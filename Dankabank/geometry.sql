@@ -82,8 +82,11 @@ CREATE TABLE `speler` (
   `nuggets` int(32) NOT NULL DEFAULT '0',
   `golden nuggets` int(32) NOT NULL DEFAULT '0',
   `achievementnr` int(10) DEFAULT NULL,
+  `clannr` int(10) DEFAULT NULL,
   PRIMARY KEY (`nr`),
   KEY `achievementsSpeler` (`achievementnr`),
+  KEY `clanSpeler` (`clannr`),
+  CONSTRAINT `clanSpeler` FOREIGN KEY (`clannr`) REFERENCES `clan` (`nr`),
   CONSTRAINT `achievementsSpeler` FOREIGN KEY (`achievementnr`) REFERENCES `achievement` (`nr`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
