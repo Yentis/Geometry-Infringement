@@ -6,13 +6,12 @@ package Game;
 public class Vijand {
     //region Instance Variables
 
-    private int vijandnr;
+    private int nr;
     private String naam;
     private String beschrijving;
     private int hp = 100;
     private int kracht = 10;
     private String uiterlijk;
-    private String kogeltype;
     private int experience = 100;
     private int score = 1000;
 
@@ -20,23 +19,22 @@ public class Vijand {
 
     //region Constructors
 
-    public Vijand (int vijandnr, String naam, String beschrijving, int hp, int kracht, String uiterlijk, String kogeltype, int experience, int score){
+    public Vijand (int nr, String naam, String beschrijving, int hp, int kracht, String uiterlijk, int experience, int score){
+        this.nr = nr;
         this.naam = naam;
         this.beschrijving = beschrijving;
         this.hp = hp;
         this.kracht = kracht;
         this.uiterlijk = uiterlijk;
-        this.kogeltype = kogeltype;
         this.experience = experience;
         this.score = score;
     }
 
     public Vijand () {
-        this.vijandnr = 0;
+        this.nr = 0;
         this.naam = "Placeholder";
         this.beschrijving = "Placeholder";
         this.uiterlijk = "Vierkant";
-        this.kogeltype = "Streep";
     }
 
     //endregion

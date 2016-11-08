@@ -5,7 +5,7 @@ package Game;
  */
 public class Speler {
     //region Instance Variables
-    private int spelernr;
+    private int nr;
     private String gebruikersnaam;
     private String wachtwoord;
     private String email;
@@ -21,14 +21,23 @@ public class Speler {
 
     //region Constructors
 
-    public Speler(int spelernr, String gebruikersnaam, String wachtwoord, String email){
+    public Speler(int nr, String gebruikersnaam, String wachtwoord, String email, int level, int experience, String profielfoto, int rank, int nuggets, int gnuggets, int hp, int kracht){
+        this.nr = nr;
         this.gebruikersnaam = gebruikersnaam;
         this.wachtwoord = wachtwoord;
         this.email = email;
+        this.level = level;
+        this.experience = experience;
+        this.profielfoto = profielfoto;
+        this.rank = rank;
+        this.nuggets = nuggets;
+        this.gnuggets = gnuggets;
+        this.hp = hp;
+        this.kracht = kracht;
     }
 
     public Speler(){
-        this.spelernr = 0;
+        this.nr = 0;
         this.gebruikersnaam = "Placeholder";
         this.wachtwoord = "Placeholder";
         this.email = "Placeholder@placeholder.com";
