@@ -23,20 +23,57 @@ public class GUIGM {
      */
     public static void main(String[] args) throws MalformedURLException, IOException {
         // TODO code application logic here
-        JFrame frame = new JFrame("Test");
-
+        
+        //Make components
+        //==================================================
+                JFrame frame = new JFrame("Test");
+                JButton button = new JButton("startGame");
+                JButton button2 = new JButton("test");
+        
+        
+        //==================================================
+        
+        //Set text
+        //==================================================
+                button.setText("Start Game");
+        
+        
+        //==================================================
+        
+        
     frame.setContentPane(new JPanel() {
-        BufferedImage image = ImageIO.read(new File("C:\\Users\\Matthias Carlier\\Desktop\\GitHub\\Geometry-Infringement\\Geometry-Infringement\\src\\Geometry-Wars\\src\\Media\\Background.png"));
+        BufferedImage image = ImageIO.read(new File("src\\Media\\Background.png"));
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.drawImage(image, 0, 0, 300, 300, this);
+            g.drawImage(image, 0, 0, 1920, 1080, this);
+            
         }
     });
+    frame.setLayout(null);
+    
+    
+    
+    
+        //Set Bounds
+        //==================================================
+                 
+        button.setBounds(200,200,200,50);
+        
+        
+        //==================================================
+        
+        //Add Components
+        //==================================================
+                frame.add(button);
+                frame.add(button2);
+        
+        //==================================================
+    
+    
 
-    frame.add(new JButton("Test Button"));
-
+    
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setSize(300, 300);
+    frame.setSize(1920, 1080);
     frame.setVisible(true);
     }
     
