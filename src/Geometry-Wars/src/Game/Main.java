@@ -1,14 +1,13 @@
 package Game;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
 /**
  * Created by Renzie on 7/11/2016.
  */
-public class Game extends Canvas implements Runnable{
-    
+public class Main extends Canvas implements Runnable{
+
     private static final long serialVersionUID = 7364682855700581664L;
 
     Toolkit tk = Toolkit.getDefaultToolkit();
@@ -17,7 +16,7 @@ public class Game extends Canvas implements Runnable{
     private Thread thread;
     private boolean running = false;
 
-    public Game(){
+    public Main(){
         new Window(WIDTH,HEIGHT,"Geometry Wars",this);
     }
 
@@ -28,7 +27,7 @@ public class Game extends Canvas implements Runnable{
         running = true;
     }
 
-    // Stop the Game
+    // Stop the Main
     public synchronized void stop(){
         try{
             thread.join();
@@ -93,7 +92,9 @@ public class Game extends Canvas implements Runnable{
     }
 
     public static void main(String args[]){
-        new Game();
+
+        new Main();
+
     }
 
 }
