@@ -48,8 +48,10 @@ public class MainMenu {
         //Make components
         //==================================================
                 JFrame frame = new JFrame("Test");
-                JButton button = new JButton("startGame");
-                JButton button2 = new JButton("test");
+                JButton StartGame = new JButton("startGame");
+                JButton Upgrades = new JButton("Upgrades");
+                JButton Profile = new JButton("Profile");
+                JButton Settings = new JButton("Settings");
                 JLabel label = new JLabel("title", SwingConstants.CENTER);
         
         
@@ -57,9 +59,11 @@ public class MainMenu {
         
         //Set text
         //==================================================
-                button.setText("Start Game");
-                
+                StartGame.setText("Start Game");
+                Upgrades.setText("Upgrades");
                 label.setText("Geometry Wars");
+                Profile.setText("Profile");
+                Settings.setText("Settings");
                 
                 
         
@@ -71,10 +75,18 @@ public class MainMenu {
                 label.setFont(font80);
                 label.setOpaque(true);
                 label.setBackground(new Color(255,255,255,95));
-                button.setFont(font36);
-                button.setOpaque(true);
-                button.setBackground(new Color(255,255,255,200));
-                
+                StartGame.setFont(font36);
+                StartGame.setOpaque(true);
+                StartGame.setBackground(new Color(255,255,255,200));
+                Upgrades.setFont(font36);
+                Upgrades.setOpaque(true);
+                Upgrades.setBackground(new Color(255,255,255,200));
+                Profile.setFont(font36);
+                Profile.setOpaque(true);
+                Profile.setBackground(new Color(255,255,255,200));
+                Settings.setFont(font36);
+                Settings.setOpaque(true);
+                Settings.setBackground(new Color(255,255,255,200));
         
         //==================================================
         
@@ -94,17 +106,20 @@ public class MainMenu {
         //Set Bounds
         //==================================================
                  
-        button.setBounds(250,200,300,80);
+        StartGame.setBounds(350,250,300,80);
+        Upgrades.setBounds(475,425,300,80);
+        Profile.setBounds(535,600,300,80);
+        Settings.setBounds(550,775,300,80);
         label.setBounds(25,25,800,125);
-       
-        
         
         //==================================================
         
         //Add Components
         //==================================================
-                frame.add(button);
-                frame.add(button2);
+                frame.add(StartGame);
+                frame.add(Profile);
+                frame.add(Upgrades);
+                frame.add(Settings);
                 frame.add(label);
         
         //==================================================
