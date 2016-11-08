@@ -13,14 +13,15 @@ import java.beans.PropertyChangeListener;
 public class MainMenu extends JFrame{
 
 
-    private JButton bg;
+
+    private JLabel Background;
 
     public MainMenu() {
 
     }
 
-    private void createUIComponents() {
-        bg.add(new JLabel(new ImageIcon("../Media/Background.png")));
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }
