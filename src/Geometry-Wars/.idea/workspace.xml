@@ -86,6 +86,8 @@
         <option value="$PROJECT_DIR$/src/Game/Window.java" />
         <option value="$PROJECT_DIR$/src/Game/Game.java" />
         <option value="$PROJECT_DIR$/src/Game/Speler.java" />
+        <option value="$PROJECT_DIR$/src/Game/Upgrade.java" />
+        <option value="$PROJECT_DIR$/src/Game/Vijand.java" />
       </list>
     </option>
   </component>
