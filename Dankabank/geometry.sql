@@ -52,6 +52,22 @@ CREATE TABLE `clan` (
 
 /*Data for the table `clan` */
 
+/*Table structure for table `drone` */
+
+DROP TABLE IF EXISTS `drone`;
+
+CREATE TABLE `drone` (
+  `nr` int(10) NOT NULL AUTO_INCREMENT,
+  `naam` tinytext NOT NULL,
+  `beschrijving` tinytext,
+  `hp` int(5) NOT NULL DEFAULT '100',
+  `kracht` int(5) DEFAULT '2',
+  `uiterlijk` tinytext,
+  PRIMARY KEY (`nr`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `drone` */
+
 /*Table structure for table `skin` */
 
 DROP TABLE IF EXISTS `skin`;
@@ -76,18 +92,21 @@ CREATE TABLE `speler` (
   `wachtwoord` tinytext NOT NULL,
   `email` tinytext NOT NULL,
   `level` int(2) NOT NULL DEFAULT '1',
-  `xp` int(32) NOT NULL DEFAULT '0',
+  `experience` int(32) NOT NULL DEFAULT '0',
   `profielfoto` tinytext,
   `rank` int(128) DEFAULT NULL,
   `nuggets` int(32) NOT NULL DEFAULT '0',
   `golden nuggets` int(32) NOT NULL DEFAULT '0',
   `achievementnr` int(10) DEFAULT NULL,
   `clannr` int(10) DEFAULT NULL,
+  `dronenr` int(10) DEFAULT NULL,
   PRIMARY KEY (`nr`),
   KEY `achievementsSpeler` (`achievementnr`),
   KEY `clanSpeler` (`clannr`),
-  CONSTRAINT `clanSpeler` FOREIGN KEY (`clannr`) REFERENCES `clan` (`nr`),
-  CONSTRAINT `achievementsSpeler` FOREIGN KEY (`achievementnr`) REFERENCES `achievement` (`nr`)
+  KEY `droneSpeler` (`dronenr`),
+  CONSTRAINT `droneSpeler` FOREIGN KEY (`dronenr`) REFERENCES `drone` (`nr`),
+  CONSTRAINT `achievementsSpeler` FOREIGN KEY (`achievementnr`) REFERENCES `achievement` (`nr`),
+  CONSTRAINT `clanSpeler` FOREIGN KEY (`clannr`) REFERENCES `clan` (`nr`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `speler` */
@@ -116,10 +135,11 @@ CREATE TABLE `vijand` (
   `nr` int(10) NOT NULL AUTO_INCREMENT,
   `naam` tinytext NOT NULL,
   `beschrijving` tinytext,
-  `levenspunten` int(2) NOT NULL,
+  `hp` int(2) NOT NULL,
   `kracht` int(5) NOT NULL,
   `uiterlijk` tinytext NOT NULL,
-  `kogeltype` tinytext NOT NULL,
+  `experience` int(32) NOT NULL DEFAULT '100',
+  `score` int(32) NOT NULL DEFAULT '1000',
   PRIMARY KEY (`nr`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

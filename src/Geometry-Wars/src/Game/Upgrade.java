@@ -6,7 +6,7 @@ package Game;
 public class Upgrade {
     //region Instance Variables
 
-    private int upgradenr;
+    private int nr;
     private String naam;
     private String beschrijving;
     private int level = 1;
@@ -17,8 +17,8 @@ public class Upgrade {
 
     //region Constructors
 
-    public Upgrade(int upgradenr, String naam, String beschrijving, int level, String foto, int kost){
-        this.upgradenr = upgradenr;
+    public Upgrade(int nr, String naam, String beschrijving, int level, String foto, int kost){
+        this.nr = nr;
         this.naam = naam;
         this.beschrijving = beschrijving;
         this.level = level;
@@ -27,7 +27,7 @@ public class Upgrade {
     }
 
     public Upgrade(){
-        this.upgradenr = 0;
+        this.nr = 0;
         this.naam = "Placeholder";
         this.beschrijving = "Placeholder";
     }
