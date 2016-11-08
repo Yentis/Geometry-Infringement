@@ -15,13 +15,11 @@ public class Speler {
     private int rank = 0;
     private int nuggets = 0;
     private int gnuggets = 0;
-    private int hp = 100;
-    private int kracht = 10;
     //endregion
 
     //region Constructors
 
-    public Speler(int nr, String gebruikersnaam, String wachtwoord, String email, int level, int experience, String profielfoto, int rank, int nuggets, int gnuggets, int hp, int kracht){
+    public Speler(int nr, String gebruikersnaam, String wachtwoord, String email, int level, int experience, String profielfoto, int rank, int nuggets, int gnuggets){
         this.nr = nr;
         this.gebruikersnaam = gebruikersnaam;
         this.wachtwoord = wachtwoord;
@@ -32,8 +30,6 @@ public class Speler {
         this.rank = rank;
         this.nuggets = nuggets;
         this.gnuggets = gnuggets;
-        this.hp = hp;
-        this.kracht = kracht;
     }
 
     public Speler(){
@@ -67,9 +63,6 @@ public class Speler {
         this.rank = rank;
     }
 
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
 
     //endregion
 
@@ -89,14 +82,6 @@ public class Speler {
 
     public void addGNuggets(int amount) {
         this.gnuggets += amount;
-    }
-
-    public void addKracht(int amount) {
-        this.kracht += amount;
-    }
-
-    public void addHp(int amount) {
-        this.hp += amount;
     }
 
     //endregion
