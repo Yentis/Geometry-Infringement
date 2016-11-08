@@ -63,6 +63,8 @@ CREATE TABLE `drone` (
   `hp` int(5) NOT NULL DEFAULT '100',
   `kracht` int(5) DEFAULT '2',
   `uiterlijk` tinytext,
+  `level` int(10) NOT NULL DEFAULT '1',
+  `experience` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`nr`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

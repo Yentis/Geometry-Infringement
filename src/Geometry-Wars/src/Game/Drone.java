@@ -12,18 +12,22 @@ public class Drone {
     private int hp = 100;
     private int kracht = 2;
     private String uiterlijk;
+    private int level;
+    private int experience;
 
     //endregion
 
     //region Constructors
 
-    public Drone(int nr, String naam, String beschrijving, int hp, int kracht, String uiterlijk){
+    public Drone(int nr, String naam, String beschrijving, int hp, int kracht, String uiterlijk, int level, int experience){
         this.nr = nr;
         this.naam = naam;
         this.beschrijving = beschrijving;
         this.hp = hp;
         this.kracht = kracht;
         this.uiterlijk = uiterlijk;
+        this.level = level;
+        this.experience = experience;
     }
 
     public Drone(){
