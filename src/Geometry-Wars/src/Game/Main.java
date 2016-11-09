@@ -17,7 +17,7 @@ public class Main extends Canvas implements Runnable{
     private boolean running = false;
 
     public Main(){
-        new Window(WIDTH,HEIGHT,"Geometry Wars",this);
+        new GUI.Window(WIDTH,HEIGHT,"Geometry Wars",this);
     }
 
     // Start the game
