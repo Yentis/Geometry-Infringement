@@ -18,7 +18,7 @@ public class Main extends Canvas implements Runnable{
     private boolean running = false;
 
     public Main() throws IOException {
-        new GUI.Window("Geometry Wars",this);
+       // new GUI.Window("Geometry Wars",this);
     }
 
     // Start the game

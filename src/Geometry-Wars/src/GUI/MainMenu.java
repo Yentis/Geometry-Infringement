@@ -24,48 +24,26 @@ import Font.GFont;
  *
  * @author Renzie
  */
-public class MainMenu {
+public class MainMenu{
 
-    /**
-     * @param args the command line arguments
-     */
+
+
     public MainMenu() throws MalformedURLException, IOException, FontFormatException {
 
 
-        //create the font to use. Specify the size!
-       /* Font font80 = Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")).deriveFont(80f);
-        GraphicsEnvironment ge64 = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        //register the font
-        ge64.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")));
-
-        Font font36 = Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")).deriveFont(36f);
-        GraphicsEnvironment ge36 = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        //register the font
-        ge36.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")));
-
-*/
 
 
 
         //Make components
         //==================================================
-        JFrame frame = new JFrame("Test");
-        JButton StartGame = new JButton("startGame");
+       // JFrame frame = new JFrame("Test");
+
+        JButton StartGame = new JButton("StartGame");
         JButton Upgrades = new JButton("Upgrades");
         JButton Profile = new JButton("Profile");
         JButton Settings = new JButton("Settings");
         JLabel label = new JLabel("title", SwingConstants.CENTER);
 
-
-        //==================================================
-
-        //Set text
-        //==================================================
-        StartGame.setText("Start Game");
-        Upgrades.setText("Upgrades");
-        label.setText("Geometry Wars");
-        Profile.setText("Profile");
-        Settings.setText("Settings");
 
 
 
@@ -77,31 +55,31 @@ public class MainMenu {
         label.setFont(new GFont(80));
 
         label.setOpaque(true);
-        label.setBackground(new Color(255,255,255,95));/*
-        StartGame.setFont(font36);
+        label.setBackground(new Color(255,255,255,95));
+        StartGame.setFont(new GFont(36));
         StartGame.setOpaque(true);
         StartGame.setBackground(new Color(255,255,255,200));
-        Upgrades.setFont(font36);
+        Upgrades.setFont(new GFont(36));
         Upgrades.setOpaque(true);
         Upgrades.setBackground(new Color(255,255,255,200));
-        Profile.setFont(font36);
+        Profile.setFont(new GFont(36));
         Profile.setOpaque(true);
         Profile.setBackground(new Color(255,255,255,200));
-        Settings.setFont(font36);
+        Settings.setFont(new GFont(36));
         Settings.setOpaque(true);
         Settings.setBackground(new Color(255,255,255,200));
-*/
+
         //==================================================
 
-        frame.setContentPane(new JPanel() {
+        /*frame.setContentPane(new JPanel() {
             BufferedImage image = ImageIO.read(new File("src\\Media\\Background.png"));
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.drawImage(image, 0, 0, 1920, 1080, this);
 
             }
-        });
-        frame.setLayout(null);
+        });*/
+       // frame.setLayout(null);
 
 
 
@@ -119,7 +97,7 @@ public class MainMenu {
 
         //Add Components
         //==================================================
-        frame.add(StartGame);
+        Window.get.add(StartGame));
         frame.add(Profile);
         frame.add(Upgrades);
         frame.add(Settings);
