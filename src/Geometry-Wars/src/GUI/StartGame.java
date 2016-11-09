@@ -50,6 +50,10 @@ public class StartGame {
 
         label.setOpaque(true);
         label.setBackground(new Color(255,255,255,95));
+        War.setBackground(new Color(255,255,255,200));
+        Campaign.setBackground(new Color(255,255,255,200));
+        SoloGame.setBackground(new Color(255,255,255,200));
+        Coop.setBackground(new Color(255,255,255,200));
 
         frame.setContentPane(new JPanel() {
             BufferedImage image = ImageIO.read(new File("src\\Media\\Background.png"));

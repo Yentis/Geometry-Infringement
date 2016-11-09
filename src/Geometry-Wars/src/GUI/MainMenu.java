@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import Font.GFont;
 /**
  *
  * @author Renzie
@@ -35,7 +36,7 @@ public class MainMenu{
 
         //Make components
         //==================================================
-       // JFrame frame = new JFrame("Test");
+        JFrame frame = new JFrame("Test");
 
         JButton StartGame = new JButton("StartGame");
         JButton Upgrades = new JButton("Upgrades");
@@ -51,7 +52,7 @@ public class MainMenu{
 
         //Set Properties
         //==================================================
-        //label.setFont(new GFont(80));
+        label.setFont(new GFont(80));
 
         label.setOpaque(true);
         label.setBackground(new Color(255,255,255,95));
@@ -70,15 +71,15 @@ public class MainMenu{
 
         //==================================================
 
-        /*frame.setContentPane(new JPanel() {
+        frame.setContentPane(new JPanel() {
             BufferedImage image = ImageIO.read(new File("src\\Media\\Background.png"));
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.drawImage(image, 0, 0, 1920, 1080, this);
 
             }
-        });*/
-       // frame.setLayout(null);
+        });
+       frame.setLayout(null);
 
 
 
@@ -96,7 +97,7 @@ public class MainMenu{
 
         //Add Components
         //==================================================
-        Window.get.add(StartGame));
+        frame.add(StartGame);
         frame.add(Profile);
         frame.add(Upgrades);
         frame.add(Settings);
