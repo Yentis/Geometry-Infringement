@@ -51,6 +51,7 @@ public class Register {
 
         //Make components
         //==================================================
+
         JFrame frame = new JFrame("Test");
         JButton register = new JButton("Register");
         JLabel registered = new JLabel("Registration Successful");
@@ -64,11 +65,11 @@ public class Register {
         JLabel lblemail = new JLabel("E-mail");
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
 
-
         //==================================================
 
         //Set Properties
         //==================================================
+
         registered.setFont(font20);
         registered.setForeground(Color.WHITE);
         registered.setVisible(false);
@@ -112,29 +113,27 @@ public class Register {
         });
         frame.setLayout(null);
 
-
-
-
         //Set Bounds
         //==================================================
 
-        register.setBounds(900,700,300,80);
-        username.setBounds(900,300,300,80);
-        lblusername.setBounds(550,300,300,80);
-        password.setBounds(900,400,300,80);
-        lblpassword.setBounds(550,400,300,80);
-        passwordconfirm.setBounds(900,500,300,80);
-        lblpasswordconfirm.setBounds(550,500,300,80);
-        email.setBounds(900,600,300,80);
-        lblemail.setBounds(550,600,300,80);
-        registered.setBounds(900,800,550,80);
-
         label.setBounds(25,25,800,125);
+
+        lblusername.setBounds(550,300,300,80);
+        lblpassword.setBounds(550,400,300,80);
+        lblpasswordconfirm.setBounds(550,500,300,80);
+        lblemail.setBounds(550,600,300,80);
+        username.setBounds(900,300,300,80);
+        password.setBounds(900,400,300,80);
+        passwordconfirm.setBounds(900,500,300,80);
+        email.setBounds(900,600,300,80);
+        register.setBounds(900,700,300,80);
+        registered.setBounds(900,800,550,80);
 
         //==================================================
 
         //Add Components
         //==================================================
+
         frame.add(register);
         frame.add(username);
         frame.add(password);
@@ -175,7 +174,6 @@ public class Register {
                 registered.setVisible(true);
             }
         });
-
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1920, 1080);
