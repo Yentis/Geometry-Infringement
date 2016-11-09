@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
+import Font.GFont;
 /**
  *
  * @author Renzie
@@ -30,10 +30,10 @@ public class MainMenu {
      * @param args the command line arguments
      */
     public MainMenu() throws MalformedURLException, IOException, FontFormatException {
-        // TODO code application logic here
+
 
         //create the font to use. Specify the size!
-        Font font80 = Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")).deriveFont(80f);
+       /* Font font80 = Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")).deriveFont(80f);
         GraphicsEnvironment ge64 = GraphicsEnvironment.getLocalGraphicsEnvironment();
         //register the font
         ge64.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")));
@@ -42,6 +42,8 @@ public class MainMenu {
         GraphicsEnvironment ge36 = GraphicsEnvironment.getLocalGraphicsEnvironment();
         //register the font
         ge36.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")));
+
+*/
 
 
 
@@ -72,9 +74,10 @@ public class MainMenu {
 
         //Set Properties
         //==================================================
-        label.setFont(font80);
+        label.setFont(new GFont(80));
+
         label.setOpaque(true);
-        label.setBackground(new Color(255,255,255,95));
+        label.setBackground(new Color(255,255,255,95));/*
         StartGame.setFont(font36);
         StartGame.setOpaque(true);
         StartGame.setBackground(new Color(255,255,255,200));
@@ -87,7 +90,7 @@ public class MainMenu {
         Settings.setFont(font36);
         Settings.setOpaque(true);
         Settings.setBackground(new Color(255,255,255,200));
-
+*/
         //==================================================
 
         frame.setContentPane(new JPanel() {
