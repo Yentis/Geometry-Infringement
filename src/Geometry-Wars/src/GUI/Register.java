@@ -30,9 +30,6 @@ import javax.swing.border.EmptyBorder;
  */
 public class Register {
 
-    /**
-     * @param args the command line arguments
-     */
     public Register() throws MalformedURLException, IOException, FontFormatException {
         // TODO code application logic here
 
@@ -167,17 +164,12 @@ public class Register {
                 } else if (!Arrays.equals(password.getPassword(), passwordconfirm.getPassword())){
                     registered.setText("Your passwords do not match, please try again");
                 } else {
-                    registered.setText("Registration Successful");
+                    String result = checkAndCreate(username.getText(), password.getPassword(), email.getText());
 
-                    Spel spel = new Spel();
-                    try {
-                        spel.registerPlayer(username.getText(), password.getPassword(), email.getText());
-                    } catch (SQLException e1) {
-                        e1.printStackTrace();
-                    } catch (NoSuchAlgorithmException e1) {
-                        e1.printStackTrace();
-                    } catch (UnsupportedEncodingException e1) {
-                        e1.printStackTrace();
+                    if(Objects.equals(result, "")){
+                        registered.setText("Registration Successful");
+                    } else {
+                        registered.setText(result + " bestaat al.");
                     }
                 }
                 registered.setVisible(true);
@@ -196,5 +188,30 @@ public class Register {
 
     public static void main(String[] args)  throws MalformedURLException, IOException, FontFormatException {
         new Register();
+    }
+
+    private String checkAndCreate(String gebruikersnaam, char[] password, String email){
+        Spel spel = new Spel();
+        String result = "";
+        try {
+            result = spel.infoChecker(gebruikersnaam, email);
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+
+        if(Objects.equals(result, "")){
+            try {
+                spel.registerPlayer(gebruikersnaam, password, email);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            } catch (NoSuchAlgorithmException e1) {
+                e1.printStackTrace();
+            } catch (UnsupportedEncodingException e1) {
+                e1.printStackTrace();
+            }
+        } else {
+            return result;
+        }
+        return "";
     }
 }

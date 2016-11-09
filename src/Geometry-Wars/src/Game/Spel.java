@@ -96,7 +96,32 @@ public class Spel {
         Statement myStmt = myConn.createStatement();
 
         int a = myStmt.executeUpdate("insert into speler (gebruikersnaam, wachtwoord, email, rank)" +
-                "values('" + gebruikersnaam +"', '" + test + "', '" + email + "', 1)");
+                "values('" + gebruikersnaam +"', '" + test + "', '" + email + "', 0)");
+    }
+
+    public String infoChecker(String gebruikersnaam, String email) throws SQLException {
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/geometry-infringement", "root", "XjY3G5dLB8u1mAEcZzqmobSXxtrKzFLP");
+        Statement myStmt = myConn.createStatement();
+
+        //Gebruikersnaam
+        ResultSet myRs = myStmt.executeQuery("select count(*) from speler where gebruikersnaam = '" + gebruikersnaam + "'");
+
+        while(myRs.next()){
+            if(myRs.getInt("count(*)") > 0){
+                return "Gebruikersnaam";
+            }
+        }
+
+        //Email
+        ResultSet myRs2 = myStmt.executeQuery("select count(*) from speler where email = '" + email + "'");
+
+        while(myRs2.next()){
+            if(myRs2.getInt("count(*)") > 0){
+                return "Email";
+            }
+        }
+        return "";
     }
 
     //endregion
