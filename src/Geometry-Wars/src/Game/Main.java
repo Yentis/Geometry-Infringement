@@ -2,6 +2,7 @@ package Game;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.IOException;
 
 /**
  * Created by Renzie on 7/11/2016.
@@ -16,8 +17,8 @@ public class Main extends Canvas implements Runnable{
     private Thread thread;
     private boolean running = false;
 
-    public Main(){
-        new Window(WIDTH,HEIGHT,"Geometry Wars",this);
+    public Main() throws IOException {
+        new GUI.Window("Geometry Wars",this);
     }
 
     // Start the game
@@ -91,7 +92,7 @@ public class Main extends Canvas implements Runnable{
         bs.show();
     }
 
-    public static void main(String args[]){
+    public static void main(String args[]) throws IOException {
 
         new Main();
 
