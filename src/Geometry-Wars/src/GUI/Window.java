@@ -13,11 +13,12 @@ import java.io.IOException;
  * Created by Renzie on 7/11/2016.
  */
 public class Window extends Canvas {
+    private JFrame frame;
 
     private static final long serialVersionUID = 573860602378245302L;
 
-    public Window(String title, Main game) throws IOException {
-        JFrame frame = new JFrame(title);
+    public Window(String title /*, Main game*/ ) throws IOException {
+        frame = new JFrame(title);
 
         frame.setPreferredSize(new Dimension(1920, 1080));
         frame.setMaximumSize(new Dimension(1920, 1080));
@@ -36,12 +37,25 @@ public class Window extends Canvas {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
-        frame.add(game);
+        //frame.add(game);
         frame.setVisible(true);
-        game.start();
+        //game.start();
     }
 
-    public void clearWindow(){
-
+    public static void main(String args[]) throws IOException {
+        Window window = new Window("Geometry Wars");
     }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public static enum STATE{
+        MENU,
+        GAME,
+        REGISTER,
+        PROFILE
+    };
+
+    private STATE State = STATE.MENU;
 }

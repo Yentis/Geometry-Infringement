@@ -28,7 +28,7 @@ public class Spel {
 
     public void initDankabank() throws SQLException{
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/geometry-infringement", "root", "XjY3G5dLB8u1mAEcZzqmobSXxtrKzFLP");
+        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/geometry-infringement", "root", "");
         Statement myStmt = myConn.createStatement();
 
         //region Spelers
