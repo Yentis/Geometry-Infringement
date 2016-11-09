@@ -46,7 +46,7 @@ public class Spel {
 
         i = 0;
         while (schip.next()){
-            schepen.add(i, new Schip(schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht")));
+            schepen.add(i, new Schip(schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image")));
             i++;
         }
         //endregion
