@@ -5,6 +5,7 @@
  */
 package gui.gm;
 
+import Font.GFont;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -35,25 +36,7 @@ public class MainMenu {
      * @param args the command line arguments
      */
     public MainMenu() throws MalformedURLException, IOException, FontFormatException {
-        // TODO code application logic here
         
-            //create the font to use. Specify the size!
-            Font font80 = Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")).deriveFont(80f);
-            GraphicsEnvironment ge64 = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            //register the font
-            ge64.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")));
-            
-           Font font36 = Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")).deriveFont(36f);
-            GraphicsEnvironment ge36 = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            //register the font
-            ge36.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")));
-            
-            Font font24 = Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")).deriveFont(24f);
-            GraphicsEnvironment ge24 = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            //register the font
-            ge24.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")));
-      
-       
         
         //Make components
         //==================================================
@@ -107,31 +90,31 @@ public class MainMenu {
         
         //Set Properties
         //==================================================
-                Title.setFont(font80);
+                Title.setFont(new GFont(80));
                 Title.setOpaque(true);
                 Title.setBackground(new Color(255,255,255,95));
-                StartGame.setFont(font36);
+                StartGame.setFont(new GFont(36));
                 StartGame.setOpaque(true);
                 StartGame.setBackground(new Color(255,255,255,200));
-                Upgrades.setFont(font36);
+                Upgrades.setFont(new GFont(36));
                 Upgrades.setOpaque(true);
                 Upgrades.setBackground(new Color(255,255,255,200));
-                Profile.setFont(font36);
+                Profile.setFont(new GFont(36));
                 Profile.setOpaque(true);
                 Profile.setBackground(new Color(255,255,255,200));
-                Settings.setFont(font36);
+                Settings.setFont(new GFont(36));
                 Settings.setOpaque(true);
                 Settings.setBackground(new Color(255,255,255,200));
                 FriendsBtn.setOpaque(true);
-                FriendsBtn.setFont(font24);
+                FriendsBtn.setFont(new GFont(24));
                 FriendsBtn.setBackground(new Color(255,255,255,200));
                 LogOut.setOpaque(true);
-                LogOut.setFont(font24);
+                LogOut.setFont(new GFont(24));
                 LogOut.setBackground(new Color(255,255,255,200));
                 Quit.setOpaque(true);
-                Quit.setFont(font24);
+                Quit.setFont(new GFont(24));
                 Quit.setBackground(new Color(255,255,255,200));
-                JoinDiscord.setFont(font24);
+                JoinDiscord.setFont(new GFont(24));
                 JoinDiscord.setForeground(Color.white);
                 
                 
