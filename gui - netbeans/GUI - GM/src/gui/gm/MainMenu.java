@@ -5,11 +5,15 @@
  */
 package gui.gm;
 
+import Font.GFont;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.MalformedURLException;
@@ -18,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -26,67 +31,101 @@ import javax.swing.border.EmptyBorder;
  */
 public class MainMenu {
 
+    private String url = "https://discordapp.com/";
     /**
      * @param args the command line arguments
      */
     public MainMenu() throws MalformedURLException, IOException, FontFormatException {
-        // TODO code application logic here
         
-            //create the font to use. Specify the size!
-            Font font80 = Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")).deriveFont(80f);
-            GraphicsEnvironment ge64 = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            //register the font
-            ge64.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")));
-            
-           Font font36 = Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")).deriveFont(36f);
-            GraphicsEnvironment ge36 = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            //register the font
-            ge36.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")));
-      
-       
         
         //Make components
         //==================================================
-                JFrame frame = new JFrame("Test");
-                JButton StartGame = new JButton("startGame");
+                JFrame frame = new JFrame("Geometry Wars");
+                JButton StartGame = new JButton("start Game");
                 JButton Upgrades = new JButton("Upgrades");
                 JButton Profile = new JButton("Profile");
                 JButton Settings = new JButton("Settings");
-                JLabel label = new JLabel("title", SwingConstants.CENTER);
+                JButton FriendsBtn = new JButton("Friends");
+                JButton LogOut = new JButton("Logout");
+                JButton Quit = new JButton("Quit");
+                JButton Discord = new JButton(new ImageIcon(((new ImageIcon("src\\Media\\Discord.jpg")).getImage()).getScaledInstance(65, 65, java.awt.Image.SCALE_SMOOTH)));
+                JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
+                JLabel JoinDiscord = new JLabel("Join Server!");
+                JList Friends = new JList();
         
         
         //==================================================
+      
         
-        //Set text
+        
+        //Add Action Listener
         //==================================================
-                StartGame.setText("Start Game");
-                Upgrades.setText("Upgrades");
-                label.setText("Geometry Wars");
-                Profile.setText("Profile");
-                Settings.setText("Settings");
+        FriendsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if (!Friends.isShowing()){
+                    Friends.setVisible(true);
+                } else {
+                    Friends.setVisible(false);
+                }
                 
-                
-        
-        
+            }
+        });
+        Discord.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                 try {         
+                    java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
+                    }
+                catch (java.io.IOException e) {
+                    System.out.println(e.getMessage());
+                    }
+            }
+        });
+        Quit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                 frame.dispose();
+            }
+        });
         //==================================================
+        
         
         //Set Properties
         //==================================================
-                label.setFont(font80);
-                label.setOpaque(true);
-                label.setBackground(new Color(255,255,255,95));
-                StartGame.setFont(font36);
+                Title.setFont(new GFont(80));
+                Title.setOpaque(true);
+                Title.setBackground(new Color(255,255,255,95));
+                StartGame.setFont(new GFont(36));
                 StartGame.setOpaque(true);
                 StartGame.setBackground(new Color(255,255,255,200));
-                Upgrades.setFont(font36);
+                Upgrades.setFont(new GFont(36));
                 Upgrades.setOpaque(true);
                 Upgrades.setBackground(new Color(255,255,255,200));
-                Profile.setFont(font36);
+                Profile.setFont(new GFont(36));
                 Profile.setOpaque(true);
                 Profile.setBackground(new Color(255,255,255,200));
-                Settings.setFont(font36);
+                Settings.setFont(new GFont(36));
                 Settings.setOpaque(true);
                 Settings.setBackground(new Color(255,255,255,200));
+                FriendsBtn.setOpaque(true);
+                FriendsBtn.setFont(new GFont(24));
+                FriendsBtn.setBackground(new Color(255,255,255,200));
+                LogOut.setOpaque(true);
+                LogOut.setFont(new GFont(24));
+                LogOut.setBackground(new Color(255,255,255,200));
+                Quit.setOpaque(true);
+                Quit.setFont(new GFont(24));
+                Quit.setBackground(new Color(255,255,255,200));
+                JoinDiscord.setFont(new GFont(24));
+                JoinDiscord.setForeground(Color.white);
+                
+                
+                
+                
+                
+
+                
+                Friends.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                Friends.setVisible(false);
+                
         
         //==================================================
         
@@ -106,11 +145,17 @@ public class MainMenu {
         //Set Bounds
         //==================================================
                  
-        StartGame.setBounds(350,250,300,80);
-        Upgrades.setBounds(475,425,300,80);
-        Profile.setBounds(535,600,300,80);
-        Settings.setBounds(550,775,300,80);
-        label.setBounds(25,25,800,125);
+        StartGame.setBounds(399,262,472,135);
+        Upgrades.setBounds(507,474,380,97);
+        Profile.setBounds(561,642,380,97);
+        Settings.setBounds(574,818,380,97);
+        Quit.setBounds(1616,984,270,67);
+        LogOut.setBounds(1326,984,270,67);
+        Title.setBounds(54,40,900,131);
+        JoinDiscord.setBounds(102,1000,180,35);
+        Friends.setBounds(1616,129,270,254);
+        FriendsBtn.setBounds(1616,40,270,67);
+        Discord.setBounds(22,983,65,65);
         
         //==================================================
         
@@ -120,10 +165,17 @@ public class MainMenu {
                 frame.add(Profile);
                 frame.add(Upgrades);
                 frame.add(Settings);
-                frame.add(label);
+                frame.add(Title);
+                frame.add(Friends);
+                frame.add(Quit);
+                frame.add(LogOut);
+                frame.add(Discord);
+                frame.add(FriendsBtn);
+                frame.add(JoinDiscord);
         
         //==================================================
     
+        
     
 
     
@@ -131,9 +183,7 @@ public class MainMenu {
     frame.setSize(1920, 1080);
     frame.setVisible(true);
     }
-    
-    
-    
+
     
     
      public static void main(String[] args)  throws MalformedURLException, IOException, FontFormatException {

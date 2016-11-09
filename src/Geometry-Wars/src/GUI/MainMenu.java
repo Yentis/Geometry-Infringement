@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import Font.GFont;
 /**
  *
  * @author Renzie
@@ -74,7 +73,7 @@ public class MainMenu {
 
         //Set Properties
         //==================================================
-        label.setFont(new GFont(80));
+        //label.setFont(new GFont(80));
 
         label.setOpaque(true);
         label.setBackground(new Color(255,255,255,95));/*
