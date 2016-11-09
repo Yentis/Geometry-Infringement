@@ -42,6 +42,11 @@ public class StartGame {
         label.setText("Geometry Wars");
 
         label.setFont(new GFont(80));
+        War.setFont(new GFont(36));
+        Campaign.setFont(new GFont(36));
+        SoloGame.setFont(new GFont(36));
+        Coop.setFont(new GFont(36));
+
 
         label.setOpaque(true);
         label.setBackground(new Color(255,255,255,95));
