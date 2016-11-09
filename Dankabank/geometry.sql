@@ -70,6 +70,19 @@ CREATE TABLE `drone` (
 
 /*Data for the table `drone` */
 
+/*Table structure for table `schip` */
+
+DROP TABLE IF EXISTS `schip`;
+
+CREATE TABLE `schip` (
+  `nr` int(10) NOT NULL AUTO_INCREMENT,
+  `hp` int(10) NOT NULL DEFAULT '100',
+  `kracht` int(10) NOT NULL DEFAULT '10',
+  PRIMARY KEY (`nr`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `schip` */
+
 /*Table structure for table `skin` */
 
 DROP TABLE IF EXISTS `skin`;
@@ -102,16 +115,21 @@ CREATE TABLE `speler` (
   `achievementnr` int(10) DEFAULT NULL,
   `clannr` int(10) DEFAULT NULL,
   `dronenr` int(10) DEFAULT NULL,
+  `schipnr` int(10) DEFAULT NULL,
   PRIMARY KEY (`nr`),
   KEY `achievementsSpeler` (`achievementnr`),
   KEY `clanSpeler` (`clannr`),
   KEY `droneSpeler` (`dronenr`),
-  CONSTRAINT `droneSpeler` FOREIGN KEY (`dronenr`) REFERENCES `drone` (`nr`),
+  KEY `schipSpeler` (`schipnr`),
   CONSTRAINT `achievementsSpeler` FOREIGN KEY (`achievementnr`) REFERENCES `achievement` (`nr`),
-  CONSTRAINT `clanSpeler` FOREIGN KEY (`clannr`) REFERENCES `clan` (`nr`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `clanSpeler` FOREIGN KEY (`clannr`) REFERENCES `clan` (`nr`),
+  CONSTRAINT `droneSpeler` FOREIGN KEY (`dronenr`) REFERENCES `drone` (`nr`),
+  CONSTRAINT `schipSpeler` FOREIGN KEY (`schipnr`) REFERENCES `schip` (`nr`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `speler` */
+
+insert  into `speler`(`nr`,`gebruikersnaam`,`wachtwoord`,`email`,`level`,`experience`,`profielfoto`,`rank`,`nuggets`,`golden nuggets`,`achievementnr`,`clannr`,`dronenr`,`schipnr`) values (1,'Yentl','-116105118-27-7565421-67-238-6777-1821-33-79103-87-56115-475-72-883111142-7672-8724','yentl.volcke@student.howest.be',1,0,NULL,0,0,0,NULL,NULL,NULL,NULL),(2,'Renzie','-617527-27-8617120-123916-9115-47-12192247-106-67-11523-4-118-79886212439-949785','renzie.omana@student.howest.be',1,0,NULL,0,0,0,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `upgrade` */
 

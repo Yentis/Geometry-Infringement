@@ -1,5 +1,8 @@
 package Game;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +28,7 @@ public class Spel {
 
     public void initDankabank() throws SQLException{
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/geometry-infringement", "root", "XjY3G5dLB8u1mAEcZzqmobSXxtrKzFLP");
+        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/geometry-infringement", "root", "");
         Statement myStmt = myConn.createStatement();
 
         //region Spelers
@@ -77,6 +80,48 @@ public class Spel {
             i++;
         }
         //endregion
+    }
+
+    public void registerPlayer(String gebruikersnaam, char[] wachtwoord, String email) throws SQLException, NoSuchAlgorithmException, UnsupportedEncodingException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(new String(wachtwoord).getBytes("UTF-8"));
+        byte[] digest = md.digest();
+        String test = "";
+        for (byte item:digest) {
+            test += item;
+        }
+
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/geometry-infringement", "root", "XjY3G5dLB8u1mAEcZzqmobSXxtrKzFLP");
+        Statement myStmt = myConn.createStatement();
+
+        int a = myStmt.executeUpdate("insert into speler (gebruikersnaam, wachtwoord, email, rank)" +
+                "values('" + gebruikersnaam +"', '" + test + "', '" + email + "', 0)");
+    }
+
+    public String infoChecker(String gebruikersnaam, String email) throws SQLException {
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/geometry-infringement", "root", "XjY3G5dLB8u1mAEcZzqmobSXxtrKzFLP");
+        Statement myStmt = myConn.createStatement();
+
+        //Gebruikersnaam
+        ResultSet myRs = myStmt.executeQuery("select count(*) from speler where gebruikersnaam = '" + gebruikersnaam + "'");
+
+        while(myRs.next()){
+            if(myRs.getInt("count(*)") > 0){
+                return "Gebruikersnaam";
+            }
+        }
+
+        //Email
+        ResultSet myRs2 = myStmt.executeQuery("select count(*) from speler where email = '" + email + "'");
+
+        while(myRs2.next()){
+            if(myRs2.getInt("count(*)") > 0){
+                return "Email";
+            }
+        }
+        return "";
     }
 
     //endregion
