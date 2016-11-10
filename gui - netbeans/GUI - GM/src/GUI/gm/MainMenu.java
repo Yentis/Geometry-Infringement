@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui.gm;
+package GUI.gm;
 
 import Font.GFont;
 import java.awt.Color;
@@ -51,6 +51,7 @@ public class MainMenu {
                 JButton Discord = new JButton(new ImageIcon(((new ImageIcon("src\\Media\\Discord.jpg")).getImage()).getScaledInstance(65, 65, java.awt.Image.SCALE_SMOOTH)));
                 JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
                 JLabel JoinDiscord = new JLabel("Join Server!");
+                JLabel Background = new JLabel(new ImageIcon(((new ImageIcon("src\\Media\\Background.png")).getImage().getScaledInstance(1920,1080, java.awt.Image.SCALE_SMOOTH))));
                 JList Friends = new JList();
         
         
@@ -128,20 +129,7 @@ public class MainMenu {
                 
         
         //==================================================
-        
-    frame.setContentPane(new JPanel() {
-        BufferedImage image = ImageIO.read(new File("src\\Media\\Background.png"));
-        public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            g.drawImage(image, 0, 0, 1920, 1080, this);
-            
-        }
-    });
-    frame.setLayout(null);
-    
-    
-    
-    
+  
         //Set Bounds
         //==================================================
                  
@@ -156,6 +144,7 @@ public class MainMenu {
         Friends.setBounds(1616,129,270,254);
         FriendsBtn.setBounds(1616,40,270,67);
         Discord.setBounds(22,983,65,65);
+        Background.setBounds(0,0,1920,1080);
         
         //==================================================
         
@@ -172,6 +161,7 @@ public class MainMenu {
                 frame.add(Discord);
                 frame.add(FriendsBtn);
                 frame.add(JoinDiscord);
+                frame.add(Background);
         
         //==================================================
     
