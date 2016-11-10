@@ -5,7 +5,7 @@
  */
 package GUI.gm;
 
-import Font.GFont;
+import Font.*;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -49,9 +49,10 @@ public class Profile {
                 JLabel ProfilePicture = new JLabel(new ImageIcon(((new ImageIcon("src\\Media\\profilePicture.png")).getImage().getScaledInstance(336,324, java.awt.Image.SCALE_SMOOTH))));
                 JLabel Rank = new JLabel("Unranked");
                 JLabel RankPicture = new JLabel(new ImageIcon(((new ImageIcon("src\\Media\\Badges\\NoRank.png")).getImage().getScaledInstance(168,168, java.awt.Image.SCALE_SMOOTH))));
-                JButton MyClan = new JButton("My Clan");
-                JButton EditProfile = new JButton("Edit Profile");
-                JButton Back = new JButton("Back");
+                JButton MyClan = new GButton("My Clan",36f,536,696,418,96);
+                JButton EditProfile = new GButton("Edit Profile",36f,606,820,278,67);
+                JButton Back = new GButton("Back",36f,536,982,270,67);
+                JButton Achievements = new GButton("Achievements", 36f, 60,982,340,67);
         
         
         //==================================================
@@ -60,7 +61,21 @@ public class Profile {
         
         //Add Action Listener
         //==================================================
-        
+        Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    frame.setVisible(false);
+                    frame.dispose();
+                    new MainMenu();
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (FontFormatException ex) {
+                    Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+        });
        
        
         //==================================================
@@ -75,15 +90,6 @@ public class Profile {
                 Profile.setBackground(new Color(255,255,255,95));
                 ProfileInfo.setOpaque(true);
                 ProfileInfo.setBackground(new Color(255,255,255,92));
-                MyClan.setFont(new GFont(36));
-                MyClan.setOpaque(true);
-                MyClan.setBackground(new Color(255,255,255,200));
-                EditProfile.setFont(new GFont(36));
-                EditProfile.setOpaque(true);
-                EditProfile.setBackground(new Color(255,255,255,200));
-                Back.setFont(new GFont(36));
-                Back.setOpaque(true);
-                Back.setBackground(new Color(255,255,255,200));
                 Username.setFont(new GFont(36));
                 Username.setOpaque(true);
                 Username.setBackground(new Color(255,255,255,200));
@@ -105,9 +111,6 @@ public class Profile {
         Background.setBounds(0,0,1920,1080);
         Profile.setBounds(536,193,418,481);
         ProfileInfo.setBounds(976,40,902,1009);
-        MyClan.setBounds(536,696,418,96);
-        EditProfile.setBounds(606,820,278,67);
-        Back.setBounds(536,982,270,67);
         Username.setBounds(576,215,337,91);
         ProfilePicture.setBounds(577,329,336,324);
         RankPicture.setBounds(1026,77,168,168);
@@ -123,12 +126,15 @@ public class Profile {
                 frame.add(MyClan);
                 frame.add(EditProfile);
                 frame.add(Back);
+                frame.add(Achievements);
                 frame.add(Username);
                 frame.add(RankPicture);
                 frame.add(Rank);
+                
                 frame.add(Profile);
                 frame.add(ProfileInfo);
                 frame.add(Background);
+                
         
         //==================================================
     

@@ -5,7 +5,7 @@
  */
 package GUI.gm;
 
-import Font.GFont;
+import Font.*;
 import Game.Spel;
 import java.awt.Color;
 import java.awt.Component;
@@ -49,8 +49,8 @@ public class Login {
                 JLabel PasswordLabel = new JLabel("Password:");
                 JLabel RegisterLabel = new JLabel("Not Registered yet?");
                 JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
-                JButton Login = new JButton("Login");
-                JButton Register = new JButton("Register");
+                JButton Login = new GButton("Login", 24f ,1775,531,117,44);
+                JButton Register = new GButton("Register",24f,1681,711,209,44);
                 JTextField Username = new JTextField();
                 JPasswordField Password = new JPasswordField();
                 JLabel Background = new JLabel(new ImageIcon(((new ImageIcon("src\\Media\\Background.png")).getImage().getScaledInstance(1920,1080, java.awt.Image.SCALE_SMOOTH))));
@@ -142,15 +142,7 @@ public class Login {
                 RegisterLabel.setFont(new GFont(16));
                 RegisterLabel.setForeground(Color.black);
                 
-                Login.setFont(new GFont(24));
-                Login.setOpaque(true);
-                Login.setBackground(new Color(255,255,255,200));
-                Login.setForeground(Color.black);
-                
-                Register.setFont(new GFont(24));
-                Register.setOpaque(true);
-                Register.setBackground(new Color(255,255,255,200));
-                Register.setForeground(Color.black);
+               
                 
                
                 
@@ -175,8 +167,6 @@ public class Login {
         UsernameLabel.setBounds(1395, 358, 130,24);
         PasswordLabel.setBounds(1395,452,130,24);
         RegisterLabel.setBounds(1712,665,185,21);
-        Login.setBounds(1775,531,117,44);
-        Register.setBounds(1681,711,209,44);
         Background.setBounds(0,0,1920,1080);
         
         
