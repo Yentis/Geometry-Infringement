@@ -50,8 +50,7 @@ public class Board extends JPanel implements ActionListener {
 
         for(Object item: kogels){
             Kogel k = (Kogel) item;
-            g2d.rotate(Math.toRadians(schip.getR()), (int)Math.round(k.getX()) + k.getWidth()/2, (int)Math.round(k.getY() + k.getHeight()/2));
-            g2d.drawImage(k.getImage(), (int)Math.round(k.getX()), (int)Math.round(k.getY()), this);
+            g2d.drawImage(k.getImage(), k.getX(), k.getY(), this);
         }
     }
 
@@ -63,16 +62,18 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void updateKogels(){
-        double x = MouseInfo.getPointerInfo().getLocation().getX();
-        double y = MouseInfo.getPointerInfo().getLocation().getY();
-        float length = (float) Math.sqrt((x - schip.getX())*(x - schip.getX()) + (y - schip.getY())*(y - schip.getY()));
-        float velocityX = (float) (x - schip.getX()) /length * (float) 5;
-        float velocityY = (float) (y - schip.getY()) /length * (float) 5;
+        float length;
+        float velocityX;
+        float velocityY;
 
         ArrayList kogel = schip.getKogels();
 
         for(int i = 0; i < kogel.size(); i++){
             Kogel k = (Kogel) kogel.get(i);
+
+            length = (float) Math.sqrt((k.getMousex() - schip.getX())*(k.getMousex() - schip.getX()) + (k.getMousey() - schip.getY())*(k.getMousey() - schip.getY()));
+            velocityX = (float) (k.getMousex() - schip.getX()) /length * (float) k.getKogelSnelheid();
+            velocityY = (float) (k.getMousey() - schip.getY()) /length * (float) k.getKogelSnelheid();
 
             if(k.isVisible()){
                 k.move(velocityX, velocityY);

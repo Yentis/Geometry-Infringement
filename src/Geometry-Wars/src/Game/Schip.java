@@ -104,12 +104,12 @@ public class Schip {
             r += 360;
         }
 
-        if (x > 1500) {
-            x = 1500;
+        if (x > 1920) {
+            x = 1920;
         } else if (x < 0) {
             x = 0;
-        } else if (y > 600){
-            y = 600;
+        } else if (y > 1080){
+            y = 1080;
         } else if (y < 0){
             y = 0;
         }
@@ -204,7 +204,10 @@ public class Schip {
     }
 
     public void fire(){
-        kogels.add(new Kogel(this.x + width, this.y + height / 2));
+        int x = MouseInfo.getPointerInfo().getLocation().x;
+        int y = MouseInfo.getPointerInfo().getLocation().y;
+
+        kogels.add(new Kogel(this.x + width / 3, this.y + height / 3, x, y));
     }
 
     public void keyReleased(KeyEvent e){
