@@ -6,6 +6,7 @@
 package GUI.gm;
 
 import Font.GFont;
+import Font.GButton;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -41,13 +42,13 @@ public class MainMenu {
         //Make components
         //==================================================
                 JFrame frame = new JFrame("Geometry Wars");
-                JButton StartGame = new JButton("start Game");
-                JButton Upgrades = new JButton("Upgrades");
-                JButton Profile = new JButton("Profile");
-                JButton Settings = new JButton("Settings");
-                JButton FriendsBtn = new JButton("Friends");
-                JButton LogOut = new JButton("Logout");
-                JButton Quit = new JButton("Quit");
+                JButton StartGame = new GButton("Start Game", 36f, 399, 262, 472, 135);
+                JButton Upgrades = new GButton("Upgrades", 36f , 507,474,380,97 );
+                JButton Profile = new GButton("Profile",36f , 561,642,380,97);
+                JButton Settings = new GButton("Settings",36f,574,818,380,97);
+                JButton FriendsBtn = new GButton("Friends",36f,1616,40,270,67);
+                JButton LogOut = new GButton("Logout",36f,1326,984,270,67);
+                JButton Quit = new GButton("Quit",36f,1616,984,270,67);
                 JButton Discord = new JButton(new ImageIcon(((new ImageIcon("src\\Media\\Discord.jpg")).getImage()).getScaledInstance(65, 65, java.awt.Image.SCALE_SMOOTH)));
                 JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
                 JLabel JoinDiscord = new JLabel("Join Server!");
@@ -86,6 +87,21 @@ public class MainMenu {
                  frame.dispose();
             }
         });
+        Profile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    frame.setVisible(false);
+                    frame.dispose();
+                    new Profile();
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (FontFormatException ex) {
+                    Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+        });
         //==================================================
         
         
@@ -94,36 +110,9 @@ public class MainMenu {
                 Title.setFont(new GFont(80));
                 Title.setOpaque(true);
                 Title.setBackground(new Color(255,255,255,95));
-                StartGame.setFont(new GFont(36));
-                StartGame.setOpaque(true);
-                StartGame.setBackground(new Color(255,255,255,200));
-                Upgrades.setFont(new GFont(36));
-                Upgrades.setOpaque(true);
-                Upgrades.setBackground(new Color(255,255,255,200));
-                Profile.setFont(new GFont(36));
-                Profile.setOpaque(true);
-                Profile.setBackground(new Color(255,255,255,200));
-                Settings.setFont(new GFont(36));
-                Settings.setOpaque(true);
-                Settings.setBackground(new Color(255,255,255,200));
-                FriendsBtn.setOpaque(true);
-                FriendsBtn.setFont(new GFont(24));
-                FriendsBtn.setBackground(new Color(255,255,255,200));
-                LogOut.setOpaque(true);
-                LogOut.setFont(new GFont(24));
-                LogOut.setBackground(new Color(255,255,255,200));
-                Quit.setOpaque(true);
-                Quit.setFont(new GFont(24));
-                Quit.setBackground(new Color(255,255,255,200));
                 JoinDiscord.setFont(new GFont(24));
                 JoinDiscord.setForeground(Color.white);
-                
-                
-                
-                
-                
-
-                
+                               
                 Friends.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 Friends.setVisible(false);
                 
@@ -133,16 +122,11 @@ public class MainMenu {
         //Set Bounds
         //==================================================
                  
-        StartGame.setBounds(399,262,472,135);
-        Upgrades.setBounds(507,474,380,97);
-        Profile.setBounds(561,642,380,97);
-        Settings.setBounds(574,818,380,97);
-        Quit.setBounds(1616,984,270,67);
-        LogOut.setBounds(1326,984,270,67);
+        
         Title.setBounds(54,40,900,131);
         JoinDiscord.setBounds(102,1000,180,35);
         Friends.setBounds(1616,129,270,254);
-        FriendsBtn.setBounds(1616,40,270,67);
+        
         Discord.setBounds(22,983,65,65);
         Background.setBounds(0,0,1920,1080);
         

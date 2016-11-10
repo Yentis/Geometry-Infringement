@@ -7,7 +7,7 @@ package GUI.gm;
 
 
 
-import Font.GFont;
+import Font.*;
 import Game.Spel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -39,7 +39,7 @@ public class Register {
         //==================================================
 
         JFrame frame = new JFrame("Test");
-        JButton register = new JButton("Register");
+        JButton register = new GButton("Register",36f,1621,831,265,50);
         JLabel registered = new JLabel("Registration Successful");
         JTextField username = new JTextField();
         JLabel lblusername = new JLabel("Username:");
@@ -81,9 +81,6 @@ public class Register {
         Title.setOpaque(true);
         Title.setBackground(new Color(255,255,255,95));
         
-        register.setFont(new GFont(36));
-        register.setOpaque(true);
-        register.setBackground(new Color(255,255,255,200));
         
         RegisterPane.setOpaque(true);
         RegisterPane.setBackground(new Color(255,255,255,95));
@@ -105,7 +102,7 @@ public class Register {
         Rpassword.setBounds(1585,406,300,50);
         email.setBounds(1585,539,300,50);
         Remail.setBounds(1585,608,300,50);
-        register.setBounds(1621,831,265,50);
+        
         registered.setBounds(1358,815,550,80);
         RegisterPane.setBounds(1241,187,679,724);
         Background.setBounds(0,0,1920,1080);
