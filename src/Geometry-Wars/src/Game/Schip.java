@@ -3,7 +3,9 @@ package Game;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import static com.sun.javafx.webkit.UIClientImpl.toBufferedImage;
@@ -28,6 +30,7 @@ public class Schip {
     private int width;
     private int height;
     private String direction;
+    private ArrayList kogels = new ArrayList();
 
     //endregion
 
@@ -78,6 +81,10 @@ public class Schip {
         return height;
     }
 
+    public ArrayList getKogels() {
+        return kogels;
+    }
+
     //endregion
 
     //region Behaviour
@@ -97,16 +104,22 @@ public class Schip {
             r += 360;
         }
 
-        if (x > 1640){
-            x = 1640;
-        } else if (y > 800){
-            y = 800;
+        if (x > 1500) {
+            x = 1500;
+        } else if (x < 0) {
+            x = 0;
+        } else if (y > 600){
+            y = 600;
+        } else if (y < 0){
+            y = 0;
         }
 
         x += dx;
         y += dy;
+        r += dr;
 
-        if (dy < 0){
+        //region Horror
+        /*if (dy < 0){
             //if at correct position clear direction
             if(r <= 3 && r >= -3){
                 direction = "";
@@ -157,17 +170,14 @@ public class Schip {
                     }
                 }
             }
-        } else if (dr > 0 && r <= 90){
+        } else if (dr > 0 && r <= 90 && r >= -270){
             System.out.println("right");
             r += dr;
         } else if (dr < 0 && r >= -90 && r <= 270){
             System.out.println("left");
-            if (r+90 < r - 90){
-                r -= dr;
-            } else {
-                r += dr;
-            }
-        }
+            r+= dr;
+        }*/
+        //endregion
     }
 
     public void keyPressed(KeyEvent e){
@@ -175,22 +185,26 @@ public class Schip {
 
         switch(key){
             case KeyEvent.VK_LEFT:
-                dx = -1;
-                dr = -3;
+                dx = -3;
                 break;
             case KeyEvent.VK_RIGHT:
-                dx = 1;
-                dr = 3;
+                dx = 3;
                 break;
             case KeyEvent.VK_UP:
-                dy = -1;
-                dr = -3;
+                dy = -3;
                 break;
             case KeyEvent.VK_DOWN:
-                dy = 1;
-                dr = 3;
+                dy = 3;
                 break;
         }
+    }
+
+    public void mousePressed(MouseEvent e){
+        fire();
+    }
+
+    public void fire(){
+        kogels.add(new Kogel(this.x + width, this.y + height / 2));
     }
 
     public void keyReleased(KeyEvent e){
@@ -200,12 +214,10 @@ public class Schip {
             case KeyEvent.VK_LEFT:
             case KeyEvent.VK_RIGHT:
                 dx = 0;
-                dr = 0;
                 break;
             case KeyEvent.VK_UP:
             case KeyEvent.VK_DOWN:
                 dy = 0;
-                dr = 0;
                 break;
         }
     }
