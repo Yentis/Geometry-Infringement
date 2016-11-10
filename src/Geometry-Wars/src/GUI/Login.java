@@ -5,25 +5,15 @@
  */
 package GUI;
 
-import Font.GFont;
+import GComponents.GFont;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
-import java.awt.Image;
-import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -42,7 +32,7 @@ public class Login {
         //==================================================
                 JFrame frame = new JFrame("Geometry Wars");
                 JLabel LoginPane = new JLabel();
-                JLabel UsernameLabel = new JLabel("Username:");
+                JLabel UsernameLabel = new JLabel("Username");
                 JLabel PasswordLabel = new JLabel("Password:");
                 JLabel RegisterLabel = new JLabel("Not Registered yet?");
                 JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
