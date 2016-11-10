@@ -5,8 +5,7 @@
  */
 package GUI.gm;
 
-import Font.GFont;
-import Font.GButton;
+import GComponents.*;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -50,8 +49,8 @@ public class MainMenu {
                 JButton LogOut = new GButton("Logout",36f,1326,984,270,67);
                 JButton Quit = new GButton("Quit",36f,1616,984,270,67);
                 JButton Discord = new JButton(new ImageIcon(((new ImageIcon("src\\Media\\Discord.jpg")).getImage()).getScaledInstance(65, 65, java.awt.Image.SCALE_SMOOTH)));
-                JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
-                JLabel JoinDiscord = new JLabel("Join Server!");
+                JLabel Title = new GTitle(54,40);
+                JLabel JoinDiscord = new GLabel("Join Server!", 24f, 102,1000,180,35, false, Color.WHITE);
                 JLabel Background = new JLabel(new ImageIcon(((new ImageIcon("src\\Media\\Background.png")).getImage().getScaledInstance(1920,1080, java.awt.Image.SCALE_SMOOTH))));
                 JList Friends = new JList();
         
@@ -107,12 +106,7 @@ public class MainMenu {
         
         //Set Properties
         //==================================================
-                Title.setFont(new GFont(80));
-                Title.setOpaque(true);
-                Title.setBackground(new Color(255,255,255,95));
-                JoinDiscord.setFont(new GFont(24));
-                JoinDiscord.setForeground(Color.white);
-                               
+                   
                 Friends.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 Friends.setVisible(false);
                 
@@ -123,12 +117,10 @@ public class MainMenu {
         //==================================================
                  
         
-        Title.setBounds(54,40,900,131);
-        JoinDiscord.setBounds(102,1000,180,35);
+       
         Friends.setBounds(1616,129,270,254);
-        
         Discord.setBounds(22,983,65,65);
-        Background.setBounds(0,0,1920,1080);
+        
         
         //==================================================
         
