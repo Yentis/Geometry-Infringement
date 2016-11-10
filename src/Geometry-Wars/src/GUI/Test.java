@@ -5,8 +5,6 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-import Font.GFont;
-
 /**
  * Created by Renzie on 9/11/2016.
  */

@@ -1,4 +1,4 @@
-package Font;
+package GComponents;
 
 import java.awt.*;
 import java.io.File;
