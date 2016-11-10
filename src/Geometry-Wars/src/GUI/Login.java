@@ -32,7 +32,7 @@ public class Login {
         //==================================================
                 JFrame frame = new JFrame("Geometry Wars");
                 JLabel LoginPane = new JLabel();
-                JLabel UsernameLabel = new JLabel("Username:");
+                JLabel UsernameLabel = new JLabel("Username");
                 JLabel PasswordLabel = new JLabel("Password:");
                 JLabel RegisterLabel = new JLabel("Not Registered yet?");
                 JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
