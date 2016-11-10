@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 import Font.GFont;
 
+
 /**
  * @author Renzie
  */
@@ -67,6 +68,7 @@ public class MainMenu extends JPanel {
         Settings.setBackground(new Color(255, 255, 255, 200));
 
         //==================================================
+
         //Set Bounds
         //==================================================
 
@@ -79,11 +81,13 @@ public class MainMenu extends JPanel {
         //==================================================
         //Add Components
         //==================================================
+
         jPanel.add(StartGame);
         jPanel.add(Profile);
         jPanel.add(Upgrades);
         jPanel.add(Settings);
         jPanel.add(label);
+
 
         //==================================================
 

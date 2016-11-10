@@ -42,9 +42,18 @@ public class StartGame {
         label.setText("Geometry Wars");
 
         label.setFont(new GFont(80));
+        War.setFont(new GFont(36));
+        Campaign.setFont(new GFont(36));
+        SoloGame.setFont(new GFont(36));
+        Coop.setFont(new GFont(36));
+
 
         label.setOpaque(true);
         label.setBackground(new Color(255,255,255,95));
+        War.setBackground(new Color(255,255,255,200));
+        Campaign.setBackground(new Color(255,255,255,200));
+        SoloGame.setBackground(new Color(255,255,255,200));
+        Coop.setBackground(new Color(255,255,255,200));
 
         frame.setContentPane(new JPanel() {
             BufferedImage image = ImageIO.read(new File("src\\Media\\Background.png"));
