@@ -15,6 +15,7 @@ public class GTitle extends JLabel {
         this.setOpaque(true);
         this.setBackground(new Color(255,255,255,95));
         this.setBounds(x,y,900,131);
+        this.setHorizontalAlignment(CENTER);
     }
 
 }
