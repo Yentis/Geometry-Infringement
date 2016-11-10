@@ -41,14 +41,14 @@ public class Profile {
         //Make components
         //==================================================
                 JFrame frame = new JFrame("Geometry Wars");
-                JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
+                JLabel Title = new GTitle(54,40);
                 JLabel Background = new JLabel(new ImageIcon(((new ImageIcon("src\\Media\\Background.png")).getImage().getScaledInstance(1920,1080, java.awt.Image.SCALE_SMOOTH))));
-                JLabel Profile = new JLabel();
-                JLabel ProfileInfo = new JLabel();
-                JLabel Username = new JLabel("Username", SwingConstants.CENTER);
-                JLabel ProfilePicture = new JLabel(new ImageIcon(((new ImageIcon("src\\Media\\profilePicture.png")).getImage().getScaledInstance(336,324, java.awt.Image.SCALE_SMOOTH))));
-                JLabel Rank = new JLabel("Unranked");
-                JLabel RankPicture = new JLabel(new ImageIcon(((new ImageIcon("src\\Media\\Badges\\NoRank.png")).getImage().getScaledInstance(168,168, java.awt.Image.SCALE_SMOOTH))));
+                JLabel Profile = new GPane(536,193,418,481);
+                JLabel ProfileInfo = new GPane(976,40,902,1009);
+                JLabel Username = new GLabel("Username", 36f,576,215,337,91,true, Color.BLACK);
+                JLabel ProfilePicture = new GIcon("profilePicture.png",577,329,336,324, true);
+                JLabel Rank = new GLabel("Unranked",36f,1243,130,280,62,false, Color.BLACK);
+                JLabel RankPicture = new GIcon("Badges\\NoRank.png",1026,77,168,168,false);
                 JButton MyClan = new GButton("My Clan",36f,536,696,418,96);
                 JButton EditProfile = new GButton("Edit Profile",36f,606,820,278,67);
                 JButton Back = new GButton("Back",36f,536,982,270,67);
@@ -57,8 +57,6 @@ public class Profile {
         
         //==================================================
       
-        
-        
         //Add Action Listener
         //==================================================
         Back.addActionListener(new java.awt.event.ActionListener() {
@@ -77,45 +75,16 @@ public class Profile {
             }
         });
        
-       
         //==================================================
-        
         
         //Set Properties
         //==================================================
-                Title.setFont(new GFont(80));
-                Title.setOpaque(true);
-                Title.setBackground(new Color(255,255,255,95));
-                Profile.setOpaque(true);
-                Profile.setBackground(new Color(255,255,255,95));
-                ProfileInfo.setOpaque(true);
-                ProfileInfo.setBackground(new Color(255,255,255,92));
-                Username.setFont(new GFont(36));
-                Username.setOpaque(true);
-                Username.setBackground(new Color(255,255,255,200));
-                ProfilePicture.setOpaque(true);
-                ProfilePicture.setBackground(new Color(255,255,255,200));
-                Rank.setFont(new GFont(36));
-                
-                
-                
-                
-                
-        
+         
         //==================================================
     
         //Set Bounds
         //==================================================
-                 
-        Title.setBounds(54,40,900,131);
-        Background.setBounds(0,0,1920,1080);
-        Profile.setBounds(536,193,418,481);
-        ProfileInfo.setBounds(976,40,902,1009);
-        Username.setBounds(576,215,337,91);
-        ProfilePicture.setBounds(577,329,336,324);
-        RankPicture.setBounds(1026,77,168,168);
-        Rank.setBounds(1243,130,280,62);
-        
+             
         //==================================================
         
         //Add Components
@@ -130,25 +99,16 @@ public class Profile {
                 frame.add(Username);
                 frame.add(RankPicture);
                 frame.add(Rank);
-                
                 frame.add(Profile);
                 frame.add(ProfileInfo);
                 frame.add(Background);
-                
-        
         //==================================================
-    
-        
-    
-
     
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(1920, 1080);
     frame.setVisible(true);
     }
 
-    
-    
      public static void main(String[] args)  throws MalformedURLException, IOException, FontFormatException {
          new Profile();
      }

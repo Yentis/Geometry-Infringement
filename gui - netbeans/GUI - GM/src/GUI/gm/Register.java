@@ -41,17 +41,17 @@ public class Register {
         JFrame frame = new JFrame("Test");
         JButton register = new GButton("Register",36f,1621,831,265,50);
         JLabel registered = new GLabel("Registration Successful", 16f,1358,815,550,80,false, Color.BLACK);
-        JTextField username = new JTextField();
+        JTextField username = new GInputField(1585,262,300,50);
         JLabel lblusername = new GLabel("Username:", 20f,1358,275,130,24,false, Color.BLACK);
-        JPasswordField password = new JPasswordField();
+        JPasswordField password = new GPasswordField(1585,336,300,50);
         JLabel lblpassword = new GLabel("Password:",20f,1358,349,130,24,false, Color.BLACK);
-        JPasswordField Rpassword = new JPasswordField();
+        JPasswordField Rpassword = new GPasswordField(1585,406,300,50);
         JLabel lblRpassword = new GLabel("Retype Password:",20f, 1358,419,210,24,false, Color.BLACK);
-        JTextField email = new JTextField();
+        JTextField email = new GInputField(1585,539,300,50);
         JLabel lblemail = new GLabel("Email:", 20f, 1358,552,130,24, false, Color.BLACK);
-        JTextField Remail = new JTextField();
+        JTextField Remail = new GInputField(1585,608,300,50);
         JLabel lblRemail = new GLabel("Retype Email:",20f,1358, 621, 190,24, false, Color.BLACK);
-        JLabel RegisterPane = new JLabel();
+        JLabel RegisterPane = new GPane(1241,187,679,724);
         JLabel Info = new GLabel("At least 8 characters [a-z/0-9]", 16f, 1585,464,300,24, false, Color.BLACK);
         JLabel Background = new JLabel(new ImageIcon(((new ImageIcon("src\\Media\\Background.png")).getImage().getScaledInstance(1920,1080, java.awt.Image.SCALE_SMOOTH))));
         JLabel Title = new GTitle(300,187);
@@ -60,32 +60,12 @@ public class Register {
 
         //Set Properties
         //==================================================
-        username.setFont(new GFont(20));
-        password.setFont(new GFont(20));
-        Rpassword.setFont(new GFont(20));
-        email.setFont(new GFont(20));
-        Remail.setFont(new GFont(20));
-        registered.setFont(new GFont(16));
-        Info.setFont(new GFont(16));
-       
-        RegisterPane.setOpaque(true);
-        RegisterPane.setBackground(new Color(255,255,255,95));
                
         //==================================================
 
         //Set Bounds
         //==================================================
 
-        Title.setBounds(300,187,900,131);
-        username.setBounds(1585,262,300,50);
-        password.setBounds(1585,336,300,50);
-        Rpassword.setBounds(1585,406,300,50);
-        email.setBounds(1585,539,300,50);
-        Remail.setBounds(1585,608,300,50);
-        
-        registered.setBounds(1358,815,550,80);
-        RegisterPane.setBounds(1241,187,679,724);
-        Background.setBounds(0,0,1920,1080);
 
         //==================================================
 
