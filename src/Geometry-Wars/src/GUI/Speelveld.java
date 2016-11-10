@@ -10,7 +10,7 @@ public class Speelveld extends JFrame {
     public Speelveld(){
         add(new Board());
 
-        setSize(400, 300);
+        setSize(1640, 800);
         setResizable(false);
 
         setTitle("Geometry Wars");
