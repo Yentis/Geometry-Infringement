@@ -1,4 +1,4 @@
-package Font;
+package GComponents;
 
 import javax.swing.*;
 import java.awt.*;

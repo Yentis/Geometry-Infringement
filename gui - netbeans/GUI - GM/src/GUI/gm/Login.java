@@ -5,7 +5,7 @@
  */
 package GUI.gm;
 
-import Font.*;
+import GComponents.*;
 import Game.Spel;
 import java.awt.Color;
 import java.awt.Component;

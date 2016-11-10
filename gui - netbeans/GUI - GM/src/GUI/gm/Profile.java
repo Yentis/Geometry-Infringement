@@ -5,7 +5,7 @@
  */
 package GUI.gm;
 
-import Font.*;
+import GComponents.*;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
