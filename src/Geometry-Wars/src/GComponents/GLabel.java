@@ -9,10 +9,10 @@ import java.io.IOException;
  */
 public class GLabel extends JLabel {
 
-    public GLabel(String text, int floatsize, int x, int y, int width, int height, boolean background) throws IOException, FontFormatException {
+    public GLabel(String text, float floatsize, int x, int y, int width, int height, boolean background, Color foreground) throws IOException, FontFormatException {
         this.setText(text);
         this.setFont(new GFont(floatsize));
-
+        this.setForeground(foreground);
         this.setBounds(x,y,width,height);
         if (background){
             this.setOpaque(true);
