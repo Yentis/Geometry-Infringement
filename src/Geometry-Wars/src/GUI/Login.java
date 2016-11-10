@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI.gm;
+package GUI;
 
 import Font.GFont;
-import Game.Spel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -19,8 +18,6 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -53,7 +50,6 @@ public class Login {
                 JButton Register = new JButton("Register");
                 JTextField Username = new JTextField();
                 JPasswordField Password = new JPasswordField();
-                JLabel Background = new JLabel(new ImageIcon(((new ImageIcon("src\\Media\\Background.png")).getImage().getScaledInstance(1920,1080, java.awt.Image.SCALE_SMOOTH))));
                
         
         
@@ -63,55 +59,7 @@ public class Login {
         
         //Add Action Listener
         //==================================================
-          Register.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                frame.setVisible(false);
-                frame.dispose();
-                try {
-                    new Register();
-                } catch (IOException ex) {
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (FontFormatException ex) {
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                    
-                
-               
-                
-            }
-        });
-          
-          Login.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Spel spel = new Spel();
-                String gebruikersnaam = Username.getText();
-                char[] wachtwoord = Password.getPassword();
-                try {
-                    if (spel.LoginPlayer(gebruikersnaam, wachtwoord)){
-                        frame.setVisible(false);
-                        frame.dispose();
-                        
-                        try {
-                            new MainMenu();
-                        } catch (IOException ex) {
-                            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (FontFormatException ex) {
-                            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        
-                    }
-                } 
-                catch (SQLException ex) {
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (NoSuchAlgorithmException ex) {
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (UnsupportedEncodingException ex) {
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                }
-               
-                
-            }
-        });
+       
         //==================================================
         
         
@@ -163,7 +111,20 @@ public class Login {
                 
         
         //==================================================
-
+        
+    frame.setContentPane(new JPanel() {
+        BufferedImage image = ImageIO.read(new File("src\\Media\\Background.png"));
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(image, 0, 0, 1920, 1080, this);
+            
+        }
+    });
+    frame.setLayout(null);
+    
+    
+    
+    
         //Set Bounds
         //==================================================
                  
@@ -177,7 +138,6 @@ public class Login {
         RegisterLabel.setBounds(1712,665,185,21);
         Login.setBounds(1775,531,117,44);
         Register.setBounds(1681,711,209,44);
-        Background.setBounds(0,0,1920,1080);
         
         
         //==================================================
@@ -197,7 +157,6 @@ public class Login {
                 frame.add(Register);
                
                 frame.add(LoginPane);
-                frame.add(Background);
                 
                 
         

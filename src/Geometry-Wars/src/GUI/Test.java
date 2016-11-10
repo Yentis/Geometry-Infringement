@@ -1,60 +1,44 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.io.IOException;
+import java.net.MalformedURLException;
 
-import Font.*;
-
+import Font.GFont;
 
 /**
- * @author Renzie
+ * Created by Renzie on 9/11/2016.
  */
-public class MainMenu extends JPanel {
-
-    //private JjPanel jPanel;
+public class Test extends JPanel{
 
 
-    public MainMenu(JFrame frame) throws MalformedURLException, IOException, FontFormatException {
 
+    public void addComponentsToPane(Container pane, JFrame frame) throws IOException, FontFormatException {
 
-        JPanel jPanel = new JPanel();
-        jPanel.setLayout(null);
-        jPanel.setSize(1920,1080);
-        //jPanel.setBounds(0, 0, 1920, 1080);
-        //jPanel.setContentPane(frame);
-        //jPanel.setVisible(true);
+        frame.setLayout(new CardLayout());
+
         //Make components
         //==================================================
 
 
-        JButton StartGame = new GButton("StartGame", 36, 350,250,300,80);
+       /* JButton StartGame = new JButton("StartGame");
         JButton Upgrades = new JButton("Upgrades");
         JButton Profile = new JButton("Profile");
         JButton Settings = new JButton("Settings");
         JLabel label = new JLabel("title", SwingConstants.CENTER);
-
+*/
 
         //==================================================
         //Set Properties
         //==================================================
-        label.setFont(new GFont(80));
+       /* label.setFont(new GFont(80));
 
         label.setOpaque(true);
         label.setBackground(new Color(255, 255, 255, 95));
-
+        StartGame.setFont(new GFont(36));
+        StartGame.setOpaque(true);
+        StartGame.setBackground(new Color(255, 255, 255, 200));
         Upgrades.setFont(new GFont(36));
         Upgrades.setOpaque(true);
         Upgrades.setBackground(new Color(255, 255, 255, 200));
@@ -64,13 +48,13 @@ public class MainMenu extends JPanel {
         Settings.setFont(new GFont(36));
         Settings.setOpaque(true);
         Settings.setBackground(new Color(255, 255, 255, 200));
-
+*/
         //==================================================
-
         //Set Bounds
         //==================================================
 
-       // StartGame.setBounds(350, 250, 300, 80);
+       /* StartGame.setBounds(350, 250, 300, 80);
+
         Upgrades.setBounds(475, 425, 300, 80);
         Profile.setBounds(535, 600, 300, 80);
         Settings.setBounds(550, 775, 300, 80);
@@ -79,24 +63,29 @@ public class MainMenu extends JPanel {
         //==================================================
         //Add Components
         //==================================================
-
-        jPanel.setOpaque(false);
-        jPanel.add(StartGame);
-        jPanel.add(Profile);
-        jPanel.add(Upgrades);
-        jPanel.add(Settings);
-        jPanel.add(label);
-
-
+        frame.add(StartGame);
+        pane.add(Profile);
+        frame.add(Upgrades);
+        frame.add(Settings);
+        frame.add(label);
+        */
         //==================================================
 
-        jPanel.revalidate();
-        jPanel.setVisible(true);
-        frame.add(jPanel);
+
+
+    }
+
+
+    public void createAndShowUI(JFrame frame) throws MalformedURLException, IOException, FontFormatException {
+        addComponentsToPane(frame.getContentPane(), frame);
+
         frame.pack();
         frame.setVisible(true);
     }
 
+    public Test(JFrame frame) throws IOException, FontFormatException {
+        createAndShowUI(frame);
+    }
 
 
 

@@ -10,6 +10,7 @@ import java.io.IOException;
 public class GFont extends Font{
 
     public GFont(float size) throws IOException, FontFormatException {
+
         super(Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")).deriveFont(size));
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
