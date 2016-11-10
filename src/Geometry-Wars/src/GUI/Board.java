@@ -1,16 +1,13 @@
 package GUI;
 
+import Game.Kogel;
 import Game.Schip;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.geom.AffineTransform;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -24,8 +21,10 @@ public class Board extends JPanel implements ActionListener {
 
     public Board(){
         addKeyListener(new TAdapter());
+        addMouseListener(new MAdapter());
         setFocusable(true);
         setBackground(Color.BLACK);
+        setDoubleBuffered(true);
 
         schip = new Schip(1, 100, 10, "src/Media/schip1.png");
 
@@ -46,12 +45,41 @@ public class Board extends JPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) g;
         g2d.rotate(Math.toRadians(schip.getR()), schip.getX() + schip.getWidth()/2, schip.getY() + schip.getHeight()/2);
         g2d.drawImage(schip.getImage(), schip.getX(), schip.getY(), this);
+
+        ArrayList kogels = schip.getKogels();
+
+        for(Object item: kogels){
+            Kogel k = (Kogel) item;
+            g2d.rotate(Math.toRadians(schip.getR()), (int)Math.round(k.getX()) + k.getWidth()/2, (int)Math.round(k.getY() + k.getHeight()/2));
+            g2d.drawImage(k.getImage(), (int)Math.round(k.getX()), (int)Math.round(k.getY()), this);
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        updateKogels();
         schip.beweegSchip();
         repaint();
+    }
+
+    private void updateKogels(){
+        double x = MouseInfo.getPointerInfo().getLocation().getX();
+        double y = MouseInfo.getPointerInfo().getLocation().getY();
+        float length = (float) Math.sqrt((x - schip.getX())*(x - schip.getX()) + (y - schip.getY())*(y - schip.getY()));
+        float velocityX = (float) (x - schip.getX()) /length * (float) 5;
+        float velocityY = (float) (y - schip.getY()) /length * (float) 5;
+
+        ArrayList kogel = schip.getKogels();
+
+        for(int i = 0; i < kogel.size(); i++){
+            Kogel k = (Kogel) kogel.get(i);
+
+            if(k.isVisible()){
+                k.move(velocityX, velocityY);
+            } else {
+                kogel.remove(i);
+            }
+        }
     }
 
     private class TAdapter extends KeyAdapter{
@@ -64,5 +92,10 @@ public class Board extends JPanel implements ActionListener {
         public void keyReleased(KeyEvent e){
             schip.keyReleased(e);
         }
+    }
+
+    private class MAdapter extends MouseAdapter{
+        @Override
+        public void mousePressed(MouseEvent e) { schip.mousePressed(e);}
     }
 }
