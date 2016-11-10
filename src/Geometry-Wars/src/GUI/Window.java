@@ -23,6 +23,7 @@ public class Window extends Canvas {
 
     // Geeft enkel de Window weer
     public Window(String title /*, Main game*/ ) throws IOException, FontFormatException {
+
         isStarted = true;
         frame = new JFrame(title);
 

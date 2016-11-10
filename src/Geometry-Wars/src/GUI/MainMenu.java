@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import Font.GFont;
+import Font.*;
 
 
 /**
@@ -40,7 +40,7 @@ public class MainMenu extends JPanel {
         //==================================================
 
 
-        JButton StartGame = new JButton("StartGame");
+        JButton StartGame = new GButton("StartGame", 36, 350,250,300,80);
         JButton Upgrades = new JButton("Upgrades");
         JButton Profile = new JButton("Profile");
         JButton Settings = new JButton("Settings");
@@ -54,9 +54,7 @@ public class MainMenu extends JPanel {
 
         label.setOpaque(true);
         label.setBackground(new Color(255, 255, 255, 95));
-        StartGame.setFont(new GFont(36));
-        StartGame.setOpaque(true);
-        StartGame.setBackground(new Color(255, 255, 255, 200));
+
         Upgrades.setFont(new GFont(36));
         Upgrades.setOpaque(true);
         Upgrades.setBackground(new Color(255, 255, 255, 200));
@@ -72,7 +70,7 @@ public class MainMenu extends JPanel {
         //Set Bounds
         //==================================================
 
-        StartGame.setBounds(350, 250, 300, 80);
+       // StartGame.setBounds(350, 250, 300, 80);
         Upgrades.setBounds(475, 425, 300, 80);
         Profile.setBounds(535, 600, 300, 80);
         Settings.setBounds(550, 775, 300, 80);
@@ -82,6 +80,7 @@ public class MainMenu extends JPanel {
         //Add Components
         //==================================================
 
+        jPanel.setOpaque(false);
         jPanel.add(StartGame);
         jPanel.add(Profile);
         jPanel.add(Upgrades);
