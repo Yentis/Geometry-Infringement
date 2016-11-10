@@ -13,89 +13,64 @@ import java.io.IOException;
 /**
  * Created by Renzie on 7/11/2016.
  */
-public class Window extends Canvas {
-    private static JFrame frame;
-    private boolean isStarted = false;
-    private static Window instance;
+public class Window extends JFrame {
 
-    private static final long serialVersionUID = 573860602378245302L;
+
+    //private static final long serialVersionUID = 573860602378245302L;
 
 
     // Geeft enkel de Window weer
-    public Window(String title /*, Main game*/ ) throws IOException, FontFormatException {
+    public Window(String title) throws IOException, FontFormatException {
 
-        isStarted = true;
-        frame = new JFrame(title);
+        // Set Window size and stuff
+        this.setPreferredSize(new Dimension(1920, 1080));
+        this.setMaximumSize(new Dimension(1920, 1080));
+        this.setMinimumSize(new Dimension(1920, 1080));
+        this.setLayout(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
 
-        frame.setPreferredSize(new Dimension(1920, 1080));
-        frame.setMaximumSize(new Dimension(1920, 1080));
-        frame.setMinimumSize(new Dimension(1920, 1080));
 
-       /* frame.setContentPane(new JPanel() {
 
-            BufferedImage image = ImageIO.read(new File("src\\Media\\Background.png"));
 
-            public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(image, 0, 0, 1920, 1080, this);
 
-            }
-        });*/
+        this.setVisible(true);
 
-        JLabel thumb = new JLabel();
-        thumb.setSize(1920,1080);
-        frame.setLayout(null); thumb.setLayout(null);
+        //mainMenu.setVisible(false);
+
+    }
+
+    // Set Background
+    public void setBackground(){
+
+        JLabel bg = new JLabel();
+        bg.setSize(1920,1080);
         ImageIcon icon = new ImageIcon("src\\Media\\Background.png");
-        thumb.setIcon(icon);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        //frame.add(game);
+        bg.setIcon(icon);
+        this.add(bg);
+    }
 
-        //game.start();
 
-        frame.add(thumb);
-        frame.setVisible(true);
+    public void initGUI() throws IOException, FontFormatException {
+        // Make UI panels
+        MainMenu mainMenu = new MainMenu();
+
+
+        // Add UI panels
+        this.add(mainMenu);
 
     }
 
 
-
-    /*public static Window getInstance() throws IOException {
-        if (instance == null) {
-
-                instance = new Window("Geometry Wars");
-            System.out.println(instance);
-
-        }
-        return instance;
-    }
-*/
-    public JFrame getFrame() {
-        return frame;
-    }
 
 
 
     public static void main(String args[]) throws IOException, FontFormatException {
-        init();
+       new Window("Geometry Wars");
 
-
-        new MainMenu(frame);
 
     }
 
-
-    public static void init() throws IOException, FontFormatException {
-        Window window = new Window("Geometry Wars");
-        //new MainMenu(frame);
-    }
-    //private MainMenu menu = new MainMenu();
-    /*public static STATE state = STATE.MainMenu;
-    public enum STATE{
-        MainMenu,
-        Register
-    };
-*/
 
 }
