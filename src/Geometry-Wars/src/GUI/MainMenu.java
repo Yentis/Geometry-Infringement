@@ -22,7 +22,10 @@ public class MainMenu extends GPanel {
 
     private String url = "https://discordapp.com/";
 
-    private MainMenu that = this;
+    private MainMenu panel = this;
+    private Window window = (Window) SwingUtilities.getRoot(this);
+
+
 
     public MainMenu() throws MalformedURLException, IOException, FontFormatException {
 
@@ -41,7 +44,8 @@ public class MainMenu extends GPanel {
         JButton Discord = new JButton(new ImageIcon(((new ImageIcon("src\\Media\\Discord.jpg")).getImage()).getScaledInstance(65, 65, java.awt.Image.SCALE_SMOOTH)));
         JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
         JLabel JoinDiscord = new JLabel("Join Server!");
-        JLabel Background = new JLabel(new ImageIcon(((new ImageIcon("src\\Media\\Background.png")).getImage().getScaledInstance(1920,1080, java.awt.Image.SCALE_SMOOTH))));
+        //TODO put img in files (intelliJ only)
+        //JLabel Background = new JLabel(new ImageIcon(((new ImageIcon("src\\Media\\Background.png")).getImage().getScaledInstance(1920,1080, java.awt.Image.SCALE_SMOOTH))));
         JList Friends = new JList();
 
 
@@ -51,6 +55,19 @@ public class MainMenu extends GPanel {
 
         //Add Action Listener
         //==================================================
+
+        // TODO give same sort of buttons the same kind of function
+        StartGame.addActionListener(new java.awt.event.ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent evt){
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getStartGame().setVisible(true);
+
+
+            }
+
+        });
+
         FriendsBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 if (!Friends.isShowing()){
@@ -73,13 +90,15 @@ public class MainMenu extends GPanel {
         });
         Quit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //this.dispose();
+                System.exit(0);
             }
         });
+
+        //TODO (IntelliJ)
         Profile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
               //  try {
-                    that.setVisible(false);
+                    panel.setVisible(false);
                     //SwingUtilities.getWindowAncestor(JFrame);
                     //new Profile();
 /*
@@ -90,7 +109,7 @@ public class MainMenu extends GPanel {
                 }*/
 
            // }
-        };
+        }});
         //==================================================
 
 
@@ -117,24 +136,26 @@ public class MainMenu extends GPanel {
         Friends.setBounds(1616,129,270,254);
 
         Discord.setBounds(22,983,65,65);
-        Background.setBounds(0,0,1920,1080);
+
+        //TODO (IntelliJ)
+        //Background.setBounds(0,0,1920,1080);
 
         //==================================================
 
         //Add Components
         //==================================================
-        that.add(StartGame);
-        frame.add(Profile);
-        frame.add(Upgrades);
-        frame.add(Settings);
-        frame.add(Title);
-        frame.add(Friends);
-        frame.add(Quit);
-        frame.add(LogOut);
-        frame.add(Discord);
-        frame.add(FriendsBtn);
-        frame.add(JoinDiscord);
-        frame.add(Background);
+        panel.add(StartGame);
+        panel.add(Profile);
+        panel.add(Upgrades);
+        panel.add(Settings);
+        panel.add(Title);
+        panel.add(Friends);
+        panel.add(Quit);
+        panel.add(LogOut);
+        panel.add(Discord);
+        panel.add(FriendsBtn);
+        panel.add(JoinDiscord);
+        //panel.add(Background);
 
         //==================================================
     }

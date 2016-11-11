@@ -9,17 +9,29 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import GComponents.*;
 
 /**
  * Created by Renzie on 7/11/2016.
  */
 public class Window extends JFrame {
 
+    //TODO set window resizable
 
-    //private static final long serialVersionUID = 573860602378245302L;
 
 
-    // Geeft enkel de Window weer
+
+    // Panels
+    // TODO fill in other panels , add getters too
+    private MainMenu mainMenu;
+    private StartGame startGame;
+
+
+    // this
+    private Window frame = this;
+
     public Window(String title) throws IOException, FontFormatException {
 
         // Set Window size and stuff
@@ -31,13 +43,18 @@ public class Window extends JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
 
+        // Set the panels
+        initPanels();
+
+        // Set the background
+        setBackground();
 
 
-
-
+        // Start the frame
         this.setVisible(true);
 
-        //mainMenu.setVisible(false);
+
+
 
     }
 
@@ -45,25 +62,38 @@ public class Window extends JFrame {
     public void setBackground(){
 
         JLabel bg = new JLabel();
+        bg.setLayout(null);
         bg.setSize(1920,1080);
         ImageIcon icon = new ImageIcon("src\\Media\\Background.png");
         bg.setIcon(icon);
-        this.add(bg);
+        frame.add(bg);
+        bg.setVisible(true);
+
     }
 
 
-    public void initGUI() throws IOException, FontFormatException {
-        // Make UI panels
-        MainMenu mainMenu = new MainMenu();
 
+
+    public void initPanels() throws IOException, FontFormatException {
+        // Make UI panels
+        mainMenu = new MainMenu();
+        startGame = new StartGame();
 
         // Add UI panels
-        this.add(mainMenu);
-
+        frame.add(mainMenu);
+        frame.add(startGame);
+        startGame.setVisible(false);
     }
 
 
+    // Getters
+    public StartGame getStartGame() {
+        return startGame;
+    }
 
+    public MainMenu getMainMenu() {
+        return mainMenu;
+    }
 
 
     public static void main(String args[]) throws IOException, FontFormatException {
