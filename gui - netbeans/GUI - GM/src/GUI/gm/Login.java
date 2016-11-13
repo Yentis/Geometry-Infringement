@@ -5,7 +5,7 @@
  */
 package GUI.gm;
 
-import Font.GFont;
+import GComponents.*;
 import Game.Spel;
 import java.awt.Color;
 import java.awt.Component;
@@ -34,7 +34,7 @@ import javax.swing.border.EmptyBorder;
  */
 public class Login {
 
-    private String url = "https://discordapp.com/";
+    
     /**
      * @param args the command line arguments
      */
@@ -44,15 +44,15 @@ public class Login {
         //Make components
         //==================================================
                 JFrame frame = new JFrame("Geometry Wars");
-                JLabel LoginPane = new JLabel();
-                JLabel UsernameLabel = new JLabel("Username:");
-                JLabel PasswordLabel = new JLabel("Password:");
-                JLabel RegisterLabel = new JLabel("Not Registered yet?");
-                JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
-                JButton Login = new JButton("Login");
-                JButton Register = new JButton("Register");
-                JTextField Username = new JTextField();
-                JPasswordField Password = new JPasswordField();
+                JLabel LoginPane = new GPane(1241,187,679,724);
+                JLabel UsernameLabel = new GLabel("Username:",20f,1395, 358, 130,24, false, Color.BLACK);
+                JLabel PasswordLabel = new GLabel("Password:",20f,1395,452,130,24, false, Color.BLACK);
+                JLabel RegisterLabel = new GLabel("Not Registered yet?",14f, 1712,665,185,21, false, Color.BLACK);
+                JLabel Title = new GTitle(300,187);
+                JButton Login = new GButton("Login", 24f ,1775,531,117,44);
+                JButton Register = new GButton("Register",24f,1681,711,209,44);
+                JTextField Username = new GInputField(1535,346,357,49);
+                JPasswordField Password = new GPasswordField(1535,440,357,49);
                 JLabel Background = new JLabel(new ImageIcon(((new ImageIcon("src\\Media\\Background.png")).getImage().getScaledInstance(1920,1080, java.awt.Image.SCALE_SMOOTH))));
                
         
@@ -117,51 +117,7 @@ public class Login {
         
         //Set Properties
         //==================================================
-                Title.setFont(new GFont(80));
-                Title.setOpaque(true);
-                Title.setBackground(new Color(255,255,255,95));
-                
-                LoginPane.setOpaque(true);
-                LoginPane.setBackground(new Color(255,255,255,95));
-                
-                Username.setFont(new GFont(24));
-                Username.setOpaque(true);
-                Username.setBackground(new Color(255,255,255,200));
-                
-                Password.setFont(new GFont(24));
-                Password.setOpaque(true);
-                Password.setBackground(new Color(255,255,255,200));
-                
-                
-                UsernameLabel.setFont(new GFont(20));
-                UsernameLabel.setForeground(Color.BLACK);
-                
-                PasswordLabel.setFont(new GFont(20));
-                PasswordLabel.setForeground(Color.black);
-                
-                RegisterLabel.setFont(new GFont(16));
-                RegisterLabel.setForeground(Color.black);
-                
-                Login.setFont(new GFont(24));
-                Login.setOpaque(true);
-                Login.setBackground(new Color(255,255,255,200));
-                Login.setForeground(Color.black);
-                
-                Register.setFont(new GFont(24));
-                Register.setOpaque(true);
-                Register.setBackground(new Color(255,255,255,200));
-                Register.setForeground(Color.black);
-                
-               
-                
-                
-                
-                
-                
-
-              
-                
-        
+     
         //==================================================
 
         //Set Bounds
@@ -175,8 +131,6 @@ public class Login {
         UsernameLabel.setBounds(1395, 358, 130,24);
         PasswordLabel.setBounds(1395,452,130,24);
         RegisterLabel.setBounds(1712,665,185,21);
-        Login.setBounds(1775,531,117,44);
-        Register.setBounds(1681,711,209,44);
         Background.setBounds(0,0,1920,1080);
         
         

@@ -9,12 +9,12 @@ import java.net.MalformedURLException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import GComponents.GFont;
+import GComponents.*;
 
 /**
  * Created by Laurens Visser on 9/11/2016.
  */
-public class StartGame {
+public class StartGame extends GPanel{
 
     public StartGame() throws MalformedURLException, IOException, FontFormatException {
 
@@ -22,7 +22,7 @@ public class StartGame {
 
         //Make components
         //==================================================
-        JFrame frame = new JFrame("Startgame");
+        //JFrame frame = new JFrame("Startgame");
         JButton Campaign = new JButton("Campaign");
         JButton War = new JButton("War");
         JButton SoloGame = new JButton("Solo Game");
@@ -50,15 +50,8 @@ public class StartGame {
         SoloGame.setBackground(new Color(255,255,255,200));
         Coop.setBackground(new Color(255,255,255,200));
 
-        frame.setContentPane(new JPanel() {
-            BufferedImage image = ImageIO.read(new File("src\\Media\\Background.png"));
-            public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(image, 0, 0, 1920, 1080, this);
 
-            }
-        });
-        frame.setLayout(null);
+
 
         //Bounds
         Campaign.setBounds(400,264,472,135);
@@ -68,23 +61,23 @@ public class StartGame {
         label.setBounds(25,25,800,125);
 
 
-        frame.add(Campaign);
-        frame.add(War);
-        frame.add(SoloGame);
-        frame.add(Coop);
-        frame.add(label);
+        this.add(Campaign);
+        this.add(War);
+        this.add(SoloGame);
+        this.add(Coop);
+        this.add(label);
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1920, 1080);
+
 
 
 
 
 
         }
-    public static void main(String[] args)  throws MalformedURLException, IOException, FontFormatException {
+
+    /*public static void main(String[] args)  throws MalformedURLException, IOException, FontFormatException {
         new StartGame();
-    }
+    }*/
 
 
 }
