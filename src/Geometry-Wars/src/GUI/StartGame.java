@@ -14,7 +14,7 @@ import GComponents.*;
 /**
  * Created by Laurens Visser on 9/11/2016.
  */
-public class StartGame extends GPanel{
+public class StartGame extends GPanel {
 
     public StartGame() throws MalformedURLException, IOException, FontFormatException {
 
@@ -23,6 +23,18 @@ public class StartGame extends GPanel{
         //Make components
         //==================================================
         //JFrame frame = new JFrame("Startgame");
+
+
+            initComponents();
+
+
+
+
+
+        }
+
+    @Override
+    public void initComponents() throws IOException, FontFormatException {
         JButton Campaign = new JButton("Campaign");
         JButton War = new JButton("War");
         JButton SoloGame = new JButton("Solo Game");
@@ -68,12 +80,7 @@ public class StartGame extends GPanel{
         this.add(label);
 
 
-
-
-
-
-
-        }
+    }
 
     /*public static void main(String[] args)  throws MalformedURLException, IOException, FontFormatException {
         new StartGame();
