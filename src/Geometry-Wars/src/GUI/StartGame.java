@@ -2,11 +2,7 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.FontFormatException;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.MalformedURLException;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import GComponents.*;
@@ -16,13 +12,16 @@ import GComponents.*;
  */
 public class StartGame extends GPanel{
 
-    public StartGame() throws MalformedURLException, IOException, FontFormatException {
+    public StartGame() throws IOException, FontFormatException {
+        initComponents();
+        }
 
-
+    @Override
+    public void initComponents() throws IOException, FontFormatException {
 
         //Make components
         //==================================================
-        //JFrame frame = new JFrame("Startgame");
+
         JButton Campaign = new JButton("Campaign");
         JButton War = new JButton("War");
         JButton SoloGame = new JButton("Solo Game");
@@ -66,18 +65,5 @@ public class StartGame extends GPanel{
         this.add(SoloGame);
         this.add(Coop);
         this.add(label);
-
-
-
-
-
-
-
-        }
-
-    /*public static void main(String[] args)  throws MalformedURLException, IOException, FontFormatException {
-        new StartGame();
-    }*/
-
-
+    }
 }

@@ -7,9 +7,6 @@ package GUI;
 
 import java.awt.*;
 import java.io.*;
-import java.net.MalformedURLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 
 import GComponents.*;
@@ -21,7 +18,6 @@ import GComponents.*;
 public class MainMenu extends GPanel {
 
     private String url = "https://discordapp.com/";
-
     private MainMenu panel = this;
 
 
@@ -47,7 +43,6 @@ public class MainMenu extends GPanel {
         JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
         JLabel JoinDiscord = new JLabel("Join Server!");
         //TODO put img in files (intelliJ only)
-        //JLabel Background = new JLabel(new ImageIcon(((new ImageIcon("src\\Media\\Background.png")).getImage().getScaledInstance(1920,1080, java.awt.Image.SCALE_SMOOTH))));
         JList Friends = new JList();
 
 
@@ -63,8 +58,6 @@ public class MainMenu extends GPanel {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 window.getStartGame().setVisible(true);
-
-
             }
 
         });
@@ -97,16 +90,12 @@ public class MainMenu extends GPanel {
         //TODO (IntelliJ)
         Profile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //  try {
+
                 panel.setVisible(false);
-                //SwingUtilities.getWindowAncestor(JFrame);
-                //new Profile();
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getProfile().setVisible(true);
 /*
-                } catch (IOException ex) {
-                    Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (FontFormatException ex) {
-                    Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-                }*/
+
 
                 // }
             }
@@ -156,7 +145,7 @@ public class MainMenu extends GPanel {
         panel.add(Discord);
         panel.add(FriendsBtn);
         panel.add(JoinDiscord);
-        //panel.add(Background);
+
 
         //==================================================
     }
