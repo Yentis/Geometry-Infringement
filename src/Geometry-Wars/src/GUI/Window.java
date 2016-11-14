@@ -82,6 +82,9 @@ public class Window extends JFrame {
         // Add UI panels
         frame.add(mainMenu);
         frame.add(startGame);
+
+
+
         startGame.setVisible(false);
     }
 

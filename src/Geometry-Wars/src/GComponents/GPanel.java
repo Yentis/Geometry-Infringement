@@ -8,13 +8,13 @@ import javax.swing.tree.ExpandVetoException;
 import java.awt.*;
 
 import java.awt.event.ActionEvent;
-
+import java.io.IOException;
 
 
 /**
  * Created by Renzie on 10/11/2016.
  */
-public class GPanel extends JPanel {
+public abstract class GPanel extends JPanel {
 
     /*private GPanel panel = this;
     private Window window = (Window) SwingUtilities.getRoot(panel.getParent());
@@ -27,41 +27,7 @@ public class GPanel extends JPanel {
 
     }
 
-   /* public Window getWindow(){
-        return window;
-    }
-
-    public void SwitchToPanel(GPanel gPanel, ActionEvent evt){
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                panel.setVisible(false);
-                gPanel.setVisible(true);
-            }
-        });
+    public abstract void initComponents() throws IOException, FontFormatException;
 
 
-    }
-    */
-
-
-    //private Window window = panel.getParent();;
-
-    /*public Window getWindow(){
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-
-                    Window window =
-
-            }
-        });
-        return window;
-    }*/
-    /*public void SwitchPanelTo(GPanel gpanel, ActionEvent evt){
-        panel.setVisible(false);
-        Component component = (Component) evt.getSource();
-        Window window = (Window) SwingUtilities.getRoot(component);
-        window.getStartGame().setVisible(true);
-    }*/
 }

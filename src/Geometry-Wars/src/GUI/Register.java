@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import GComponents.GPanel;
 import Game.Spel;
 
 import java.awt.*;
@@ -28,7 +29,7 @@ import javax.swing.border.EmptyBorder;
  *
  * @author Renzie
  */
-public class Register {
+public class Register extends GPanel {
 
     public Register() throws MalformedURLException, IOException, FontFormatException {
         // TODO code application logic here
@@ -180,8 +181,10 @@ public class Register {
         frame.setVisible(true);
     }
 
+    @Override
+    public void initComponents() throws IOException, FontFormatException {
 
-
+    }
 
 
     public static void main(String[] args)  throws MalformedURLException, IOException, FontFormatException {
