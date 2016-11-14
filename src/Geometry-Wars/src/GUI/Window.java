@@ -27,6 +27,7 @@ public class Window extends JFrame {
     // TODO fill in other panels , add getters too
     private MainMenu mainMenu;
     private StartGame startGame;
+    private Profile profile;
 
 
     // this
@@ -78,14 +79,17 @@ public class Window extends JFrame {
         // Make UI panels
         mainMenu = new MainMenu();
         startGame = new StartGame();
+        profile = new Profile();
 
         // Add UI panels
         frame.add(mainMenu);
         frame.add(startGame);
+        frame.add(profile);
 
 
-
+        // Set all panels invisible except the starting panel
         startGame.setVisible(false);
+        profile.setVisible(false);
     }
 
 
@@ -98,11 +102,11 @@ public class Window extends JFrame {
         return mainMenu;
     }
 
+    public Profile getProfile(){ return profile; }
+
 
     public static void main(String args[]) throws IOException, FontFormatException {
        new Window("Geometry Wars");
-
-
     }
 
 
