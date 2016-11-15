@@ -21,7 +21,6 @@ public class MainMenu extends GPanel {
     private MainMenu panel = this;
 
 
-
     public MainMenu() throws IOException, FontFormatException {
         initComponents();
     }
@@ -94,7 +93,6 @@ public class MainMenu extends GPanel {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 window.getProfile().setVisible(true);
-/*
 
 
                 // }
@@ -149,4 +147,5 @@ public class MainMenu extends GPanel {
 
         //==================================================
     }
+
 }
