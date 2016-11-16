@@ -5,11 +5,11 @@ package Game;
  */
 public class Kogel extends Sprite {
 
-    private final int SCREEN_WIDTH = 1640;
+    private final int SCREEN_WIDTH = 1920;
     private int kogelSnelheid = 5;
 
-    public Kogel (double x, double y){
-        super(x, y);
+    public Kogel (int x, int y, int mousex, int mousey){
+        super(x, y, mousex, mousey);
 
         initKogel();
     }
@@ -18,8 +18,11 @@ public class Kogel extends Sprite {
         loadImage("src/Media/kogel1.png");
     }
 
+    public int getKogelSnelheid() {
+        return kogelSnelheid;
+    }
+
     public void move(double velocityX, double velocityY){
-        moving = true;
         x += velocityX;
         y += velocityY;
 

@@ -9,93 +9,105 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import GComponents.*;
 
 /**
  * Created by Renzie on 7/11/2016.
  */
-public class Window extends Canvas {
-    private static JFrame frame;
-    private boolean isStarted = false;
-    private static Window instance;
+public class Window extends JFrame {
 
-    private static final long serialVersionUID = 573860602378245302L;
+    //TODO set window resizable
 
 
-    // Geeft enkel de Window weer
-    public Window(String title /*, Main game*/ ) throws IOException, FontFormatException {
 
-        isStarted = true;
-        frame = new JFrame(title);
 
-        frame.setPreferredSize(new Dimension(1920, 1080));
-        frame.setMaximumSize(new Dimension(1920, 1080));
-        frame.setMinimumSize(new Dimension(1920, 1080));
+    // Panels
+    // TODO fill in other panels , add getters too
+    private MainMenu mainMenu;
+    private StartGame startGame;
+    private Profile profile;
 
-       /* frame.setContentPane(new JPanel() {
 
-            BufferedImage image = ImageIO.read(new File("src\\Media\\Background.png"));
+    // this
+    private Window frame = this;
 
-            public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(image, 0, 0, 1920, 1080, this);
+    public Window(String title) throws IOException, FontFormatException {
 
-            }
-        });*/
+        // Set Window size and stuff
+        this.setPreferredSize(new Dimension(1920, 1080));
+        this.setMaximumSize(new Dimension(1920, 1080));
+        this.setMinimumSize(new Dimension(1920, 1080));
+        this.setLayout(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
 
-        JLabel thumb = new JLabel();
-        thumb.setSize(1920,1080);
-        frame.setLayout(null); thumb.setLayout(null);
+        // Set the panels
+        initPanels();
+
+        // Set the background
+        setBackground();
+
+
+        // Start the frame
+        this.setVisible(true);
+
+
+
+
+    }
+
+    // Set Background
+    public void setBackground(){
+
+        JLabel bg = new JLabel();
+        bg.setLayout(null);
+        bg.setSize(1920,1080);
         ImageIcon icon = new ImageIcon("src\\Media\\Background.png");
-        thumb.setIcon(icon);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        //frame.add(game);
-
-        //game.start();
-
-        frame.add(thumb);
-        frame.setVisible(true);
+        bg.setIcon(icon);
+        frame.add(bg);
+        bg.setVisible(true);
 
     }
 
 
 
-    /*public static Window getInstance() throws IOException {
-        if (instance == null) {
 
-                instance = new Window("Geometry Wars");
-            System.out.println(instance);
+    public void initPanels() throws IOException, FontFormatException {
+        // Make UI panels
+        mainMenu = new MainMenu();
+        startGame = new StartGame();
+        profile = new Profile();
 
-        }
-        return instance;
+        // Add UI panels
+        frame.add(mainMenu);
+        frame.add(startGame);
+        frame.add(profile);
+
+
+        // Set all panels invisible except the starting panel
+        startGame.setVisible(false);
+        profile.setVisible(false);
     }
-*/
-    public JFrame getFrame() {
-        return frame;
+
+
+    // Getters
+    public StartGame getStartGame() {
+        return startGame;
     }
 
+    public MainMenu getMainMenu() {
+        return mainMenu;
+    }
+
+    public Profile getProfile(){ return profile; }
 
 
     public static void main(String args[]) throws IOException, FontFormatException {
-        init();
-
-
-        new MainMenu(frame);
-
+       new Window("Geometry Wars");
     }
 
-
-    public static void init() throws IOException, FontFormatException {
-        Window window = new Window("Geometry Wars");
-        //new MainMenu(frame);
-    }
-    //private MainMenu menu = new MainMenu();
-    /*public static STATE state = STATE.MainMenu;
-    public enum STATE{
-        MainMenu,
-        Register
-    };
-*/
 
 }

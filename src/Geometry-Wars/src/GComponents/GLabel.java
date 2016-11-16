@@ -18,7 +18,10 @@ public class GLabel extends JLabel {
             this.setOpaque(true);
             this.setBackground(new Color(255,255,255,200));
 
+
+
         }
+
     }
 
 }
