@@ -2,6 +2,7 @@ package GComponents;
 
 import GUI.*;
 import GUI.Window;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 
 import javax.swing.*;
 import javax.swing.tree.ExpandVetoException;
@@ -16,16 +17,33 @@ import java.io.IOException;
  */
 public abstract class GPanel extends JPanel {
 
-    /*private GPanel panel = this;
-    private Window window = (Window) SwingUtilities.getRoot(panel.getParent());
-    */
+    private Component[] components = this.getComponents();
+
+
+
+
 
     public GPanel(){
         this.setLayout(null);
-        this.setSize(1920,1080);
+        this.setSize(1280,760);
+        //double Dscale = this.getSize().getWidth() / this.getSize().getHeight();
+        //scale = (int) Dscale;
         this.setOpaque(false);
 
+        int width = this.getWidth();
+        int height =  this.getHeight();
+        //resizeComponents(scale);
+        System.out.println( width );
     }
+
+    public void resizeComponents(int width, int height){
+        for (Component c : components){
+            System.out.println(c);
+            c.setBounds( c.getX() * width / height, c.getY() * width / height, c.getWidth() * width / height, c.getHeight() * width / height);
+        }
+    }
+
+
 
     public abstract void initComponents() throws IOException, FontFormatException;
 

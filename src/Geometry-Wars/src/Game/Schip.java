@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Vector;
 
 import static com.sun.javafx.webkit.UIClientImpl.toBufferedImage;
 import static java.lang.Math.abs;
@@ -204,6 +205,7 @@ public class Schip {
     }
 
     public void fire(){
+
         int x = MouseInfo.getPointerInfo().getLocation().x;
         int y = MouseInfo.getPointerInfo().getLocation().y;
 
@@ -224,6 +226,7 @@ public class Schip {
                 break;
         }
     }
+
 
     //endregion
 }
