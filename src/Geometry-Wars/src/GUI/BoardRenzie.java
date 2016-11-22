@@ -45,7 +45,7 @@ public class BoardRenzie extends JPanel implements ActionListener {
 
     private void drawShip(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
-        g2d.rotate(Math.toRadians(schip.getAngle(schip.getLocation())));
+        g2d.rotate(Math.toRadians(schip.getAngle()), schip.getLocation().getX() + schip.getWidth() / 2, schip.getLocation().getY() + schip.getHeight()/2);
 
         g2d.drawImage(schip.getImage(), schip.getLocation().x, schip.getLocation().y, this);
     }
@@ -59,7 +59,7 @@ public class BoardRenzie extends JPanel implements ActionListener {
             KogelRenzie k = (KogelRenzie) item;
             AffineTransform t = new AffineTransform();
             t.translate(k.getX(), k.getY());
-            t.rotate(Math.toRadians(schip.getAngle(k.getDirection())));
+            t.rotate(Math.toRadians(schip.getDirection(k.getDirection())));
             g2d.drawImage(k.getImage(), t, this);
         }
     }

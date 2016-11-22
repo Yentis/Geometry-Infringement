@@ -44,7 +44,7 @@ public class Schip {
         this.image = ii.getImage();
         x = 700;
         y = 300;
-        r = 0;
+        r = 60;
         this.nr = nr;
         this.hp = hp;
         this.kracht = kracht;
@@ -99,6 +99,8 @@ public class Schip {
     }
 
     public void beweegSchip(){
+
+        dr  =30 ;
         if (r > 360){
             r -= 360;
         } else if (r < -360){
