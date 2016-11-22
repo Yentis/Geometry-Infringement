@@ -61,7 +61,7 @@ public class Window extends JFrame {
         JLabel bg = new JLabel();
         bg.setLayout(null);
         bg.setSize(1024,768);
-        ImageIcon icon = new ImageIcon("src\\Media\\Background-768.png");
+        ImageIcon icon = new ImageIcon("src\\Media\\resized_background-768.png");
         bg.setIcon(icon);
         frame.add(bg);
         bg.setVisible(true);
