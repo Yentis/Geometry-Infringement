@@ -28,6 +28,7 @@ public class Window extends JFrame {
     private MainMenu mainMenu;
     private StartGame startGame;
     private Profile profile;
+    private StartGameCampaign startGameCampaign;
 
 
     // this
@@ -80,16 +81,20 @@ public class Window extends JFrame {
         mainMenu = new MainMenu();
         startGame = new StartGame();
         profile = new Profile();
+        startGameCampaign = new StartGameCampaign();
 
         // Add UI panels
         frame.add(mainMenu);
         frame.add(startGame);
         frame.add(profile);
+        frame.add(startGameCampaign);
+
 
 
         // Set all panels invisible except the starting panel
         startGame.setVisible(false);
         profile.setVisible(false);
+        startGameCampaign.setVisible(false);
     }
 
 
@@ -100,6 +105,10 @@ public class Window extends JFrame {
 
     public MainMenu getMainMenu() {
         return mainMenu;
+    }
+
+    public StartGameCampaign getStartGameCampaign() {
+        return startGameCampaign;
     }
 
     public Profile getProfile(){ return profile; }

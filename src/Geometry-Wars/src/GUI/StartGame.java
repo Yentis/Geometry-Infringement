@@ -11,6 +11,7 @@ import GComponents.*;
  * Created by Laurens Visser on 9/11/2016.
  */
 public class StartGame extends GPanel {
+    private StartGame panel = this;
 
     public StartGame() throws IOException, FontFormatException {
         initComponents();
@@ -65,9 +66,18 @@ public class StartGame extends GPanel {
         this.add(Coop);
         this.add(label);
 
+        Campaign.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getStartGameCampaign().setVisible(true);
+            }
 
+        });
 
     }
+
+
 
     /*public static void main(String[] args)  throws MalformedURLException, IOException, FontFormatException {
         new StartGame();

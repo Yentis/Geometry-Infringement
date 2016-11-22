@@ -94,7 +94,8 @@ public class MainMenu extends GPanel {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 window.getProfile().setVisible(true);
-/*
+
+
 
 
                 // }

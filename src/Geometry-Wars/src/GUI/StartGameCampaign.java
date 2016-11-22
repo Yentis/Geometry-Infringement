@@ -10,14 +10,24 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import GComponents.GFont;
+import GComponents.GPanel;
+
 /**
  * Created by Laurens Visser on 9/11/2016.
  */
-public class StartGameCampaign  {
+public class StartGameCampaign extends GPanel {
+    private StartGameCampaign panel = this;
 
     public StartGameCampaign() throws MalformedURLException, IOException, FontFormatException {
 
-        JFrame frame = new JFrame("StartgameCampaign");
+       
+        initComponents();
+
+
+    }
+
+    @Override
+    public void initComponents() throws IOException, FontFormatException {
         JButton Continue = new JButton("Continue");
         JButton newCampaign = new JButton("New Campagin");
         JButton clearCampaign = new JButton("Clear Campagin");
@@ -42,14 +52,6 @@ public class StartGameCampaign  {
         newCampaign.setBackground(new Color(255,255,255,200));
         clearCampaign.setBackground(new Color(255,255,255,200));
 
-        frame.setContentPane(new JPanel() {
-            BufferedImage image = ImageIO.read(new File("src\\Media\\Background.png"));
-            public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(image, 0, 0, 1920, 1080, this);
-
-            }
-        });
 
 
 
@@ -57,7 +59,8 @@ public class StartGameCampaign  {
 
 
 
-        frame.setLayout(null);
+
+        panel.setLayout(null);
 
         //Bounds
         Continue.setBounds(398,262,472,135);
@@ -67,19 +70,15 @@ public class StartGameCampaign  {
         label.setBounds(25,25,800,125);
 
 
-        frame.add(Continue);
-        frame.add(newCampaign);
-        frame.add(clearCampaign);
+        panel.add(Continue);
+        panel.add(newCampaign);
+        panel.add(clearCampaign);
 
-        frame.add(label);
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1920, 1080);
-        frame.setVisible(true);
+        panel.add(label);
 
 
+        
     }
-    public static void main(String[] args)  throws MalformedURLException, IOException, FontFormatException {
-        new StartGameCampaign();
-    }
+
+
 }
