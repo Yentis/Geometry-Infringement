@@ -34,7 +34,7 @@ public class StartGame extends GPanel {
 
         //props
         label.setOpaque(true);
-        label.setFont(new GFont(80));
+        label.setFont(new GFont(65));
         label.setBackground(new Color(255,255,255,95));
         War.setBackground(new Color(255,255,255,200));
         Campaign.setBackground(new Color(255,255,255,200));
@@ -47,7 +47,7 @@ public class StartGame extends GPanel {
 
         //Bounds
 
-        label.setBounds(25,25,800,125);
+        label.setBounds(25,25,650,100);;
 
 
         this.add(Campaign);
@@ -57,14 +57,35 @@ public class StartGame extends GPanel {
         this.add(label);
         this.add(Back);
 
+        //ActionListeners
+
         Campaign.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 window.getStartGameCampaign().setVisible(true);
             }
-
         });
+
+
+
+        Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getMainMenu().setVisible(true);
+            }
+        });
+
+        Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getStartGame().setVisible(true);
+            }
+        });
+
+
 
     }
 

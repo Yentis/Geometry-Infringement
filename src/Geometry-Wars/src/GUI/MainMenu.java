@@ -36,13 +36,13 @@ public class MainMenu extends GPanel {
         //Make components
         //==================================================
 
-        JButton StartGame = new GButton("Start Game", 36f, 399, 262, 472, 135);
-        JButton Upgrades = new GButton("Upgrades", 36f, 507, 474, 380, 97);
-        JButton Profile = new GButton("Profile", 36f, 561, 642, 380, 97);
-        JButton Settings = new GButton("Settings", 36f, 574, 818, 380, 97);
-        JButton FriendsBtn = new GButton("Friends", 36f, 1616, 40, 270, 67);
-        JButton LogOut = new GButton("Logout", 36f, 1326, 984, 270, 67);
-        JButton Quit = new GButton("Quit", 36f, 1616, 984, 270, 67);
+        JButton StartGame = new GButton("Start Game", 32f, 120,200,260,70);
+        JButton Upgrades = new GButton("Upgrades", 32f, 190,300,260,70);
+        JButton Profile = new GButton("Profile", 32f, 240,400,260,70);
+        JButton Settings = new GButton("Settings", 32f, 240,500,260,70);
+        JButton FriendsBtn = new GButton("Friends", 32f, 820, 25, 170,63);
+        JButton LogOut = new GButton("Logout", 32f, 635,650, 170, 63);
+        JButton Quit = new GButton("Quit", 32f, 820, 650, 170, 63);
         JButton Discord = new JButton(new ImageIcon(((new ImageIcon("src\\Media\\Discord.jpg")).getImage()).getScaledInstance(65, 65, java.awt.Image.SCALE_SMOOTH)));
         JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
         JLabel JoinDiscord = new JLabel("Join Server!");
@@ -107,7 +107,7 @@ public class MainMenu extends GPanel {
 
         //Set Properties
         //==================================================
-        Title.setFont(new GFont(80));
+        Title.setFont(new GFont(65));
         Title.setOpaque(true);
         Title.setBackground(new Color(255, 255, 255, 95));
         JoinDiscord.setFont(new GFont(24));
@@ -123,10 +123,10 @@ public class MainMenu extends GPanel {
         //==================================================
 
 
-        Title.setBounds(54, 40, 900, 131);
+        Title.setBounds(25,25,650,100);
         JoinDiscord.setBounds(102, 1000, 180, 35);
-        Friends.setBounds(1616, 129, 270, 254);
-        Discord.setBounds(22, 983, 65, 65);
+        Friends.setBounds(600, 129, 160, 150);
+        Discord.setBounds(35, 650, 65, 65);
 
 
         //==================================================

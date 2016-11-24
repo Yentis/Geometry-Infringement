@@ -39,7 +39,7 @@ public class StartGameCampaign extends GPanel {
 
         //props
         label.setOpaque(true);
-        label.setFont(new GFont(80));
+        label.setFont(new GFont(65));
         label.setBackground(new Color(255,255,255,95));
         Continue.setBackground(new Color(255,255,255,200));
         NewCampaign.setBackground(new Color(255,255,255,200));
@@ -52,7 +52,7 @@ public class StartGameCampaign extends GPanel {
 
         //Bounds
 
-        label.setBounds(25,25,800,125);
+        label.setBounds(25,25,650,100);;
 
 
         this.add(Continue);
@@ -61,6 +61,19 @@ public class StartGameCampaign extends GPanel {
 
         this.add(label);
         this.add(Back);
+
+
+        //Action listeners
+        Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getStartGame().setVisible(true);
+            }
+
+
+
+        });
 
 
         
