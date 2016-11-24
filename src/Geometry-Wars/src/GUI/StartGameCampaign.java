@@ -29,11 +29,11 @@ public class StartGameCampaign extends GPanel {
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
-        JButton Continue = new GButton("Continue", 36f, 150,230,300,80);
+        JButton Continue = new GButton("Continue", 24f, 150,230,300,80);
 
-        JButton NewCampaign = new GButton("New Campaign", 36f, 200,350,350,80);
-        JButton ClearCampaign = new GButton("Clear Campaign", 36f, 250,470,350,80);
-        JButton Back = new GButton("Back", 36f, 670,620,300,80);
+        JButton NewCampaign = new GButton("New Campaign", 24f, 200,350,350,80);
+        JButton ClearCampaign = new GButton("Clear Campaign", 24f, 250,470,350,80);
+        JButton Back = new GButton("Back", 24f, 820, 650, 170, 63);
 
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
 
