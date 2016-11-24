@@ -17,8 +17,8 @@ public class SchipRenzie {
     private int nr;
     private int hp = 100;
     private int kracht = 10;
-   // private int x;
-   // private int y;
+    // private int x;
+    // private int y;
     private int r;
     private double dx;
     private double dy;
@@ -31,14 +31,14 @@ public class SchipRenzie {
     private Point location = new Point();
     private double locationX = location.getX();
     private double locationY = location.getY();
-    private double angle;
+    private int currentAngle;
 
 
     //endregion
 
     //region Constructors
 
-    public SchipRenzie(int nr, int hp, int kracht, String image){
+    public SchipRenzie(int nr, int hp, int kracht, String image) {
         ImageIcon ii = new ImageIcon(image);
         width = ii.getIconWidth();
         height = ii.getIconHeight();
@@ -47,8 +47,7 @@ public class SchipRenzie {
         locationY = 300;
         location.setLocation(locationX, locationY);
         System.out.println(location);
-        //y = 300;
-        //r = 0;
+        currentAngle = 0;
         this.nr = nr;
         this.hp = hp;
         this.kracht = kracht;
@@ -90,7 +89,9 @@ public class SchipRenzie {
         return kogels;
     }
 
-    public Point getLocation() { return location; }
+    public Point getLocation() {
+        return location;
+    }
 
     //endregion
 
@@ -104,11 +105,12 @@ public class SchipRenzie {
         this.hp += amount;
     }
 
-    public void beweegSchip(){
+    public void beweegSchip() {
 
-        if (r > 360){
+        //dr = 15;
+        if (r > 360) {
             r -= 360;
-        } else if (r < -360){
+        } else if (r < -360) {
             r += 360;
         }
 
@@ -116,16 +118,16 @@ public class SchipRenzie {
             locationX = 1024;
         } else if (locationX < 0) {
             locationX = 0;
-        } else if (locationY > 768){
-           locationY = 768;
-        } else if (location.getY() < 0){
+        } else if (locationY > 768) {
+            locationY = 768;
+        } else if (location.getY() < 0) {
             locationY = 0;
         }
 
         location.setLocation(locationX += dx, locationY += dy);
 
-        r += dr;
 
+        r += dr;
 
 
         //region Horror
@@ -190,39 +192,43 @@ public class SchipRenzie {
         //endregion
     }
 
-    public void keyPressed(KeyEvent e){
+    public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        switch(key){
+        switch (key) {
             case KeyEvent.VK_LEFT:
                 dx = -3;
-                rotate(5);
+                normalizeAngle(currentAngle);
+                rotate(10, 270);
                 break;
             case KeyEvent.VK_RIGHT:
-                rotate(-5);
+
+                normalizeAngle(currentAngle);
+                rotate(10, 90);
                 dx = 3;
                 break;
             case KeyEvent.VK_UP:
-
+                rotate(10, 0);
                 dy = -3;
                 break;
             case KeyEvent.VK_DOWN:
+                rotate(10, 180);
                 dy = 3;
                 break;
         }
     }
 
-    public void mousePressed(MouseEvent e){
+    public void mousePressed(MouseEvent e) {
         fire(e.getPoint());
     }
 
-    public void fire(Point mousePointer){
+    public void fire(Point mousePointer) {
         kogels.add(new KogelRenzie(location.getX(), location.getY(), mousePointer));
     }
 
-    public void keyReleased(KeyEvent e){
+    public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
 
-        switch(key){
+        switch (key) {
             case KeyEvent.VK_LEFT:
             case KeyEvent.VK_RIGHT:
                 dx = 0;
@@ -234,18 +240,120 @@ public class SchipRenzie {
         }
     }
 
-    public void rotate(double degrees){
-        angle += Math.toRadians(degrees); // 5 degrees per 100 ms = 50 degrees/second
-        while (angle > 2 * Math.PI)
-            angle -= 2 * Math.PI;  // keep angle in reasonable range.
+    public double rotate(int degrees, int targetAngle) {
+        int verschil = (currentAngle - targetAngle) % 360;
+        currentAngle = normalizeAngle(currentAngle);
+
+
+        if (currentAngle - targetAngle == 0) return currentAngle;
+
+
+
+
+        /*if (Math.abs(currentAngle - targetAngle) < 180) {
+            System.out.println("directly");
+            // Rotate current directly towards target.
+            if (currentAngle < targetAngle) currentAngle += degrees ;
+            else currentAngle -= degrees;
+        } else {
+            System.out.println("not directly");
+            // Rotate the other direction towards target
+            if (currentAngle < targetAngle) currentAngle-= degrees ;
+            else currentAngle+= degrees ;
+        }
+        currentAngle = ((currentAngle % 360) + 360) % 360;
+
+*/
+        // als angle + target groter is dan doe je het omgekeerde
+        //    270              90 =  350             270                90      = 170
+
+        // Probleem : bij 270 CA zal CA naar 260 gaan maar bij 260 gaat hij naar 270
+        // Probleem : bij 180 -> 270  180 + 270 % 360 = 90    180 - 270 % 360 = 270
+        /*if ((currentAngle + targetAngle) % 180 > (currentAngle - targetAngle) % 180 ){
+
+            currentAngle += normalizeAngle(degrees);
+            currentAngle = normalizeAngle(currentAngle);
+            System.out.println(" in 1ste" + (currentAngle + targetAngle) % 360);
+        } else {
+
+            currentAngle -= normalizeAngle(degrees);
+            currentAngle = normalizeAngle(currentAngle);
+            System.out.println(" int 2e" + (currentAngle + targetAngle) % 360);
+        }
+        System.out.printf("CurrentAngle = %d, targetAngle = %d\n",
+                currentAngle, targetAngle);
+*/
+        if (currentAngle < targetAngle && (targetAngle - currentAngle) % 360 <= 180) {
+            rotateClockwise(degrees);
+        }
+        if (targetAngle < currentAngle && currentAngle - targetAngle <= 180) {
+            rotateCounterClockwise(degrees);
+        }
+        if (currentAngle < targetAngle && targetAngle - currentAngle >= 180) {
+            rotateCounterClockwise(degrees);
+        }
+        if (targetAngle < currentAngle && currentAngle - targetAngle >= 180) {
+            rotateClockwise(degrees);
+        }
+
+      /*  if ((currentAngle - targetAngle) % 360 == 180 && targetAngle < currentAngle){
+            rotateCounterClockwise(degrees);
+        }
+        if ((currentAngle - targetAngle) % 360 == 180 && targetAngle > currentAngle){
+            rotateClockwise(degrees);
+        }*/
+        System.out.printf("CurrentAngle = %d, targetAngle = %d\n",
+                currentAngle, targetAngle);
+
+
+        /*if (verschil < 180 && targetAngle > currentAngle) { currentAngle += degrees; }
+        if (verschil < 180 && targetAngle < currentAngle) { currentAngle -= degrees; }
+        if (verschil > 180 && targetAngle > currentAngle) { currentAngle -= degrees; }
+        if (verschil > 180 && targetAngle < currentAngle) { currentAngle += degrees; }
+        if (verschil == 180 || verschil == 0) { currentAngle += degrees; }*/
+       /* if (currentAngle + degrees <= targetAngle){
+            currentAngle += targetAngle - currentAngle;
+        } else if (currentAngle + degrees >= targetAngle){
+
+        }
+        currentAngle += Math.toRadians(degrees); // 5 degrees per 100 ms = 50 degrees/second
+        while (currentAngle > 2 * Math.PI) {
+            currentAngle -= 2 * Math.PI;  // keep angle in reasonable range.
+        }
+*/
+        return currentAngle;
     }
 
-    public double getAngle(Point target){
+    public void rotateClockwise(int degrees) {
+        currentAngle += degrees;
+    }
+
+    public void rotateCounterClockwise(int degrees) {
+        currentAngle -= degrees;
+    }
+
+    // nodig voor wanneer currentangle negatief wordt
+    public int normalizeAngle(int angle) {
+        //angle = angle % 360;
+        if (angle < 0 || 360 < angle) {
+            angle = (angle + 360) % 360;
+            return angle;
+        } else {
+            return angle;
+        }
+    }
+
+
+    public int getAngle() {
+        return currentAngle;
+    }
+
+    public double getDirection(Point target) {
         double angle = Math.toDegrees(Math.atan2(target.getY() - location.getY(), target.x - location.getX()));
 
         //if(angle < 0){
         //    angle += 360;
-       // }
+        // }
         return angle;
     }
 
