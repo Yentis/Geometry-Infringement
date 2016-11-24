@@ -21,9 +21,13 @@ public class MainMenu extends GPanel {
     private MainMenu panel = this;
 
 
-
     public MainMenu() throws IOException, FontFormatException {
+
         initComponents();
+
+        // resize components according to frame size
+        resizeComponents(getWidth(), getHeight());
+
     }
 
 
@@ -42,7 +46,6 @@ public class MainMenu extends GPanel {
         JButton Discord = new JButton(new ImageIcon(((new ImageIcon("src\\Media\\Discord.jpg")).getImage()).getScaledInstance(65, 65, java.awt.Image.SCALE_SMOOTH)));
         JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
         JLabel JoinDiscord = new JLabel("Join Server!");
-        //TODO put img in files (intelliJ only)
         JList Friends = new JList();
 
 
@@ -96,8 +99,6 @@ public class MainMenu extends GPanel {
                 window.getProfile().setVisible(true);
 
 
-
-
                 // }
             }
         });
@@ -125,11 +126,8 @@ public class MainMenu extends GPanel {
         Title.setBounds(54, 40, 900, 131);
         JoinDiscord.setBounds(102, 1000, 180, 35);
         Friends.setBounds(1616, 129, 270, 254);
-
         Discord.setBounds(22, 983, 65, 65);
 
-        //TODO (IntelliJ)
-        //Background.setBounds(0,0,1920,1080);
 
         //==================================================
 
@@ -149,5 +147,9 @@ public class MainMenu extends GPanel {
 
 
         //==================================================
+
+
     }
+
+
 }

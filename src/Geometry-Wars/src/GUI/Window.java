@@ -18,11 +18,6 @@ import GComponents.*;
  */
 public class Window extends JFrame {
 
-    //TODO set window resizable
-
-
-
-
     // Panels
     // TODO fill in other panels , add getters too
     private MainMenu mainMenu;
@@ -37,9 +32,10 @@ public class Window extends JFrame {
     public Window(String title) throws IOException, FontFormatException {
 
         // Set Window size and stuff
-        this.setPreferredSize(new Dimension(1920, 1080));
-        this.setMaximumSize(new Dimension(1920, 1080));
-        this.setMinimumSize(new Dimension(1920, 1080));
+        this.setTitle(title);
+        this.setPreferredSize(new Dimension(1024, 768));
+        this.setMaximumSize(new Dimension(1024, 768));
+        this.setMinimumSize(new Dimension(1024, 768));
         this.setLayout(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
@@ -56,7 +52,7 @@ public class Window extends JFrame {
         this.setVisible(true);
 
 
-
+        pack();
 
     }
 
@@ -65,8 +61,8 @@ public class Window extends JFrame {
 
         JLabel bg = new JLabel();
         bg.setLayout(null);
-        bg.setSize(1920,1080);
-        ImageIcon icon = new ImageIcon("src\\Media\\Background.png");
+        bg.setSize(1024,768);
+        ImageIcon icon = new ImageIcon("src\\Media\\resized_background-768.png");
         bg.setIcon(icon);
         frame.add(bg);
         bg.setVisible(true);
@@ -112,6 +108,8 @@ public class Window extends JFrame {
     }
 
     public Profile getProfile(){ return profile; }
+
+
 
 
     public static void main(String args[]) throws IOException, FontFormatException {

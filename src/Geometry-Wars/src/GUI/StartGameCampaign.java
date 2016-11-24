@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import GComponents.GButton;
 import GComponents.GFont;
 import GComponents.GPanel;
 
@@ -28,53 +29,38 @@ public class StartGameCampaign extends GPanel {
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
-        JButton Continue = new JButton("Continue");
-        JButton newCampaign = new JButton("New Campagin");
-        JButton clearCampaign = new JButton("Clear Campagin");
-        JLabel label = new JLabel("title", SwingConstants.CENTER);
+        JButton Continue = new GButton("Continue", 36f, 150,230,300,80);
 
-        Continue.setText("Continue");
-        newCampaign .setText("New Campaign");
-        clearCampaign.setText("Clear Campaign");
-        label.setText("Geometry Wars");
+        JButton NewCampaign = new GButton("New Campaign", 36f, 200,350,350,80);
+        JButton ClearCampaign = new GButton("Clear Campaign", 36f, 250,470,350,80);
+        JButton Back = new GButton("Back", 36f, 670,620,300,80);
 
+        JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
 
-
-
-        label.setFont(new GFont(80));
-        newCampaign.setFont(new GFont(36));
-        clearCampaign.setFont(new GFont(36));
-        Continue.setFont(new GFont(36));
-
+        //props
         label.setOpaque(true);
+        label.setFont(new GFont(80));
         label.setBackground(new Color(255,255,255,95));
         Continue.setBackground(new Color(255,255,255,200));
-        newCampaign.setBackground(new Color(255,255,255,200));
-        clearCampaign.setBackground(new Color(255,255,255,200));
+        NewCampaign.setBackground(new Color(255,255,255,200));
+        ClearCampaign.setBackground(new Color(255,255,255,200));
+
+        Back.setBackground(new Color(255,255,255,200));
 
 
 
-
-
-
-
-
-
-        panel.setLayout(null);
 
         //Bounds
-        Continue.setBounds(398,262,472,135);
-        newCampaign.setBounds(540,488,472,135);
-        clearCampaign.setBounds(576,722,472,135);
 
         label.setBounds(25,25,800,125);
 
 
-        panel.add(Continue);
-        panel.add(newCampaign);
-        panel.add(clearCampaign);
+        this.add(Continue);
+        this.add(NewCampaign);
+        this.add(ClearCampaign);
 
-        panel.add(label);
+        this.add(label);
+        this.add(Back);
 
 
         

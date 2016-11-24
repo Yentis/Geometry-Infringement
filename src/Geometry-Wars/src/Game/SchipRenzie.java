@@ -4,47 +4,51 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Vector;
 
-import static com.sun.javafx.webkit.UIClientImpl.toBufferedImage;
-import static java.lang.Math.abs;
-
 /**
- * Created by Yentl-PC on 8/11/2016.
+ * Created by Renzie on 19/11/2016.
  */
-public class Schip {
+public class SchipRenzie {
+
     //region Instance Variables
 
     private int nr;
     private int hp = 100;
     private int kracht = 10;
-    private int x;
-    private int y;
+   // private int x;
+   // private int y;
     private int r;
-    private int dx;
-    private int dy;
+    private double dx;
+    private double dy;
     private int dr;
     private Image image;
     private int width;
     private int height;
     private String direction;
     private ArrayList kogels = new ArrayList();
+    private Point location = new Point();
+    private double locationX = location.getX();
+    private double locationY = location.getY();
+    private double angle;
+
 
     //endregion
 
     //region Constructors
 
-    public Schip(int nr, int hp, int kracht, String image){
+    public SchipRenzie(int nr, int hp, int kracht, String image){
         ImageIcon ii = new ImageIcon(image);
         width = ii.getIconWidth();
         height = ii.getIconHeight();
         this.image = ii.getImage();
-        x = 700;
-        y = 300;
-        r = 0;
+        locationX = 700;
+        locationY = 300;
+        location.setLocation(locationX, locationY);
+        System.out.println(location);
+        //y = 300;
+        //r = 0;
         this.nr = nr;
         this.hp = hp;
         this.kracht = kracht;
@@ -62,7 +66,7 @@ public class Schip {
         return image;
     }
 
-    public int getX() {
+   /* public int getX() {
         return x;
     }
 
@@ -72,7 +76,7 @@ public class Schip {
 
     public int getR() {
         return r;
-    }
+    }*/
 
     public int getWidth() {
         return width;
@@ -85,6 +89,8 @@ public class Schip {
     public ArrayList getKogels() {
         return kogels;
     }
+
+    public Point getLocation() { return location; }
 
     //endregion
 
@@ -99,25 +105,28 @@ public class Schip {
     }
 
     public void beweegSchip(){
+
         if (r > 360){
             r -= 360;
         } else if (r < -360){
             r += 360;
         }
 
-        if (x > 1920) {
-            x = 1920;
-        } else if (x < 0) {
-            x = 0;
-        } else if (y > 1080){
-            y = 1080;
-        } else if (y < 0){
-            y = 0;
+        if (locationX > 1024) {
+            locationX = 1024;
+        } else if (locationX < 0) {
+            locationX = 0;
+        } else if (locationY > 768){
+           locationY = 768;
+        } else if (location.getY() < 0){
+            locationY = 0;
         }
 
-        x += dx;
-        y += dy;
+        location.setLocation(locationX += dx, locationY += dy);
+
         r += dr;
+
+
 
         //region Horror
         /*if (dy < 0){
@@ -183,15 +192,17 @@ public class Schip {
 
     public void keyPressed(KeyEvent e){
         int key = e.getKeyCode();
-
         switch(key){
             case KeyEvent.VK_LEFT:
                 dx = -3;
+                rotate(5);
                 break;
             case KeyEvent.VK_RIGHT:
+                rotate(-5);
                 dx = 3;
                 break;
             case KeyEvent.VK_UP:
+
                 dy = -3;
                 break;
             case KeyEvent.VK_DOWN:
@@ -201,15 +212,11 @@ public class Schip {
     }
 
     public void mousePressed(MouseEvent e){
-        fire();
+        fire(e.getPoint());
     }
 
-    public void fire(){
-
-        int x = MouseInfo.getPointerInfo().getLocation().x;
-        int y = MouseInfo.getPointerInfo().getLocation().y;
-
-        kogels.add(new Kogel(this.x + width / 3, this.y + height / 3, x, y));
+    public void fire(Point mousePointer){
+        kogels.add(new KogelRenzie(location.getX(), location.getY(), mousePointer));
     }
 
     public void keyReleased(KeyEvent e){
@@ -227,6 +234,20 @@ public class Schip {
         }
     }
 
+    public void rotate(double degrees){
+        angle += Math.toRadians(degrees); // 5 degrees per 100 ms = 50 degrees/second
+        while (angle > 2 * Math.PI)
+            angle -= 2 * Math.PI;  // keep angle in reasonable range.
+    }
+
+    public double getAngle(Point target){
+        double angle = Math.toDegrees(Math.atan2(target.getY() - location.getY(), target.x - location.getX()));
+
+        //if(angle < 0){
+        //    angle += 360;
+       // }
+        return angle;
+    }
 
     //endregion
 }
