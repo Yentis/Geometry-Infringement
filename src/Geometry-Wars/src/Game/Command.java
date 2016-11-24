@@ -7,6 +7,6 @@ interface Command {
     public void execute();
 }
 
-public class left{
+/*public class left{
 
-}
+}*/

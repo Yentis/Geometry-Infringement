@@ -11,6 +11,7 @@ import GComponents.*;
  * Created by Laurens Visser on 9/11/2016.
  */
 public class StartGame extends GPanel {
+    private StartGame panel = this;
 
     public StartGame() throws IOException, FontFormatException {
         initComponents();
@@ -21,42 +22,32 @@ public class StartGame extends GPanel {
     @Override
     public void initComponents() throws IOException, FontFormatException {
 
-        JButton Campaign = new JButton("Campaign");
-        JButton War = new JButton("War");
-        JButton SoloGame = new JButton("Solo Game");
-        JButton Coop = new JButton("Co-op");
-        JLabel label = new JLabel("title", SwingConstants.CENTER);
 
 
-        Campaign.setText("Campaign");
-        War.setText("War");
-        SoloGame.setText("Solo Game");
-        Coop.setText("Co-op");
-        label.setText("Geometry Wars");
+        JButton Campaign = new GButton("Campaign", 36f, 150,230,300,80);
+        JButton War = new GButton("War", 36f, 550,230,300,80);
+        JButton SoloGame = new GButton("Solo Game", 36f, 200,350,300,80);
+        JButton Coop = new GButton("Co-op", 36f, 250,470,300,80);
+        JButton Back = new GButton("Back", 36f, 670,620,300,80);
 
-        label.setFont(new GFont(80));
-        War.setFont(new GFont(36));
-        Campaign.setFont(new GFont(36));
-        SoloGame.setFont(new GFont(36));
-        Coop.setFont(new GFont(36));
+        JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
 
-
+        //props
         label.setOpaque(true);
+        label.setFont(new GFont(65));
         label.setBackground(new Color(255,255,255,95));
         War.setBackground(new Color(255,255,255,200));
         Campaign.setBackground(new Color(255,255,255,200));
         SoloGame.setBackground(new Color(255,255,255,200));
         Coop.setBackground(new Color(255,255,255,200));
+        Back.setBackground(new Color(255,255,255,200));
 
 
 
 
         //Bounds
-        Campaign.setBounds(400,264,472,135);
-        War.setBounds(968,264,472,135);
-        SoloGame.setBounds(542,490,472,135);
-        Coop.setBounds(578,724,472,135);
-        label.setBounds(25,25,800,125);
+
+        label.setBounds(25,25,650,100);;
 
 
         this.add(Campaign);
@@ -64,10 +55,41 @@ public class StartGame extends GPanel {
         this.add(SoloGame);
         this.add(Coop);
         this.add(label);
+        this.add(Back);
+
+        //ActionListeners
+
+        Campaign.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getStartGameCampaign().setVisible(true);
+            }
+        });
+
+
+
+        Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getMainMenu().setVisible(true);
+            }
+        });
+
+        Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getStartGame().setVisible(true);
+            }
+        });
 
 
 
     }
+
+
 
     /*public static void main(String[] args)  throws MalformedURLException, IOException, FontFormatException {
         new StartGame();

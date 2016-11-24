@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.function.Function;
 
 import GComponents.*;
 
@@ -23,6 +24,7 @@ public class Window extends JFrame {
     private MainMenu mainMenu;
     private StartGame startGame;
     private Profile profile;
+    private StartGameCampaign startGameCampaign;
 
 
     // this
@@ -61,7 +63,7 @@ public class Window extends JFrame {
         JLabel bg = new JLabel();
         bg.setLayout(null);
         bg.setSize(1024,768);
-        ImageIcon icon = new ImageIcon("src\\Media\\Background-768.png");
+        ImageIcon icon = new ImageIcon("src\\Media\\resized_background-768.png");
         bg.setIcon(icon);
         frame.add(bg);
         bg.setVisible(true);
@@ -70,22 +72,25 @@ public class Window extends JFrame {
 
 
 
-
     public void initPanels() throws IOException, FontFormatException {
         // Make UI panels
         mainMenu = new MainMenu();
         startGame = new StartGame();
         profile = new Profile();
+        startGameCampaign = new StartGameCampaign();
 
         // Add UI panels
         frame.add(mainMenu);
         frame.add(startGame);
         frame.add(profile);
+        frame.add(startGameCampaign);
+
 
 
         // Set all panels invisible except the starting panel
         startGame.setVisible(false);
         profile.setVisible(false);
+        startGameCampaign.setVisible(false);
     }
 
 
@@ -96,6 +101,10 @@ public class Window extends JFrame {
 
     public MainMenu getMainMenu() {
         return mainMenu;
+    }
+
+    public StartGameCampaign getStartGameCampaign() {
+        return startGameCampaign;
     }
 
     public Profile getProfile(){ return profile; }

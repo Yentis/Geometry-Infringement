@@ -9,77 +9,75 @@ import java.net.MalformedURLException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import GComponents.GButton;
 import GComponents.GFont;
+import GComponents.GPanel;
+
 /**
  * Created by Laurens Visser on 9/11/2016.
  */
-public class StartGameCampaign  {
+public class StartGameCampaign extends GPanel {
+    private StartGameCampaign panel = this;
 
     public StartGameCampaign() throws MalformedURLException, IOException, FontFormatException {
 
-        JFrame frame = new JFrame("StartgameCampaign");
-        JButton Continue = new JButton("Continue");
-        JButton newCampaign = new JButton("New Campagin");
-        JButton clearCampaign = new JButton("Clear Campagin");
-        JLabel label = new JLabel("title", SwingConstants.CENTER);
-
-        Continue.setText("Continue");
-        newCampaign .setText("New Campaign");
-        clearCampaign.setText("Clear Campaign");
-        label.setText("Geometry Wars");
+       
+        initComponents();
 
 
+    }
 
+    @Override
+    public void initComponents() throws IOException, FontFormatException {
+        JButton Continue = new GButton("Continue", 36f, 150,230,300,80);
 
-        label.setFont(new GFont(80));
-        newCampaign.setFont(new GFont(36));
-        clearCampaign.setFont(new GFont(36));
-        Continue.setFont(new GFont(36));
+        JButton NewCampaign = new GButton("New Campaign", 36f, 200,350,350,80);
+        JButton ClearCampaign = new GButton("Clear Campaign", 36f, 250,470,350,80);
+        JButton Back = new GButton("Back", 36f, 670,620,300,80);
 
+        JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
+
+        //props
         label.setOpaque(true);
+        label.setFont(new GFont(65));
         label.setBackground(new Color(255,255,255,95));
         Continue.setBackground(new Color(255,255,255,200));
-        newCampaign.setBackground(new Color(255,255,255,200));
-        clearCampaign.setBackground(new Color(255,255,255,200));
+        NewCampaign.setBackground(new Color(255,255,255,200));
+        ClearCampaign.setBackground(new Color(255,255,255,200));
 
-        frame.setContentPane(new JPanel() {
-            BufferedImage image = ImageIO.read(new File("src\\Media\\Background.png"));
-            public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(image, 0, 0, 1920, 1080, this);
+        Back.setBackground(new Color(255,255,255,200));
 
+
+
+
+        //Bounds
+
+        label.setBounds(25,25,650,100);;
+
+
+        this.add(Continue);
+        this.add(NewCampaign);
+        this.add(ClearCampaign);
+
+        this.add(label);
+        this.add(Back);
+
+
+        //Action listeners
+        Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getStartGame().setVisible(true);
             }
+
+
+
         });
 
 
-
-
-
-
-
-        frame.setLayout(null);
-
-        //Bounds
-        Continue.setBounds(398,262,472,135);
-        newCampaign.setBounds(540,488,472,135);
-        clearCampaign.setBounds(576,722,472,135);
-
-        label.setBounds(25,25,800,125);
-
-
-        frame.add(Continue);
-        frame.add(newCampaign);
-        frame.add(clearCampaign);
-
-        frame.add(label);
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1920, 1080);
-        frame.setVisible(true);
-
-
+        
     }
-    public static void main(String[] args)  throws MalformedURLException, IOException, FontFormatException {
-        new StartGameCampaign();
-    }
+
+
 }
