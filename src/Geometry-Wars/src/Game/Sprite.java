@@ -7,20 +7,18 @@ import java.awt.*;
  * Created by Yentl-PC on 10/11/2016.
  */
 public class Sprite {
-    protected int x;
-    protected int y;
+    protected double x;
+    protected double y;
     protected int width;
     protected int height;
     protected Image image;
     protected boolean visible;
-    protected int mousex;
-    protected int mousey;
+    protected Point direction;
 
-    public Sprite(int x, int y, int mousex, int mousey){
+    public Sprite(double x, double y, Point direction){
         this.x = x;
         this.y = y;
-        this.mousex = mousex;
-        this.mousey = mousey;
+        this.direction = direction;
         visible = true;
     }
 
@@ -35,21 +33,15 @@ public class Sprite {
         return image;
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    public int getMousex() {
-        return mousex;
-    }
-
-    public int getMousey() {
-        return mousey;
-    }
+    public Point getDirection() { return direction; }
 
 
     public boolean isVisible() {

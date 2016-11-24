@@ -10,13 +10,13 @@ public class Speelveld extends JFrame {
     public Speelveld(){
         add(new Board());
 
-        setSize(1920, 1080);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setSize(1024, 768);
+        //setExtendedState(JFrame.MAXIMIZED_BOTH);
         setUndecorated(true);
         setVisible(true);
         setResizable(false);
 
-        setTitle("Geometry Wars");
+        setTitle("derp");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

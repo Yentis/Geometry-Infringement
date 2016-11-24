@@ -36,13 +36,13 @@ public class MainMenu extends GPanel {
         //Make components
         //==================================================
 
-        JButton StartGame = new GButton("Start Game", 32f, 120,200,260,70);
-        JButton Upgrades = new GButton("Upgrades", 32f, 190,300,260,70);
-        JButton Profile = new GButton("Profile", 32f, 240,400,260,70);
-        JButton Settings = new GButton("Settings", 32f, 240,500,260,70);
-        JButton FriendsBtn = new GButton("Friends", 32f, 820, 25, 170,63);
-        JButton LogOut = new GButton("Logout", 32f, 635,650, 170, 63);
-        JButton Quit = new GButton("Quit", 32f, 820, 650, 170, 63);
+        JButton StartGame = new GButton("Start Game", 24f, 120,200,260,70);
+        JButton Upgrades = new GButton("Upgrades", 24f, 190,320,260,70);
+        JButton Profile = new GButton("Profile", 24f, 237,440,260,70);
+        JButton Settings = new GButton("Settings", 24f, 235,560,260,70);
+        JButton FriendsBtn = new GButton("Friends", 24f, 820, 25, 170,63);
+        JButton LogOut = new GButton("Logout", 24f, 635,650, 170, 63);
+        JButton Quit = new GButton("Quit", 24f, 820, 650, 170, 63);
         JButton Discord = new JButton(new ImageIcon(((new ImageIcon("src\\Media\\Discord.jpg")).getImage()).getScaledInstance(65, 65, java.awt.Image.SCALE_SMOOTH)));
         JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
         JLabel JoinDiscord = new JLabel("Join Server!");
