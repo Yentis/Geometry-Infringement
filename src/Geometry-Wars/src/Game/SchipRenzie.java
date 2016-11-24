@@ -17,16 +17,12 @@ public class SchipRenzie {
     private int nr;
     private int hp = 100;
     private int kracht = 10;
-    // private int x;
-    // private int y;
     private int r;
     private double dx;
     private double dy;
-    private int dr;
     private Image image;
     private int width;
     private int height;
-    private String direction;
     private ArrayList kogels = new ArrayList();
     private Point location = new Point();
     private double locationX = location.getX();
@@ -64,18 +60,6 @@ public class SchipRenzie {
     public Image getImage() {
         return image;
     }
-
-   /* public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getR() {
-        return r;
-    }*/
 
     public int getWidth() {
         return width;
@@ -127,7 +111,7 @@ public class SchipRenzie {
         location.setLocation(locationX += dx, locationY += dy);
 
 
-        r += dr;
+        //r += dr;
 
 
         //region Horror
@@ -194,6 +178,7 @@ public class SchipRenzie {
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
+        // Rotation: graden worden in radialen omgezet in Board
         switch (key) {
             case KeyEvent.VK_LEFT:
                 dx = -3;
@@ -241,48 +226,9 @@ public class SchipRenzie {
     }
 
     public double rotate(int degrees, int targetAngle) {
-        int verschil = (currentAngle - targetAngle) % 360;
-        currentAngle = normalizeAngle(currentAngle);
-
 
         if (currentAngle - targetAngle == 0) return currentAngle;
 
-
-
-
-        /*if (Math.abs(currentAngle - targetAngle) < 180) {
-            System.out.println("directly");
-            // Rotate current directly towards target.
-            if (currentAngle < targetAngle) currentAngle += degrees ;
-            else currentAngle -= degrees;
-        } else {
-            System.out.println("not directly");
-            // Rotate the other direction towards target
-            if (currentAngle < targetAngle) currentAngle-= degrees ;
-            else currentAngle+= degrees ;
-        }
-        currentAngle = ((currentAngle % 360) + 360) % 360;
-
-*/
-        // als angle + target groter is dan doe je het omgekeerde
-        //    270              90 =  350             270                90      = 170
-
-        // Probleem : bij 270 CA zal CA naar 260 gaan maar bij 260 gaat hij naar 270
-        // Probleem : bij 180 -> 270  180 + 270 % 360 = 90    180 - 270 % 360 = 270
-        /*if ((currentAngle + targetAngle) % 180 > (currentAngle - targetAngle) % 180 ){
-
-            currentAngle += normalizeAngle(degrees);
-            currentAngle = normalizeAngle(currentAngle);
-            System.out.println(" in 1ste" + (currentAngle + targetAngle) % 360);
-        } else {
-
-            currentAngle -= normalizeAngle(degrees);
-            currentAngle = normalizeAngle(currentAngle);
-            System.out.println(" int 2e" + (currentAngle + targetAngle) % 360);
-        }
-        System.out.printf("CurrentAngle = %d, targetAngle = %d\n",
-                currentAngle, targetAngle);
-*/
         if (currentAngle < targetAngle && (targetAngle - currentAngle) % 360 <= 180) {
             rotateClockwise(degrees);
         }
@@ -295,41 +241,17 @@ public class SchipRenzie {
         if (targetAngle < currentAngle && currentAngle - targetAngle >= 180) {
             rotateClockwise(degrees);
         }
-
-      /*  if ((currentAngle - targetAngle) % 360 == 180 && targetAngle < currentAngle){
-            rotateCounterClockwise(degrees);
-        }
-        if ((currentAngle - targetAngle) % 360 == 180 && targetAngle > currentAngle){
-            rotateClockwise(degrees);
-        }*/
-        System.out.printf("CurrentAngle = %d, targetAngle = %d\n",
-                currentAngle, targetAngle);
-
-
-        /*if (verschil < 180 && targetAngle > currentAngle) { currentAngle += degrees; }
-        if (verschil < 180 && targetAngle < currentAngle) { currentAngle -= degrees; }
-        if (verschil > 180 && targetAngle > currentAngle) { currentAngle -= degrees; }
-        if (verschil > 180 && targetAngle < currentAngle) { currentAngle += degrees; }
-        if (verschil == 180 || verschil == 0) { currentAngle += degrees; }*/
-       /* if (currentAngle + degrees <= targetAngle){
-            currentAngle += targetAngle - currentAngle;
-        } else if (currentAngle + degrees >= targetAngle){
-
-        }
-        currentAngle += Math.toRadians(degrees); // 5 degrees per 100 ms = 50 degrees/second
-        while (currentAngle > 2 * Math.PI) {
-            currentAngle -= 2 * Math.PI;  // keep angle in reasonable range.
-        }
-*/
+        currentAngle = normalizeAngle(currentAngle);
         return currentAngle;
     }
 
-    public void rotateClockwise(int degrees) {
-        currentAngle += degrees;
+    public int rotateClockwise(int degrees) {
+        return currentAngle += degrees;
+
     }
 
-    public void rotateCounterClockwise(int degrees) {
-        currentAngle -= degrees;
+    public int rotateCounterClockwise(int degrees) {
+        return currentAngle -= degrees;
     }
 
     // nodig voor wanneer currentangle negatief wordt
@@ -350,10 +272,6 @@ public class SchipRenzie {
 
     public double getDirection(Point target) {
         double angle = Math.toDegrees(Math.atan2(target.getY() - location.getY(), target.x - location.getX()));
-
-        //if(angle < 0){
-        //    angle += 360;
-        // }
         return angle;
     }
 

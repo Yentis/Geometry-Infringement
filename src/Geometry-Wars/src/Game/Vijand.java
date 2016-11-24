@@ -37,5 +37,11 @@ public class Vijand {
         this.uiterlijk = "Vierkant";
     }
 
+
+    // moet spawnen
+
+
+    // moet van spawnpunt naar schip vliegen op een bepaalde manier
+
     //endregion
 }
