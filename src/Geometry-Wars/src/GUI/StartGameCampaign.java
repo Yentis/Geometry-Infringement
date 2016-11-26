@@ -52,7 +52,7 @@ public class StartGameCampaign extends GPanel {
 
         //Bounds
 
-        label.setBounds(25,25,650,100);;
+        label.setBounds(25,25,650,100);
 
 
         this.add(Continue);

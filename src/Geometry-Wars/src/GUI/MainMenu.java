@@ -90,6 +90,14 @@ public class MainMenu extends GPanel {
             }
         });
 
+        LogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getLogout().setVisible(true);
+            }
+        });
+
         //TODO (IntelliJ)
         Profile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,6 +110,8 @@ public class MainMenu extends GPanel {
                 // }
             }
         });
+
+
         //==================================================
 
 

@@ -19,6 +19,8 @@ public class InGameSinglePlayer {
 
 
 
+
+
         JFrame frame = new JFrame("Game");
         ImageIcon PauseImage = new ImageIcon("src\\Media\\pause-128.png");
         JButton pauze = new JButton(PauseImage);
