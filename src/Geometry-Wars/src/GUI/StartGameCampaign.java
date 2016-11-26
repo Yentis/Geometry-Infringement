@@ -37,6 +37,7 @@ public class StartGameCampaign extends GPanel {
 
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
 
+
         //props
         label.setOpaque(true);
         label.setFont(new GFont(65));
@@ -69,6 +70,17 @@ public class StartGameCampaign extends GPanel {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 window.getStartGame().setVisible(true);
+            }
+
+
+
+        });
+
+        Continue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getInGameSinglePlayer().setVisible(true);
             }
 
 
