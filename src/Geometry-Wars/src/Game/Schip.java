@@ -2,6 +2,8 @@ package Game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -33,6 +35,12 @@ public class Schip {
     private double locationX = location.getX();
     private double locationY = location.getY();
     private int currentAngle;
+
+   // private boolean up, down, left, right;
+    private boolean keyPressed;
+    private static boolean keys[] = new boolean[65535];
+    private Timer left, right, up, down;
+
 
 
     //endregion
@@ -82,7 +90,31 @@ public class Schip {
         return location;
     }
 
+    public double getDy() {
+        return dy;
+    }
+
+    public double getDx() {
+        return dx;
+    }
+
+    public void setDy(double dy) {
+        this.dy = dy;
+    }
+
+    public void setDx(double dx) {
+        this.dx = dx;
+    }
+
+    public void setLocationX(double locationX) {
+        this.locationX = locationX;
+    }
+
+    public void setLocationY(double locationY) {
+        this.locationY = locationY;
+    }
     //endregion
+
 
     //region Behaviour
 
@@ -117,96 +149,73 @@ public class Schip {
 
 
         //r += dr;
-
-
-        //region Horror
-        /*if (dy < 0){
-            //if at correct position clear direction
-            if(r <= 3 && r >= -3){
-                direction = "";
-                r = 0;
-            } else {
-                //calculate shortest distance to 0 or 360
-                if (Objects.equals(direction, "left") || (abs(0 - r) < abs(360 - r))){
-                    System.out.println("direction: " + direction);
-                    direction = "left";
-                    if(r < 0){
-                        r -= dr;
-                    } else {
-                        r += dr;
-                    }
-                } else if (Objects.equals(direction, "right")) {
-                    direction = "right";
-                    if(r < 0){
-                        r += dr;
-                    } else {
-                        r -= dr;
-                    }
-                }
-            }
-        } else if (dy > 0){
-            System.out.println("down");
-            System.out.println(r);
-
-            //if at correct position clear direction
-            if((abs(r) <= 183 && abs(r) >= 177)){
-                direction = "";
-                r = 180;
-            } else {
-                //calculate shortest distance to 180 or -180
-                if (Objects.equals(direction, "left") || (abs(180 - r) < abs(-180 - r))){
-                    System.out.println("direction: " + direction);
-                    direction = "left";
-                    if(r < 0){
-                        r -= dr;
-                    } else {
-                        r += dr;
-                    }
-                } else if (Objects.equals(direction, "right")) {
-                    direction = "right";
-                    if(r < 0){
-                        r += dr;
-                    } else {
-                        r -= dr;
-                    }
-                }
-            }
-        } else if (dr > 0 && r <= 90 && r >= -270){
-            System.out.println("right");
-            r += dr;
-        } else if (dr < 0 && r >= -90 && r <= 270){
-            System.out.println("left");
-            r+= dr;
-        }*/
-        //endregion
     }
 
-    public void keyPressed(KeyEvent e) {
+    /*public void keyPressed(KeyEvent e) {
+        System.out.println("keypressed");
+        keyPressed = true;
         int key = e.getKeyCode();
         // Rotation: graden worden in radialen omgezet in Board
+        // TODO stuttering weghalen
         switch (key) {
             case KeyEvent.VK_LEFT:
+                left = new Timer(30, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                        normalizeAngle(currentAngle);
+                        rotate(10, 270);
+                    }
+                });left.start();
+                //left = true;
                 dx = -3;
-                normalizeAngle(currentAngle);
-                rotate(10, 270);
                 break;
             case KeyEvent.VK_RIGHT:
-
+                //right = true;
                 normalizeAngle(currentAngle);
                 rotate(10, 90);
                 dx = 3;
                 break;
             case KeyEvent.VK_UP:
+               // up = true;
                 rotate(10, 0);
                 dy = -3;
                 break;
             case KeyEvent.VK_DOWN:
+                //down = true;
                 rotate(10, 180);
                 dy = 3;
                 break;
         }
     }
 
+
+
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
+        System.out.println("keyreleased");
+
+        switch (key) {
+            case KeyEvent.VK_LEFT:
+               // left = false;
+                dx = 0;
+                left.stop();
+                break;
+            case KeyEvent.VK_RIGHT:
+               // right = false;
+                dx = 0;
+                break;
+            case KeyEvent.VK_UP:
+               // up = false;
+                dy = 0;
+                break;
+            case KeyEvent.VK_DOWN:
+               // down = false;
+                dy = 0;
+                break;
+        }
+    }
+*/
     public void mousePressed(MouseEvent e) {
         fire(e.getPoint());
     }
@@ -215,44 +224,44 @@ public class Schip {
         kogels.add(new Kogel(location.getX(), location.getY(), mousePointer));
     }
 
-    public void keyReleased(KeyEvent e) {
-        int key = e.getKeyCode();
-
-        switch (key) {
-            case KeyEvent.VK_LEFT:
-            case KeyEvent.VK_RIGHT:
-                dx = 0;
-                break;
-            case KeyEvent.VK_UP:
-            case KeyEvent.VK_DOWN:
-                dy = 0;
-                break;
-        }
-    }
 
     public double rotate(int degrees, int targetAngle) {
+        System.out.println("in rotate");
+        if (keyPressed){
+            System.out.println(keyPressed);
+            if (currentAngle - targetAngle == 0) return currentAngle;
 
-        if (currentAngle - targetAngle == 0) return currentAngle;
+            if (currentAngle < targetAngle && (targetAngle - currentAngle) % 360 <= 180) {
+                rotateClockwise(degrees);
+            }
+            if (targetAngle < currentAngle && currentAngle - targetAngle <= 180) {
+                rotateCounterClockwise(degrees);
+            }
+            if (currentAngle < targetAngle && targetAngle - currentAngle >= 180) {
+                rotateCounterClockwise(degrees);
+            }
+            if (targetAngle < currentAngle && currentAngle - targetAngle >= 180) {
+                rotateClockwise(degrees);
+            }
+            currentAngle = normalizeAngle(currentAngle);
+        }
 
-        if (currentAngle < targetAngle && (targetAngle - currentAngle) % 360 <= 180) {
-            rotateClockwise(degrees);
-        }
-        if (targetAngle < currentAngle && currentAngle - targetAngle <= 180) {
-            rotateCounterClockwise(degrees);
-        }
-        if (currentAngle < targetAngle && targetAngle - currentAngle >= 180) {
-            rotateCounterClockwise(degrees);
-        }
-        if (targetAngle < currentAngle && currentAngle - targetAngle >= 180) {
-            rotateClockwise(degrees);
-        }
-        currentAngle = normalizeAngle(currentAngle);
+
+
         return currentAngle;
     }
 
     public int rotateClockwise(int degrees) {
         return currentAngle += degrees;
 
+    }
+
+    public int getCurrentAngle() {
+        return currentAngle;
+    }
+
+    public void setCurrentAngle(int currentAngle) {
+        this.currentAngle = currentAngle;
     }
 
     public int rotateCounterClockwise(int degrees) {

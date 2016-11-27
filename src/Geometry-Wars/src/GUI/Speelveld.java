@@ -2,11 +2,13 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Yentl-PC on 9/11/2016.
  */
-public class Speelveld extends JFrame {
+public class Speelveld extends JFrame{
     public Speelveld(){
         add(new Board());
 
@@ -19,6 +21,8 @@ public class Speelveld extends JFrame {
         setTitle("derp");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
     }
 
     public static void main(String[] args) {
@@ -26,8 +30,12 @@ public class Speelveld extends JFrame {
             @Override
             public void run() {
                 Speelveld sv = new Speelveld();
+
                 sv.setVisible(true);
             }
         });
     }
+
+
+
 }

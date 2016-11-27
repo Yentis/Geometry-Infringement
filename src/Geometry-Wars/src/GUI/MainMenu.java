@@ -144,12 +144,6 @@ public class MainMenu extends GPanel {
         panel.add(Discord);
         panel.add(FriendsBtn);
         panel.add(JoinDiscord);
-
-
-        //==================================================
-
-
+        //=================================================
     }
-
-
 }

@@ -19,13 +19,9 @@ public abstract class GPanel extends JPanel {
 
     private Component[] components = this.getComponents();
 
-
-
-
-
     public GPanel(){
         this.setLayout(null);
-        this.setSize(1280,760);
+        this.setSize(1024,768);
         //double Dscale = this.getSize().getWidth() / this.getSize().getHeight();
         //scale = (int) Dscale;
         this.setOpaque(false);
@@ -42,8 +38,6 @@ public abstract class GPanel extends JPanel {
             c.setBounds( c.getX() * width / height, c.getY() * width / height, c.getWidth() * width / height, c.getHeight() * width / height);
         }
     }
-
-
 
     public abstract void initComponents() throws IOException, FontFormatException;
 
