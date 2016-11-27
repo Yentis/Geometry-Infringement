@@ -29,13 +29,14 @@ public class StartGameCampaign extends GPanel {
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
-        JButton Continue = new GButton("Continue", 36f, 150,230,300,80);
+        JButton Continue = new GButton("Continue", 24f, 150,230,300,80);
 
-        JButton NewCampaign = new GButton("New Campaign", 36f, 200,350,350,80);
-        JButton ClearCampaign = new GButton("Clear Campaign", 36f, 250,470,350,80);
-        JButton Back = new GButton("Back", 36f, 670,620,300,80);
+        JButton NewCampaign = new GButton("New Campaign", 24f, 200,350,350,80);
+        JButton ClearCampaign = new GButton("Clear Campaign", 24f, 250,470,350,80);
+        JButton Back = new GButton("Back", 24f, 820, 650, 170, 63);
 
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
+
 
         //props
         label.setOpaque(true);
@@ -52,7 +53,7 @@ public class StartGameCampaign extends GPanel {
 
         //Bounds
 
-        label.setBounds(25,25,650,100);;
+        label.setBounds(25,25,650,100);
 
 
         this.add(Continue);
@@ -69,6 +70,17 @@ public class StartGameCampaign extends GPanel {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 window.getStartGame().setVisible(true);
+            }
+
+
+
+        });
+
+        Continue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getInGameSinglePlayer().setVisible(true);
             }
 
 

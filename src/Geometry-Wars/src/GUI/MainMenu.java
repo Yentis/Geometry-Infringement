@@ -90,6 +90,14 @@ public class MainMenu extends GPanel {
             }
         });
 
+        LogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getLogout().setVisible(true);
+            }
+        });
+
         //TODO (IntelliJ)
         Profile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,6 +110,8 @@ public class MainMenu extends GPanel {
                 // }
             }
         });
+
+
         //==================================================
 
 
@@ -115,6 +125,7 @@ public class MainMenu extends GPanel {
 
         Friends.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         Friends.setVisible(false);
+        Friends.setBackground(new Color(255, 255, 255, 95));
 
 
         //==================================================
@@ -125,7 +136,7 @@ public class MainMenu extends GPanel {
 
         Title.setBounds(25,25,650,100);
         JoinDiscord.setBounds(102, 1000, 180, 35);
-        Friends.setBounds(600, 129, 160, 150);
+        Friends.setBounds(820, 129, 170, 300);
         Discord.setBounds(35, 650, 65, 65);
 
 

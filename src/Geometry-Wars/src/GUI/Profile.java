@@ -48,18 +48,18 @@ public class Profile extends GPanel {
         //Make components
         //==================================================
 
-        JLabel Title = new GTitle(54, 40);
+        JLabel Title = new GTitle(25, 25);
         JLabel Background = new JLabel(new ImageIcon(((new ImageIcon("src\\Media\\Background.png")).getImage().getScaledInstance(1920, 1080, java.awt.Image.SCALE_SMOOTH))));
-        JLabel Profile = new GPane(536, 193, 418, 481);
-        JLabel ProfileInfo = new GPane(976, 40, 902, 1009);
-        JLabel Username = new GLabel("Username", 36f, 576, 215, 337, 91, true, Color.BLACK);
-        JLabel ProfilePicture = new GIcon("profilePicture.png", 577, 329, 336, 324, true);
-        JLabel Rank = new GLabel("Unranked", 36f, 1243, 130, 280, 62, false, Color.BLACK);
-        JLabel RankPicture = new GIcon("Badges\\NoRank.png", 1026, 77, 168, 168, false);
-        JButton MyClan = new GButton("My Clan", 36f, 536, 696, 418, 96);
-        JButton EditProfile = new GButton("Edit Profile", 36f, 606, 820, 278, 67);
-        JButton Back = new GButton("Back", 36f, 536, 982, 270, 67);
-        JButton Achievements = new GButton("Achievements", 36f, 60, 982, 340, 67);
+        JLabel Profile = new GPane(220, 160, 234, 300);
+        JLabel ProfileInfo = new GPane(480, 160, 500, 540);
+        JLabel Username = new GLabel("Username", 24f, 245, 175, 180, 64, true, Color.BLACK);
+        JLabel ProfilePicture = new GIcon("profilePicture.png", 245, 268, 180, 170, true);
+        JLabel Rank = new GLabel("Unranked", 24f, 550, 175, 280, 62, false, Color.BLACK);
+        JLabel RankPicture = new GIcon("Badges\\NoRank.png", 520, 175, 130, 130, false);
+        JButton MyClan = new GButton("My Clan", 24f, 220, 475, 234, 60);
+        JButton EditProfile = new GButton("Edit Profile", 18f, 260, 545, 165, 40);
+        JButton Back = new GButton("Back", 24f, 320, 655, 140, 45);
+        JButton Achievements = new GButton("Achievements", 24f, 60, 982, 340, 67);
 
 
         //==================================================

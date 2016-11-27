@@ -24,11 +24,11 @@ public class StartGame extends GPanel {
 
 
 
-        JButton Campaign = new GButton("Campaign", 36f, 150,230,300,80);
-        JButton War = new GButton("War", 36f, 550,230,300,80);
-        JButton SoloGame = new GButton("Solo Game", 36f, 200,350,300,80);
-        JButton Coop = new GButton("Co-op", 36f, 250,470,300,80);
-        JButton Back = new GButton("Back", 36f, 670,620,300,80);
+        JButton Campaign = new GButton("Campaign", 24f, 150,230,300,80);
+        JButton War = new GButton("War", 24f, 550,230,300,80);
+        JButton SoloGame = new GButton("Solo Game", 24f, 200,350,300,80);
+        JButton Coop = new GButton("Co-op", 24f, 250,470,300,80);
+        JButton Back = new GButton("Back", 24f, 820, 650, 170, 63);
 
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
 
@@ -47,7 +47,7 @@ public class StartGame extends GPanel {
 
         //Bounds
 
-        label.setBounds(25,25,650,100);;
+        label.setBounds(25,25,650,100);
 
 
         this.add(Campaign);

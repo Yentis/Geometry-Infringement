@@ -25,6 +25,10 @@ public class Window extends JFrame {
     private StartGame startGame;
     private Profile profile;
     private StartGameCampaign startGameCampaign;
+    private Logout logout;
+    private Login login;
+    private InGameSinglePlayer inGameSinglePlayer;
+    private Scoreboard scoreboard;
 
 
     // this
@@ -44,6 +48,7 @@ public class Window extends JFrame {
 
         // Set the panels
         initPanels();
+
 
         // Set the background
         setBackground();
@@ -78,12 +83,20 @@ public class Window extends JFrame {
         startGame = new StartGame();
         profile = new Profile();
         startGameCampaign = new StartGameCampaign();
+        logout  = new Logout();
+        login = new Login();
+        inGameSinglePlayer = new InGameSinglePlayer();
+        scoreboard = new Scoreboard();
 
         // Add UI panels
         frame.add(mainMenu);
         frame.add(startGame);
         frame.add(profile);
         frame.add(startGameCampaign);
+        frame.add(logout);
+        frame.add(login);
+        frame.add(inGameSinglePlayer);
+        frame.add(scoreboard);
 
 
 
@@ -91,6 +104,10 @@ public class Window extends JFrame {
         startGame.setVisible(false);
         profile.setVisible(false);
         startGameCampaign.setVisible(false);
+        logout.setVisible(false);
+        login.setVisible(false);
+        inGameSinglePlayer.setVisible(false);
+        scoreboard.setVisible(false);
     }
 
 
@@ -108,6 +125,14 @@ public class Window extends JFrame {
     }
 
     public Profile getProfile(){ return profile; }
+
+    public Logout getLogout(){ return logout; }
+
+    public Login getLogin() {return login;}
+
+    public InGameSinglePlayer getInGameSinglePlayer() {return inGameSinglePlayer;}
+
+    public Scoreboard getScoreboard() {return scoreboard;}
 
 
 

@@ -11,10 +11,10 @@ public class GTitle extends JLabel {
 
     public GTitle(int x , int y) throws IOException, FontFormatException {
         this.setText("Geometry Wars");
-        this.setFont(new GFont(80));
+        this.setFont(new GFont(64));
         this.setOpaque(true);
         this.setBackground(new Color(255,255,255,95));
-        this.setBounds(x,y,900,131);
+        this.setBounds(x,y,650,100);
         this.setHorizontalAlignment(CENTER);
     }
 
