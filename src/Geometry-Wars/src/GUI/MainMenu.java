@@ -47,6 +47,10 @@ public class MainMenu extends GPanel {
         JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
         JLabel JoinDiscord = new JLabel("Join Server!");
         JList Friends = new JList();
+        GLabel confirmationlabel = new GLabel("Are you sure you want to quit?", 30, 320,285,550,60, false, Color.cyan);
+        JButton Yes = new GButton("Yes", 24f, 455, 380, 100, 47);
+        JButton No = new GButton("No", 24f, 595, 380, 100, 47);
+        JLabel pauzepane = new JLabel();
 
 
         //==================================================
@@ -84,11 +88,7 @@ public class MainMenu extends GPanel {
                 }
             }
         });
-        Quit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                System.exit(0);
-            }
-        });
+
 
         LogOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,6 +110,72 @@ public class MainMenu extends GPanel {
                 // }
             }
         });
+        Quit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                pauzepane.setVisible(true);
+                Yes.setVisible(true);
+                No.setVisible(true);
+                confirmationlabel.setVisible(true);
+                StartGame.setVisible(false);
+                Profile.setVisible(false);
+                Upgrades.setVisible(false);
+                Settings.setVisible(false);
+
+                Friends.setVisible(false);
+                Quit.setVisible(false);
+                LogOut.setVisible(false);
+                Discord.setVisible(false);
+                FriendsBtn.setVisible(false);
+                JoinDiscord.setVisible(false);
+
+
+            }
+
+
+
+        });
+
+        No.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                pauzepane.setVisible(false);
+                Yes.setVisible(false);
+                No.setVisible(false);
+                confirmationlabel.setVisible(false);
+                StartGame.setVisible(true);
+                Profile.setVisible(true);
+                Upgrades.setVisible(true);
+                Settings.setVisible(true);
+
+                Friends.setVisible(true);
+                Quit.setVisible(true);
+                LogOut.setVisible(true);
+                Discord.setVisible(true);
+                FriendsBtn.setVisible(true);
+                JoinDiscord.setVisible(true);
+
+            }
+
+
+
+        });
+
+        Yes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getScoreboard().setVisible(true);
+                System.exit(0);
+
+
+            }
+
+
+
+        });
 
 
         //==================================================
@@ -127,6 +193,11 @@ public class MainMenu extends GPanel {
         Friends.setVisible(false);
         Friends.setBackground(new Color(255, 255, 255, 95));
 
+        pauzepane.setOpaque(true);
+        pauzepane.setBackground(new Color(255,255,255,50));
+        pauzepane.setBorder(BorderFactory.createMatteBorder(
+                2, 2, 2, 2, Color.cyan));
+
 
         //==================================================
 
@@ -138,7 +209,13 @@ public class MainMenu extends GPanel {
         JoinDiscord.setBounds(102, 1000, 180, 35);
         Friends.setBounds(820, 129, 170, 300);
         Discord.setBounds(35, 650, 65, 65);
+        pauzepane.setBounds(280,265,630,245);
 
+
+        pauzepane.setVisible(false);
+        Yes.setVisible(false);
+        No.setVisible(false);
+        confirmationlabel.setVisible(false);
 
         //==================================================
 
@@ -155,6 +232,12 @@ public class MainMenu extends GPanel {
         panel.add(Discord);
         panel.add(FriendsBtn);
         panel.add(JoinDiscord);
+        panel.add(pauzepane);
+        panel.add(Quit);
+        panel.add(confirmationlabel);
+        panel.add(Yes);
+        panel.add(No);
+
 
 
         //==================================================
