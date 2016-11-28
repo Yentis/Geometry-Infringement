@@ -232,6 +232,7 @@ public class MainMenu extends GPanel {
         panel.add(Discord);
         panel.add(FriendsBtn);
         panel.add(JoinDiscord);
+
         panel.add(pauzepane);
         panel.add(Quit);
         panel.add(confirmationlabel);
@@ -240,10 +241,5 @@ public class MainMenu extends GPanel {
 
 
 
-        //==================================================
-
-
     }
-
-
 }
