@@ -3,7 +3,7 @@ package Game;
 /**
  * Created by Yentl-PC on 8/11/2016.
  */
-public class Vijand {
+public class Enemy {
     //region Instance Variables
 
     private int nr;
@@ -19,7 +19,7 @@ public class Vijand {
 
     //region Constructors
 
-    public Vijand (int nr, String naam, String beschrijving, int hp, int kracht, String uiterlijk, int experience, int score){
+    public Enemy(int nr, String naam, String beschrijving, int hp, int kracht, String uiterlijk, int experience, int score){
         this.nr = nr;
         this.naam = naam;
         this.beschrijving = beschrijving;
@@ -30,7 +30,7 @@ public class Vijand {
         this.score = score;
     }
 
-    public Vijand () {
+    public Enemy() {
         this.nr = 0;
         this.naam = "Placeholder";
         this.beschrijving = "Placeholder";

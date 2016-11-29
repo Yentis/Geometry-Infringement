@@ -1,13 +1,11 @@
 package GUI;
 
 import Game.Kogel;
-import Game.Rotation;
 import Game.Schip;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -20,7 +18,7 @@ public class Board extends JPanel implements ActionListener {
     private Timer timer;
     private Schip schip;
     private final int DELAY = 10;
-    private Rotation rotation;
+    //private Movement rotation;
 
     public Board() {
         addKeyListener(new Board.TAdapter());
@@ -31,7 +29,7 @@ public class Board extends JPanel implements ActionListener {
 
         schip = new Schip(1, 100, 10, "src/Media/schip1.png");
 
-        rotation = new Rotation(this, schip);
+        //rotation = new Movement(this, schip);
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -111,12 +109,12 @@ public class Board extends JPanel implements ActionListener {
     private class TAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
-            rotation.keyPressed(e);
+            schip.keyPressed(e);
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
-            rotation.keyReleased(e);
+            schip.keyReleased(e);
         }
     }
 

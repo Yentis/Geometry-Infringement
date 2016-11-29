@@ -17,7 +17,7 @@ public class Spel {
     private List<Schip> schepen = new ArrayList<>();
     private List<Drone> drones = new ArrayList<>();
     private List<Upgrade> upgrades = new ArrayList<>();
-    private List<Vijand> vijanden = new ArrayList<>();
+    private List<Enemy> vijanden = new ArrayList<>();
 
     //endregion
 
@@ -76,7 +76,7 @@ public class Spel {
 
         i = 0;
         while (vijand.next()){
-            vijanden.add(i, new Vijand(vijand.getInt("nr") - 1, vijand.getString("naam"), vijand.getString("beschrijving"), vijand.getInt("hp"), vijand.getInt("kracht"), vijand.getString("uiterlijk"), vijand.getInt("experience"), vijand.getInt("score")));
+            vijanden.add(i, new Enemy(vijand.getInt("nr") - 1, vijand.getString("naam"), vijand.getString("beschrijving"), vijand.getInt("hp"), vijand.getInt("kracht"), vijand.getString("uiterlijk"), vijand.getInt("experience"), vijand.getInt("score")));
             i++;
         }
         //endregion

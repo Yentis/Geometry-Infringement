@@ -10,48 +10,47 @@ import java.awt.event.KeyListener;
 /**
  * Created by Renzie on 26/11/2016.
  */
-public class Rotation implements KeyListener {
+public class Movement implements KeyListener {
     private Schip schip;
-    private JPanel panel;
-    private boolean keyPressed;
     private Timer left, right, up, down;
-    private Rotation rotation;
-
-
 
     // Constructor
-    public Rotation(JPanel panel, Schip schip) {
-        this.panel = panel;
+    public Movement(Schip schip) {
+
         this.schip = schip;
         setTimers();
-
     }
 
 
 
     private void setTimers() {
-        left = new Timer(30, new ActionListener() {
+        left = new Timer(20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotate(10, 270);
+
+
             }
         });
-        right = new Timer(30, new ActionListener() {
+        right = new Timer(20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotate(10, 90);
+
             }
         });
-        up = new Timer(30, new ActionListener() {
+        up = new Timer(20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotate(10, 0);
+
             }
         });
-        down = new Timer(30, new ActionListener() {
+        down = new Timer(20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rotate(10, 180);
+
             }
         });
     }
@@ -96,29 +95,33 @@ public class Rotation implements KeyListener {
         //keyPressed = true;
 
         int key = e.getKeyCode();
-        // Rotation: graden worden in radialen omgezet in Board
+        // Movement: graden worden in radialen omgezet in Board
         switch (key) {
             case KeyEvent.VK_LEFT:
                 if (!left.isRunning()){
                     left.start();
+                    schip.moveLeft(3);
                 }
 
                 break;
             case KeyEvent.VK_RIGHT:
                 if (!right.isRunning()){
                     right.start();
+                    schip.moveRight(3);
                 }
 
                 break;
             case KeyEvent.VK_UP:
                 if (!up.isRunning()){
                     up.start();
+                    schip.moveUp(3);
                 }
 
                 break;
             case KeyEvent.VK_DOWN:
                 if (!down.isRunning()){
                     down.start();
+                    schip.moveDown(3);
                 }
 
                 break;
@@ -129,19 +132,23 @@ public class Rotation implements KeyListener {
     public void keyReleased(KeyEvent e) {
         //keyPressed = true;
         int key = e.getKeyCode();
-        // Rotation: graden worden in radialen omgezet in Board
+        // Movement: graden worden in radialen omgezet in Board
         switch (key) {
             case KeyEvent.VK_LEFT:
-
+                schip.moveLeft(0);
                 left.stop();
+
                 break;
             case KeyEvent.VK_RIGHT:
+                schip.moveRight(0);
                 right.stop();
                 break;
             case KeyEvent.VK_UP:
+                schip.moveUp(0);
                 up.stop();
                 break;
             case KeyEvent.VK_DOWN:
+                schip.moveDown(0);
                 down.stop();
                 break;
         }
