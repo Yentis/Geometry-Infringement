@@ -25,6 +25,7 @@ public class Schip {
     private int width;
     private int height;
     private ArrayList kogels = new ArrayList();
+    private ArrayList coordinateList = new ArrayList();
     private Point location = new Point();
     private double locationX = location.getX();
     private double locationY = location.getY();
@@ -45,7 +46,6 @@ public class Schip {
         locationX = 700;
         locationY = 300;
         location.setLocation(locationX, locationY);
-        System.out.println(location);
         currentAngle = 0;
         this.nr = nr;
         this.hp = hp;
@@ -176,7 +176,17 @@ public class Schip {
         fire(e.getPoint());
     }
 
+    public ArrayList getCoordinateList() {
+        return coordinateList;
+    }
+
     public void fire(Point mousePointer) {
+        final double startPointX = location.getX();
+        final double startPointY = location.getY();
+        Point startingPoint = new Point();
+        startingPoint.setLocation(startPointX,startPointY);
+        coordinateList.add(startingPoint);
+
         kogels.add(new Kogel(location.getX(), location.getY(), mousePointer));
     }
 

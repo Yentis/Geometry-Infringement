@@ -6,15 +6,20 @@ import java.awt.*;
  * Created by Yentl-PC on 10/11/2016.
  */
 public class Kogel extends Sprite {
-    private final int SCREEN_WIDTH = 1920;
+    private final int SCREEN_WIDTH = 1024;
     private double kogelSnelheid = 5;
-
+    private Point startingPoint;
 
 
     public Kogel(double x, double y, Point direction){
         super(x, y, direction);
 
+        //this.startingPoint = startingPoint;
         initKogel();
+    }
+
+    public Point getStartingPoint(){
+        return startingPoint;
     }
 
     private void initKogel(){

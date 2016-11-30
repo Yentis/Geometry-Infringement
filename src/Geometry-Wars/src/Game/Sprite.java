@@ -13,12 +13,12 @@ public class Sprite {
     protected int height;
     protected Image image;
     protected boolean visible;
-    protected Point direction;
+    protected Point target;
 
-    public Sprite(double x, double y, Point direction){
+    public Sprite(double x, double y, Point target){
         this.x = x;
         this.y = y;
-        this.direction = direction;
+        this.target = target;
         visible = true;
     }
 
@@ -41,7 +41,7 @@ public class Sprite {
         return y;
     }
 
-    public Point getDirection() { return direction; }
+    public Point gettarget() { return target; }
 
 
     public boolean isVisible() {
