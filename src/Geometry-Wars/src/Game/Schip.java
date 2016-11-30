@@ -181,15 +181,8 @@ public class Schip {
     }
 
     public void fire(Point mousePointer) {
-        /*final double startPointX = location.getX();
-        final double startPointY = location.getY();
-        Point startingPoint = new Point();
-        startingPoint.setLocation(startPointX,startPointY);
-        coordinateList.add(startingPoint);*/
         double kogelX = locationX;
         double kogelY = locationY;
-
-
         kogels.add(new Kogel(kogelX, kogelY, mousePointer));
     }
 

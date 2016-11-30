@@ -78,7 +78,7 @@ public class Enemy {
         return image;
     }
 
-    public double getDirection(Point target) {
+    public double getDirection(Point target, Point start) {
         double angle = Math.toDegrees(Math.atan2(target.getY() - location.getY(), target.x - location.getX()));
         return angle;
     }
@@ -87,7 +87,7 @@ public class Enemy {
     public void move(double velocityX, double velocityY){
         locationX += velocityX;
         locationY += velocityY;
-
+        System.out.println(location);
 
         location.setLocation(locationX, locationY);
 

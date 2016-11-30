@@ -8,6 +8,7 @@ import javafx.scene.transform.Affine;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -54,9 +55,18 @@ public class Board extends JPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform t = new AffineTransform();
 
-        //g2d.translate(schip.getLocation().getX(), schip.getLocation().getY());
-        g2d.rotate(Math.toRadians(schip.getAngle()), schip.getLocation().getX() + schip.getWidth() / 2, schip.getLocation().getY() + schip.getHeight() / 2);
+        t.translate(schip.getLocation().getX(), schip.getLocation().getY());
+        t.rotate(Math.toRadians(schip.getAngle()), schip.getWidth() / 2, schip.getHeight() / 2);
+        t.translate(-schip.getLocation().getX(), -schip.getLocation().getY());
+        g2d.transform(t);
+
+
         g2d.drawImage(schip.getImage(), schip.getLocation().x, schip.getLocation().y, this);
+        try{
+            g2d.transform(t.createInverse());
+        } catch (NoninvertibleTransformException e){
+            e.printStackTrace();
+        }
     }
 
     private void drawBullets(Graphics g) {
@@ -71,6 +81,11 @@ public class Board extends JPanel implements ActionListener {
             t.translate(k.getX(), k.getY());
             t.rotate(Math.toRadians(schip.getDirection(k.gettarget(), k.getStartingPoint())));
             g2d.drawImage(k.getImage(), t, this);
+            try{
+                g2d.transform(t.createInverse());
+            } catch (NoninvertibleTransformException e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -79,11 +94,20 @@ public class Board extends JPanel implements ActionListener {
 
         //TODO approach enemy towards ship
         AffineTransform t = new AffineTransform();
-        t.translate(enemy.getLocation().getX(), enemy.getLocation().getY());
-        g2d.rotate(Math.toRadians(enemy.getDirection(schip.getLocation())));
+        t.translate(enemy.getLocation().getX(),enemy.getLocation().getY());
+        t.rotate(Math.toRadians(schip.getDirection(schip.getLocation(), enemy.getLocation())));
+        t.translate(-enemy.getLocation().getX(), -enemy.getLocation().getY());
+        g2d.transform(t);
         //g2d.translate( -enemy.getLocation().getX(), -enemy.getLocation().getY());
         //System.out.println(enemy.getLocation());
         g2d.drawImage(enemy.getImage(),enemy.getLocation().x, enemy.getLocation().y, this);
+        try{
+            g2d.transform(t.createInverse());
+        } catch (NoninvertibleTransformException e){
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override
@@ -95,7 +119,7 @@ public class Board extends JPanel implements ActionListener {
 
     }
 
-    //TODO problem: point v/d enemy start op 0,0 + rotate mee met schip wat dus niet zou mogen
+    //TODO problem: rotate mee met schip wat dus niet zou mogen
     private void approachShip(){
         double length;
         double velocityX;
