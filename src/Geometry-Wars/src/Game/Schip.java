@@ -181,13 +181,16 @@ public class Schip {
     }
 
     public void fire(Point mousePointer) {
-        final double startPointX = location.getX();
+        /*final double startPointX = location.getX();
         final double startPointY = location.getY();
         Point startingPoint = new Point();
         startingPoint.setLocation(startPointX,startPointY);
-        coordinateList.add(startingPoint);
+        coordinateList.add(startingPoint);*/
+        double kogelX = locationX;
+        double kogelY = locationY;
 
-        kogels.add(new Kogel(location.getX(), location.getY(), mousePointer));
+
+        kogels.add(new Kogel(kogelX, kogelY, mousePointer));
     }
 
     public int getCurrentAngle() {
@@ -214,8 +217,8 @@ public class Schip {
         return currentAngle;
     }
 
-    public double getDirection(Point target) {
-        double angle = Math.toDegrees(Math.atan2(target.getY() - location.getY(), target.x - location.getX()));
+    public double getDirection(Point target , Point start) {
+        double angle = Math.toDegrees(Math.atan2(target.getY() - start.getY(), target.x - start.getX()));
         return angle;
     }
 

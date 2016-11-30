@@ -13,12 +13,13 @@ public class Kogel extends Sprite {
 
     public Kogel(double x, double y, Point direction){
         super(x, y, direction);
+        startingPoint = new Point();
+        startingPoint.setLocation(x, y);
 
-        //this.startingPoint = startingPoint;
         initKogel();
     }
 
-    public Point getStartingPoint(){
+    public Point getStartingPoint() {
         return startingPoint;
     }
 

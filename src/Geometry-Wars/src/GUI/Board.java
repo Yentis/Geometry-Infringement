@@ -53,7 +53,7 @@ public class Board extends JPanel implements ActionListener {
     private void drawShip(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform t = new AffineTransform();
-        System.out.println(schip.getLocation().getX());
+
         //g2d.translate(schip.getLocation().getX(), schip.getLocation().getY());
         g2d.rotate(Math.toRadians(schip.getAngle()), schip.getLocation().getX() + schip.getWidth() / 2, schip.getLocation().getY() + schip.getHeight() / 2);
         g2d.drawImage(schip.getImage(), schip.getLocation().x, schip.getLocation().y, this);
@@ -69,7 +69,7 @@ public class Board extends JPanel implements ActionListener {
             Kogel k = (Kogel) item;
             AffineTransform t = new AffineTransform();
             t.translate(k.getX(), k.getY());
-            t.rotate(Math.toRadians(schip.getDirection(k.gettarget())));
+            t.rotate(Math.toRadians(schip.getDirection(k.gettarget(), k.getStartingPoint())));
             g2d.drawImage(k.getImage(), t, this);
         }
     }
@@ -136,10 +136,10 @@ public class Board extends JPanel implements ActionListener {
         ArrayList coords = schip.getCoordinateList();
         for (int i = 0; i < kogel.size(); i++) {
             Kogel k = (Kogel) kogel.get(i);
-            Point startingPoint = (Point) coords.get(i);
-            verschilX = k.gettarget().getX() - startingPoint.getX();
-            verschilY = k.gettarget().getY() - startingPoint.getY();
-            System.out.println(k.getStartingPoint());
+
+            verschilX = k.gettarget().getX() - k.getStartingPoint().getX();
+            verschilY = k.gettarget().getY() - k.getStartingPoint().getY();
+            System.out.println(k.getX());
 
             /* verschil x / vierkantswortel van ( verschilx^2 + verschilY^2) om de lengte naar 1 stuk te brengen
             *  dit bepaalt de snelheid van de bullet en kan versneld worden door gewoon de kogelsnelheid te veranderen.*/

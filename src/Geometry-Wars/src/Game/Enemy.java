@@ -87,7 +87,7 @@ public class Enemy {
     public void move(double velocityX, double velocityY){
         locationX += velocityX;
         locationY += velocityY;
-        System.out.println("in move, locationX is: " + locationX);
+
 
         location.setLocation(locationX, locationY);
 
