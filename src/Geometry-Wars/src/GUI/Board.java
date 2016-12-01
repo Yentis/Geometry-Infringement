@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -59,8 +60,10 @@ public class Board extends JPanel implements ActionListener {
         t.rotate(Math.toRadians(schip.getAngle()), schip.getWidth() / 2, schip.getHeight() / 2);
         t.translate(-schip.getLocation().getX(), -schip.getLocation().getY());
         g2d.transform(t);
+        Rectangle2D r = new Rectangle2D.Double(schip.getLocation().getX(), schip.getLocation().getY(), schip.getHitBox().getWidth(), schip.getHitBox().getHeight());
 
 
+        g2d.draw(r);
         g2d.drawImage(schip.getImage(), schip.getLocation().x, schip.getLocation().y, this);
         try{
             g2d.transform(t.createInverse());
@@ -93,15 +96,9 @@ public class Board extends JPanel implements ActionListener {
         t.translate(enemy.getLocation().getX(),enemy.getLocation().getY());
         t.rotate(Math.toRadians(schip.getDirection(schip.getLocation(), enemy.getLocation()) + 90));
         t.translate(-enemy.getLocation().getX(), -enemy.getLocation().getY());
+        g2d.draw(enemy.getR());
         g2d.transform(t);
-        //g2d.translate( -enemy.getLocation().getX(), -enemy.getLocation().getY());
-        //System.out.println(enemy.getLocation());
         g2d.drawImage(enemy.getImage(),enemy.getLocation().x, enemy.getLocation().y, this);
-        /*try{
-            g2d.transform(t.createInverse());
-        } catch (NoninvertibleTransformException e){
-            e.printStackTrace();
-        }*/
 
 
     }

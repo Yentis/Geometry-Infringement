@@ -25,13 +25,12 @@ public class Schip {
     private int width;
     private int height;
     private ArrayList kogels = new ArrayList();
-    private ArrayList coordinateList = new ArrayList();
     private Point location = new Point();
     private double locationX = location.getX();
     private double locationY = location.getY();
     private int currentAngle;
     private Movement move;
-
+    private HitBox hitBox;
 
 
     //endregion
@@ -51,12 +50,16 @@ public class Schip {
         this.hp = hp;
         this.kracht = kracht;
         move = new Movement(this);
+        hitBox = new HitBox(location, width, height);
     }
 
-    //endregion
+
+//endregion
 
     //region Properties
-
+    public HitBox getHitBox() {
+        return hitBox;
+    }
     public void setHp(int hp) {
         this.hp = hp;
     }
@@ -174,10 +177,6 @@ public class Schip {
 
     public void mousePressed(MouseEvent e) {
         fire(e.getPoint());
-    }
-
-    public ArrayList getCoordinateList() {
-        return coordinateList;
     }
 
     public void fire(Point mousePointer) {

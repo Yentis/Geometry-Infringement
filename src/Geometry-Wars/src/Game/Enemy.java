@@ -2,6 +2,7 @@ package Game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
 /**
@@ -16,8 +17,8 @@ public class Enemy {
     private int hp = 100;
     private int kracht = 10;
     private Image image;
-    private int width = 100;
-    private int height = 1000;
+    private double width = 100;
+    private double height = 1000;
     private Point location = new Point();
     private double locationX;
     private double locationY;
@@ -25,7 +26,10 @@ public class Enemy {
     private int score;
 
     private int SCREEN_WIDTH = 1024;
+    private int SCREEN_HEIGHT = 768;
     private boolean visible;
+    private HitBox hitbox;
+    private Rectangle2D r;
 
     //endregion
 
@@ -41,11 +45,21 @@ public class Enemy {
         this.beschrijving = beschrijving;
         this.hp = hp;
         this.kracht = kracht;
-        locationX = randRange(0, 1024);
-        locationY = randRange(0, 768);
+        locationX = randRange(0, SCREEN_WIDTH);
+        locationY = randRange(0, SCREEN_HEIGHT);
         location.setLocation(locationX, locationY);
+        hitbox = new HitBox(location, width, height);
+        r = new Rectangle2D.Double(this.getLocation().getX(), this.getLocation().getY(), hitbox.getWidth(), hitbox.getHeight());
 
 
+    }
+
+    public Rectangle2D getR() {
+        return r;
+    }
+
+    public HitBox getHitbox() {
+        return hitbox;
     }
 
     public boolean isVisible() {
