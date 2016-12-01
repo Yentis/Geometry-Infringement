@@ -87,13 +87,9 @@ public class Enemy {
     public void move(double velocityX, double velocityY){
         locationX += velocityX;
         locationY += velocityY;
-        System.out.println(location);
 
         location.setLocation(locationX, locationY);
 
-        if(locationX > SCREEN_WIDTH){
-            visible = false;
-        }
     }
 
 

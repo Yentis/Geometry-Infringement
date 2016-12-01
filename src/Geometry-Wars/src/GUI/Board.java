@@ -81,31 +81,27 @@ public class Board extends JPanel implements ActionListener {
             t.translate(k.getX(), k.getY());
             t.rotate(Math.toRadians(schip.getDirection(k.gettarget(), k.getStartingPoint())));
             g2d.drawImage(k.getImage(), t, this);
-            try{
-                g2d.transform(t.createInverse());
-            } catch (NoninvertibleTransformException e){
-                e.printStackTrace();
-            }
+
         }
     }
 
     private void drawEnemy(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
 
-        //TODO approach enemy towards ship
+        //TODO rotate correctly
         AffineTransform t = new AffineTransform();
         t.translate(enemy.getLocation().getX(),enemy.getLocation().getY());
-        t.rotate(Math.toRadians(schip.getDirection(schip.getLocation(), enemy.getLocation())));
+        t.rotate(Math.toRadians(schip.getDirection(schip.getLocation(), enemy.getLocation()) + 90));
         t.translate(-enemy.getLocation().getX(), -enemy.getLocation().getY());
         g2d.transform(t);
         //g2d.translate( -enemy.getLocation().getX(), -enemy.getLocation().getY());
         //System.out.println(enemy.getLocation());
         g2d.drawImage(enemy.getImage(),enemy.getLocation().x, enemy.getLocation().y, this);
-        try{
+        /*try{
             g2d.transform(t.createInverse());
         } catch (NoninvertibleTransformException e){
             e.printStackTrace();
-        }
+        }*/
 
 
     }
@@ -119,7 +115,7 @@ public class Board extends JPanel implements ActionListener {
 
     }
 
-    //TODO problem: rotate mee met schip wat dus niet zou mogen
+
     private void approachShip(){
         double length;
         double velocityX;
@@ -140,7 +136,6 @@ public class Board extends JPanel implements ActionListener {
 
 
         if (enemy.getLocation() != schip.getLocation()){
-
             enemy.move(velocityX, velocityY);
         } else{
             //enemy.setVisible(false);
