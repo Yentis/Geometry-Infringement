@@ -189,32 +189,34 @@ public class Schip {
     public void mouseReleased(MouseEvent e) {
         if (mousePressedTimer != null){
             mousePressedTimer.stop();
+            System.out.println("mouse released");
         }
     }
 
     private void addKogels(Kogel k){
-        if (kogels.size() < 10){
+        if (kogels.size() < 30){
             kogels.add(k);
         } else {
             kogels.clear();
+            System.out.println("kogels cleared");
         }
     }
 
     public void fire(Point mousePointer) {
-        if (mousePressedTimer == null){
+        /*if (mousePressedTimer == null){
             mousePressedTimer = new Timer(50, new ActionListener() {
                 @Override
-                public void actionPerformed(ActionEvent e) {
+                public void actionPerformed(ActionEvent e) {*/
                     double kogelX = locationX;
                     double kogelY = locationY;
-                    kogels.add(new Kogel(kogelX, kogelY, mousePointer));
-                }
+                    addKogels(new Kogel(kogelX, kogelY, mousePointer));
+              /*  }
             });
-        }
+       }
         else{
             mousePressedTimer.start();
         }
-
+            */
     }
 
     public int getCurrentAngle() {

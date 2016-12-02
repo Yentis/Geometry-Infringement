@@ -166,7 +166,6 @@ public class Board extends JPanel implements ActionListener {
 
             verschilX = k.gettarget().getX() - k.getStartingPoint().getX();
             verschilY = k.gettarget().getY() - k.getStartingPoint().getY();
-            System.out.println(k.getX());
 
             /* verschil x / vierkantswortel van ( verschilx^2 + verschilY^2) om de lengte naar 1 stuk te brengen
             *  dit bepaalt de snelheid van de bullet en kan versneld worden door gewoon de kogelsnelheid te veranderen.*/
