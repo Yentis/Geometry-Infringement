@@ -19,13 +19,13 @@ import javax.swing.*;
  */
 public class Board extends JPanel implements ActionListener {
 
-    //TODO hitbox enemy
+    //TODO hitbox een beetje modifieen zodat het precies past
 
     private Timer timer;
     private Schip schip;
     private Enemy enemy;
     private final int DELAY = 10;
-    //private Movement rotation;
+
 
     public Board() {
         addKeyListener(new Board.TAdapter());
@@ -37,10 +37,11 @@ public class Board extends JPanel implements ActionListener {
         schip = new Schip(1, 100, 10, "src/Media/schip1.png");
         enemy = new Enemy(1, "WutFace", "euh wa moek ier zetten", 100, 10, "src/Media/vijand1.png", 20, 20);
 
-        //rotation = new Movement(this, schip);
 
         timer = new Timer(DELAY, this);
         timer.start();
+
+
 
        }
 
@@ -133,8 +134,6 @@ public class Board extends JPanel implements ActionListener {
         double verschilX;
         double verschilY;
 
-       // ArrayList enemies = schip.getKogels();
-        // enemy spawnpoint -
         verschilX = schip.getLocation().getX() - enemy.getLocation().getX();
         verschilY = schip.getLocation().getY() - enemy.getLocation().getY();
 
@@ -198,9 +197,13 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private class MAdapter extends MouseAdapter {
+
         @Override
         public void mousePressed(MouseEvent e) {
             schip.mousePressed(e);
         }
+
+        @Override
+        public void mouseReleased(MouseEvent e){ schip.mouseReleased(e); }
     }
 }

@@ -2,6 +2,8 @@ package Game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class Schip {
     private int currentAngle;
     private Movement move;
     private HitBox hitBox;
+    private Timer mousePressedTimer;
 
 
     //endregion
@@ -112,6 +115,10 @@ public class Schip {
 
     //region Behaviour
 
+    private void initTimer(){
+
+    }
+
     public void addKracht(int amount) {
         this.kracht += amount;
     }
@@ -179,10 +186,35 @@ public class Schip {
         fire(e.getPoint());
     }
 
+    public void mouseReleased(MouseEvent e) {
+        if (mousePressedTimer != null){
+            mousePressedTimer.stop();
+        }
+    }
+
+    private void addKogels(Kogel k){
+        if (kogels.size() < 10){
+            kogels.add(k);
+        } else {
+            kogels.clear();
+        }
+    }
+
     public void fire(Point mousePointer) {
-        double kogelX = locationX;
-        double kogelY = locationY;
-        kogels.add(new Kogel(kogelX, kogelY, mousePointer));
+        if (mousePressedTimer == null){
+            mousePressedTimer = new Timer(50, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    double kogelX = locationX;
+                    double kogelY = locationY;
+                    kogels.add(new Kogel(kogelX, kogelY, mousePointer));
+                }
+            });
+        }
+        else{
+            mousePressedTimer.start();
+        }
+
     }
 
     public int getCurrentAngle() {
