@@ -19,6 +19,8 @@ import javax.swing.*;
  */
 public class Board extends JPanel implements ActionListener {
 
+    //TODO hitbox enemy
+
     private Timer timer;
     private Schip schip;
     private Enemy enemy;
@@ -79,10 +81,17 @@ public class Board extends JPanel implements ActionListener {
 
 
         for (Object item : kogels) {
+
             Kogel k = (Kogel) item;
+            double angle = schip.getDirection(k.gettarget(), k.getStartingPoint());
             AffineTransform t = new AffineTransform();
             t.translate(k.getX(), k.getY());
-            t.rotate(Math.toRadians(schip.getDirection(k.gettarget(), k.getStartingPoint())));
+            t.rotate(Math.toRadians(angle), k.getHitBox().getWidth() / 2, k.getHitBox().getHeight() / 2);
+            Rectangle2D r = new Rectangle2D.Double(k.getX(), k.getY(), k.getHitBox().getWidth(), k.getHitBox().getHeight());
+
+
+
+            g2d.draw(r);
             g2d.drawImage(k.getImage(), t, this);
 
         }
@@ -93,11 +102,15 @@ public class Board extends JPanel implements ActionListener {
 
         //TODO rotate correctly
         AffineTransform t = new AffineTransform();
+
         t.translate(enemy.getLocation().getX(),enemy.getLocation().getY());
-        t.rotate(Math.toRadians(schip.getDirection(schip.getLocation(), enemy.getLocation()) + 90));
+        t.rotate(Math.toRadians(schip.getDirection(schip.getLocation(), enemy.getLocation()) + 90), enemy.getHitbox().getWidth() / 2, enemy.getHitbox().getHeight() / 2);
         t.translate(-enemy.getLocation().getX(), -enemy.getLocation().getY());
-        g2d.draw(enemy.getR());
+
         g2d.transform(t);
+        Rectangle2D r = new Rectangle2D.Double(enemy.getLocation().getX(), enemy.getLocation().getY(), enemy.getHitbox().getWidth(), enemy.getHitbox().getHeight());
+
+        g2d.draw(r);
         g2d.drawImage(enemy.getImage(),enemy.getLocation().x, enemy.getLocation().y, this);
 
 
@@ -149,7 +162,6 @@ public class Board extends JPanel implements ActionListener {
         double verschilY;
 
         ArrayList kogel = schip.getKogels();
-        ArrayList coords = schip.getCoordinateList();
         for (int i = 0; i < kogel.size(); i++) {
             Kogel k = (Kogel) kogel.get(i);
 
