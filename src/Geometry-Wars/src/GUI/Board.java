@@ -68,7 +68,9 @@ public class Board extends JPanel implements ActionListener {
         try{
             g2d.transform(t.createInverse());
         } catch (NoninvertibleTransformException e){
+
             e.printStackTrace();
+
         }
     }
 
