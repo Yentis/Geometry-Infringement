@@ -14,8 +14,10 @@ public class HitBox {
         this.width = width;
         this.center = center;
         this.height = height;
-
     }
+
+    //TODO hitboxposition definen
+    //public void
 
     public Point getCenter() {
         return center;

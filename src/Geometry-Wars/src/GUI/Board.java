@@ -19,11 +19,13 @@ import javax.swing.*;
  */
 public class Board extends JPanel implements ActionListener {
 
+    //TODO hitbox een beetje modifieen zodat het precies past
+
     private Timer timer;
     private Schip schip;
     private Enemy enemy;
     private final int DELAY = 10;
-    //private Movement rotation;
+
 
     public Board() {
         addKeyListener(new Board.TAdapter());
@@ -35,10 +37,11 @@ public class Board extends JPanel implements ActionListener {
         schip = new Schip(1, 100, 10, "src/Media/schip1.png");
         enemy = new Enemy(1, "WutFace", "euh wa moek ier zetten", 100, 10, "src/Media/vijand1.png", 20, 20);
 
-        //rotation = new Movement(this, schip);
 
         timer = new Timer(DELAY, this);
         timer.start();
+
+
 
        }
 
@@ -81,10 +84,17 @@ public class Board extends JPanel implements ActionListener {
 
 
         for (Object item : kogels) {
+
             Kogel k = (Kogel) item;
+            double angle = schip.getDirection(k.gettarget(), k.getStartingPoint());
             AffineTransform t = new AffineTransform();
             t.translate(k.getX(), k.getY());
-            t.rotate(Math.toRadians(schip.getDirection(k.gettarget(), k.getStartingPoint())));
+            t.rotate(Math.toRadians(angle), k.getHitBox().getWidth() / 2, k.getHitBox().getHeight() / 2);
+            Rectangle2D r = new Rectangle2D.Double(k.getX(), k.getY(), k.getHitBox().getWidth(), k.getHitBox().getHeight());
+
+
+
+            g2d.draw(r);
             g2d.drawImage(k.getImage(), t, this);
 
         }
@@ -95,11 +105,15 @@ public class Board extends JPanel implements ActionListener {
 
         //TODO rotate correctly
         AffineTransform t = new AffineTransform();
+
         t.translate(enemy.getLocation().getX(),enemy.getLocation().getY());
-        t.rotate(Math.toRadians(schip.getDirection(schip.getLocation(), enemy.getLocation()) + 90));
+        t.rotate(Math.toRadians(schip.getDirection(schip.getLocation(), enemy.getLocation()) + 90), enemy.getHitbox().getWidth() / 2, enemy.getHitbox().getHeight() / 2);
         t.translate(-enemy.getLocation().getX(), -enemy.getLocation().getY());
-        g2d.draw(enemy.getR());
+
         g2d.transform(t);
+        Rectangle2D r = new Rectangle2D.Double(enemy.getLocation().getX(), enemy.getLocation().getY(), enemy.getHitbox().getWidth(), enemy.getHitbox().getHeight());
+
+        g2d.draw(r);
         g2d.drawImage(enemy.getImage(),enemy.getLocation().x, enemy.getLocation().y, this);
 
 
@@ -122,8 +136,6 @@ public class Board extends JPanel implements ActionListener {
         double verschilX;
         double verschilY;
 
-       // ArrayList enemies = schip.getKogels();
-        // enemy spawnpoint -
         verschilX = schip.getLocation().getX() - enemy.getLocation().getX();
         verschilY = schip.getLocation().getY() - enemy.getLocation().getY();
 
@@ -151,13 +163,11 @@ public class Board extends JPanel implements ActionListener {
         double verschilY;
 
         ArrayList kogel = schip.getKogels();
-        ArrayList coords = schip.getCoordinateList();
         for (int i = 0; i < kogel.size(); i++) {
             Kogel k = (Kogel) kogel.get(i);
 
             verschilX = k.gettarget().getX() - k.getStartingPoint().getX();
             verschilY = k.gettarget().getY() - k.getStartingPoint().getY();
-            System.out.println(k.getX());
 
             /* verschil x / vierkantswortel van ( verschilx^2 + verschilY^2) om de lengte naar 1 stuk te brengen
             *  dit bepaalt de snelheid van de bullet en kan versneld worden door gewoon de kogelsnelheid te veranderen.*/
@@ -188,9 +198,13 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private class MAdapter extends MouseAdapter {
+
         @Override
         public void mousePressed(MouseEvent e) {
             schip.mousePressed(e);
         }
+
+        @Override
+        public void mouseReleased(MouseEvent e){ schip.mouseReleased(e); }
     }
 }
