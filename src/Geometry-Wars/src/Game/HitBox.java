@@ -1,11 +1,12 @@
 package Game;
 
 import java.awt.*;
+import java.awt.geom.Area;
 
 /**
  * Created by Renzie on 1/12/2016.
  */
-public class HitBox {
+public class HitBox{
     private Point center;
     private double width;
     private double height;
@@ -17,7 +18,17 @@ public class HitBox {
     }
 
     //TODO hitboxposition definen
-    //public void
+    /* center - width / 2
+     * center + width / 2
+     * center + height / 2
+     * center - height / 2
+     */
+
+    public boolean testIntersection(Shape shapeA, Shape shapeB){
+        Area areaA = new Area(shapeA);
+        areaA.intersect(new Area(shapeB));
+        return !areaA.isEmpty();
+    }
 
     public Point getCenter() {
         return center;
@@ -32,6 +43,6 @@ public class HitBox {
     }
 
     public void checkIfHit(HitBox approachingHitBox){
-        //if (approachingHitBox.getCenter().)
+
     }
 }

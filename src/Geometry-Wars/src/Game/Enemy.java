@@ -29,7 +29,7 @@ public class Enemy {
     private int SCREEN_HEIGHT = 768;
     private boolean visible;
     private HitBox hitbox;
-    private Rectangle2D r;
+    private Rectangle2D rectangle;
 
     //endregion
 
@@ -49,13 +49,17 @@ public class Enemy {
         locationY = randRange(0, SCREEN_HEIGHT);
         location.setLocation(locationX, locationY);
         hitbox = new HitBox(location, width, height);
-        r = new Rectangle2D.Double(this.getLocation().getX(), this.getLocation().getY(), hitbox.getWidth(), hitbox.getHeight());
+
 
 
     }
 
-    public Rectangle2D getR() {
-        return r;
+    public Rectangle2D getRectangle() {
+        return rectangle;
+    }
+
+    public void setRectangle(Rectangle2D rectangle) {
+        this.rectangle = rectangle;
     }
 
     public HitBox getHitbox() {

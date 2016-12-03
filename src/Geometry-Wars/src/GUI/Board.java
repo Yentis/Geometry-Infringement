@@ -63,10 +63,21 @@ public class Board extends JPanel implements ActionListener {
         t.rotate(Math.toRadians(schip.getAngle()), schip.getWidth() / 2, schip.getHeight() / 2);
         t.translate(-schip.getLocation().getX(), -schip.getLocation().getY());
         g2d.transform(t);
-        Rectangle2D r = new Rectangle2D.Double(schip.getLocation().getX(), schip.getLocation().getY(), schip.getHitBox().getWidth(), schip.getHitBox().getHeight());
+
+        if (schip.getRectangle() == null){
+            schip.setRectangle(new Rectangle2D.Double(schip.getLocation().getX(), schip.getLocation().getY(), schip.getHitBox().getWidth(), schip.getHitBox().getHeight()));
+        } else {
+            schip.getRectangle().setRect(schip.getLocation().getX(), schip.getLocation().getY(), schip.getHitBox().getWidth(), schip.getHitBox().getHeight());
+        }
+
+        if (schip.collisionDetect(enemy.getRectangle())){
+            System.out.println("ej twerkt");
+        }
 
 
-        g2d.draw(r);
+
+        g2d.draw(schip.getRectangle());
+        //schip.getHitBox().testIntersection(r, )
         g2d.drawImage(schip.getImage(), schip.getLocation().x, schip.getLocation().y, this);
         try{
             g2d.transform(t.createInverse());
@@ -111,7 +122,13 @@ public class Board extends JPanel implements ActionListener {
         g2d.transform(t);
         Rectangle2D r = new Rectangle2D.Double(enemy.getLocation().getX(), enemy.getLocation().getY(), enemy.getHitbox().getWidth(), enemy.getHitbox().getHeight());
 
-        g2d.draw(r);
+        if (enemy.getRectangle() == null){
+            enemy.setRectangle(new Rectangle2D.Double(enemy.getLocation().getX(), enemy.getLocation().getY(), enemy.getHitbox().getWidth(), enemy.getHitbox().getHeight()));
+        } else {
+            enemy.getRectangle().setRect(enemy.getLocation().getX(), enemy.getLocation().getY(), enemy.getHitbox().getWidth(), enemy.getHitbox().getHeight());
+        }
+
+        g2d.draw(enemy.getRectangle());
         g2d.drawImage(enemy.getImage(),enemy.getLocation().x, enemy.getLocation().y, this);
 
 

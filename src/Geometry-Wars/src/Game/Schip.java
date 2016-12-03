@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import static java.lang.Math.abs;
@@ -33,7 +35,7 @@ public class Schip {
     private int currentAngle;
     private Movement move;
     private HitBox hitBox;
-    private Timer mousePressedTimer;
+    private Rectangle2D rectangle;
 
 
     //endregion
@@ -54,15 +56,38 @@ public class Schip {
         this.kracht = kracht;
         move = new Movement(this);
         hitBox = new HitBox(location, width, height);
+        //rectangle = new Rectangle2D.Double(location.getX(), location.getY(), hitBox.getWidth(), hitBox.getHeight());
+
     }
 
 
 //endregion
 
     //region Properties
+
+
     public HitBox getHitBox() {
-        return hitBox;
+       return hitBox;
+   }
+
+    public void setRectangle(Rectangle2D rectangle) {
+        this.rectangle = rectangle;
     }
+
+    public Rectangle2D getRectangle() {
+        return rectangle;
+    }
+
+    public boolean collisionDetect(Rectangle2D approachingTarget) {
+        return approachingTarget != null && rectangle.getBounds2D().intersects(approachingTarget.getBounds2D());
+
+    }
+
+
+    /*public Rectangle2D setRectangle(double posX, double posY, double width, double height){
+        return this.rectangle = rectangle.setRect(posX,posY,width,height);
+    }*/
+
     public void setHp(int hp) {
         this.hp = hp;
     }
@@ -158,6 +183,9 @@ public class Schip {
         }
 
 
+    /*public void makeNewHitbox(){
+        if
+    }*/
 
 
     public void keyReleased(KeyEvent e) {
@@ -187,10 +215,10 @@ public class Schip {
     }
 
     public void mouseReleased(MouseEvent e) {
-        if (mousePressedTimer != null){
+        /*if (mousePressedTimer != null){
             mousePressedTimer.stop();
             System.out.println("mouse released");
-        }
+        }*/
     }
 
     private void addKogels(Kogel k){
