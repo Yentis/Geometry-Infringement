@@ -34,7 +34,7 @@ public class Schip {
     private double locationY = location.getY();
     private int currentAngle;
     private Movement move;
-    private HitBox hitBox;
+
     private Rectangle2D rectangle;
 
 
@@ -55,20 +55,12 @@ public class Schip {
         this.hp = hp;
         this.kracht = kracht;
         move = new Movement(this);
-        hitBox = new HitBox(location, width, height);
-        //rectangle = new Rectangle2D.Double(location.getX(), location.getY(), hitBox.getWidth(), hitBox.getHeight());
-
     }
 
 
 //endregion
 
     //region Properties
-
-
-    public HitBox getHitBox() {
-       return hitBox;
-   }
 
     public void setRectangle(Rectangle2D rectangle) {
         this.rectangle = rectangle;
@@ -82,11 +74,6 @@ public class Schip {
         return approachingTarget != null && rectangle.getBounds2D().intersects(approachingTarget.getBounds2D());
 
     }
-
-
-    /*public Rectangle2D setRectangle(double posX, double posY, double width, double height){
-        return this.rectangle = rectangle.setRect(posX,posY,width,height);
-    }*/
 
     public void setHp(int hp) {
         this.hp = hp;
@@ -112,37 +99,15 @@ public class Schip {
         return location;
     }
 
-    public double getDy() {
-        return dy;
+    public int getAngle() {
+        return currentAngle;
     }
 
-    public double getDx() {
-        return dx;
-    }
-
-    public void setDy(double dy) {
-        this.dy = dy;
-    }
-
-    public void setDx(double dx) {
-        this.dx = dx;
-    }
-
-    public void setLocationX(double locationX) {
-        this.locationX = locationX;
-    }
-
-    public void setLocationY(double locationY) {
-        this.locationY = locationY;
-    }
     //endregion
 
 
     //region Behaviour
 
-    private void initTimer(){
-
-    }
 
     public void addKracht(int amount) {
         this.kracht += amount;
@@ -154,39 +119,24 @@ public class Schip {
 
     public void beweegSchip() {
 
-        //dr = 15;
-        if (r > 360) {
-            r -= 360;
-        } else if (r < -360) {
-            r += 360;
-        }
-
-        if (locationX > 1024) {
-            locationX = 1024;
-        } else if (locationX < 0) {
-            locationX = 0;
-        } else if (locationY > 768) {
-            locationY = 768;
-        } else if (location.getY() < 0) {
-            locationY = 0;
-        }
+        locationX = limitToBorders(locationX , 0 , 1024);
+        locationY = limitToBorders(locationY , 0 , 768);
 
         location.setLocation(locationX += dx, locationY += dy);
+    }
 
-
-        //r += dr;
+    private double limitToBorders(double currLocation, double minBorder, double maxBorder){
+        if (currLocation > maxBorder) {
+            return maxBorder;
+        } else if (currLocation < minBorder) {
+           return minBorder;
+        }
+        return currLocation;
     }
 
     public void keyPressed(KeyEvent e) {
         move.keyPressed(e);
-
         }
-
-
-    /*public void makeNewHitbox(){
-        if
-    }*/
-
 
     public void keyReleased(KeyEvent e) {
         move.keyReleased(e);
@@ -255,20 +205,15 @@ public class Schip {
         this.currentAngle = currentAngle;
     }
 
-    // nodig voor wanneer currentangle negatief wordt
+
+    // Dit zorgt ervoor dat de angle binnen 360 blijft.
     public int normalizeAngle(int angle) {
-        //angle = angle % 360;
         if (angle < 0 || 360 < angle) {
             angle = (angle + 360) % 360;
             return angle;
         } else {
             return angle;
         }
-    }
-
-
-    public int getAngle() {
-        return currentAngle;
     }
 
     public double getDirection(Point target , Point start) {

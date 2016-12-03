@@ -65,9 +65,9 @@ public class Board extends JPanel implements ActionListener {
         g2d.transform(t);
 
         if (schip.getRectangle() == null){
-            schip.setRectangle(new Rectangle2D.Double(schip.getLocation().getX(), schip.getLocation().getY(), schip.getHitBox().getWidth(), schip.getHitBox().getHeight()));
+            schip.setRectangle(new Rectangle2D.Double(schip.getLocation().getX(), schip.getLocation().getY(), schip.getWidth(), schip.getHeight()));
         } else {
-            schip.getRectangle().setRect(schip.getLocation().getX(), schip.getLocation().getY(), schip.getHitBox().getWidth(), schip.getHitBox().getHeight());
+            schip.getRectangle().setRect(schip.getLocation().getX(), schip.getLocation().getY(), schip.getWidth(), schip.getHeight());
         }
 
         if (schip.collisionDetect(enemy.getRectangle())){
