@@ -137,8 +137,8 @@ public class Board extends JPanel implements ActionListener {
         verschilX = schip.getLocation().getX() - enemy.getLocation().getX();
         verschilY = schip.getLocation().getY() - enemy.getLocation().getY();
 
-            /* verschil x / vierkantswortel van ( verschilx^2 + verschilY^2) om de lengte naar 1 stuk te brengen
-            *  dit bepaalt de snelheid van de bullet en kan versneld worden door gewoon de kogelsnelheid te veranderen.*/
+        /* verschil x / vierkantswortel van ( verschilx^2 + verschilY^2) om de lengte naar 1 stuk te brengen
+        *  dit bepaalt de snelheid van de bullet en kan versneld worden door gewoon de kogelsnelheid te veranderen.*/
         length = Math.sqrt(Math.pow(verschilX, 2) + Math.pow(verschilY, 2));
         velocityX = ((verschilX) / length);
         velocityY = ((verschilY) / length);
