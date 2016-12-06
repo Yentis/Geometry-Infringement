@@ -28,7 +28,7 @@ public class Enemy {
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
     private boolean visible;
-    private HitBox hitbox;
+
     private Rectangle2D rectangle;
 
     //endregion
@@ -48,7 +48,7 @@ public class Enemy {
         locationX = randRange(0, SCREEN_WIDTH);
         locationY = randRange(0, SCREEN_HEIGHT);
         location.setLocation(locationX, locationY);
-        hitbox = new HitBox(location, width, height);
+
 
 
 
@@ -62,8 +62,12 @@ public class Enemy {
         this.rectangle = rectangle;
     }
 
-    public HitBox getHitbox() {
-        return hitbox;
+    public double getWidth() {
+        return width;
+    }
+
+    public double getHeight() {
+        return height;
     }
 
     public boolean isVisible() {
