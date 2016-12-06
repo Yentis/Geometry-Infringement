@@ -23,7 +23,7 @@ public class Board extends JPanel implements ActionListener {
     private Schip schip;
     //private Enemy enemy;
     private final int DELAY = 10;
-    private ArrayList enemiesOnField = new ArrayList();
+    private ArrayList<Enemy> enemiesOnField = new ArrayList<Enemy>();
     private int enemyCounter = 1;
 
 
@@ -104,8 +104,6 @@ public class Board extends JPanel implements ActionListener {
             t.rotate(Math.toRadians(angle), k.getHitBox().getWidth() / 2, k.getHitBox().getHeight() / 2);
             Rectangle2D r = new Rectangle2D.Double(k.getX(), k.getY(), k.getHitBox().getWidth(), k.getHitBox().getHeight());
 
-
-
             g2d.draw(r);
             g2d.drawImage(k.getImage(), t, this);
 
@@ -114,8 +112,8 @@ public class Board extends JPanel implements ActionListener {
 
     private void drawEnemy(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
-        for (Object anEnemiesOnField : enemiesOnField) {
-            Enemy enemy = (Enemy) anEnemiesOnField;
+        for (Enemy enemy : enemiesOnField) {
+
 
             //uh.. dit wordt gebruikt om de vorige transform te restoren ofzoiets idk - Renzie
             AffineTransform old = g2d.getTransform();
@@ -166,8 +164,7 @@ public class Board extends JPanel implements ActionListener {
         double verschilX;
         double verschilY;
 
-        for (int i = 0; i < enemiesOnField.size(); i++) {
-            Enemy enemy = (Enemy) enemiesOnField.get(i);
+        for (Enemy enemy : enemiesOnField) {
             verschilX = schip.getLocation().getX() - enemy.getLocation().getX();
             verschilY = schip.getLocation().getY() - enemy.getLocation().getY();
 

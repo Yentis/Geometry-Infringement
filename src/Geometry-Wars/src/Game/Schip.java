@@ -15,7 +15,7 @@ import static java.lang.Math.abs;
 /**
  * Created by Yentl-PC on 8/11/2016.
  */
-public class Schip {
+public class Schip extends Sprite{
 
     //region Instance Variables
 
@@ -25,9 +25,6 @@ public class Schip {
     private int r;
     private double dx;
     private double dy;
-    private Image image;
-    private int width;
-    private int height;
     private ArrayList kogels = new ArrayList();
     private Point location = new Point();
     private double locationX = location.getX();
@@ -35,18 +32,13 @@ public class Schip {
     private int currentAngle;
     private Movement move;
 
-    private Rectangle2D rectangle;
-
 
     //endregion
 
     //region Constructors
 
     public Schip(int nr, int hp, int kracht, String image) {
-        ImageIcon ii = new ImageIcon(image);
-        width = ii.getIconWidth();
-        height = ii.getIconHeight();
-        this.image = ii.getImage();
+        super(image);
         locationX = 700;
         locationY = 300;
         location.setLocation(locationX, locationY);
@@ -58,22 +50,9 @@ public class Schip {
     }
 
 
-//endregion
+    //endregion
 
     //region Properties
-
-    public void setRectangle(Rectangle2D rectangle) {
-        this.rectangle = rectangle;
-    }
-
-    public Rectangle2D getRectangle() {
-        return rectangle;
-    }
-
-    public boolean collisionDetect(Rectangle2D approachingTarget) {
-        return approachingTarget != null && rectangle.getBounds2D().intersects(approachingTarget.getBounds2D());
-
-    }
 
     public void setHp(int hp) {
         this.hp = hp;
@@ -81,14 +60,6 @@ public class Schip {
 
     public Image getImage() {
         return image;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
     }
 
     public ArrayList getKogels() {
@@ -158,8 +129,6 @@ public class Schip {
         dx = speed;
     }
 
-
-
     public void mousePressed(MouseEvent e) {
         fire(e.getPoint());
     }
@@ -205,7 +174,6 @@ public class Schip {
         this.currentAngle = currentAngle;
     }
 
-
     // Dit zorgt ervoor dat de angle binnen 360 blijft.
     public int normalizeAngle(int angle) {
         if (angle < 0 || 360 < angle) {
@@ -214,11 +182,6 @@ public class Schip {
         } else {
             return angle;
         }
-    }
-
-    public double getDirection(Point target , Point start) {
-        double angle = Math.toDegrees(Math.atan2(target.getY() - start.getY(), target.x - start.getX()));
-        return angle;
     }
 
     //endregion

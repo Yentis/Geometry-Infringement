@@ -14,7 +14,6 @@ public class Kogel extends Sprite {
     private Image image;
     private int width;
     private int height;
-    private double currentAngle;
 
 
     public Kogel(double x, double y, Point direction){

@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * Created by Yentl-PC on 8/11/2016.
  */
-public class Enemy {
+public class Enemy extends Sprite{
     //region Instance Variables
 
     private int nr;
@@ -16,30 +16,20 @@ public class Enemy {
     private String beschrijving;
     private int hp = 100;
     private int kracht = 10;
-    private Image image;
-    private double width = 100;
-    private double height = 1000;
     private Point location = new Point();
     private double locationX;
     private double locationY;
     private int experience;
     private int score;
-
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
-    private boolean visible;
-
-    private Rectangle2D rectangle;
 
     //endregion
 
     //region Constructors
 
     public Enemy(int nr, String naam, String beschrijving, int hp, int kracht, String image, int experience, int score){
-        ImageIcon ii = new ImageIcon(image);
-        width = ii.getIconWidth();
-        height = ii.getIconHeight();
-        this.image = ii.getImage();
+        super(image);
         this.nr = nr;
         this.naam = naam;
         this.beschrijving = beschrijving;
@@ -48,18 +38,6 @@ public class Enemy {
         locationX = randRange(0, SCREEN_WIDTH);
         locationY = randRange(0, SCREEN_HEIGHT);
         location.setLocation(locationX, locationY);
-
-
-
-
-    }
-
-    public Rectangle2D getRectangle() {
-        return rectangle;
-    }
-
-    public void setRectangle(Rectangle2D rectangle) {
-        this.rectangle = rectangle;
     }
 
     public double getWidth() {
@@ -68,14 +46,6 @@ public class Enemy {
 
     public double getHeight() {
         return height;
-    }
-
-    public boolean isVisible() {
-        return visible;
-    }
-
-    public void setVisible(boolean visible) {
-        this.visible = visible;
     }
 
     public double randRange(int minRange, int maxRange){
@@ -89,20 +59,15 @@ public class Enemy {
         return location;
     }
 
-    public Enemy() {
+    /*public Enemy() {
         this.nr = 0;
         this.naam = "Placeholder";
         this.beschrijving = "Placeholder";
 
-    }
+    }*/
 
     public Image getImage(){
         return image;
-    }
-
-    public double getDirection(Point target, Point start) {
-        double angle = Math.toDegrees(Math.atan2(target.getY() - location.getY(), target.x - location.getX()));
-        return angle;
     }
 
 
@@ -113,13 +78,6 @@ public class Enemy {
         location.setLocation(locationX, locationY);
 
     }
-
-
-
-    // moet spawnen
-
-
-    // moet van spawnpunt naar schip vliegen op een bepaalde manier
 
     //endregion
 }
