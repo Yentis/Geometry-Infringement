@@ -7,10 +7,10 @@ import javafx.scene.transform.Affine;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.NoninvertibleTransformException;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.*;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
 import javax.swing.*;
 
 
@@ -23,8 +23,11 @@ public class Board extends JPanel implements ActionListener {
 
     private Timer timer;
     private Schip schip;
-    private Enemy enemy;
     private final int DELAY = 10;
+    private ArrayList<Enemy> enemyOnField = new ArrayList<Enemy>();
+    private Iterator<Enemy> enemyIterator = enemyOnField.iterator();
+
+    private int enemyCounter = 1;
 
 
     public Board() {
@@ -35,12 +38,10 @@ public class Board extends JPanel implements ActionListener {
         setDoubleBuffered(true);
 
         schip = new Schip(1, 100, 10, "src/Media/schip1.png");
-        enemy = new Enemy(1, "WutFace", "euh wa moek ier zetten", 100, 10, "src/Media/vijand1.png", 20, 20);
-
 
         timer = new Timer(DELAY, this);
         timer.start();
-
+        spawnEnemies();
 
 
        }
@@ -63,10 +64,21 @@ public class Board extends JPanel implements ActionListener {
         t.rotate(Math.toRadians(schip.getAngle()), schip.getWidth() / 2, schip.getHeight() / 2);
         t.translate(-schip.getLocation().getX(), -schip.getLocation().getY());
         g2d.transform(t);
-        Rectangle2D r = new Rectangle2D.Double(schip.getLocation().getX(), schip.getLocation().getY(), schip.getHitBox().getWidth(), schip.getHitBox().getHeight());
+
+        if (schip.getRectangle() == null){
+            schip.setRectangle(new Rectangle2D.Double(schip.getLocation().getX(), schip.getLocation().getY(), schip.getWidth(), schip.getHeight()));
+        } else {
+            schip.getRectangle().setRect(schip.getLocation().getX(), schip.getLocation().getY(), schip.getWidth(), schip.getHeight());
+        }
+
+        /*if (schip.collisionDetect(enemy.getRectangle())){
+            System.out.println("ej twerkt");
+        }*/
 
 
-        g2d.draw(r);
+
+        g2d.draw(schip.getRectangle());
+
         g2d.drawImage(schip.getImage(), schip.getLocation().x, schip.getLocation().y, this);
         try{
             g2d.transform(t.createInverse());
@@ -86,36 +98,70 @@ public class Board extends JPanel implements ActionListener {
         for (Object item : kogels) {
 
             Kogel k = (Kogel) item;
-            double angle = schip.getDirection(k.gettarget(), k.getStartingPoint());
+            AffineTransform old = g2d.getTransform();
+            double angle = k.getDirection(k.gettarget(), k.getStartingPoint());
             AffineTransform t = new AffineTransform();
-            t.translate(k.getX(), k.getY());
-            t.rotate(Math.toRadians(angle), k.getHitBox().getWidth() / 2, k.getHitBox().getHeight() / 2);
-            Rectangle2D r = new Rectangle2D.Double(k.getX(), k.getY(), k.getHitBox().getWidth(), k.getHitBox().getHeight());
+            t.translate(k.getLocation().getX(), k.getLocation().getY());
+            t.rotate(Math.toRadians(angle), k.getWidth() / 2, k.getHeight() / 2);
+            t.translate(-k.getLocation().getX(), -k.getLocation().getY());
+            g2d.transform(t);
 
+            if (k.getRectangle() == null) {
+                k.setRectangle(new Rectangle2D.Double(k.getX(), k.getY(), k.getWidth(), k.getHeight()));
+            } else {
+                k.getRectangle().setRect(k.getX(), k.getY(), k.getWidth(), k.getHeight());
+            }
 
-
-            g2d.draw(r);
-            g2d.drawImage(k.getImage(), t, this);
-
+            g2d.draw(k.getRectangle());
+            g2d.drawImage(k.getImage(), k.getLocation().x, k.getLocation().y, this);
+            g2d.setTransform(old);
         }
     }
 
     private void drawEnemy(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
+        ArrayList kogels = schip.getKogels();
+        for (Iterator<Enemy> iterator = enemyOnField.iterator(); iterator.hasNext(); ) {
+            Enemy enemy = iterator.next();
+            
+            //uh.. dit wordt gebruikt om de vorige transform te restoren ofzoiets idk - Renzie
+            AffineTransform old = g2d.getTransform();
 
-        //TODO rotate correctly
-        AffineTransform t = new AffineTransform();
 
-        t.translate(enemy.getLocation().getX(),enemy.getLocation().getY());
-        t.rotate(Math.toRadians(schip.getDirection(schip.getLocation(), enemy.getLocation()) + 90), enemy.getHitbox().getWidth() / 2, enemy.getHitbox().getHeight() / 2);
-        t.translate(-enemy.getLocation().getX(), -enemy.getLocation().getY());
+            //Hier wordt alles veranderd op enkel t - Renzie
+            AffineTransform t = new AffineTransform();
+            t.translate(enemy.getLocation().getX(), enemy.getLocation().getY());
+            t.rotate(Math.toRadians(schip.getDirection(schip.getLocation(), enemy.getLocation()) + 90), enemy.getWidth() / 2, enemy.getHeight() / 2);
+            t.translate(-enemy.getLocation().getX(), -enemy.getLocation().getY());
+            g2d.transform(t);
 
-        g2d.transform(t);
-        Rectangle2D r = new Rectangle2D.Double(enemy.getLocation().getX(), enemy.getLocation().getY(), enemy.getHitbox().getWidth(), enemy.getHitbox().getHeight());
 
-        g2d.draw(r);
-        g2d.drawImage(enemy.getImage(),enemy.getLocation().x, enemy.getLocation().y, this);
+            // Gewoon een rectangle voor de hitbox - Renzie
 
+            if (enemy.getRectangle() == null) {
+                enemy.setRectangle(new Rectangle2D.Double(enemy.getLocation().getX(), enemy.getLocation().getY(), enemy.getWidth(), enemy.getHeight()));
+            } else {
+                enemy.getRectangle().setRect(enemy.getLocation().getX(), enemy.getLocation().getY(), enemy.getWidth(), enemy.getHeight());
+            }
+
+
+            for (Object kogel : kogels){
+                Kogel k = (Kogel) kogel;
+
+                if (k.collisionDetect(enemy.getRectangle())){
+                    iterator.remove();
+                }
+            }
+
+
+            //Teken alles op t - Renzie
+            g2d.draw(enemy.getRectangle());
+            g2d.drawImage(enemy.getImage(), enemy.getLocation().x, enemy.getLocation().y, this);
+
+            //Restore terug naar vorige transform - Renzie
+            g2d.setTransform(old);
+
+        }
 
     }
 
@@ -136,23 +182,24 @@ public class Board extends JPanel implements ActionListener {
         double verschilX;
         double verschilY;
 
-        verschilX = schip.getLocation().getX() - enemy.getLocation().getX();
-        verschilY = schip.getLocation().getY() - enemy.getLocation().getY();
+        for (Enemy enemy : enemyOnField) {
+            verschilX = schip.getLocation().getX() - enemy.getLocation().getX();
+            verschilY = schip.getLocation().getY() - enemy.getLocation().getY();
 
-            /* verschil x / vierkantswortel van ( verschilx^2 + verschilY^2) om de lengte naar 1 stuk te brengen
-            *  dit bepaalt de snelheid van de bullet en kan versneld worden door gewoon de kogelsnelheid te veranderen.*/
-        length = Math.sqrt(Math.pow(verschilX, 2) + Math.pow(verschilY, 2));
-        velocityX = ((verschilX) / length);
-        velocityY = ((verschilY) / length);
+        /* verschil x / vierkantswortel van ( verschilx^2 + verschilY^2) om de lengte naar 1 stuk te brengen
+        *  dit bepaalt de snelheid van de bullet en kan versneld worden door gewoon de kogelsnelheid te veranderen.*/
+            length = Math.sqrt(Math.pow(verschilX, 2) + Math.pow(verschilY, 2));
+            velocityX = ((verschilX) / length);
+            velocityY = ((verschilY) / length);
 
 
-        if (enemy.getLocation() != schip.getLocation()){
-            enemy.move(velocityX, velocityY);
-        } else{
-            //enemy.setVisible(false);
-            System.out.println("point reached");
+            if (enemy.getLocation() != schip.getLocation()) {
+                enemy.move(velocityX, velocityY);
+            } else {
+                //enemy.setVisible(false);
+                System.out.println("point reached");
+            }
         }
-
     }
 
     private void updateKogels() {
@@ -161,6 +208,7 @@ public class Board extends JPanel implements ActionListener {
         double velocityY;
         double verschilX;
         double verschilY;
+        Rectangle2D enemyRect;
 
         ArrayList kogel = schip.getKogels();
         for (int i = 0; i < kogel.size(); i++) {
@@ -175,14 +223,48 @@ public class Board extends JPanel implements ActionListener {
             velocityX = ((verschilX) / length) * k.getKogelSnelheid();
             velocityY = ((verschilY) / length) * k.getKogelSnelheid();
 
+
+
+           /*while (enemiesOnField.hasNext())
+                 enemyRect = enemiesOnField.next().getRectangle().getBounds2D();
+                    if (k.getRectangle().getBounds2D().intersects(enemyRect)){
+                    //enemyOnField.remove(enemy);
+                    System.out.println("hit");
+                }
+            }*/
+
+
+
+            /*for (Enemy enemy: enemyOnField){
+                if (k.collisionDetect(enemy.getRectangle())){
+                    System.out.println("k die shit werkt");
+                }
+            }*/
+
             if (k.isVisible()) {
                 k.move(velocityX, velocityY);
+                //k.getLocation().setLocation(k.getX(), k.getY());
             } else {
                 kogel.remove(i);
             }
         }
     }
 
+
+    private void spawnEnemies(){
+        Timer spawnTimer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (int i = 0; i < enemyCounter; i++){
+                    enemyOnField.add(new Enemy(1, "WutFace", "euh wa moek ier zetten", 100, 10, "src/Media/vijand1.png", 20, 20));
+                    System.out.println("spawned");
+
+                }
+                enemyCounter++;
+            }
+        });
+        spawnTimer.start();
+    }
 
 
     private class TAdapter extends KeyAdapter {

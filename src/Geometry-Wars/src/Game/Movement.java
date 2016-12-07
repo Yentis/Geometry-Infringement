@@ -12,59 +12,39 @@ import java.awt.event.KeyListener;
  */
 public class Movement implements KeyListener {
     private Schip schip;
-    private Timer left, right, up, down;
+    private Timer startMoves;
+    private int targetAngle;
 
     // Constructor
     public Movement(Schip schip) {
 
         this.schip = schip;
-        setTimers();
+        setTimer();
+
     }
 
 
 
-    private void setTimers() {
-        left = new Timer(20, new ActionListener() {
+    private void setTimer() {
+        startMoves = new Timer(20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                rotate(10, 270);
-
-
+                rotate(10, targetAngle);
             }
         });
-        right = new Timer(20, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                rotate(10, 90);
-
-            }
-        });
-        up = new Timer(20, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                rotate(10, 0);
-
-            }
-        });
-        down = new Timer(20, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                rotate(10, 180);
-
-            }
-        });
+        startMoves.start();
     }
 
-    public void rotateCounterClockwise(int degrees) {
+    private void rotateCounterClockwise(int degrees) {
 
         schip.setCurrentAngle(schip.getCurrentAngle() - degrees);
     }
 
-    public void rotateClockwise(int degrees) {
+    private void rotateClockwise(int degrees) {
         schip.setCurrentAngle(schip.getCurrentAngle() + degrees);
     }
 
-    public double rotate(int degrees, int targetAngle) {
+    private double rotate(int degrees, int targetAngle) {
             if (schip.getCurrentAngle() - targetAngle == 0) return schip.getCurrentAngle();
 
             if (schip.getCurrentAngle() < targetAngle && (targetAngle - schip.getCurrentAngle()) % 360 <= 180) {
@@ -85,10 +65,16 @@ public class Movement implements KeyListener {
         return schip.getCurrentAngle();
     }
 
+    public boolean timerIsRunning(){
+        return startMoves.isRunning();
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
         // do nothing
     }
+
+
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -98,31 +84,23 @@ public class Movement implements KeyListener {
         // Movement: graden worden in radialen omgezet in Board
         switch (key) {
             case KeyEvent.VK_LEFT:
-                if (!left.isRunning()){
-                    left.start();
-                    schip.moveLeft(3);
-                }
+                targetAngle = 270;
+                schip.moveLeft(3);
 
                 break;
             case KeyEvent.VK_RIGHT:
-                if (!right.isRunning()){
-                    right.start();
-                    schip.moveRight(3);
-                }
+                targetAngle = 90;
+                schip.moveRight(3);
 
                 break;
             case KeyEvent.VK_UP:
-                if (!up.isRunning()){
-                    up.start();
-                    schip.moveUp(3);
-                }
+                targetAngle = 0;
+                schip.moveUp(3);
 
                 break;
             case KeyEvent.VK_DOWN:
-                if (!down.isRunning()){
-                    down.start();
-                    schip.moveDown(3);
-                }
+                targetAngle = 180;
+                schip.moveDown(3);
 
                 break;
         }
@@ -136,20 +114,20 @@ public class Movement implements KeyListener {
         switch (key) {
             case KeyEvent.VK_LEFT:
                 schip.moveLeft(0);
-                left.stop();
+
 
                 break;
             case KeyEvent.VK_RIGHT:
                 schip.moveRight(0);
-                right.stop();
+
                 break;
             case KeyEvent.VK_UP:
                 schip.moveUp(0);
-                up.stop();
+
                 break;
             case KeyEvent.VK_DOWN:
                 schip.moveDown(0);
-                down.stop();
+
                 break;
         }
     }
