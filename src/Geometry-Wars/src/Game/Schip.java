@@ -58,10 +58,6 @@ public class Schip extends Sprite{
         this.hp = hp;
     }
 
-    public Image getImage() {
-        return image;
-    }
-
     public ArrayList getKogels() {
         return kogels;
     }
@@ -156,7 +152,7 @@ public class Schip extends Sprite{
                 public void actionPerformed(ActionEvent e) {*/
                     double kogelX = locationX;
                     double kogelY = locationY;
-                    addKogels(new Kogel(kogelX, kogelY, mousePointer));
+                    addKogels(new Kogel(kogelX, kogelY, mousePointer,"src/Media/kogel1.png"));
               /*  }
             });
        }

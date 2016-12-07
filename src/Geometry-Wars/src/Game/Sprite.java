@@ -3,6 +3,7 @@ package Game;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 /**
  * Created by Yentl-PC on 10/11/2016.
@@ -17,11 +18,15 @@ public class Sprite {
     protected Point target;
     protected Rectangle2D rectangle;
 
-    public Sprite(double x, double y, Point target){
+    public Sprite(double x, double y, Point target, String image){
         this.x = x;
         this.y = y;
         this.target = target;
         visible = true;
+        ImageIcon ii = new ImageIcon(image);
+        width = ii.getIconWidth();
+        height = ii.getIconHeight();
+        this.image = ii.getImage();
     }
 
     public Sprite(String image){
@@ -32,12 +37,6 @@ public class Sprite {
 
     }
 
-    protected void loadImage(String imageName){
-        ImageIcon ii = new ImageIcon(imageName);
-        image = ii.getImage();
-        width = ii.getIconWidth();
-        height = ii.getIconHeight();
-    }
 
 
 
@@ -86,7 +85,8 @@ public class Sprite {
 
     public boolean collisionDetect(Rectangle2D approachingTarget) {
         return approachingTarget != null && rectangle.getBounds2D().intersects(approachingTarget.getBounds2D());
-
     }
+
+
 
 }
