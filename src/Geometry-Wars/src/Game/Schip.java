@@ -58,7 +58,7 @@ public class Schip extends Sprite{
         this.hp = hp;
     }
 
-    public ArrayList getKogels() {
+    public ArrayList<Kogel> getKogels() {
         return kogels;
     }
 

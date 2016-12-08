@@ -44,7 +44,7 @@ public class Board extends JPanel implements ActionListener {
         spawnEnemies();
 
 
-       }
+    }
 
     @Override
     public void paintComponent(Graphics g) {
@@ -65,7 +65,7 @@ public class Board extends JPanel implements ActionListener {
         t.translate(-schip.getLocation().getX(), -schip.getLocation().getY());
         g2d.transform(t);
 
-        if (schip.getRectangle() == null){
+        if (schip.getRectangle() == null) {
             schip.setRectangle(new Rectangle2D.Double(schip.getLocation().getX(), schip.getLocation().getY(), schip.getWidth(), schip.getHeight()));
         } else {
             schip.getRectangle().setRect(schip.getLocation().getX(), schip.getLocation().getY(), schip.getWidth(), schip.getHeight());
@@ -76,14 +76,13 @@ public class Board extends JPanel implements ActionListener {
         }*/
 
 
-
         g2d.draw(schip.getRectangle());
 
         g2d.drawImage(schip.getImage(), schip.getLocation().x, schip.getLocation().y, this);
-        //TODO opzoeken
-        try{
+        //Returns an AffineTransform object representing the inverse transformation.   i dont get it
+        try {
             g2d.transform(t.createInverse());
-        } catch (NoninvertibleTransformException e){
+        } catch (NoninvertibleTransformException e) {
             e.printStackTrace();
         }
     }
@@ -111,12 +110,11 @@ public class Board extends JPanel implements ActionListener {
                 k.getRectangle().setRect(k.getX(), k.getY(), k.getWidth(), k.getHeight());
             }
 
-            for (Enemy enemy : enemyOnField){
+            for (Enemy enemy : enemyOnField) {
                 if (k.collisionDetect(enemy.getRectangle())) {
                     k.setHit(true);
                 }
             }
-
 
 
             g2d.draw(k.getRectangle());
@@ -126,10 +124,9 @@ public class Board extends JPanel implements ActionListener {
     }
 
 
-
-    private void drawEnemy(Graphics g){
+    private void drawEnemy(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        ArrayList kogels = schip.getKogels();
+        ArrayList<Kogel> kogels = schip.getKogels();
         for (Iterator<Enemy> iterator = enemyOnField.iterator(); iterator.hasNext(); ) {
             Enemy enemy = iterator.next();
 
@@ -154,12 +151,11 @@ public class Board extends JPanel implements ActionListener {
 
 
             //check als een kogel geland is op de enemy
-            for (Object kogel : kogels){
-                Kogel k = (Kogel) kogel;
+            for (Kogel k : kogels) {
 
-                if (k.collisionDetect(enemy.getRectangle())){
+                if (k.collisionDetect(enemy.getRectangle())) {
                     //TODO MATTHIAS IER MOET ALLE STUFF IN WANNEER JE EEN ENEMY HIT - RENZIE
-                    iterator.remove();
+                    enemy.setHit(true);
                 }
             }
 
@@ -175,101 +171,33 @@ public class Board extends JPanel implements ActionListener {
 
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        updateKogels();
-        approachShip();
-        schip.beweegSchip();
-        repaint();
 
-    }
-
-
-    private void approachShip(){
-        double length;
-        double velocityX;
-        double velocityY;
-        double verschilX;
-        double verschilY;
-
-        for (Enemy enemy : enemyOnField) {
-            verschilX = schip.getLocation().getX() - enemy.getLocation().getX();
-            verschilY = schip.getLocation().getY() - enemy.getLocation().getY();
-
-        /* verschil x / vierkantswortel van ( verschilx^2 + verschilY^2) om de lengte naar 1 stuk te brengen
-        *  dit bepaalt de snelheid van de bullet en kan versneld worden door gewoon de kogelsnelheid te veranderen.*/
-            length = Math.sqrt(Math.pow(verschilX, 2) + Math.pow(verschilY, 2));
-            velocityX = ((verschilX) / length);
-            velocityY = ((verschilY) / length);
-
-
-            if (enemy.getLocation() != schip.getLocation()) {
-                enemy.move(velocityX, velocityY);
-            } else {
-                //enemy.setVisible(false);
-                System.out.println("point reached");
+    private void approachShip() {
+        for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ){
+            Enemy enemy = enemyIterator.next();
+            enemy.updateLocation(schip.getLocation(), enemy.getLocation(), 1);
+            if (enemy.isHit()){
+                enemyIterator.remove();
             }
         }
     }
 
     private void updateKogels() {
-        double length;
-        double velocityX;
-        double velocityY;
-        double verschilX;
-        double verschilY;
-        Rectangle2D enemyRect;
-
-        ArrayList kogel = schip.getKogels();
-        for (int i = 0; i < kogel.size(); i++) {
-
-            Kogel k = (Kogel) kogel.get(i);
-            if (k.isHit() == true){
-                kogel.remove(k);
-            }
-
-            verschilX = k.gettarget().getX() - k.getStartingPoint().getX();
-            verschilY = k.gettarget().getY() - k.getStartingPoint().getY();
-
-            /* verschil x / vierkantswortel van ( verschilx^2 + verschilY^2) om de lengte naar 1 stuk te brengen
-            *  dit bepaalt de snelheid van de bullet en kan versneld worden door gewoon de kogelsnelheid te veranderen.*/
-            length = Math.sqrt(Math.pow(verschilX, 2) + Math.pow(verschilY, 2));
-            velocityX = ((verschilX) / length) * k.getKogelSnelheid();
-            velocityY = ((verschilY) / length) * k.getKogelSnelheid();
-
-
-
-           /*while (enemiesOnField.hasNext())
-                 enemyRect = enemiesOnField.next().getRectangle().getBounds2D();
-                    if (k.getRectangle().getBounds2D().intersects(enemyRect)){
-                    //enemyOnField.remove(enemy);
-                    System.out.println("hit");
-                }
-            }*/
-
-
-
-            /*for (Enemy enemy: enemyOnField){
-                if (k.collisionDetect(enemy.getRectangle())){
-                    System.out.println("k die shit werkt");
-                }
-            }*/
-
-            if (k.isVisible()) {
-                k.move(velocityX, velocityY);
-                //k.getLocation().setLocation(k.getX(), k.getY());
-            } else {
-                kogel.remove(i);
+        for (Iterator<Kogel> kogeliterator = schip.getKogels().iterator(); kogeliterator.hasNext();){
+            Kogel k = kogeliterator.next();
+            k.updateLocation(k.gettarget(), k.getStartingPoint(), 5);
+            if(k.isHit()){
+                kogeliterator.remove();
             }
         }
     }
 
 
-    private void spawnEnemies(){
+    private void spawnEnemies() {
         Timer spawnTimer = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < enemyCounter; i++){
+                for (int i = 0; i < enemyCounter; i++) {
                     enemyOnField.add(new Enemy(1, "WutFace", "euh wa moek ier zetten", 100, 10, "src/Media/vijand1.png", 20, 20));
                     System.out.println("spawned");
 
@@ -280,6 +208,14 @@ public class Board extends JPanel implements ActionListener {
         spawnTimer.start();
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        updateKogels();
+        approachShip();
+        schip.beweegSchip();
+        repaint();
+
+    }
 
     private class TAdapter extends KeyAdapter {
         @Override
@@ -301,6 +237,8 @@ public class Board extends JPanel implements ActionListener {
         }
 
         @Override
-        public void mouseReleased(MouseEvent e){ schip.mouseReleased(e); }
+        public void mouseReleased(MouseEvent e) {
+            schip.mouseReleased(e);
+        }
     }
 }

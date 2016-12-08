@@ -11,9 +11,6 @@ public class Kogel extends Sprite {
     private final int SCREEN_WIDTH = 1024;
     private double kogelSnelheid = 5;
     private Point startingPoint;
-
-    private int width;
-    private int height;
     private Point location;
     private boolean isHit;
 

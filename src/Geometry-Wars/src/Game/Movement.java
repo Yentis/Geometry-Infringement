@@ -17,7 +17,6 @@ public class Movement implements KeyListener {
 
     // Constructor
     public Movement(Schip schip) {
-
         this.schip = schip;
         setTimer();
 

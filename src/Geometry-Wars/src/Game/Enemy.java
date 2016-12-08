@@ -23,6 +23,7 @@ public class Enemy extends Sprite{
     private int score;
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
+    private boolean isHit;
 
     //endregion
 
@@ -38,7 +39,14 @@ public class Enemy extends Sprite{
         locationX = randRange(0, SCREEN_WIDTH);
         locationY = randRange(0, SCREEN_HEIGHT);
         location.setLocation(locationX, locationY);
+        isHit = false;
     }
+
+    public void setHit(boolean hit) {
+        isHit = hit;
+    }
+
+    public boolean isHit() { return isHit; }
 
     public double getWidth() {
         return width;
