@@ -80,6 +80,7 @@ public class Board extends JPanel implements ActionListener {
         g2d.draw(schip.getRectangle());
 
         g2d.drawImage(schip.getImage(), schip.getLocation().x, schip.getLocation().y, this);
+        //TODO opzoeken
         try{
             g2d.transform(t.createInverse());
         } catch (NoninvertibleTransformException e){
@@ -121,7 +122,7 @@ public class Board extends JPanel implements ActionListener {
         ArrayList kogels = schip.getKogels();
         for (Iterator<Enemy> iterator = enemyOnField.iterator(); iterator.hasNext(); ) {
             Enemy enemy = iterator.next();
-            
+
             //uh.. dit wordt gebruikt om de vorige transform te restoren ofzoiets idk - Renzie
             AffineTransform old = g2d.getTransform();
 
@@ -143,10 +144,12 @@ public class Board extends JPanel implements ActionListener {
             }
 
 
+            //check als een kogel geland is op de enemy
             for (Object kogel : kogels){
                 Kogel k = (Kogel) kogel;
 
                 if (k.collisionDetect(enemy.getRectangle())){
+                    //TODO MATTHIAS IER MOET ALLE STUFF IN WANNEER JE EEN ENEMY HIT - RENZIE
                     iterator.remove();
                 }
             }
