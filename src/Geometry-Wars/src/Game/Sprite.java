@@ -18,6 +18,7 @@ public class Sprite {
     protected Point target;
     protected Rectangle2D rectangle;
 
+
     public Sprite(double x, double y, Point target, String image){
         this.x = x;
         this.y = y;

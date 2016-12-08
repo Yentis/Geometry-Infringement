@@ -94,9 +94,9 @@ public class Board extends JPanel implements ActionListener {
         ArrayList kogels = schip.getKogels();
 
 
-        for (Object item : kogels) {
+        for (Iterator<Kogel> kogelIterator = kogels.iterator(); kogelIterator.hasNext(); ) {
 
-            Kogel k = (Kogel) item;
+            Kogel k = kogelIterator.next();
             AffineTransform old = g2d.getTransform();
             double angle = k.getDirection(k.gettarget(), k.getStartingPoint());
             AffineTransform t = new AffineTransform();
@@ -111,11 +111,21 @@ public class Board extends JPanel implements ActionListener {
                 k.getRectangle().setRect(k.getX(), k.getY(), k.getWidth(), k.getHeight());
             }
 
+            for (Enemy enemy : enemyOnField){
+                if (k.collisionDetect(enemy.getRectangle())) {
+                    k.setHit(true);
+                }
+            }
+
+
+
             g2d.draw(k.getRectangle());
             g2d.drawImage(k.getImage(), k.getLocation().x, k.getLocation().y, this);
             g2d.setTransform(old);
         }
     }
+
+
 
     private void drawEnemy(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
@@ -136,7 +146,6 @@ public class Board extends JPanel implements ActionListener {
 
 
             // Gewoon een rectangle voor de hitbox - Renzie
-
             if (enemy.getRectangle() == null) {
                 enemy.setRectangle(new Rectangle2D.Double(enemy.getLocation().getX(), enemy.getLocation().getY(), enemy.getWidth(), enemy.getHeight()));
             } else {
@@ -213,7 +222,11 @@ public class Board extends JPanel implements ActionListener {
 
         ArrayList kogel = schip.getKogels();
         for (int i = 0; i < kogel.size(); i++) {
+
             Kogel k = (Kogel) kogel.get(i);
+            if (k.isHit() == true){
+                kogel.remove(k);
+            }
 
             verschilX = k.gettarget().getX() - k.getStartingPoint().getX();
             verschilY = k.gettarget().getY() - k.getStartingPoint().getY();

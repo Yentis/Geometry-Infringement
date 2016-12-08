@@ -15,6 +15,7 @@ public class Kogel extends Sprite {
     private int width;
     private int height;
     private Point location;
+    private boolean isHit;
 
 
     public Kogel(double x, double y, Point direction, String image) {
@@ -27,6 +28,7 @@ public class Kogel extends Sprite {
         location = new Point();
         location.setLocation(x,y);
 
+        isHit = false;
         //location.setLocation(x,y);
     }
 
@@ -40,6 +42,14 @@ public class Kogel extends Sprite {
 
     public double getKogelSnelheid() {
         return kogelSnelheid;
+    }
+
+    public boolean isHit() {
+        return isHit;
+    }
+
+    public void setHit(boolean hit) {
+        isHit = hit;
     }
 
     public void move(double velocityX, double velocityY) {

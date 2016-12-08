@@ -25,7 +25,7 @@ public class Schip extends Sprite{
     private int r;
     private double dx;
     private double dy;
-    private ArrayList kogels = new ArrayList();
+    private ArrayList<Kogel> kogels = new ArrayList<Kogel>();
     private Point location = new Point();
     private double locationX = location.getX();
     private double locationY = location.getY();
