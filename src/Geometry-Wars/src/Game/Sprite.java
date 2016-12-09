@@ -116,6 +116,4 @@ public class Sprite {
         currentLocation.setLocation(x, y);
 
     }
-
-
 }

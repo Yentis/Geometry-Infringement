@@ -1,5 +1,6 @@
 package GUI;
 
+import Game.Drone;
 import Game.Enemy;
 import Game.Kogel;
 import Game.Schip;
@@ -23,6 +24,7 @@ public class Board extends JPanel implements ActionListener {
 
     private Timer timer;
     private Schip schip;
+    private Drone drone;
     private final int DELAY = 10;
     private ArrayList<Enemy> enemyOnField = new ArrayList<Enemy>();
     private Iterator<Enemy> enemyIterator = enemyOnField.iterator();
@@ -38,6 +40,7 @@ public class Board extends JPanel implements ActionListener {
         setDoubleBuffered(true);
 
         schip = new Schip(1, 100, 10, "src/Media/schip1.png");
+        drone = new Drone(1, "Drone1", "a", 100, 5, "src/Media/drone1.png", 1, 0);
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -52,6 +55,7 @@ public class Board extends JPanel implements ActionListener {
 
         drawBullets(g);
         drawShip(g);
+        drawDrone(g);
         drawEnemy(g);
         Toolkit.getDefaultToolkit().sync();
     }
@@ -79,6 +83,27 @@ public class Board extends JPanel implements ActionListener {
         g2d.draw(schip.getRectangle());
 
         g2d.drawImage(schip.getImage(), schip.getLocation().x, schip.getLocation().y, this);
+        //Returns an AffineTransform object representing the inverse transformation.   i dont get it
+        try {
+            g2d.transform(t.createInverse());
+        } catch (NoninvertibleTransformException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void drawDrone(Graphics g){
+        Graphics2D g2d = (Graphics2D) g;
+        AffineTransform t = new AffineTransform();
+
+        if (drone.getRectangle() == null) {
+            drone.setRectangle(new Rectangle2D.Double(schip.getLocation().x -100, schip.getLocation().y -100, drone.getWidth(), drone.getHeight()));
+        } else {
+            drone.getRectangle().setRect(schip.getLocation().x -100, schip.getLocation().y -100, drone.getWidth(), drone.getHeight());
+        }
+
+        g2d.draw(drone.getRectangle());
+
+        g2d.drawImage(drone.getImage(), schip.getLocation().x -100, schip.getLocation().y -100, this);
         //Returns an AffineTransform object representing the inverse transformation.   i dont get it
         try {
             g2d.transform(t.createInverse());
@@ -207,6 +232,7 @@ public class Board extends JPanel implements ActionListener {
         });
         spawnTimer.start();
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
