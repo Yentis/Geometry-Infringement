@@ -79,6 +79,14 @@ public class Board extends JPanel implements ActionListener {
             System.out.println("ej twerkt");
         }*/
 
+        for ( Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ){
+            Enemy enemy = enemyIterator.next();
+            if (schip.collisionDetect(enemy.getRectangle())){
+                schip.setHit(true);
+                enemyIterator.remove();
+            }
+        }
+
 
         g2d.draw(schip.getRectangle());
 
@@ -124,9 +132,9 @@ public class Board extends JPanel implements ActionListener {
             AffineTransform old = g2d.getTransform();
             double angle = k.getDirection(k.gettarget(), k.getStartingPoint());
             AffineTransform t = new AffineTransform();
-            t.translate(k.getLocation().getX(), k.getLocation().getY());
+            t.translate(k.getCurrentLocation().getX(), k.getCurrentLocation().getY());
             t.rotate(Math.toRadians(angle), k.getWidth() / 2, k.getHeight() / 2);
-            t.translate(-k.getLocation().getX(), -k.getLocation().getY());
+            t.translate(-k.getCurrentLocation().getX(), -k.getCurrentLocation().getY());
             g2d.transform(t);
 
             if (k.getRectangle() == null) {
@@ -143,7 +151,7 @@ public class Board extends JPanel implements ActionListener {
 
 
             g2d.draw(k.getRectangle());
-            g2d.drawImage(k.getImage(), k.getLocation().x, k.getLocation().y, this);
+            g2d.drawImage(k.getImage(), k.getCurrentLocation().x, k.getCurrentLocation().y, this);
             g2d.setTransform(old);
         }
     }
@@ -161,17 +169,17 @@ public class Board extends JPanel implements ActionListener {
 
             //Hier wordt alles veranderd op enkel t - Renzie
             AffineTransform t = new AffineTransform();
-            t.translate(enemy.getLocation().getX(), enemy.getLocation().getY());
-            t.rotate(Math.toRadians(schip.getDirection(schip.getLocation(), enemy.getLocation()) + 90), enemy.getWidth() / 2, enemy.getHeight() / 2);
-            t.translate(-enemy.getLocation().getX(), -enemy.getLocation().getY());
+            t.translate(enemy.getCurrentLocation().getX(), enemy.getCurrentLocation().getY());
+            t.rotate(Math.toRadians(schip.getDirection(schip.getLocation(), enemy.getCurrentLocation()) + 90), enemy.getWidth() / 2, enemy.getHeight() / 2);
+            t.translate(-enemy.getCurrentLocation().getX(), -enemy.getCurrentLocation().getY());
             g2d.transform(t);
 
 
             // Gewoon een rectangle voor de hitbox - Renzie
             if (enemy.getRectangle() == null) {
-                enemy.setRectangle(new Rectangle2D.Double(enemy.getLocation().getX(), enemy.getLocation().getY(), enemy.getWidth(), enemy.getHeight()));
+                enemy.setRectangle(new Rectangle2D.Double(enemy.getCurrentLocation().getX(), enemy.getCurrentLocation().getY(), enemy.getWidth(), enemy.getHeight()));
             } else {
-                enemy.getRectangle().setRect(enemy.getLocation().getX(), enemy.getLocation().getY(), enemy.getWidth(), enemy.getHeight());
+                enemy.getRectangle().setRect(enemy.getCurrentLocation().getX(), enemy.getCurrentLocation().getY(), enemy.getWidth(), enemy.getHeight());
             }
 
 
@@ -187,20 +195,19 @@ public class Board extends JPanel implements ActionListener {
 
             //Teken alles op t - Renzie
             g2d.draw(enemy.getRectangle());
-            g2d.drawImage(enemy.getImage(), enemy.getLocation().x, enemy.getLocation().y, this);
+            g2d.drawImage(enemy.getImage(), enemy.getCurrentLocation().x, enemy.getCurrentLocation().y, this);
 
             //Restore terug naar vorige transform - Renzie
             g2d.setTransform(old);
 
         }
-
     }
 
 
     private void approachShip() {
         for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ){
             Enemy enemy = enemyIterator.next();
-            enemy.updateLocation(schip.getLocation(), enemy.getLocation(), 1);
+            enemy.updateLocation(schip.getLocation(), enemy.getCurrentLocation(), 1);
             if (enemy.isHit()){
                 enemyIterator.remove();
             }
@@ -210,7 +217,7 @@ public class Board extends JPanel implements ActionListener {
     private void updateKogels() {
         for (Iterator<Kogel> kogeliterator = schip.getKogels().iterator(); kogeliterator.hasNext();){
             Kogel k = kogeliterator.next();
-            k.updateLocation(k.gettarget(), k.getStartingPoint(), 5);
+            k.updateLocation(k.gettarget(), k.getStartingPoint(), k.getKogelSnelheid());
             if(k.isHit()){
                 kogeliterator.remove();
             }
@@ -224,8 +231,6 @@ public class Board extends JPanel implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 for (int i = 0; i < enemyCounter; i++) {
                     enemyOnField.add(new Enemy(1, "WutFace", "euh wa moek ier zetten", 100, 10, "src/Media/vijand1.png", 20, 20));
-                    System.out.println("spawned");
-
                 }
                 enemyCounter++;
             }

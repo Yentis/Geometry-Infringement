@@ -14,10 +14,10 @@ public class Sprite {
     protected double width;
     protected double height;
     protected Image image;
-    protected boolean visible;
     protected Point target;
     protected Point currentLocation;
     protected Rectangle2D rectangle;
+    protected boolean isHit;
 
 
 
@@ -25,11 +25,13 @@ public class Sprite {
         this.x = x;
         this.y = y;
         this.target = target;
-        visible = true;
         ImageIcon ii = new ImageIcon(image);
         width = ii.getIconWidth();
         height = ii.getIconHeight();
         this.image = ii.getImage();
+        currentLocation = new Point();
+        currentLocation.setLocation(x, y);
+        isHit = false;
     }
 
     public Sprite(String image){
@@ -37,10 +39,10 @@ public class Sprite {
         width = ii.getIconWidth();
         height = ii.getIconHeight();
         this.image = ii.getImage();
-
+        isHit = false;
     }
 
-    public void updateLocation(Point targetLocation, Point currentLocation, int speed){
+    public void updateLocation(Point targetLocation, Point currentLocation, double speed){
         double length;
         double velocityX;
         double velocityY;
@@ -61,6 +63,14 @@ public class Sprite {
 
     }
 
+
+    public Point getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public Point getTarget() {
+        return target;
+    }
 
     public Image getImage() {
         return image;
@@ -92,12 +102,12 @@ public class Sprite {
         return rectangle;
     }
 
-    public boolean isVisible() {
-        return visible;
+    public boolean isHit() {
+        return isHit;
     }
 
-    public void setVisible(boolean visible) {
-        this.visible = visible;
+    public void setHit(boolean hit) {
+        isHit = hit;
     }
 
     public double getDirection(Point target , Point start) {
