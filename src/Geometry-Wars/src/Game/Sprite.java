@@ -14,19 +14,24 @@ public class Sprite {
     protected double width;
     protected double height;
     protected Image image;
-    protected boolean visible;
     protected Point target;
+    protected Point currentLocation;
     protected Rectangle2D rectangle;
+    protected boolean isHit;
+
+
 
     public Sprite(double x, double y, Point target, String image){
         this.x = x;
         this.y = y;
         this.target = target;
-        visible = true;
         ImageIcon ii = new ImageIcon(image);
         width = ii.getIconWidth();
         height = ii.getIconHeight();
         this.image = ii.getImage();
+        currentLocation = new Point();
+        currentLocation.setLocation(x, y);
+        isHit = false;
     }
 
     public Sprite(String image){
@@ -34,11 +39,38 @@ public class Sprite {
         width = ii.getIconWidth();
         height = ii.getIconHeight();
         this.image = ii.getImage();
+        isHit = false;
+    }
+
+    public void updateLocation(Point targetLocation, Point currentLocation, double speed){
+        double length;
+        double velocityX;
+        double velocityY;
+        double verschilX;
+        double verschilY;
+
+        verschilX = targetLocation.getX() - currentLocation.getX();
+        verschilY = targetLocation.getY() - currentLocation.getY();
+
+        /* verschil x / vierkantswortel van ( verschilx^2 + verschilY^2) om de lengte naar 1 stuk te brengen
+        *  dit bepaalt de snelheid van de bullet en kan versneld worden door gewoon de kogelsnelheid te veranderen.*/
+        length = Math.sqrt(Math.pow(verschilX, 2) + Math.pow(verschilY, 2));
+        velocityX = ((verschilX) / length) * speed;
+        velocityY = ((verschilY) / length) * speed;
+
+        //verplaats met de velocities
+        move(velocityX, velocityY);
 
     }
 
 
+    public Point getCurrentLocation() {
+        return currentLocation;
+    }
 
+    public Point getTarget() {
+        return target;
+    }
 
     public Image getImage() {
         return image;
@@ -70,12 +102,12 @@ public class Sprite {
         return rectangle;
     }
 
-    public boolean isVisible() {
-        return visible;
+    public boolean isHit() {
+        return isHit;
     }
 
-    public void setVisible(boolean visible) {
-        this.visible = visible;
+    public void setHit(boolean hit) {
+        isHit = hit;
     }
 
     public double getDirection(Point target , Point start) {
@@ -87,6 +119,11 @@ public class Sprite {
         return approachingTarget != null && rectangle.getBounds2D().intersects(approachingTarget.getBounds2D());
     }
 
+    public void move(double velocityX, double velocityY){
+        x += velocityX;
+        y += velocityY;
 
+        currentLocation.setLocation(x, y);
 
+    }
 }

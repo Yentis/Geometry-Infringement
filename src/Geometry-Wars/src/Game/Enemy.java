@@ -16,7 +16,6 @@ public class Enemy extends Sprite{
     private String beschrijving;
     private int hp = 100;
     private int kracht = 10;
-    private Point location = new Point();
     private double locationX;
     private double locationY;
     private int experience;
@@ -37,7 +36,9 @@ public class Enemy extends Sprite{
         this.kracht = kracht;
         locationX = randRange(0, SCREEN_WIDTH);
         locationY = randRange(0, SCREEN_HEIGHT);
-        location.setLocation(locationX, locationY);
+        currentLocation = new Point();
+        currentLocation.setLocation(locationX, locationY);
+        isHit = false;
     }
 
     public double getWidth() {
@@ -53,10 +54,6 @@ public class Enemy extends Sprite{
         double randgetal = minRange + (maxRange - minRange) * generator.nextDouble();
 
         return randgetal;
-    }
-
-    public Point getLocation() {
-        return location;
     }
 
     /*public Enemy() {
@@ -75,7 +72,7 @@ public class Enemy extends Sprite{
         locationX += velocityX;
         locationY += velocityY;
 
-        location.setLocation(locationX, locationY);
+        currentLocation.setLocation(locationX, locationY);
 
     }
 

@@ -11,27 +11,17 @@ public class Kogel extends Sprite {
     private final int SCREEN_WIDTH = 1024;
     private double kogelSnelheid = 5;
     private Point startingPoint;
-
-    private int width;
-    private int height;
-    private Point location;
+    private boolean isHit;
 
 
-    public Kogel(double x, double y, Point direction, String image) {
+    public Kogel(double x, double y, Point target, String image) {
 
-        super(x, y, direction, image);
+        super(x, y, target, image);
 
 
         startingPoint = new Point();
         startingPoint.setLocation(x, y);
-        location = new Point();
-        location.setLocation(x,y);
-
-        //location.setLocation(x,y);
-    }
-
-    public Point getLocation() {
-        return location;
+        isHit = false;
     }
 
     public Point getStartingPoint() {
@@ -42,15 +32,4 @@ public class Kogel extends Sprite {
         return kogelSnelheid;
     }
 
-    public void move(double velocityX, double velocityY) {
-
-        x += velocityX;
-        y += velocityY;
-
-        location.setLocation(x,y);
-
-        if (x > SCREEN_WIDTH) {
-            visible = false;
-        }
-    }
 }
