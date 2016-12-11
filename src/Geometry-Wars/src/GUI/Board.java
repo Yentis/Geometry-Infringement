@@ -69,6 +69,7 @@ public class Board extends JPanel implements ActionListener {
         t.translate(-schip.getLocation().getX(), -schip.getLocation().getY());
         g2d.transform(t);
 
+
         if (schip.getRectangle() == null) {
             schip.setRectangle(new Rectangle2D.Double(schip.getLocation().getX(), schip.getLocation().getY(), schip.getWidth(), schip.getHeight()));
         } else {
@@ -100,18 +101,32 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void drawDrone(Graphics g){
+        //drone.setX()
         Graphics2D g2d = (Graphics2D) g;
+        AffineTransform old = g2d.getTransform();
         AffineTransform t = new AffineTransform();
 
+        g2d.setTransform(t);
+
+        g2d.translate(schip.getLocation().getX(), schip.getLocation().getY());
+        g2d.rotate(Math.toRadians(drone.getCurrentAngle()) , drone.getWidth(), drone.getHeight() );
+        //g2d.translate(-schip.getLocation().getX(), -schip.getLocation().getY() );
+        g2d.transform(t);
+
+
+        drone.setCurrentAngle(drone.getCurrentAngle() + 1);
+
         if (drone.getRectangle() == null) {
-            drone.setRectangle(new Rectangle2D.Double(schip.getLocation().x -100, schip.getLocation().y -100, drone.getWidth(), drone.getHeight()));
+            drone.setRectangle(new Rectangle2D.Double(drone.getCurrentLocation().getX() -100, drone.getCurrentLocation().getY() -100, drone.getWidth(), drone.getHeight()));
         } else {
-            drone.getRectangle().setRect(schip.getLocation().x -100, schip.getLocation().y -100, drone.getWidth(), drone.getHeight());
+            drone.getRectangle().setRect(drone.getCurrentLocation().getX() -100, drone.getCurrentLocation().getY() -100, drone.getWidth() -100, drone.getHeight());
         }
 
+        drone.setCurrentLocation(schip.getLocation());
         g2d.draw(drone.getRectangle());
 
-        g2d.drawImage(drone.getImage(), schip.getLocation().x -100, schip.getLocation().y -100, this);
+        g2d.drawImage(drone.getImage(), t, this);
+       g2d.setTransform(old);
         //Returns an AffineTransform object representing the inverse transformation.   i dont get it
         try {
             g2d.transform(t.createInverse());
