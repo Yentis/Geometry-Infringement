@@ -21,6 +21,7 @@ public class Sprite {
 
 
 
+
     public Sprite(double x, double y, Point target, String image){
         this.x = x;
         this.y = y;
@@ -128,6 +129,8 @@ public class Sprite {
 
     public boolean collisionDetect(Rectangle2D approachingTarget) {
         return approachingTarget != null && rectangle.getBounds2D().intersects(approachingTarget.getBounds2D());
+
+
     }
 
     public void move(double velocityX, double velocityY){

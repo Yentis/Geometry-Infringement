@@ -39,7 +39,7 @@ public class Board extends JPanel implements ActionListener {
         setBackground(Color.BLACK);
         setDoubleBuffered(true);
 
-        schip = new Schip(1, 100, 10, "src/Media/schip1.png");
+        schip = new Schip(1, 100, 10, "src/Media/schip1.png", 0,0);
         drone = new Drone(1, "Drone1", "a", 100, 5, "src/Media/drone1.png", 1, 0);
 
         timer = new Timer(DELAY, this);
@@ -84,6 +84,9 @@ public class Board extends JPanel implements ActionListener {
             Enemy enemy = enemyIterator.next();
             if (schip.collisionDetect(enemy.getRectangle())){
                 schip.setHit(true);
+                schip.loseHP(enemy.getKracht());
+                schip.resetCombo();
+
                 enemyIterator.remove();
             }
         }
@@ -161,6 +164,10 @@ public class Board extends JPanel implements ActionListener {
             for (Enemy enemy : enemyOnField) {
                 if (k.collisionDetect(enemy.getRectangle())) {
                     k.setHit(true);
+                    //TODO combo bepalen en upgrades uitvoeren
+                    schip.addCombo();
+                    schip.checkForUpgrade(schip.getCombo());
+
                 }
             }
 
@@ -204,6 +211,7 @@ public class Board extends JPanel implements ActionListener {
                 if (k.collisionDetect(enemy.getRectangle())) {
                     //TODO MATTHIAS IER MOET ALLE STUFF IN WANNEER JE EEN ENEMY HIT - RENZIE
                     enemy.setHit(true);
+
                 }
             }
 
@@ -224,6 +232,15 @@ public class Board extends JPanel implements ActionListener {
             Enemy enemy = enemyIterator.next();
             enemy.updateLocation(schip.getLocation(), enemy.getCurrentLocation(), 1);
             if (enemy.isHit()){
+                //moest je zeggen dat de enemy HP heeft, maw je moet de enemy meerdere keren schieten tot hij op 0 HP staat moet
+                //de HP die je kwijtraakt als je geraakt wordt, is dat gelijk aan de kracht van de enemey?
+                //uh
+                //kwenie :p
+                //anders heeft die variabele Kracht toch geen zin? :p
+                //de kracht van de bullet of schip of?
+                //bij enemy staat er een krachtvariabele
+                //oh lel kwist da ni eens
+                //ah ne w8, das hier gwn als de enemy gehit wordt door de bullet
                 enemyIterator.remove();
             }
         }
@@ -234,6 +251,8 @@ public class Board extends JPanel implements ActionListener {
             Kogel k = kogeliterator.next();
             k.updateLocation(k.gettarget(), k.getStartingPoint(), k.getKogelSnelheid());
             if(k.isHit()){
+                //wanneer hij gehit is, gebeurt er hier iets, dus bvb hier heb je de bullets, eenmaal hij de enemy hit, wordt de kogel removed
+                //de enemy heeft een andere function daarvoor natuurlijk
                 kogeliterator.remove();
             }
         }
