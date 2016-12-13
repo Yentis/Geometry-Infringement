@@ -104,10 +104,6 @@ public class Sprite {
         return y;
     }
 
-    public Point gettarget() {
-        return target;
-    }
-
     public void setHitBox(Rectangle2D hitBox) {
         this.hitBox = hitBox;
     }
@@ -159,6 +155,7 @@ public class Sprite {
         //return to old Transform
         g2d.setTransform(save);
     }
+
 
     public void updateNewTransform(AffineTransform newTransform, Double angle) {
         newTransform.translate(this.getCurrentLocation().getX(), this.getCurrentLocation().getY());

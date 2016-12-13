@@ -28,6 +28,8 @@ public class Enemy extends Sprite{
 
     //region Constructors
 
+
+
     public Enemy(int nr, String naam, String beschrijving, int hp, int kracht, String image, int experience, int score){
         super(image);
         this.nr = nr;
@@ -40,6 +42,10 @@ public class Enemy extends Sprite{
         currentLocation = new Point();
         currentLocation.setLocation(locationX, locationY);
         isHit = false;
+    }
+
+    public int getKracht() {
+        return kracht;
     }
 
     public double getWidth() {

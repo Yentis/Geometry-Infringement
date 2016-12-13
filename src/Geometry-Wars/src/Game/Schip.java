@@ -1,5 +1,7 @@
 package Game;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,6 +26,9 @@ public class Schip extends Sprite{
     private int kracht = 10;
     private double dx;
     private double dy;
+    private int score;
+    private int newscore = 0;
+    private int combo;
     private ArrayList<Kogel> kogels = new ArrayList<Kogel>();
     private double locationX;
     private double locationY;
@@ -35,19 +40,27 @@ public class Schip extends Sprite{
 
     //region Constructors
 
-    public Schip(int nr, int hp, int kracht, String image) {
+    public Schip(int nr, int hp, int kracht, String image, int score, int combo) {
         super(image);
         currentLocation = new Point();
         currentLocation.setLocation(700, 300);
         locationX = currentLocation.getX();
         locationY = currentLocation.getY();
         currentAngle = 0;
+        this.score = 0;
+        this.combo = 0;
         this.nr = nr;
         this.hp = hp;
         this.kracht = kracht;
         move = new Movement(this);
     }
     //endregion
+
+    public int getCombo() {
+        return combo;
+    }
+
+//endregion
 
     //region Properties
 
@@ -61,8 +74,34 @@ public class Schip extends Sprite{
 
     //endregion
 
+    public void checkForUpgrade(int combo){
+
+    }
+    public void setCombo(int combo) {
+        this.combo = combo;
+    }
 
     //region Behaviour
+    public void resetCombo(){
+        setCombo(0);
+    }
+    public void addCombo(){
+        combo += 1;
+        addScore(100, combo);
+    }
+
+    public void addScore(int enemyscore, int combo){
+        score = enemyscore * combo;
+        adjustScore(score);
+    }
+
+    public int adjustScore(int score){
+
+        newscore += score;
+        System.out.println("score: " + newscore);
+        System.out.println("combo: " + combo);
+        return newscore;
+    }
 
 
     public void addKracht(int amount) {
@@ -71,6 +110,10 @@ public class Schip extends Sprite{
 
     public void addHp(int amount) {
         this.hp += amount;
+    }
+
+    public void loseHP(int amount) {
+        this.hp -= amount;
     }
 
     public void beweegSchip() {
