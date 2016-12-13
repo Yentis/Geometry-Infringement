@@ -22,14 +22,12 @@ public class Schip extends Sprite{
     private int nr;
     private int hp = 100;
     private int kracht = 10;
-    private int r;
     private double dx;
     private double dy;
     private ArrayList<Kogel> kogels = new ArrayList<Kogel>();
-    private Point location = new Point();
-    private double locationX = location.getX();
-    private double locationY = location.getY();
-    private int currentAngle;
+    private double locationX;
+    private double locationY;
+    private double currentAngle;
     private Movement move;
 
 
@@ -39,17 +37,16 @@ public class Schip extends Sprite{
 
     public Schip(int nr, int hp, int kracht, String image) {
         super(image);
-        locationX = 700;
-        locationY = 300;
-        location.setLocation(locationX, locationY);
+        currentLocation = new Point();
+        currentLocation.setLocation(700, 300);
+        locationX = currentLocation.getX();
+        locationY = currentLocation.getY();
         currentAngle = 0;
         this.nr = nr;
         this.hp = hp;
         this.kracht = kracht;
         move = new Movement(this);
     }
-
-
     //endregion
 
     //region Properties
@@ -60,14 +57,6 @@ public class Schip extends Sprite{
 
     public ArrayList<Kogel> getKogels() {
         return kogels;
-    }
-
-    public Point getLocation() {
-        return location;
-    }
-
-    public int getAngle() {
-        return currentAngle;
     }
 
     //endregion
@@ -89,7 +78,7 @@ public class Schip extends Sprite{
         locationX = limitToBorders(locationX , 0 , 1024);
         locationY = limitToBorders(locationY , 0 , 768);
 
-        location.setLocation(locationX += dx, locationY += dy);
+        currentLocation.setLocation(locationX += dx, locationY += dy);
     }
 
     private double limitToBorders(double currLocation, double minBorder, double maxBorder){
@@ -162,16 +151,16 @@ public class Schip extends Sprite{
             */
     }
 
-    public int getCurrentAngle() {
+    public double getCurrentAngle() {
         return currentAngle;
     }
 
-    public void setCurrentAngle(int currentAngle) {
+    public void setCurrentAngle(double currentAngle) {
         this.currentAngle = currentAngle;
     }
 
     // Dit zorgt ervoor dat de angle binnen 360 blijft.
-    public int normalizeAngle(int angle) {
+    public double normalizeAngle(double angle) {
         if (angle < 0 || 360 < angle) {
             angle = (angle + 360) % 360;
             return angle;

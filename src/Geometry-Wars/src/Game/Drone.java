@@ -1,6 +1,7 @@
 package Game;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 /**
  * Created by Yentl-PC on 8/11/2016.
@@ -56,6 +57,12 @@ public class Drone extends Sprite{
 
     public void setCurrentAngle(double currentAngle) {
         this.currentAngle = currentAngle;
+    }
+
+    public void drawAccordingToShip(Graphics2D g2d, Schip schip){
+        g2d.translate(schip.getCurrentLocation().getX(), schip.getCurrentLocation().getY());
+        g2d.rotate(Math.toRadians(this.getCurrentAngle()) , schip.getWidth() / 2, schip.getHeight()  / 2);
+        g2d.translate(-schip.getCurrentLocation().getX(), -schip.getCurrentLocation().getY() );
     }
 
     //endregion

@@ -1,9 +1,6 @@
 package GUI;
 
-import Game.Drone;
-import Game.Enemy;
-import Game.Kogel;
-import Game.Schip;
+import Game.*;
 import javafx.scene.transform.Affine;
 
 import java.awt.*;
@@ -27,8 +24,6 @@ public class Board extends JPanel implements ActionListener {
     private Drone drone;
     private final int DELAY = 10;
     private ArrayList<Enemy> enemyOnField = new ArrayList<Enemy>();
-    private Iterator<Enemy> enemyIterator = enemyOnField.iterator();
-
     private int enemyCounter = 1;
 
 
@@ -62,167 +57,72 @@ public class Board extends JPanel implements ActionListener {
 
     private void drawShip(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        AffineTransform t = new AffineTransform();
-
-        t.translate(schip.getLocation().getX(), schip.getLocation().getY());
-        t.rotate(Math.toRadians(schip.getAngle()), schip.getWidth() / 2, schip.getHeight() / 2);
-        t.translate(-schip.getLocation().getX(), -schip.getLocation().getY());
-        g2d.transform(t);
-
-
-        if (schip.getRectangle() == null) {
-            schip.setRectangle(new Rectangle2D.Double(schip.getLocation().getX(), schip.getLocation().getY(), schip.getWidth(), schip.getHeight()));
-        } else {
-            schip.getRectangle().setRect(schip.getLocation().getX(), schip.getLocation().getY(), schip.getWidth(), schip.getHeight());
-        }
-
-        /*if (schip.collisionDetect(enemy.getRectangle())){
-            System.out.println("ej twerkt");
-        }*/
-
+        schip.draw(g2d, schip.getCurrentAngle());
         for ( Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ){
             Enemy enemy = enemyIterator.next();
-            if (schip.collisionDetect(enemy.getRectangle())){
+            if (schip.collisionDetect(enemy.getHitBox())){
                 schip.setHit(true);
                 enemyIterator.remove();
             }
         }
-
-
-        g2d.draw(schip.getRectangle());
-
-        g2d.drawImage(schip.getImage(), schip.getLocation().x, schip.getLocation().y, this);
-        //Returns an AffineTransform object representing the inverse transformation.   i dont get it
-        try {
-            g2d.transform(t.createInverse());
-        } catch (NoninvertibleTransformException e) {
-            e.printStackTrace();
-        }
     }
 
     private void drawDrone(Graphics g){
-        //drone.setX()
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform old = g2d.getTransform();
         AffineTransform t = new AffineTransform();
-
         g2d.setTransform(t);
 
-        g2d.translate(schip.getLocation().getX(), schip.getLocation().getY());
-        g2d.rotate(Math.toRadians(drone.getCurrentAngle()) , drone.getWidth(), drone.getHeight() );
-        //g2d.translate(-schip.getLocation().getX(), -schip.getLocation().getY() );
+        drone.drawAccordingToShip(g2d, schip);
         g2d.transform(t);
 
-
         drone.setCurrentAngle(drone.getCurrentAngle() + 1);
+        drone.drawHitBox(g2d);
+        drone.setCurrentLocation(schip.getCurrentLocation());
 
-        if (drone.getRectangle() == null) {
-            drone.setRectangle(new Rectangle2D.Double(drone.getCurrentLocation().getX() -100, drone.getCurrentLocation().getY() -100, drone.getWidth(), drone.getHeight()));
-        } else {
-            drone.getRectangle().setRect(drone.getCurrentLocation().getX() -100, drone.getCurrentLocation().getY() -100, drone.getWidth() -100, drone.getHeight());
-        }
-
-        drone.setCurrentLocation(schip.getLocation());
-        g2d.draw(drone.getRectangle());
-
-        g2d.drawImage(drone.getImage(), t, this);
-       g2d.setTransform(old);
-        //Returns an AffineTransform object representing the inverse transformation.   i dont get it
-        try {
-            g2d.transform(t.createInverse());
-        } catch (NoninvertibleTransformException e) {
-            e.printStackTrace();
-        }
+        g2d.drawImage(drone.getImage(), drone.getCurrentLocation().x, drone.getCurrentLocation().y, this);
+        g2d.setTransform(old);
     }
 
     private void drawBullets(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-
-        ArrayList kogels = schip.getKogels();
-
-
-        for (Iterator<Kogel> kogelIterator = kogels.iterator(); kogelIterator.hasNext(); ) {
-
+        for (Iterator<Kogel> kogelIterator = schip.getKogels().iterator(); kogelIterator.hasNext(); ) {
             Kogel k = kogelIterator.next();
-            AffineTransform old = g2d.getTransform();
-            double angle = k.getDirection(k.gettarget(), k.getStartingPoint());
-            AffineTransform t = new AffineTransform();
-            t.translate(k.getCurrentLocation().getX(), k.getCurrentLocation().getY());
-            t.rotate(Math.toRadians(angle), k.getWidth() / 2, k.getHeight() / 2);
-            t.translate(-k.getCurrentLocation().getX(), -k.getCurrentLocation().getY());
-            g2d.transform(t);
 
-            if (k.getRectangle() == null) {
-                k.setRectangle(new Rectangle2D.Double(k.getX(), k.getY(), k.getWidth(), k.getHeight()));
-            } else {
-                k.getRectangle().setRect(k.getX(), k.getY(), k.getWidth(), k.getHeight());
-            }
-
+            k.draw(g2d, k.getDirection(k.getTarget(), k.getStartingPoint()));
             for (Enemy enemy : enemyOnField) {
-                if (k.collisionDetect(enemy.getRectangle())) {
+                //wanneer isHit true is verdwijnt de bullet
+                if (k.collisionDetect(enemy.getHitBox())) {
                     k.setHit(true);
                 }
             }
-
-
-            g2d.draw(k.getRectangle());
-            g2d.drawImage(k.getImage(), k.getCurrentLocation().x, k.getCurrentLocation().y, this);
-            g2d.setTransform(old);
         }
     }
 
 
     private void drawEnemy(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        ArrayList<Kogel> kogels = schip.getKogels();
+        //loop over alle enemies, zodat ze allemaal geupdatet worden
         for (Iterator<Enemy> iterator = enemyOnField.iterator(); iterator.hasNext(); ) {
             Enemy enemy = iterator.next();
-
-            //uh.. dit wordt gebruikt om de vorige transform te restoren ofzoiets idk - Renzie
-            AffineTransform old = g2d.getTransform();
-
-
-            //Hier wordt alles veranderd op enkel t - Renzie
-            AffineTransform t = new AffineTransform();
-            t.translate(enemy.getCurrentLocation().getX(), enemy.getCurrentLocation().getY());
-            t.rotate(Math.toRadians(schip.getDirection(schip.getLocation(), enemy.getCurrentLocation()) + 90), enemy.getWidth() / 2, enemy.getHeight() / 2);
-            t.translate(-enemy.getCurrentLocation().getX(), -enemy.getCurrentLocation().getY());
-            g2d.transform(t);
-
-
-            // Gewoon een rectangle voor de hitbox - Renzie
-            if (enemy.getRectangle() == null) {
-                enemy.setRectangle(new Rectangle2D.Double(enemy.getCurrentLocation().getX(), enemy.getCurrentLocation().getY(), enemy.getWidth(), enemy.getHeight()));
-            } else {
-                enemy.getRectangle().setRect(enemy.getCurrentLocation().getX(), enemy.getCurrentLocation().getY(), enemy.getWidth(), enemy.getHeight());
-            }
-
-
+            enemy.draw(g2d, enemy.getDirection(schip.getCurrentLocation(), enemy.getCurrentLocation()));
             //check als een kogel geland is op de enemy
-            for (Kogel k : kogels) {
-
-                if (k.collisionDetect(enemy.getRectangle())) {
-                    //TODO MATTHIAS IER MOET ALLE STUFF IN WANNEER JE EEN ENEMY HIT - RENZIE
+            for (Kogel k : schip.getKogels()) {
+                if (k.collisionDetect(enemy.getHitBox())) {
                     enemy.setHit(true);
                 }
             }
-
-
-            //Teken alles op t - Renzie
-            g2d.draw(enemy.getRectangle());
-            g2d.drawImage(enemy.getImage(), enemy.getCurrentLocation().x, enemy.getCurrentLocation().y, this);
-
-            //Restore terug naar vorige transform - Renzie
-            g2d.setTransform(old);
-
         }
     }
+
+
+
 
 
     private void approachShip() {
         for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ){
             Enemy enemy = enemyIterator.next();
-            enemy.updateLocation(schip.getLocation(), enemy.getCurrentLocation(), 1);
+            enemy.updateLocation(schip.getCurrentLocation(), enemy.getCurrentLocation(), 1);
             if (enemy.isHit()){
                 enemyIterator.remove();
             }
@@ -252,6 +152,8 @@ public class Board extends JPanel implements ActionListener {
         });
         spawnTimer.start();
     }
+
+
 
 
     @Override
