@@ -13,7 +13,7 @@ import java.awt.event.KeyListener;
 public class Movement implements KeyListener {
     private Schip schip;
     private Timer startMoves;
-    private int targetAngle;
+    private double targetAngle;
 
     // Constructor
     public Movement(Schip schip) {
@@ -34,16 +34,16 @@ public class Movement implements KeyListener {
         startMoves.start();
     }
 
-    private void rotateCounterClockwise(int degrees) {
+    private void rotateCounterClockwise(double degrees) {
 
         schip.setCurrentAngle(schip.getCurrentAngle() - degrees);
     }
 
-    private void rotateClockwise(int degrees) {
+    private void rotateClockwise(double degrees) {
         schip.setCurrentAngle(schip.getCurrentAngle() + degrees);
     }
 
-    private double rotate(int degrees, int targetAngle) {
+    private double rotate(double degrees, double targetAngle) {
             if (schip.getCurrentAngle() - targetAngle == 0) return schip.getCurrentAngle();
 
             if (schip.getCurrentAngle() < targetAngle && (targetAngle - schip.getCurrentAngle()) % 360 <= 180) {

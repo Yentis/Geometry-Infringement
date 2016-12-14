@@ -2,8 +2,10 @@ package Game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Yentl-PC on 10/11/2016.
@@ -16,12 +18,11 @@ public class Sprite {
     protected Image image;
     protected Point target;
     protected Point currentLocation;
-    protected Rectangle2D rectangle;
+    protected Rectangle2D hitBox;
     protected boolean isHit;
 
 
-
-    public Sprite(double x, double y, Point target, String image){
+    public Sprite(double x, double y, Point target, String image) {
         this.x = x;
         this.y = y;
         this.target = target;
@@ -34,7 +35,7 @@ public class Sprite {
         isHit = false;
     }
 
-    public Sprite(String image){
+    public Sprite(String image) {
         ImageIcon ii = new ImageIcon(image);
         width = ii.getIconWidth();
         height = ii.getIconHeight();
@@ -42,7 +43,7 @@ public class Sprite {
         isHit = false;
     }
 
-    public void updateLocation(Point targetLocation, Point currentLocation, double speed){
+    public void updateLocation(Point targetLocation, Point currentLocation, double speed) {
         double length;
         double velocityX;
         double velocityY;
@@ -63,9 +64,20 @@ public class Sprite {
 
     }
 
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
 
     public Point getCurrentLocation() {
         return currentLocation;
+    }
+
+    public void setCurrentLocation(Point currentLocation) {
+        this.currentLocation = currentLocation;
     }
 
     public Point getTarget() {
@@ -92,14 +104,12 @@ public class Sprite {
         return y;
     }
 
-    public Point gettarget() { return target; }
-
-    public void setRectangle(Rectangle2D rectangle) {
-        this.rectangle = rectangle;
+    public void setHitBox(Rectangle2D hitBox) {
+        this.hitBox = hitBox;
     }
 
-    public Rectangle2D getRectangle() {
-        return rectangle;
+    public Rectangle2D getHitBox() {
+        return hitBox;
     }
 
     public boolean isHit() {
@@ -110,20 +120,69 @@ public class Sprite {
         isHit = hit;
     }
 
-    public double getDirection(Point target , Point start) {
+    public double getDirection(Point target, Point start) {
         double angle = Math.toDegrees(Math.atan2(target.getY() - start.getY(), target.x - start.getX()));
         return angle;
     }
 
     public boolean collisionDetect(Rectangle2D approachingTarget) {
-        return approachingTarget != null && rectangle.getBounds2D().intersects(approachingTarget.getBounds2D());
+        return approachingTarget != null && hitBox.getBounds2D().intersects(approachingTarget.getBounds2D());
     }
 
-    public void move(double velocityX, double velocityY){
+    public void move(double velocityX, double velocityY) {
         x += velocityX;
         y += velocityY;
 
         currentLocation.setLocation(x, y);
 
+    }
+
+    public void draw(Graphics2D g2d,Double angle) {
+        //uh.. dit wordt gebruikt om de vorige transform te restoren ofzoiets idk - Renzie
+        AffineTransform save = g2d.getTransform();
+
+        //Hier wordt alles veranderd op enkel de newTransform - Renzie
+        AffineTransform newTransform = new AffineTransform();
+        updateNewTransform(newTransform, angle);
+        g2d.transform(newTransform);
+
+        //Teken alles op t - Renzie
+        g2d.drawImage(this.getImage(), this.getCurrentLocation().x, this.getCurrentLocation().y, null);
+
+        //Dit is een rectangle die voor collision zorgt
+        drawHitBox(g2d);
+
+        //return to old Transform
+        g2d.setTransform(save);
+    }
+
+
+    public void updateNewTransform(AffineTransform newTransform, Double angle) {
+        newTransform.translate(this.getCurrentLocation().getX(), this.getCurrentLocation().getY());
+        newTransform.rotate(Math.toRadians(angle), this.getWidth() / 2, this.getHeight() / 2);
+        newTransform.translate(-this.getCurrentLocation().getX(), -this.getCurrentLocation().getY());
+    }
+
+
+    public void drawHitBox(Graphics2D g2d) {
+        if (this.getHitBox() == null) {
+            this.setHitBox(new Rectangle2D.Double(this.getCurrentLocation().getX(), this.getCurrentLocation().getY(), this.getWidth(), this.getHeight()));
+        } else {
+            this.getHitBox().setRect(this.getCurrentLocation().getX(), this.getCurrentLocation().getY(), this.getWidth(), this.getHeight());
+        }
+        g2d.draw(this.getHitBox());
+    }
+
+
+    public void drawAndCheckCollision(Graphics2D g2d,Double angle, ArrayList collidingSprites) {
+        draw(g2d, angle);
+        for (Object object : collidingSprites) {
+            Sprite collidingSprite = (Sprite) object;
+            //wanneer isHit true is verdwijnt de collidingsprite
+            if (collidingSprite.collisionDetect(this.getHitBox())) {
+                collidingSprite.setHit(true);
+                System.out.println("in true");
+            }
+        }
     }
 }
