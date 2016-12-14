@@ -115,12 +115,10 @@ public class Board extends JPanel implements ActionListener {
         //Returns an AffineTransform object representing the inverse transformation.   i dont get it
         try {
             g2d.transform(t.createInverse());
-<<<<<<< HEAD
-        } catch (NoninvertibleTransformException e){
 
-=======
+
         } catch (NoninvertibleTransformException e) {
->>>>>>> 658c36bb163c4e351da6267b393b75b1563a0175
+
             e.printStackTrace();
 
         }
