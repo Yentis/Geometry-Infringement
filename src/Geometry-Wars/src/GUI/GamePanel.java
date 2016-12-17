@@ -1,11 +1,15 @@
 package GUI;
 
+import GComponents.GButton;
+import GComponents.GLabel;
+import GComponents.GPanel;
 import Game.*;
 import javafx.scene.transform.Affine;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
@@ -15,62 +19,86 @@ import javax.swing.*;
 /**
  * Created by Yentl-PC on 9/11/2016.
  */
-public class Board extends JPanel implements ActionListener {
-
-    //TODO hitbox een beetje modifieen zodat het precies past
-
+public class GamePanel extends GPanel{
     private Timer timer;
     private Schip schip;
     private Drone drone;
     private final int DELAY = 10;
     private ArrayList<Enemy> enemyOnField = new ArrayList<Enemy>();
     private int enemyCounter = 1;
+    private Timer spawnTimer;
+    private float interpolation;
+    private JButton derp;
+    private boolean enemiesStartedSpawning;
 
 
-    public Board() {
-        addKeyListener(new Board.TAdapter());
-        addMouseListener(new Board.MAdapter());
+    public GamePanel() {
+
+        addKeyListener(new TAdapter());
+        addMouseListener(new MAdapter());
         setFocusable(true);
-        setBackground(Color.BLACK);
+
+        requestFocus();
+
+
+
         setDoubleBuffered(true);
-
-        schip = new Schip(1, 100, 10, "src/Media/schip1.png", 0,0);
+        //GLabel combo = new GLabel("x" + schip.getCombo(), 20, 675, 100, 47, 60, false, Color.green);
+        derp = new JButton("derp");
+        this.add(derp);
+        schip = new Schip(1, 100, 10, "src/Media/schip1.png", 0, 0);
         drone = new Drone(1, "Drone1", "a", 100, 5, "src/Media/drone1.png", 1, 0);
-
-        timer = new Timer(DELAY, this);
-        timer.start();
+        //timer = new Timer(DELAY, this);
         spawnEnemies();
+        //startGame();
+    }
 
+    @Override
+    public void initComponents() throws IOException, FontFormatException {
+        //TODO
+    }
 
+    public void setInterpolation(float interpolation) {
+        this.interpolation = interpolation;
+    }
+
+    public void startGame() {
+        spawnTimer.start();
+    }
+
+    public void pauseGame() {
+        timer.stop();
+        spawnTimer.stop();
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         drawBullets(g);
         drawShip(g);
         drawDrone(g);
         drawEnemy(g);
+        //repaint();
         Toolkit.getDefaultToolkit().sync();
     }
 
     private void drawShip(Graphics g) {
+
         Graphics2D g2d = (Graphics2D) g;
         schip.draw(g2d, schip.getCurrentAngle());
-        for ( Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ){
+        for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ) {
             Enemy enemy = enemyIterator.next();
-            if (schip.collisionDetect(enemy.getHitBox())){
+            if (schip.collisionDetect(enemy.getHitBox())) {
+                System.out.println("im hit!");
                 schip.setHit(true);
                 schip.loseHP(enemy.getKracht());
                 schip.resetCombo();
-
                 enemyIterator.remove();
             }
         }
     }
 
-    private void drawDrone(Graphics g){
+    private void drawDrone(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform old = g2d.getTransform();
         AffineTransform t = new AffineTransform();
@@ -99,7 +127,6 @@ public class Board extends JPanel implements ActionListener {
                     //TODO combo bepalen en upgrades uitvoeren
                     schip.addCombo();
                     schip.checkForUpgrade(schip.getCombo());
-
                 }
             }
         }
@@ -124,50 +151,54 @@ public class Board extends JPanel implements ActionListener {
 
 
     private void approachShip() {
-        for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ){
+        for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ) {
             Enemy enemy = enemyIterator.next();
             enemy.updateLocation(schip.getCurrentLocation(), enemy.getCurrentLocation(), 1);
-            if (enemy.isHit()){
+            if (enemy.isHit()) {
                 enemyIterator.remove();
             }
         }
     }
 
     private void updateKogels() {
-        for (Iterator<Kogel> kogeliterator = schip.getKogels().iterator(); kogeliterator.hasNext();){
+        for (Iterator<Kogel> kogeliterator = schip.getKogels().iterator(); kogeliterator.hasNext(); ) {
             Kogel k = kogeliterator.next();
             k.updateLocation(k.getTarget(), k.getStartingPoint(), k.getKogelSnelheid());
-            if(k.isHit()){
+            if (k.isHit()) {
                 kogeliterator.remove();
             }
         }
     }
 
 
-    private void spawnEnemies() {
-        Timer spawnTimer = new Timer(5000, new ActionListener() {
+    public void spawnEnemies() {
+        spawnTimer = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (int i = 0; i < enemyCounter; i++) {
                     enemyOnField.add(new Enemy(1, "WutFace", "euh wa moek ier zetten", 100, 10, "src/Media/vijand1.png", 20, 20));
                 }
+                System.out.println("spawned");
                 enemyCounter++;
             }
         });
-        spawnTimer.start();
     }
 
 
-
-
-    @Override
+    /*@Override
     public void actionPerformed(ActionEvent e) {
+        update();
+    }*/
+
+    public void update(){
         updateKogels();
         approachShip();
         schip.beweegSchip();
         repaint();
-
     }
+
+
+
 
     private class TAdapter extends KeyAdapter {
         @Override
@@ -186,6 +217,7 @@ public class Board extends JPanel implements ActionListener {
         @Override
         public void mousePressed(MouseEvent e) {
             schip.mousePressed(e);
+
         }
 
         @Override

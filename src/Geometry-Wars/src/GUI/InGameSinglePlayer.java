@@ -1,32 +1,64 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 import java.net.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.Timer;
+
 import GComponents.*;
+import Game.Drone;
+import Game.Enemy;
+import Game.Kogel;
+import Game.Schip;
 
 
 /**
  * Created by Laurens Visser on 9/11/2016.
  */
-public class InGameSinglePlayer extends GPanel{
+public class InGameSinglePlayer extends GPanel implements ActionListener{
     private InGameSinglePlayer panel = this;
 
-    public InGameSinglePlayer() throws MalformedURLException, IOException, FontFormatException {
+    private GamePanel gamePanel = new GamePanel();
+    private boolean running = false;
+    private boolean paused = false;
+    private int FPS = 60;
+    private int frameCount = 0;
+    private GButton startGame = new GButton("Start", 24f, 200, 200, 500, 200);
+    private int lastFpsTime;
 
+
+
+    public InGameSinglePlayer() throws IOException, FontFormatException {
         initComponents();
+        panel.add(gamePanel);
+        gamePanel.setOpaque(false);
+        panel.add(startGame);
+        startGame.addActionListener(this);
+        gamePanel.setVisible(false);
 
     }
 
 
+    public boolean startRunning(){
+        return running = true;
+    }
+
+    public void initGamePanel(){
+        gamePanel.setVisible(true);
+        gamePanel.requestFocus();
+        gamePanel.startGame();
+    }
+
     @Override
     public void initComponents() throws IOException, FontFormatException {
 
-        
+
         ImageIcon PauseImage = new ImageIcon("src\\Media\\pause-128.png");
         JButton pauze = new JButton(PauseImage);
         JLabel pane = new JLabel();
@@ -65,7 +97,7 @@ public class InGameSinglePlayer extends GPanel{
 
         //BOUNDS
         pauze.setBounds(510,23,60,58);
-        pane.setBounds(235,175,700,430);
+        pane.setBounds(50,125,900,500);
         pauzepane.setBounds(395,265,370,245);
 
         pauzepane.setVisible(false);
@@ -146,4 +178,83 @@ public class InGameSinglePlayer extends GPanel{
     }
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
+        if (source == startGame){
+            startGame.setVisible(false);
+             initGamePanel();
+            startRunning();
+            if(running){
+                runGameLoop();
+            }
+        }
+    }
+
+    private void runGameLoop() {
+        Thread loop = new Thread() {
+            public void run() {
+                gameLoop();
+            }
+        };
+        loop.start();
+    }
+
+
+    // TL;DR : zorgt ervoor dat de loop binnen de 60 fps blijft EN zorgt ervoor dat de game constant repaint; - Renzie
+    private void gameLoop(){
+        long lastLoopTime = System.nanoTime();
+        final int TARGET_FPS = 60;
+        final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
+
+        // keep looping round til the game ends
+        while (running)
+        {
+            // work out how long its been since the last update, this
+            // will be used to calculate how far the entities should
+            // move this loop
+            long now = System.nanoTime();
+            long updateLength = now - lastLoopTime;
+            lastLoopTime = now;
+            //double delta = updateLength / ((double)OPTIMAL_TIME);
+
+            // update the frame counter
+            lastFpsTime += updateLength;
+            FPS++;
+
+            // update our FPS counter if a second has passed since
+            // we last recorded
+            if (lastFpsTime >= 1000000000)
+            {
+                System.out.println("(FPS: "+FPS+")");
+                lastFpsTime = 0;
+                FPS= 0;
+            }
+
+            // update the game logic
+            updateGame();
+
+            // draw everyting
+            drawGame();
+
+            // we want each frame to take 10 milliseconds, to do this
+            // we've recorded when we started the frame. We add 10 milliseconds
+            // to this and then factor in the current time to give
+            // us our final value to wait for
+            // remember this is in ms, whereas our lastLoopTime etc. vars are in ns.
+            try{
+                Thread.sleep( (lastLoopTime-System.nanoTime() + OPTIMAL_TIME)/1000000 );
+            } catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void updateGame(){
+        gamePanel.update();
+    }
+
+    private void drawGame(){
+        //gamePanel.repaint();
+    }
 }

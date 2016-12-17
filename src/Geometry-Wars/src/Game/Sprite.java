@@ -173,16 +173,4 @@ public class Sprite {
         g2d.draw(this.getHitBox());
     }
 
-
-    public void drawAndCheckCollision(Graphics2D g2d,Double angle, ArrayList collidingSprites) {
-        draw(g2d, angle);
-        for (Object object : collidingSprites) {
-            Sprite collidingSprite = (Sprite) object;
-            //wanneer isHit true is verdwijnt de collidingsprite
-            if (collidingSprite.collisionDetect(this.getHitBox())) {
-                collidingSprite.setHit(true);
-                System.out.println("in true");
-            }
-        }
-    }
 }

@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
  */
 public class Speelveld extends JFrame{
     public Speelveld(){
-        add(new Board());
+        add(new GamePanel());
 
         setSize(1024, 768);
         //setExtendedState(JFrame.MAXIMIZED_BOTH);

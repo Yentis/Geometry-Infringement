@@ -98,7 +98,6 @@ public class MainMenu extends GPanel {
             }
         });
 
-        //TODO (IntelliJ)
         Profile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 

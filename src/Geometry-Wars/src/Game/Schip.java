@@ -1,15 +1,9 @@
 package Game;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import static java.lang.Math.abs;
@@ -118,6 +112,7 @@ public class Schip extends Sprite{
 
     public void beweegSchip() {
 
+
         locationX = limitToBorders(locationX , 0 , 1024);
         locationY = limitToBorders(locationY , 0 , 768);
 
@@ -182,6 +177,7 @@ public class Schip extends Sprite{
             mousePressedTimer = new Timer(50, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {*/
+        System.out.println("shit fired");
                     double kogelX = locationX;
                     double kogelY = locationY;
                     addKogels(new Kogel(kogelX, kogelY, mousePointer,"src/Media/kogel1.png"));
