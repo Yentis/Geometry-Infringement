@@ -54,7 +54,11 @@ public class Schip extends Sprite{
         return combo;
     }
 
-//endregion
+    public int getScore() {
+        return score;
+    }
+
+    //endregion
 
     //region Properties
 
@@ -86,7 +90,7 @@ public class Schip extends Sprite{
 
     public void addScore(int enemyscore, int combo){
         score = enemyscore * combo;
-        adjustScore(score);
+        score = adjustScore(score);
     }
 
     public int adjustScore(int score){

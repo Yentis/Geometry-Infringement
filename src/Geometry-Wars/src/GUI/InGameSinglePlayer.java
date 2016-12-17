@@ -24,17 +24,17 @@ import Game.Schip;
 public class InGameSinglePlayer extends GPanel implements ActionListener{
     private InGameSinglePlayer panel = this;
 
-    private GamePanel gamePanel = new GamePanel();
+    private GamePanel gamePanel;
     private boolean running = false;
-    private boolean paused = false;
+    private boolean paused = false; //TODO
     private int FPS = 60;
-    private int frameCount = 0;
     private GButton startGame = new GButton("Start", 24f, 200, 200, 500, 200);
     private int lastFpsTime;
 
 
 
     public InGameSinglePlayer() throws IOException, FontFormatException {
+        gamePanel = new GamePanel();
         initComponents();
         panel.add(gamePanel);
         gamePanel.setOpaque(false);
@@ -59,6 +59,8 @@ public class InGameSinglePlayer extends GPanel implements ActionListener{
     public void initComponents() throws IOException, FontFormatException {
 
 
+
+
         ImageIcon PauseImage = new ImageIcon("src\\Media\\pause-128.png");
         JButton pauze = new JButton(PauseImage);
         JLabel pane = new JLabel();
@@ -72,7 +74,7 @@ public class InGameSinglePlayer extends GPanel implements ActionListener{
         GLabel dronebar = new GLabel("", 24, 753,672,216,47, true, Color.black);
         GLabel schipbar = new GLabel("", 24, 350,672,216,47, true, Color.black);
         GLabel confirmationlabel = new GLabel("Are you sure?", 30, 470,285,500,60, false, Color.cyan);
-        JButton Quit = new GButton("Quit", 24f, 20, 675, 100, 47);
+        //JButton Quit = new GButton("Quit", 24f, 20, 675, 100, 47);
         JButton Yes = new GButton("Yes", 24f, 455, 380, 100, 47);
         JButton No = new GButton("No", 24f, 595, 380, 100, 47);
 
@@ -121,7 +123,7 @@ public class InGameSinglePlayer extends GPanel implements ActionListener{
         this.add(schipLvl);
         this.add(droneLvl);
         this.add(pauzepane);
-        this.add(Quit);
+        //this.add(Quit);
         this.add(confirmationlabel);
         this.add(Yes);
         this.add(No);
@@ -129,7 +131,7 @@ public class InGameSinglePlayer extends GPanel implements ActionListener{
 
 
 
-        Quit.addActionListener(new java.awt.event.ActionListener() {
+        /*Quit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
@@ -141,7 +143,7 @@ public class InGameSinglePlayer extends GPanel implements ActionListener{
 
 
 
-        });
+        });*/
 
         No.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

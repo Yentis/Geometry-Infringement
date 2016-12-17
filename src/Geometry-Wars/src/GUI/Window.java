@@ -11,19 +11,17 @@ import java.io.IOException;
 /**
  * Created by Renzie on 7/11/2016.
  */
-public class Window extends JFrame implements ActionListener{
+public class Window extends JFrame{
 
     // Panels
-    // TODO fill in other panels , add getters too
-    private MainMenu mainMenu = new MainMenu();
-    private StartGame startGame = new StartGame();
-    private Profile profile = new Profile();
-    private StartGameCampaign startGameCampaign = new StartGameCampaign();
-    private Logout logout = new Logout();
-    private Login login = new Login();
-    private InGameSinglePlayer inGameSinglePlayer = new InGameSinglePlayer();
-    private Scoreboard scoreboard = new Scoreboard();
-//    private GamePanel gamePanel = new GamePanel();
+    private MainMenu mainMenu;
+    private StartGame startGame;
+    private Profile profile;
+    private StartGameCampaign startGameCampaign;
+    private Logout logout;
+    private Login login;
+    private InGameSinglePlayer inGameSinglePlayer;
+    private Scoreboard scoreboard;
 
 
 
@@ -76,6 +74,15 @@ public class Window extends JFrame implements ActionListener{
 
 
     public void initPanels() throws IOException, FontFormatException {
+        // Make UI panels
+        mainMenu = new MainMenu();
+        startGame = new StartGame();
+        profile = new Profile();
+        startGameCampaign = new StartGameCampaign();
+        logout  = new Logout();
+        login = new Login();
+        inGameSinglePlayer = new InGameSinglePlayer();
+        scoreboard = new Scoreboard();
 
         // Add UI panels
         cp.add(mainMenu);
@@ -123,14 +130,4 @@ public class Window extends JFrame implements ActionListener{
     public Scoreboard getScoreboard() {return scoreboard;}
 
 
-
-
-
-
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource();
-        System.out.println(source);
-    }
 }

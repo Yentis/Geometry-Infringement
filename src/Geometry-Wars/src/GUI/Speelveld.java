@@ -4,12 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * Created by Yentl-PC on 9/11/2016.
  */
 public class Speelveld extends JFrame{
-    public Speelveld(){
+    public Speelveld() throws IOException, FontFormatException {
         add(new GamePanel());
 
         setSize(1024, 768);
@@ -29,7 +30,14 @@ public class Speelveld extends JFrame{
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Speelveld sv = new Speelveld();
+                Speelveld sv = null;
+                try {
+                    sv = new Speelveld();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (FontFormatException e) {
+                    e.printStackTrace();
+                }
 
                 sv.setVisible(true);
             }
