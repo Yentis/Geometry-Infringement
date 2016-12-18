@@ -79,6 +79,7 @@ public class Board extends JPanel implements ActionListener {
         drone.drawAccordingToShip(g2d, schip);
         g2d.transform(t);
 
+
         drone.setCurrentAngle(drone.getCurrentAngle() + 1);
         drone.drawHitBox(g2d);
         drone.setCurrentLocation(schip.getCurrentLocation());
