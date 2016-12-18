@@ -22,6 +22,7 @@ public class Window extends JFrame{
     private Login login;
     private InGameSinglePlayer inGameSinglePlayer;
     private Scoreboard scoreboard;
+    private Pause pause;
 
 
 
@@ -128,6 +129,8 @@ public class Window extends JFrame{
     public InGameSinglePlayer getInGameSinglePlayer() {return inGameSinglePlayer;}
 
     public Scoreboard getScoreboard() {return scoreboard;}
+
+    public Pause getPause() {return pause;}
 
 
 }
