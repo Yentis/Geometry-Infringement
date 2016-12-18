@@ -1,26 +1,19 @@
 package GUI;
 
-import Game.Main;
+import GComponents.GButton;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.function.Function;
-
-import GComponents.*;
 
 /**
  * Created by Renzie on 7/11/2016.
  */
-public class Window extends JFrame {
+public class Window extends JFrame{
 
     // Panels
-    // TODO fill in other panels , add getters too
     private MainMenu mainMenu;
     private StartGame startGame;
     private Profile profile;
@@ -30,6 +23,9 @@ public class Window extends JFrame {
     private InGameSinglePlayer inGameSinglePlayer;
     private Scoreboard scoreboard;
 
+
+
+    private Container cp = getContentPane();
 
     // this
     private Window frame = this;
@@ -49,28 +45,28 @@ public class Window extends JFrame {
         // Set the panels
         initPanels();
 
-
         // Set the background
         setBackground();
 
-
         // Start the frame
         this.setVisible(true);
-
 
         pack();
 
     }
 
+    public static void main(String args[]) throws IOException, FontFormatException {
+        new Window("Geometry Wars");
+    }
+
     // Set Background
     public void setBackground(){
-
         JLabel bg = new JLabel();
         bg.setLayout(null);
         bg.setSize(1024,768);
         ImageIcon icon = new ImageIcon("src\\Media\\resized_background-768.png");
         bg.setIcon(icon);
-        frame.add(bg);
+        cp.add(bg);
         bg.setVisible(true);
 
     }
@@ -89,15 +85,14 @@ public class Window extends JFrame {
         scoreboard = new Scoreboard();
 
         // Add UI panels
-        frame.add(mainMenu);
-        frame.add(startGame);
-        frame.add(profile);
-        frame.add(startGameCampaign);
-        frame.add(logout);
-        frame.add(login);
-        frame.add(inGameSinglePlayer);
-        frame.add(scoreboard);
-
+        cp.add(mainMenu);
+        cp.add(startGame);
+        cp.add(profile);
+        cp.add(startGameCampaign);
+        cp.add(logout);
+        cp.add(login);
+        cp.add(inGameSinglePlayer);
+        cp.add(scoreboard);
 
 
         // Set all panels invisible except the starting panel
@@ -133,13 +128,6 @@ public class Window extends JFrame {
     public InGameSinglePlayer getInGameSinglePlayer() {return inGameSinglePlayer;}
 
     public Scoreboard getScoreboard() {return scoreboard;}
-
-
-
-
-    public static void main(String args[]) throws IOException, FontFormatException {
-       new Window("Geometry Wars");
-    }
 
 
 }

@@ -66,8 +66,4 @@ public class Drone extends Sprite{
     }
 
     //endregion
-
-    /*public Point getLocation(){
-        return location;
-    }*/
 }
