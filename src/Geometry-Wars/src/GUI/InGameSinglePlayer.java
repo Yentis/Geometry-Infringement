@@ -211,6 +211,8 @@ public class InGameSinglePlayer extends GPanel implements ActionListener{
             // work out how long its been since the last update, this
             // will be used to calculate how far the entities should
             // move this loop
+
+            //dit berekent de tijd tussen nu en de laatste keer dat deze loop is gepasseerd
             long now = System.nanoTime();
             long updateLength = now - lastLoopTime;
 
@@ -221,26 +223,27 @@ public class InGameSinglePlayer extends GPanel implements ActionListener{
             lastFpsTime += updateLength;
             FPS++;
 
-            // update our FPS counter if a second has passed since we last recorded
+            // update our FPS counter if a second has passed since
+            // we last recorded
             if (lastFpsTime >= 1000000000)
             {
                 System.out.println("(FPS: "+FPS+")");
                 lastFpsTime = 0;
                 FPS= 0;
             }
-            System.out.println(lastLoopTime-System.nanoTime() + OPTIMAL_TIME);
+            System.out.println(OPTIMAL_TIME);
             // update the game logic
             updateGame();
 
-            // draw everyting
+            // redraw
             drawGame();
 
-            // we want each frame to take 10 milliseconds, to do this
-            // we've recorded when we started the frame. We add 10 milliseconds
-            // to this and then factor in the current time to give
-            // us our final value to wait for
-            // remember this is in ms, whereas our lastLoopTime etc. vars are in ns.
+
+            /*elke frame neemt 10 milliseconden in beslag en daarom zal de thread moeten sleepen voor ~10 ms zodat het niet overbelast geraakt
+              Dit is in milliseconden en niet in nanoseconden OPLETTEN.
+             */
             try{
+                // "now" anders geeft het na een bepaalde tijd een negatieve waarde weer indien je System.nanoTime(); gebruikt
                 Thread.sleep( (lastLoopTime - now + OPTIMAL_TIME)/1000000 );
             } catch (InterruptedException e){
                 e.printStackTrace();
@@ -253,6 +256,6 @@ public class InGameSinglePlayer extends GPanel implements ActionListener{
     }
 
     private void drawGame(){
-        //gamePanel.repaint();
+        gamePanel.repaint();
     }
 }

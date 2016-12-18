@@ -66,9 +66,7 @@ public class GamePanel extends GPanel{
         panel.add(score);
         panel.add(currentHealthBar);
 
-        for (Component component : panel.getComponents()){
-            component.setVisible(true);
-        }
+        setAllComponentsVisible();
     }
 
     public void startGame() {
@@ -169,7 +167,6 @@ public class GamePanel extends GPanel{
         }
     }
 
-
     public void spawnEnemies() {
         spawnTimer = new Timer(5000, new ActionListener() {
             @Override
@@ -194,14 +191,21 @@ public class GamePanel extends GPanel{
         combo.setText("x " + schip.getCombo());
         score.setText("" + schip.getScore());
         currentHealthBar.setSize((int) healthBarWidth, currentHealthBar.getHeight());
-        repaint();
     }
 
     private void updateHealthBar(){
-        ratio = currentHealthBar.getWidth() / schip.getHp();
-        healthBarWidth = ratio * schip.getHp();
+        if (schip.getHp() != 0){
+            ratio = currentHealthBar.getWidth() / schip.getHp();
+            healthBarWidth = ratio * schip.getHp();
+        } else {
+            //TODO
+            System.out.println("GameOver");
+        }
     }
 
+    private void updateCombo(){
+        
+    }
 
 
     private class TAdapter extends KeyAdapter {

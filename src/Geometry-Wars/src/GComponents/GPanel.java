@@ -32,9 +32,15 @@ public abstract class GPanel extends JPanel {
         }
     }
 
-    public void setAllComponentsVisible(boolean toVisibleOrInvisible){
+    public void setAllComponentsVisible(){
         for (Component component : components){
-            component.setVisible(toVisibleOrInvisible);
+            component.setVisible(true);
+        }
+    }
+
+    public void setAllComponentsInVisible(){
+        for (Component component : components){
+            component.setVisible(false);
         }
     }
 
