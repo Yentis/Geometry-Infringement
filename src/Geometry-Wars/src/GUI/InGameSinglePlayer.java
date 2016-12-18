@@ -57,16 +57,12 @@ public class InGameSinglePlayer extends GPanel implements ActionListener{
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
-
-
-
-
         ImageIcon PauseImage = new ImageIcon("src\\Media\\pause-128.png");
         JButton pauze = new JButton(PauseImage);
         JLabel pane = new JLabel();
         JLabel pauzepane = new JLabel();
 
-        GLabel health = new GLabel("Health:", 24, 40,18,169,62, false, Color.cyan);
+        GLabel health = new GLabel("Health:", 24, 40,18,169,62, false, Color.black);
         GLabel score = new GLabel("Score:", 24, 606,18,169,62, false, Color.cyan);
         GLabel schipLvl = new GLabel("Ship lvl:", 24, 200,667,222,62, false, Color.green);
         GLabel droneLvl = new GLabel("Drone lvl:", 24, 600,667,222,62, false, new Color(155,255,204));
@@ -217,6 +213,7 @@ public class InGameSinglePlayer extends GPanel implements ActionListener{
             // move this loop
             long now = System.nanoTime();
             long updateLength = now - lastLoopTime;
+
             lastLoopTime = now;
             //double delta = updateLength / ((double)OPTIMAL_TIME);
 
@@ -224,15 +221,14 @@ public class InGameSinglePlayer extends GPanel implements ActionListener{
             lastFpsTime += updateLength;
             FPS++;
 
-            // update our FPS counter if a second has passed since
-            // we last recorded
+            // update our FPS counter if a second has passed since we last recorded
             if (lastFpsTime >= 1000000000)
             {
                 System.out.println("(FPS: "+FPS+")");
                 lastFpsTime = 0;
                 FPS= 0;
             }
-
+            System.out.println(lastLoopTime-System.nanoTime() + OPTIMAL_TIME);
             // update the game logic
             updateGame();
 
@@ -245,7 +241,7 @@ public class InGameSinglePlayer extends GPanel implements ActionListener{
             // us our final value to wait for
             // remember this is in ms, whereas our lastLoopTime etc. vars are in ns.
             try{
-                Thread.sleep( (lastLoopTime-System.nanoTime() + OPTIMAL_TIME)/1000000 );
+                Thread.sleep( (lastLoopTime - now + OPTIMAL_TIME)/1000000 );
             } catch (InterruptedException e){
                 e.printStackTrace();
             }

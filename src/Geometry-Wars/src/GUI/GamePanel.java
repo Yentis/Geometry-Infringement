@@ -29,35 +29,42 @@ public class GamePanel extends GPanel{
     private Timer spawnTimer;
     private GLabel combo;
     private GLabel score;
+    private JProgressBar currentHealthBar;
+    private double healthBarWidth;
+    private double ratio;
 
 
 
     public GamePanel() throws IOException, FontFormatException {
-
-        initComponents();
         addKeyListener(new TAdapter());
         addMouseListener(new MAdapter());
         setFocusable(true);
         requestFocus();
-
+        initComponents();
         setDoubleBuffered(true);
 
         schip = new Schip(1, 100, 10, "src/Media/schip1.png", 0, 0);
         drone = new Drone(1, "Drone1", "a", 100, 5, "src/Media/drone1.png", 1, 0);
         spawnEnemies();
-
     }
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
+        //make Components
         combo = new GLabel("x 0" , 36f, 30, 665, 100, 60, false, Color.white);
         score = new GLabel("0", 30f, 700, 25, 300, 60, false, Color.white);
+        currentHealthBar = new JProgressBar();
+        currentHealthBar.setBounds(20, 27, 425, 40);
+        currentHealthBar.setBackground(new Color(0, 200, 0));
+        currentHealthBar.setOpaque(true);
 
         //score rechts uitlijnen
         score.setHorizontalAlignment(SwingConstants.RIGHT);
 
+        //Add components to panel
         panel.add(combo);
         panel.add(score);
+        panel.add(currentHealthBar);
 
         for (Component component : panel.getComponents()){
             component.setVisible(true);
@@ -84,7 +91,6 @@ public class GamePanel extends GPanel{
         for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ) {
             Enemy enemy = enemyIterator.next();
             if (schip.collisionDetect(enemy.getHitBox())) {
-                System.out.println("im hit!");
                 schip.setHit(true);
                 schip.loseHP(enemy.getKracht());
                 schip.resetCombo();
@@ -127,7 +133,6 @@ public class GamePanel extends GPanel{
         }
     }
 
-
     private void drawEnemy(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         //loop over alle enemies, zodat ze allemaal geupdatet worden
@@ -143,7 +148,6 @@ public class GamePanel extends GPanel{
             }
         }
     }
-
 
     private void approachShip() {
         for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ) {
@@ -186,11 +190,17 @@ public class GamePanel extends GPanel{
         updateKogels();
         approachShip();
         schip.beweegSchip();
+        updateHealthBar();
         combo.setText("x " + schip.getCombo());
         score.setText("" + schip.getScore());
+        currentHealthBar.setSize((int) healthBarWidth, currentHealthBar.getHeight());
         repaint();
     }
 
+    private void updateHealthBar(){
+        ratio = currentHealthBar.getWidth() / schip.getHp();
+        healthBarWidth = ratio * schip.getHp();
+    }
 
 
 

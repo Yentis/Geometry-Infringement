@@ -67,7 +67,6 @@ public class StartGameCampaign extends GPanel {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 window.getInGameSinglePlayer().setVisible(true);
-                //window.getInGameSinglePlayer().startRunning();
 
             }
         });

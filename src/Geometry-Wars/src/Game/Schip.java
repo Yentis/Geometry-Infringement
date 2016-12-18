@@ -58,6 +58,10 @@ public class Schip extends Sprite{
         return score;
     }
 
+    public int getHp() {
+        return hp;
+    }
+
     //endregion
 
     //region Properties
