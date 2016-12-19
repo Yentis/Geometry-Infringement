@@ -196,6 +196,7 @@ public class GamePanel extends GPanel{
                 for (Kogel k : closestShip(enemy).getKogels()) {
                     if (k.collisionDetect(enemy.getHitBox())) {
                         enemy.setHit(true);
+
                     }
                 }
             } else {
@@ -204,8 +205,17 @@ public class GamePanel extends GPanel{
                 //check als een kogel geland is op de enemy
                 for (Kogel k : schip.getKogels()) {
                     if (k.collisionDetect(enemy.getHitBox())) {
-                        enemy.setHit(true);
+
+                        enemy.loseHP(50);
+                        if (enemy.getHP() == 0){
+
+                            enemy.setHit(true);
+
+                        }
+                        System.out.println(enemy.getHP());
+
                     }
+                    
                 }
             }
         }
@@ -234,6 +244,7 @@ public class GamePanel extends GPanel{
 
             if (enemy.isHit()) {
                 enemyIterator.remove();
+
             }
         }
     }
@@ -287,7 +298,7 @@ public class GamePanel extends GPanel{
             healthBarWidth = (int)ratio * schip.getHp();
         } else {
             //TODO
-           gameFinished = true;
+            gameFinished = true;
         }
         return healthBarWidth;
     }
