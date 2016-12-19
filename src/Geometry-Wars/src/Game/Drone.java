@@ -17,6 +17,8 @@ public class Drone extends Sprite{
     private String uiterlijk;
     private int level;
     private int experience;
+    private double droneX;
+    private double droneY;
     /*private Point location = new Point();
     private double locationX = location.getX();
     private double locationY = location.getY();*/
@@ -50,6 +52,7 @@ public class Drone extends Sprite{
         this.beschrijving = "Placeholder";
         this.uiterlijk = "Vierkant";
     }
+
 
     public double getCurrentAngle() {
         return currentAngle;

@@ -21,6 +21,7 @@ public class Enemy extends Sprite{
     private double locationY;
     private int experience;
     private int score;
+    private int speed = 2;
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
 
@@ -67,6 +68,13 @@ public class Enemy extends Sprite{
         return hp;
     }
 
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
 
     public double randomX(){
         Random randomGenerator = new Random();

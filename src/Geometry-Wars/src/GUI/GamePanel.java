@@ -28,6 +28,7 @@ public class GamePanel extends GPanel{
     private int enemyCounter = 1;
     private Timer spawnTimer;
     private Timer invulnerabilityTimer;
+    private Timer slowerEnemiesTimer;
     private GLabel combo;
     private GLabel combop2;
     private GLabel score;
@@ -95,6 +96,7 @@ public class GamePanel extends GPanel{
     public void startGame(){
         gameFinished = false;
         spawnTimer.start();
+        setSlowerEnemiesTimer();
         setInvulnerabilityTimer();
         try{
             initComponents();
@@ -131,14 +133,12 @@ public class GamePanel extends GPanel{
     private void drawShip(Graphics g, Schip schip) {
         Graphics2D g2d = (Graphics2D) g;
         schip.draw(g2d, schip.getCurrentAngle());
-<<<<<<< HEAD
 
-=======
         schipHit(schip);
     }
 
     private void schipHit(Schip schip){
->>>>>>> origin/master
+
         for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ) {
             Enemy enemy = enemyIterator.next();
             if (schip.collisionDetect(enemy.getHitBox())) {
@@ -243,10 +243,13 @@ public class GamePanel extends GPanel{
     private void approachShip() {
         for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ) {
             Enemy enemy = enemyIterator.next();
+            if (schip.isSlowerEnemies()){
+                enemy.setSpeed(1);
+            }
             if(coop){
-                enemy.updateLocation(closestShip(enemy).getCurrentLocation(), enemy.getCurrentLocation(), 1);
+                enemy.updateLocation(closestShip(enemy).getCurrentLocation(), enemy.getCurrentLocation(), enemy.getSpeed());
             } else {
-                enemy.updateLocation(schip.getCurrentLocation(), enemy.getCurrentLocation(), 1);
+                enemy.updateLocation(schip.getCurrentLocation(), enemy.getCurrentLocation(), enemy.getSpeed());
             }
 
             if (enemy.isHit()) {
@@ -287,14 +290,16 @@ public class GamePanel extends GPanel{
         updateKogels(schip);
         approachShip();
         schip.beweegSchip();
-<<<<<<< HEAD
-        updateHealthBar();
+
         if(schip.isInvulnerability()){
             System.out.println("invulnerability start");
             invulnerabilityTimer.start();
         }
-=======
->>>>>>> origin/master
+        if (schip.isSlowerEnemies()){
+            System.out.println("slower enemies");
+            slowerEnemiesTimer.start();
+        }
+
         combo.setText("x " + schip.getCombo());
         score.setText("" + schip.getScore());
         currentHealthBar.setSize((int) updateHealthBar(schip, healthBarWidth, currentHealthBar), currentHealthBar.getHeight());
@@ -329,6 +334,18 @@ public class GamePanel extends GPanel{
             }
         });
 
+    }
+
+    public void setSlowerEnemiesTimer(){
+        slowerEnemiesTimer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                schip.setSlowerEnemies(false);
+                System.out.println("slower enemies stopped");
+                slowerEnemiesTimer.stop();
+
+            }
+        });
     }
 
     private void updateCombo(){

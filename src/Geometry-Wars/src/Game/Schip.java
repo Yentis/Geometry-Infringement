@@ -41,6 +41,7 @@ public class Schip extends Sprite{
     private boolean lifesteal;
     private boolean invulnerability;
     private boolean randomBullets;
+    private boolean slowerEnemies;
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
 
@@ -123,19 +124,31 @@ public class Schip extends Sprite{
         this.randomBullets = randomBullets;
     }
 
+    public boolean isSlowerEnemies() {
+        return slowerEnemies;
+    }
+
+    public void setSlowerEnemies(boolean slowerEnemies) {
+        this.slowerEnemies = slowerEnemies;
+    }
+
     public void checkForUpgrade(int combo){
 
         if (combo % 100 == 0){
             //System.out.println("setHp(100);");
             setHp(100);
             setInvulnerability(true);
+
             //System.out.println("setInvulnerability");
+        } else if (combo % 75 == 0){
+            setSlowerEnemies(true);
         }
         switch (combo){
             case 1:
                 setLifesteal(false);
                 setInvulnerability(false);
                 setRandomBullets(false);
+                setSlowerEnemies(false);
                 break;
             case 20 :
                 //System.out.println("setExtraPowerActive");
@@ -314,6 +327,7 @@ public class Schip extends Sprite{
         addKogels(new Kogel(kogelX,kogelY, mousePointer2,"src/Media/kogel1.png"));
         System.out.println(kogelX2 + " " + kogelY2);
     }
+
 
     public double getCurrentAngle() {
         return currentAngle;
