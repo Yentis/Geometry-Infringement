@@ -1,11 +1,7 @@
 package GUI;
 
-import GComponents.GButton;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /**
@@ -20,9 +16,10 @@ public class Window extends JFrame{
     private StartGameCampaign startGameCampaign;
     private Logout logout;
     private Login login;
-    private InGameSinglePlayer inGameSinglePlayer;
+    private InGame inGame;
     private Scoreboard scoreboard;
 
+    private Coop startCoop;
 
 
     private Container cp = getContentPane();
@@ -68,7 +65,6 @@ public class Window extends JFrame{
         bg.setIcon(icon);
         cp.add(bg);
         bg.setVisible(true);
-
     }
 
 
@@ -81,8 +77,9 @@ public class Window extends JFrame{
         startGameCampaign = new StartGameCampaign();
         logout  = new Logout();
         login = new Login();
-        inGameSinglePlayer = new InGameSinglePlayer();
+        inGame = new InGame();
         scoreboard = new Scoreboard();
+        startCoop = new Coop();
 
         // Add UI panels
         cp.add(mainMenu);
@@ -91,8 +88,9 @@ public class Window extends JFrame{
         cp.add(startGameCampaign);
         cp.add(logout);
         cp.add(login);
-        cp.add(inGameSinglePlayer);
+        cp.add(inGame);
         cp.add(scoreboard);
+        cp.add(startCoop);
 
 
         // Set all panels invisible except the starting panel
@@ -101,8 +99,9 @@ public class Window extends JFrame{
         startGameCampaign.setVisible(false);
         logout.setVisible(false);
         login.setVisible(false);
-        inGameSinglePlayer.setVisible(false);
+        inGame.setVisible(false);
         scoreboard.setVisible(false);
+        startCoop.setVisible(false);
     }
 
 
@@ -125,9 +124,12 @@ public class Window extends JFrame{
 
     public Login getLogin() {return login;}
 
-    public InGameSinglePlayer getInGameSinglePlayer() {return inGameSinglePlayer;}
+    public InGame getInGameSinglePlayer() {return inGame;}
 
     public Scoreboard getScoreboard() {return scoreboard;}
 
 
+    public Coop getStartCoop() {
+        return startCoop;
+    }
 }
