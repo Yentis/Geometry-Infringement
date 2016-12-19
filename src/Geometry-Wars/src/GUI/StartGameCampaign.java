@@ -73,6 +73,4 @@ public class StartGameCampaign extends GPanel {
     }
 
 
-
-
 }

@@ -18,6 +18,9 @@ public class Spel {
     private List<Drone> drones = new ArrayList<>();
     private List<Upgrade> upgrades = new ArrayList<>();
     private List<Enemy> vijanden = new ArrayList<>();
+    private String url = "http://www.phpmyadmin.co/index.php?db=sql7150029";
+    private String user = "sql7150029";
+    private String pass = "3Ngdr6LYhR";
 
     //endregion
 
@@ -28,7 +31,7 @@ public class Spel {
 
     public void initDankabank() throws SQLException{
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/geometry-infringement", "root", "");
+        Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
 
         //region Spelers
@@ -92,7 +95,7 @@ public class Spel {
         }
 
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/geometry-infringement", "root", "XjY3G5dLB8u1mAEcZzqmobSXxtrKzFLP");
+        Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
 
         int a = myStmt.executeUpdate("insert into speler (gebruikersnaam, wachtwoord, email, rank)" +
@@ -101,7 +104,7 @@ public class Spel {
 
     public String infoChecker(String gebruikersnaam, String email) throws SQLException {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/geometry-infringement", "root", "XjY3G5dLB8u1mAEcZzqmobSXxtrKzFLP");
+        Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
 
         //Gebruikersnaam

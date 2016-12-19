@@ -17,6 +17,7 @@ public class Schip extends Sprite{
 
     private int nr;
     private int hp = 100;
+    private int maxhp = 100;
     private int kracht = 10;
     private double dx;
     private double dy;
@@ -32,6 +33,7 @@ public class Schip extends Sprite{
     private int keyRight;
     private int keyUp;
     private int keyDown;
+    private boolean lifesteal;
 
 
     //endregion
@@ -73,6 +75,9 @@ public class Schip extends Sprite{
     //endregion
 
     //region Properties
+    public int getMaxhp(){
+        return maxhp;
+    }
 
     public void setHp(int hp) {
         this.hp = hp;
@@ -84,8 +89,46 @@ public class Schip extends Sprite{
 
     //endregion
 
+    public boolean isLifesteal() {
+        return lifesteal;
+    }
+
+    public void setLifesteal(boolean lifesteal) {
+        this.lifesteal = lifesteal;
+    }
+
     public void checkForUpgrade(int combo){
 
+        if (combo % 100 == 0){
+            System.out.println("setHp(100);");
+            setHp(100);
+            //setInvulnerability()
+            System.out.println("setInvulnerability");
+        }
+        switch (combo){
+            case 1:
+                setLifesteal(false);
+                break;
+            case 20 :
+                System.out.println("setExtraPowerActive");
+                //setExtraPowerActive()
+                break;
+            case 50 :
+                setLifesteal(true);
+                break;
+            case 125 :
+                //setDroneActive()
+                break;
+            case 150:
+                //setDroneAuto()
+                break;
+            case 250:
+                //setDroneMorePower()
+                break;
+            case 350:
+                //setRandomBullets()
+                break;
+        }
     }
     public void setCombo(int combo) {
         this.combo = combo;
@@ -95,6 +138,7 @@ public class Schip extends Sprite{
     public void resetCombo(){
         setCombo(0);
     }
+
     public void addCombo(){
         combo += 1;
         addScore(100, combo);
@@ -112,7 +156,6 @@ public class Schip extends Sprite{
         System.out.println("combo: " + combo);
         return newscore;
     }
-
 
     public void addKracht(int amount) {
         this.kracht += amount;

@@ -47,6 +47,7 @@ public class GamePanel extends GPanel{
         requestFocus();
         setDoubleBuffered(true);
         spawnEnemies();
+
     }
 
     @Override
@@ -85,9 +86,15 @@ public class GamePanel extends GPanel{
         setAllComponentsVisible();
     }
 
-    public void startGame() throws IOException, FontFormatException {
+    public void startGame(){
         spawnTimer.start();
-        initComponents();
+        try{
+            initComponents();
+        } catch (IOException e){
+            e.printStackTrace();
+        } catch (FontFormatException e){
+            e.printStackTrace();
+        }
         schip = new Schip(1, 100, 10, "src/Media/schip1.png", 0, 0, 37, 39, 38, 40);
         drone = new Drone(1, "Drone1", "a", 100, 5, "src/Media/drone1.png", 1, 0);
         if(coop){
@@ -95,6 +102,8 @@ public class GamePanel extends GPanel{
             dronep2 = new Drone(1, "Drone1", "a", 100, 5, "src/Media/drone1.png", 1, 0);
         }
     }
+
+    public void pauseGame() { spawnTimer.stop(); }
 
     @Override
     public void paintComponent(Graphics g) {
@@ -158,6 +167,13 @@ public class GamePanel extends GPanel{
                     //TODO combo bepalen en upgrades uitvoeren
                     schip.addCombo();
                     schip.checkForUpgrade(schip.getCombo());
+                    System.out.println(schip.getHp());
+                    System.out.println(schip.isLifesteal());
+                    if (schip.getHp() < 100 && schip.isLifesteal()){
+                        schip.addHp(2);
+                    }
+
+
                 }
             }
         }
@@ -261,8 +277,8 @@ public class GamePanel extends GPanel{
 
     private double updateHealthBar(Schip schip, double healthBarWidth, JProgressBar currentHealthBar){
         if (schip.getHp() != 0){
-            ratio = currentHealthBar.getWidth() / schip.getHp();
-            healthBarWidth = ratio * schip.getHp();
+            ratio = 425 / schip.getMaxhp();
+            healthBarWidth = (int)ratio * schip.getHp();
         } else {
             //TODO
             System.out.println("GameOver");
@@ -271,21 +287,23 @@ public class GamePanel extends GPanel{
     }
 
     private void updateCombo(){
-
+        //TODO cleanup
     }
+
 
 
     private class TAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
+
             schip.keyPressed(e);
-            schipp2.keyPressed(e);
+            if(coop){schipp2.keyPressed(e);}
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
             schip.keyReleased(e);
-            schipp2.keyReleased(e);
+            if(coop){schipp2.keyReleased(e);}
         }
     }
 

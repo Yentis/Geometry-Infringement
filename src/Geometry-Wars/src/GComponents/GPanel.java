@@ -9,6 +9,8 @@ import javax.swing.tree.ExpandVetoException;
 import java.awt.*;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 
@@ -19,12 +21,12 @@ public abstract class GPanel extends JPanel {
 
     private Component[] components = this.getComponents();
 
-    public GPanel(){
+    public GPanel() {
         this.setLayout(null);
-        this.setSize(1024,768);
+        this.setSize(1024, 768);
         this.setOpaque(false);
-    }
 
+    }
     protected void resizeComponents(int width, int height){
         for (Component c : components){
             System.out.println(c);
