@@ -1,10 +1,8 @@
 package GUI;
 
-import GComponents.GButton;
 import GComponents.GLabel;
 import GComponents.GPanel;
 import Game.*;
-import javafx.scene.transform.Affine;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -12,7 +10,7 @@ import java.awt.geom.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.ListIterator;
+
 import javax.swing.*;
 
 
@@ -27,6 +25,7 @@ public class GamePanel extends GPanel{
     private ArrayList<Enemy> enemyOnField = new ArrayList<Enemy>();
     private int enemyCounter = 1;
     private Timer spawnTimer;
+    private Timer invulnerabilityTimer;
     private GLabel combo;
     private GLabel combop2;
     private GLabel score;
@@ -58,7 +57,7 @@ public class GamePanel extends GPanel{
             combop2 = new GLabel("x 0" , 36f, 580, 620, 100, 60, false, Color.white);
             scorep2 = new GLabel("0", 30f, 950, 65, 300, 60, false, Color.white);
         }
-        combo = new GLabel("x 0" , 36f, 30, 620, 100, 60, false, Color.white);
+        combo = new GLabel("x 0" , 36f, 30, 620, 200, 60, false, Color.white);
         score = new GLabel("0", 30f, 140, 65, 300, 60, false, Color.white);
         currentHealthBar = new JProgressBar();
         currentHealthBar.setBounds(20, 27, 425, 40);
@@ -82,6 +81,7 @@ public class GamePanel extends GPanel{
 
     public void startGame(){
         spawnTimer.start();
+        setInvulnerabilityTimer();
         try{
             initComponents();
         } catch (IOException e){
@@ -107,16 +107,16 @@ public class GamePanel extends GPanel{
     private void drawShip(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         schip.draw(g2d, schip.getCurrentAngle());
-<<<<<<< HEAD
-        //System.out.println(schip.getCurrentLocation());
-=======
->>>>>>> origin/master
+
         for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ) {
             Enemy enemy = enemyIterator.next();
             if (schip.collisionDetect(enemy.getHitBox())) {
                 schip.setHit(true);
-                schip.loseHP(enemy.getKracht());
-                schip.resetCombo();
+                if (!schip.isInvulnerability()){
+                    schip.loseHP(enemy.getKracht());
+                    schip.resetCombo();
+                }
+
                 enemyIterator.remove();
             }
         }
@@ -151,8 +151,8 @@ public class GamePanel extends GPanel{
                     //TODO combo bepalen en upgrades uitvoeren
                     schip.addCombo();
                     schip.checkForUpgrade(schip.getCombo());
-                    System.out.println(schip.getHp());
-                    System.out.println(schip.isLifesteal());
+                    //System.out.println(schip.getHp());
+                    //System.out.println(schip.isLifesteal());
                     if (schip.getHp() < 100 && schip.isLifesteal()){
                         schip.addHp(2);
                     }
@@ -206,7 +206,7 @@ public class GamePanel extends GPanel{
                 for (int i = 0; i < enemyCounter; i++) {
                     enemyOnField.add(new Enemy(1, "WutFace", "euh wa moek ier zetten", 100, 10, "src/Media/vijand1.png", 20, 20));
                 }
-                System.out.println("spawned");
+                //System.out.println("spawned");
                 enemyCounter++;
             }
         });
@@ -221,6 +221,10 @@ public class GamePanel extends GPanel{
         approachShip();
         schip.beweegSchip();
         updateHealthBar();
+        if(schip.isInvulnerability()){
+            System.out.println("invulnerability start");
+            invulnerabilityTimer.start();
+        }
         combo.setText("x " + schip.getCombo());
         score.setText("" + schip.getScore());
         currentHealthBar.setSize((int) healthBarWidth, currentHealthBar.getHeight());
@@ -236,10 +240,22 @@ public class GamePanel extends GPanel{
         }
     }
 
+    public void setInvulnerabilityTimer(){
+
+        invulnerabilityTimer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                schip.setInvulnerability(false);
+                System.out.println("invulnerability stop");
+                invulnerabilityTimer.stop();
+            }
+        });
+
+    }
+
     private void updateCombo(){
         //TODO cleanup
     }
-
 
 
     private class TAdapter extends KeyAdapter {
