@@ -52,36 +52,6 @@ public class InGame extends GPanel implements ActionListener {
         gamePanel.setVisible(false);
 
     }
-
-    public void addActionListeners() { //TODO
-        startGame.addActionListener(panel);
-        Continue.addActionListener(panel);
-    }
-
-
-
-    public void initGamePanel() {
-        setupGameTimer();
-        gameTimer.start();
-        gamePanel.setVisible(true);
-        gamePanel.requestFocus();
-        gamePanel.startGame();
-    }
-
-    public void setupGameTimer() {
-        gameTimer = new Timer(10, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                drawGame();
-                updateGame();
-            }
-        });
-    }
-
-    public void initPausePanel() {
-        pause.setVisible(true);
-    }
-
     @Override
     public void initComponents() throws IOException, FontFormatException {
         ImageIcon PauseImage = new ImageIcon("src\\Media\\pause-128.png");
@@ -203,6 +173,38 @@ public class InGame extends GPanel implements ActionListener {
 
 
     }
+    public void initGamePanel() {
+        setupGameTimer();
+        gameTimer.start();
+        gamePanel.setVisible(true);
+        gamePanel.requestFocus();
+        gamePanel.startGame();
+    }
+
+    public void addActionListeners() { //TODO
+        startGame.addActionListener(panel);
+        Continue.addActionListener(panel);
+    }
+
+
+
+
+
+    public void setupGameTimer() {
+        gameTimer = new Timer(10, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                drawGame();
+                updateGame();
+            }
+        });
+    }
+
+    public void initPausePanel() {
+        pause.setVisible(true);
+    }
+
+
 
 
     @Override
