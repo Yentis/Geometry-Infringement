@@ -63,7 +63,9 @@ public class Enemy extends Sprite{
     public double getHeight() {
         return height;
     }
-
+    public int getHP() {
+        return hp;
+    }
 
 
     public double randomX(){

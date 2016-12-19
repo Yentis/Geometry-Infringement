@@ -17,6 +17,7 @@ public class Schip extends Sprite{
 
     private int nr;
     private int hp = 100;
+    private int maxhp = 100;
     private int kracht = 10;
     private double dx;
     private double dy;
@@ -28,6 +29,10 @@ public class Schip extends Sprite{
     private double locationY;
     private double currentAngle;
     private Movement move;
+    private int keyLeft;
+    private int keyRight;
+    private int keyUp;
+    private int keyDown;
     private boolean lifesteal;
 
 
@@ -35,7 +40,7 @@ public class Schip extends Sprite{
 
     //region Constructors
 
-    public Schip(int nr, int hp, int kracht, String image, int score, int combo) {
+    public Schip(int nr, int hp, int kracht, String image, int score, int combo, int keyLeft, int keyRight, int keyUp, int keyDown) {
         super(image);
         currentLocation = new Point();
         currentLocation.setLocation(700, 300);
@@ -47,7 +52,11 @@ public class Schip extends Sprite{
         this.nr = nr;
         this.hp = hp;
         this.kracht = kracht;
-        move = new Movement(this);
+        this.keyLeft = keyLeft;
+        this.keyRight = keyRight;
+        this.keyUp = keyUp;
+        this.keyDown = keyDown;
+        move = new Movement(this, keyLeft, keyRight, keyUp, keyDown);
     }
     //endregion
 
@@ -66,6 +75,9 @@ public class Schip extends Sprite{
     //endregion
 
     //region Properties
+    public int getMaxhp(){
+        return maxhp;
+    }
 
     public void setHp(int hp) {
         this.hp = hp;
@@ -94,7 +106,7 @@ public class Schip extends Sprite{
             System.out.println("setInvulnerability");
         }
         switch (combo){
-            case 0:
+            case 1:
                 setLifesteal(false);
                 break;
             case 20 :
@@ -102,7 +114,6 @@ public class Schip extends Sprite{
                 //setExtraPowerActive()
                 break;
             case 50 :
-                System.out.println("setLifeStealActive");
                 setLifesteal(true);
                 break;
             case 125 :
@@ -127,6 +138,7 @@ public class Schip extends Sprite{
     public void resetCombo(){
         setCombo(0);
     }
+
     public void addCombo(){
         combo += 1;
         addScore(100, combo);

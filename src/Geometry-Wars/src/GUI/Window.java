@@ -56,9 +56,9 @@ public class Window extends JFrame{
         new Window("Geometry Wars");
     }
 
-    // Set Background){
-    JLabel bg = new JLabel();
-    public void setBackground(
+    // Set Background
+    public void setBackground(){
+        JLabel bg = new JLabel();
         bg.setLayout(null);
         bg.setSize(1024,768);
         ImageIcon icon = new ImageIcon("src\\Media\\resized_background-768.png");
