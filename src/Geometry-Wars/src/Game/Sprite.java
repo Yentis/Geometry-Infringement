@@ -80,6 +80,8 @@ public class Sprite {
         this.currentLocation = currentLocation;
     }
 
+    public void setCurrentLocation(double x, double y){ this.currentLocation.setLocation(x,y); }
+
     public Point getTarget() {
         return target;
     }

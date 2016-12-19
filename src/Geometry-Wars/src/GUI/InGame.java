@@ -187,13 +187,17 @@ public class InGame extends GPanel implements ActionListener {
     }
 
     public void checkGameFinished(){
-        
+        if (gamePanel.getGameFinished()) {
+            pauseGameLoop();
+            System.out.println("game over");
+        }
     }
 
     public void setupGameTimer() {
         gameTimer = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                checkGameFinished();
                 drawGame();
                 updateGame();
             }
@@ -210,7 +214,6 @@ public class InGame extends GPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
-        System.out.println(e);
         if (source == startGame) {
             startGame.setVisible(false);
             initGamePanel();

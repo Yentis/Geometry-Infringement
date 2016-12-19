@@ -236,7 +236,6 @@ public class Schip extends Sprite{
             mousePressedTimer = new Timer(50, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {*/
-        System.out.println("shit fired");
                     double kogelX = locationX;
                     double kogelY = locationY;
                     addKogels(new Kogel(kogelX, kogelY, mousePointer,"src/Media/kogel1.png"));
