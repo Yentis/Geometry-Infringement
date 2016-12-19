@@ -256,11 +256,11 @@ public class Coop extends GPanel implements ActionListener {
             // we last recorded
             if (lastFpsTime >= 1000000000)
             {
-                System.out.println("(FPS: "+FPS+")");
+                //System.out.println("(FPS: "+FPS+")");
                 lastFpsTime = 0;
                 FPS= 0;
             }
-            System.out.println(OPTIMAL_TIME);
+            //System.out.println(OPTIMAL_TIME);
             // update the game logic
             updateGame();
 
