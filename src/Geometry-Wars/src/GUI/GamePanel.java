@@ -27,7 +27,6 @@ public class GamePanel extends GPanel{
     private ArrayList<Enemy> enemyOnField = new ArrayList<Enemy>();
     private int enemyCounter = 1;
     private Timer spawnTimer;
-    private Timer gameTimer;
     private GLabel combo;
     private GLabel combop2;
     private GLabel score;
@@ -108,7 +107,10 @@ public class GamePanel extends GPanel{
     private void drawShip(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         schip.draw(g2d, schip.getCurrentAngle());
+<<<<<<< HEAD
         //System.out.println(schip.getCurrentLocation());
+=======
+>>>>>>> origin/master
         for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ) {
             Enemy enemy = enemyIterator.next();
             if (schip.collisionDetect(enemy.getHitBox())) {

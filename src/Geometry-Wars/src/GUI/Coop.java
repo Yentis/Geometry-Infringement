@@ -17,11 +17,23 @@ public class Coop extends GPanel implements ActionListener {
     private Coop panel = this;
 
     private GamePanel gamePanel;
-    private boolean running = false;
-    private boolean paused = false; //TODO
-    private int FPS = 60;
+
+
     private GButton startGame = new GButton("Start", 24f, 200, 200, 500, 200);
-    private int lastFpsTime;
+    private Timer gameTimer;
+
+    //PausePanel
+    private GButton Continue = new GButton("Continue", 24f, 325, 84, 375, 120);
+    private GButton restart = new GButton("Restart", 24f, 325, 284, 375, 120);
+    private GButton menu = new GButton("Back to Main Menu", 24f, 325, 484, 375, 120);
+    private GPanel pause = new GPanel() {
+        @Override
+        public void initComponents() throws IOException, FontFormatException {
+            pause.add(Continue);
+            pause.add(restart);
+            pause.add(menu);
+        }
+    };
 
 
 
@@ -37,11 +49,9 @@ public class Coop extends GPanel implements ActionListener {
     }
 
 
-    public boolean startRunning(){
-        return running = true;
-    }
 
-    public void initGamePanel() throws IOException, FontFormatException {
+    public void initGamePanel(){
+        setupGameTimer();
         gamePanel.setVisible(true);
         gamePanel.requestFocus();
         gamePanel.setCoop(true);
@@ -151,7 +161,7 @@ public class Coop extends GPanel implements ActionListener {
 
         });*/
 
-        No.addActionListener(new java.awt.event.ActionListener() {
+        /*No.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
@@ -179,13 +189,12 @@ public class Coop extends GPanel implements ActionListener {
 
 
 
-        });
+        });*/
 
        /* pauze.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                panel.setVisible(false);
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                window.getPause().setVisible(true);
+
+                pauseGameLoop();
             }
 
 
@@ -199,92 +208,71 @@ public class Coop extends GPanel implements ActionListener {
     }
 
 
+    public void addActionListeners() { //TODO
+        startGame.addActionListener(panel);
+        Continue.addActionListener(panel);
+    }
+
+
+
+
+
+    public void setupGameTimer() {
+        gameTimer = new Timer(10, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                drawGame();
+                updateGame();
+            }
+        });
+    }
+
+    public void initPausePanel() {
+        pause.setVisible(true);
+    }
+
+
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
-        if (source == startGame){
+        System.out.println(e);
+        if (source == startGame) {
             startGame.setVisible(false);
-            try {
-                initGamePanel();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            } catch (FontFormatException e1) {
-                e1.printStackTrace();
-            }
-            startRunning();
-            if(running){
-                runGameLoop();
-            }
+            initGamePanel();
+            runGameLoop();
+        } else if (source == Continue) {
+            resumeGameLoop();
         }
+    }
+
+    private void pauseGameLoop() {
+        gamePanel.pauseGame();
+        gamePanel.setFocusable(false);
+        initPausePanel();
+        gameTimer.stop();
     }
 
     private void runGameLoop() {
-        Thread loop = new Thread() {
-            public void run() {
-                gameLoop();
-            }
-        };
-        loop.start();
+        gameTimer.start();
+    }
+
+    private void resumeGameLoop() {
+        pause.setVisible(false);
+        gamePanel.startGame();
+        gamePanel.setFocusable(true);
+        gamePanel.requestFocus(); // anders werkt de keybinds niet meer
+        gameTimer.start();
     }
 
 
-    // TL;DR : zorgt ervoor dat de loop binnen de 60 fps blijft EN zorgt ervoor dat de game constant repaint; - Renzie
-    private void gameLoop(){
-        long lastLoopTime = System.nanoTime();
-        final int TARGET_FPS = 60;
-        final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
-
-        // keep looping round til the game ends
-        while (running)
-        {
-            // work out how long its been since the last update, this
-            // will be used to calculate how far the entities should
-            // move this loop
-
-            //dit berekent de tijd tussen nu en de laatste keer dat deze loop is gepasseerd
-            long now = System.nanoTime();
-            long updateLength = now - lastLoopTime;
-
-            lastLoopTime = now;
-            //double delta = updateLength / ((double)OPTIMAL_TIME);
-
-            // update the frame counter
-            lastFpsTime += updateLength;
-            FPS++;
-
-            // update our FPS counter if a second has passed since
-            // we last recorded
-            if (lastFpsTime >= 1000000000)
-            {
-                System.out.println("(FPS: "+FPS+")");
-                lastFpsTime = 0;
-                FPS= 0;
-            }
-            System.out.println(OPTIMAL_TIME);
-            // update the game logic
-            updateGame();
-
-            // redraw
-            drawGame();
-
-
-            /*elke frame neemt 10 milliseconden in beslag en daarom zal de thread moeten sleepen voor ~10 ms zodat het niet overbelast geraakt
-              Dit is in milliseconden en niet in nanoseconden OPLETTEN.
-             */
-            try{
-                // "now" anders geeft het na een bepaalde tijd een negatieve waarde weer indien je System.nanoTime(); gebruikt
-                Thread.sleep( (lastLoopTime - now + OPTIMAL_TIME)/1000000 );
-            } catch (InterruptedException e){
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void updateGame(){
+    private void updateGame() {
         gamePanel.update();
     }
 
-    private void drawGame(){
+    private void drawGame() {
         gamePanel.repaint();
     }
+
 }
