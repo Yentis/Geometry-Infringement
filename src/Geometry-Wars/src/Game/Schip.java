@@ -34,6 +34,10 @@ public class Schip extends Sprite{
     private double locationY;
     private double currentAngle;
     private Movement move;
+    private int keyLeft;
+    private int keyRight;
+    private int keyUp;
+    private int keyDown;
     private boolean lifesteal;
     private boolean invulnerability;
     private boolean randomBullets;
@@ -46,7 +50,7 @@ public class Schip extends Sprite{
 
     //region Constructors
 
-    public Schip(int nr, int hp, int kracht, String image, int score, int combo) {
+    public Schip(int nr, int hp, int kracht, String image, int score, int combo, int keyLeft, int keyRight, int keyUp, int keyDown) {
         super(image);
         currentLocation = new Point();
         currentLocation.setLocation(700, 300);
@@ -58,7 +62,11 @@ public class Schip extends Sprite{
         this.nr = nr;
         this.hp = hp;
         this.kracht = kracht;
-        move = new Movement(this);
+        this.keyLeft = keyLeft;
+        this.keyRight = keyRight;
+        this.keyUp = keyUp;
+        this.keyDown = keyDown;
+        move = new Movement(this, keyLeft, keyRight, keyUp, keyDown);
     }
     //endregion
 

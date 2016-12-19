@@ -266,7 +266,6 @@ public class Coop extends GPanel implements ActionListener {
         gameTimer.start();
     }
 
-
     private void updateGame() {
         gamePanel.update();
     }

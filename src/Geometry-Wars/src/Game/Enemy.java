@@ -47,6 +47,11 @@ public class Enemy extends Sprite{
         isHit = false;
     }
 
+    public void loseHP(int amount) {
+
+        this.hp -= amount;
+    }
+
     public int getKracht() {
         return kracht;
     }
@@ -58,6 +63,10 @@ public class Enemy extends Sprite{
     public double getHeight() {
         return height;
     }
+    public int getHP() {
+        return hp;
+    }
+
 
     public double randomX(){
         Random randomGenerator = new Random();
@@ -117,6 +126,8 @@ public class Enemy extends Sprite{
         currentLocation.setLocation(locationX, locationY);
 
     }
+
+
 
     //endregion
 }
