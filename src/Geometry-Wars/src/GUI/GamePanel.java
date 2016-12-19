@@ -29,10 +29,13 @@ public class GamePanel extends GPanel{
     private Timer spawnTimer;
     private Timer gameTimer;
     private GLabel combo;
+    private GLabel combop2;
     private GLabel score;
+    private GLabel scorep2;
     private JProgressBar currentHealthBar;
     private double healthBarWidth;
     private double ratio;
+    private boolean coop;
 
 
 
@@ -41,7 +44,6 @@ public class GamePanel extends GPanel{
         addMouseListener(new MAdapter());
         setFocusable(true);
         requestFocus();
-        initComponents();
         setDoubleBuffered(true);
 
         schip = new Schip(1, 100, 10, "src/Media/schip1.png", 0, 0);
@@ -53,8 +55,12 @@ public class GamePanel extends GPanel{
     @Override
     public void initComponents() throws IOException, FontFormatException {
         //make Components
-        combo = new GLabel("x 0" , 36f, 30, 665, 100, 60, false, Color.white);
-        score = new GLabel("0", 30f, 700, 25, 300, 60, false, Color.white);
+        if(coop){
+            combop2 = new GLabel("x 0" , 36f, 580, 620, 100, 60, false, Color.white);
+            scorep2 = new GLabel("0", 30f, 950, 65, 300, 60, false, Color.white);
+        }
+        combo = new GLabel("x 0" , 36f, 30, 620, 100, 60, false, Color.white);
+        score = new GLabel("0", 30f, 140, 65, 300, 60, false, Color.white);
         currentHealthBar = new JProgressBar();
         currentHealthBar.setBounds(20, 27, 425, 40);
         currentHealthBar.setBackground(new Color(0, 200, 0));
@@ -64,6 +70,10 @@ public class GamePanel extends GPanel{
         score.setHorizontalAlignment(SwingConstants.RIGHT);
 
         //Add components to panel
+        if(coop){
+            panel.add(combop2);
+            panel.add(scorep2);
+        }
         panel.add(combo);
         panel.add(score);
         panel.add(currentHealthBar);
@@ -71,8 +81,16 @@ public class GamePanel extends GPanel{
         setAllComponentsVisible();
     }
 
-    public void startGame() {
+    public void startGame(){
         spawnTimer.start();
+        try{
+            initComponents();
+        } catch (IOException e){
+            e.printStackTrace();
+        } catch (FontFormatException e){
+            e.printStackTrace();
+        }
+
     }
 
     public void pauseGame() { spawnTimer.stop(); }
@@ -131,6 +149,13 @@ public class GamePanel extends GPanel{
                     //TODO combo bepalen en upgrades uitvoeren
                     schip.addCombo();
                     schip.checkForUpgrade(schip.getCombo());
+                    System.out.println(schip.getHp());
+                    while (schip.getHp() < 100){
+                        if (schip.isLifesteal()){
+                            schip.addHp(5);
+                        }
+                    }
+
                 }
             }
         }
@@ -183,6 +208,10 @@ public class GamePanel extends GPanel{
                 enemyCounter++;
             }
         });
+    }
+
+    public void setCoop(boolean coop) {
+        this.coop = coop;
     }
 
     public void update(){

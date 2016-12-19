@@ -37,10 +37,13 @@ public class Enemy extends Sprite{
         this.beschrijving = beschrijving;
         this.hp = hp;
         this.kracht = kracht;
-        locationX = randRange(0, SCREEN_WIDTH);
-        locationY = randRange(0, SCREEN_HEIGHT);
+
+        locationX = randomX();
+        locationY = randomY();
+
+
         currentLocation = new Point();
-        currentLocation.setLocation(locationX, locationY);
+        currentLocation.setLocation(locationX,locationY);
         isHit = false;
     }
 
@@ -56,12 +59,33 @@ public class Enemy extends Sprite{
         return height;
     }
 
-    public double randRange(int minRange, int maxRange){
-        Random generator = new Random();
-        double randgetal = minRange + (maxRange - minRange) * generator.nextDouble();
+    public double randomX(){
+        Random randomGenerator = new Random();
 
-        return randgetal;
+        int randGetal = randomGenerator.nextInt(SCREEN_WIDTH);
+
+
+        while (randGetal > 100 && randGetal < (SCREEN_WIDTH-100)){
+            randGetal = randomGenerator.nextInt(SCREEN_WIDTH);
+        }
+
+        return  randGetal;
+
     }
+
+    public double randomY(){
+
+        Random randomGenerator = new Random();
+
+        int randGetal = randomGenerator.nextInt(SCREEN_HEIGHT);
+        while (randGetal > 100 && randGetal < (SCREEN_HEIGHT-100)){
+            randGetal = randomGenerator.nextInt(SCREEN_HEIGHT);
+        }
+
+        return  randGetal;
+
+    }
+
 
     /*public Enemy() {
         this.nr = 0;

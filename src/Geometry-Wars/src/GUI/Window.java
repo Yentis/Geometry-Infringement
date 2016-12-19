@@ -19,7 +19,7 @@ public class Window extends JFrame{
     private InGame inGame;
     private Scoreboard scoreboard;
 
-
+    private Coop startCoop;
 
 
     private Container cp = getContentPane();
@@ -65,7 +65,6 @@ public class Window extends JFrame{
         bg.setIcon(icon);
         cp.add(bg);
         bg.setVisible(true);
-
     }
 
 
@@ -80,6 +79,7 @@ public class Window extends JFrame{
         login = new Login();
         inGame = new InGame();
         scoreboard = new Scoreboard();
+        startCoop = new Coop();
 
         // Add UI panels
         cp.add(mainMenu);
@@ -90,6 +90,7 @@ public class Window extends JFrame{
         cp.add(login);
         cp.add(inGame);
         cp.add(scoreboard);
+        cp.add(startCoop);
 
 
         // Set all panels invisible except the starting panel
@@ -100,6 +101,7 @@ public class Window extends JFrame{
         login.setVisible(false);
         inGame.setVisible(false);
         scoreboard.setVisible(false);
+        startCoop.setVisible(false);
     }
 
 
@@ -127,5 +129,7 @@ public class Window extends JFrame{
     public Scoreboard getScoreboard() {return scoreboard;}
 
 
-
+    public Coop getStartCoop() {
+        return startCoop;
+    }
 }
