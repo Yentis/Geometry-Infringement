@@ -186,9 +186,9 @@ public class InGame extends GPanel implements ActionListener {
         Continue.addActionListener(panel);
     }
 
-
-
-
+    public void checkGameFinished(){
+        
+    }
 
     public void setupGameTimer() {
         gameTimer = new Timer(10, new ActionListener() {

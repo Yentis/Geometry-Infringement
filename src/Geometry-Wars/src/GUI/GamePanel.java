@@ -35,6 +35,7 @@ public class GamePanel extends GPanel{
     private double healthBarWidth;
     private double ratio;
     private boolean coop;
+    private boolean gameFinished;
 
 
 
@@ -49,6 +50,10 @@ public class GamePanel extends GPanel{
         drone = new Drone(1, "Drone1", "a", 100, 5, "src/Media/drone1.png", 1, 0);
         spawnEnemies();
 
+    }
+
+    public boolean isGameFinished() {
+        return gameFinished;
     }
 
     @Override
@@ -77,10 +82,13 @@ public class GamePanel extends GPanel{
         panel.add(score);
         panel.add(currentHealthBar);
 
+
         setAllComponentsVisible();
     }
 
+
     public void startGame(){
+        gameFinished = false;
         spawnTimer.start();
         try{
             initComponents();
@@ -153,7 +161,6 @@ public class GamePanel extends GPanel{
                             schip.addHp(5);
                         }
                     }
-
                 }
             }
         }
@@ -228,7 +235,7 @@ public class GamePanel extends GPanel{
             healthBarWidth = ratio * schip.getHp();
         } else {
             //TODO
-            System.out.println("GameOver");
+           gameFinished = true;
         }
     }
 
