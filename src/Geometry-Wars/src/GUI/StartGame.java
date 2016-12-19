@@ -68,7 +68,13 @@ public class StartGame extends GPanel {
             }
         });
 
-
+        Coop.addActionListener(new java.awt.event.ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent evt){
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getStartCoop().setVisible(true);
+            }
+        });
 
         Back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,26 +83,4 @@ public class StartGame extends GPanel {
                 window.getMainMenu().setVisible(true);
             }
         });
-
-        Back.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                panel.setVisible(false);
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                window.getStartGame().setVisible(true);
-            }
-        });
-
-
-
-    }
-
-
-
-    /*public static void main(String[] args)  throws MalformedURLException, IOException, FontFormatException {
-        new StartGame();
-    }*/
-
-
-
-    }
-
+    }}
