@@ -28,6 +28,7 @@ public class Schip extends Sprite{
     private double locationY;
     private double currentAngle;
     private Movement move;
+    private boolean lifesteal;
 
 
     //endregion
@@ -76,8 +77,47 @@ public class Schip extends Sprite{
 
     //endregion
 
+    public boolean isLifesteal() {
+        return lifesteal;
+    }
+
+    public void setLifesteal(boolean lifesteal) {
+        this.lifesteal = lifesteal;
+    }
+
     public void checkForUpgrade(int combo){
 
+        if (combo % 100 == 0){
+            System.out.println("setHp(100);");
+            setHp(100);
+            //setInvulnerability()
+            System.out.println("setInvulnerability");
+        }
+        switch (combo){
+            case 0:
+                setLifesteal(false);
+                break;
+            case 20 :
+                System.out.println("setExtraPowerActive");
+                //setExtraPowerActive()
+                break;
+            case 50 :
+                System.out.println("setLifeStealActive");
+                setLifesteal(true);
+                break;
+            case 125 :
+                //setDroneActive()
+                break;
+            case 150:
+                //setDroneAuto()
+                break;
+            case 250:
+                //setDroneMorePower()
+                break;
+            case 350:
+                //setRandomBullets()
+                break;
+        }
     }
     public void setCombo(int combo) {
         this.combo = combo;
@@ -104,7 +144,6 @@ public class Schip extends Sprite{
         System.out.println("combo: " + combo);
         return newscore;
     }
-
 
     public void addKracht(int amount) {
         this.kracht += amount;

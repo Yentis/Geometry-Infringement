@@ -137,6 +137,13 @@ public class GamePanel extends GPanel{
                     //TODO combo bepalen en upgrades uitvoeren
                     schip.addCombo();
                     schip.checkForUpgrade(schip.getCombo());
+                    System.out.println(schip.getHp());
+                    while (schip.getHp() < 100){
+                        if (schip.isLifesteal()){
+                            schip.addHp(5);
+                        }
+                    }
+
                 }
             }
         }
