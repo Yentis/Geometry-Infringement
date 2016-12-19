@@ -191,7 +191,7 @@ public class Coop extends GPanel implements ActionListener {
 
         });*/
 
-        pauze.addActionListener(new java.awt.event.ActionListener() {
+       /* pauze.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
                 pauseGameLoop();
@@ -199,7 +199,7 @@ public class Coop extends GPanel implements ActionListener {
 
 
 
-        });
+        });*/
 
 
 
@@ -265,7 +265,6 @@ public class Coop extends GPanel implements ActionListener {
         gamePanel.requestFocus(); // anders werkt de keybinds niet meer
         gameTimer.start();
     }
-
 
     private void updateGame() {
         gamePanel.update();

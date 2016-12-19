@@ -14,12 +14,19 @@ public class Movement implements KeyListener {
     private Schip schip;
     private Timer startMoves;
     private double targetAngle;
+    private int keyLeft;
+    private int keyRight;
+    private int keyUp;
+    private int keyDown;
 
     // Constructor
-    public Movement(Schip schip) {
+    public Movement(Schip schip, int keyLeft, int keyRight, int keyUp, int keyDown) {
         this.schip = schip;
         setTimer();
-
+        this.keyLeft = keyLeft;
+        this.keyRight = keyRight;
+        this.keyUp = keyUp;
+        this.keyDown = keyDown;
     }
 
 
@@ -80,28 +87,20 @@ public class Movement implements KeyListener {
         //keyPressed = true;
 
         int key = e.getKeyCode();
+        System.out.println(key);
         // Movement: graden worden in radialen omgezet in Board
-        switch (key) {
-            case KeyEvent.VK_LEFT:
-                targetAngle = 270;
-                schip.moveLeft(3);
-
-                break;
-            case KeyEvent.VK_RIGHT:
-                targetAngle = 90;
-                schip.moveRight(3);
-
-                break;
-            case KeyEvent.VK_UP:
-                targetAngle = 0;
-                schip.moveUp(3);
-
-                break;
-            case KeyEvent.VK_DOWN:
-                targetAngle = 180;
-                schip.moveDown(3);
-
-                break;
+        if(key == keyLeft){
+            targetAngle = 270;
+            schip.moveLeft(3);
+        } else if (key == keyRight){
+            targetAngle = 90;
+            schip.moveRight(3);
+        } else if (key == keyUp){
+            targetAngle = 0;
+            schip.moveUp(3);
+        } else if (key == keyDown){
+            targetAngle = 180;
+            schip.moveDown(3);
         }
     }
 
@@ -110,24 +109,14 @@ public class Movement implements KeyListener {
         //keyPressed = true;
         int key = e.getKeyCode();
         // Movement: graden worden in radialen omgezet in Board
-        switch (key) {
-            case KeyEvent.VK_LEFT:
-                schip.moveLeft(0);
-
-
-                break;
-            case KeyEvent.VK_RIGHT:
-                schip.moveRight(0);
-
-                break;
-            case KeyEvent.VK_UP:
-                schip.moveUp(0);
-
-                break;
-            case KeyEvent.VK_DOWN:
-                schip.moveDown(0);
-
-                break;
+        if(key == keyLeft){
+            schip.moveLeft(0);
+        } else if (key == keyRight){
+            schip.moveRight(0);
+        } else if (key == keyUp){
+            schip.moveUp(0);
+        } else if (key == keyDown){
+            schip.moveDown(0);
         }
     }
 

@@ -49,7 +49,7 @@ public class Spel {
 
         i = 0;
         while (schip.next()){
-            schepen.add(i, new Schip(schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image"), schip.getInt("score"), schip.getInt("combo")));
+            schepen.add(i, new Schip(schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image"), schip.getInt("score"), schip.getInt("combo"), 37, 39, 38, 40));
             i++;
         }
         //endregion
