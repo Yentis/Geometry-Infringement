@@ -1,17 +1,22 @@
 package Game;
 
 
+import GUI.GamePanel;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static java.lang.Math.abs;
 
 /**
  * Created by Yentl-PC on 8/11/2016.
  */
-public class Schip extends Sprite{
+public class Schip extends Sprite {
 
     //region Instance Variables
 
@@ -34,6 +39,11 @@ public class Schip extends Sprite{
     private int keyUp;
     private int keyDown;
     private boolean lifesteal;
+    private boolean invulnerability;
+    private boolean randomBullets;
+    private boolean slowerEnemies;
+    private int SCREEN_WIDTH = 1024;
+    private int SCREEN_HEIGHT = 768;
 
 
     //endregion
@@ -75,7 +85,7 @@ public class Schip extends Sprite{
     //endregion
 
     //region Properties
-    public int getMaxhp(){
+    public int getMaxhp() {
         return maxhp;
     }
 
@@ -89,6 +99,14 @@ public class Schip extends Sprite{
 
     //endregion
 
+    public boolean isInvulnerability() {
+        return invulnerability;
+    }
+
+    public void setInvulnerability(boolean invulnerability) {
+        this.invulnerability = invulnerability;
+    }
+
     public boolean isLifesteal() {
         return lifesteal;
     }
@@ -97,26 +115,49 @@ public class Schip extends Sprite{
         this.lifesteal = lifesteal;
     }
 
-    public void checkForUpgrade(int combo){
+    public boolean isRandomBullets() {
+        return randomBullets;
+    }
 
-        if (combo % 100 == 0){
-            System.out.println("setHp(100);");
+    public void setRandomBullets(boolean randomBullets) {
+        this.randomBullets = randomBullets;
+    }
+
+    public boolean isSlowerEnemies() {
+        return slowerEnemies;
+    }
+
+    public void setSlowerEnemies(boolean slowerEnemies) {
+        this.slowerEnemies = slowerEnemies;
+    }
+
+    public void checkForUpgrade(int combo) {
+
+        if (combo % 100 == 0) {
+            //System.out.println("setHp(100);");
             setHp(100);
-            //setInvulnerability()
-            System.out.println("setInvulnerability");
+            setInvulnerability(true);
+
+            //System.out.println("setInvulnerability");
+        } else if (combo % 75 == 0) {
+            setSlowerEnemies(true);
         }
-        switch (combo){
+        switch (combo) {
             case 1:
                 setLifesteal(false);
+                setInvulnerability(false);
+                setRandomBullets(false);
+                setSlowerEnemies(false);
                 break;
-            case 20 :
-                System.out.println("setExtraPowerActive");
+            case 20:
+                //System.out.println("setExtraPowerActive");
                 //setExtraPowerActive()
+
                 break;
-            case 50 :
+            case 50:
                 setLifesteal(true);
                 break;
-            case 125 :
+            case 125:
                 //setDroneActive()
                 break;
             case 150:
@@ -126,30 +167,32 @@ public class Schip extends Sprite{
                 //setDroneMorePower()
                 break;
             case 350:
-                //setRandomBullets()
+                setRandomBullets(true);
                 break;
         }
     }
+
     public void setCombo(int combo) {
         this.combo = combo;
     }
 
     //region Behaviour
-    public void resetCombo(){
+    public void resetCombo() {
         setCombo(0);
     }
 
-    public void addCombo(){
+    public void addCombo() {
         combo += 1;
         addScore(100, combo);
     }
 
-    public void addScore(int enemyscore, int combo){
+
+    public void addScore(int enemyscore, int combo) {
         score = enemyscore * combo;
         score = adjustScore(score);
     }
 
-    public int adjustScore(int score){
+    public int adjustScore(int score) {
 
         newscore += score;
         System.out.println("score: " + newscore);
@@ -172,47 +215,51 @@ public class Schip extends Sprite{
     public void beweegSchip() {
 
 
-        locationX = limitToBorders(locationX , 0 , 1024);
-        locationY = limitToBorders(locationY , 0 , 768);
+        locationX = limitToBorders(locationX, 0, 1024);
+        locationY = limitToBorders(locationY, 0, 768);
 
         currentLocation.setLocation(locationX += dx, locationY += dy);
     }
 
-    private double limitToBorders(double currLocation, double minBorder, double maxBorder){
+    private double limitToBorders(double currLocation, double minBorder, double maxBorder) {
         if (currLocation > maxBorder) {
             return maxBorder;
         } else if (currLocation < minBorder) {
-           return minBorder;
+            return minBorder;
         }
         return currLocation;
     }
 
     public void keyPressed(KeyEvent e) {
         move.keyPressed(e);
-        }
+    }
 
     public void keyReleased(KeyEvent e) {
         move.keyReleased(e);
     }
 
-    public void moveUp(int speed){
+    public void moveUp(int speed) {
         dy = -speed;
     }
 
-    public void moveDown(int speed){
+    public void moveDown(int speed) {
         dy = speed;
     }
 
-    public void moveLeft(int speed){
+    public void moveLeft(int speed) {
         dx = -speed;
     }
 
-    public void moveRight(int speed){
+    public void moveRight(int speed) {
         dx = speed;
     }
 
     public void mousePressed(MouseEvent e) {
         fire(e.getPoint());
+        if (isRandomBullets()) {
+            randomFire();
+        }
+
     }
 
     public void mouseReleased(MouseEvent e) {
@@ -222,13 +269,8 @@ public class Schip extends Sprite{
         }*/
     }
 
-    private void addKogels(Kogel k){
-        if (kogels.size() < 30){
-            kogels.add(k);
-        } else {
-            kogels.clear();
-            System.out.println("kogels cleared");
-        }
+    private void addKogels(Kogel k) {
+        kogels.add(k);
     }
 
     public void fire(Point mousePointer) {
@@ -236,9 +278,9 @@ public class Schip extends Sprite{
             mousePressedTimer = new Timer(50, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {*/
-                    double kogelX = locationX;
-                    double kogelY = locationY;
-                    addKogels(new Kogel(kogelX, kogelY, mousePointer,"src/Media/kogel1.png"));
+        double kogelX = locationX;
+        double kogelY = locationY;
+        addKogels(new Kogel(kogelX, kogelY, mousePointer, "src/Media/kogel1.png"));
               /*  }
             });
        }
@@ -247,6 +289,39 @@ public class Schip extends Sprite{
         }
             */
     }
+
+    public int randomX() {
+        Random randomGenerator = new Random();
+
+        int randGetal = randomGenerator.nextInt(SCREEN_WIDTH);
+
+
+        return randGetal;
+
+    }
+
+    public int randomY() {
+
+        Random randomGenerator = new Random();
+
+        int randGetal = randomGenerator.nextInt(SCREEN_HEIGHT);
+
+        return randGetal;
+
+    }
+
+    public void randomFire() {
+
+        double kogelX = locationX;
+        double kogelY = locationY;
+        int kogelX2 = randomX();
+        int kogelY2 = randomY();
+        Point mousePointer2 = new Point(kogelX2, kogelY2);
+
+        addKogels(new Kogel(kogelX, kogelY, mousePointer2, "src/Media/kogel1.png"));
+        System.out.println(kogelX2 + " " + kogelY2);
+    }
+
 
     public double getCurrentAngle() {
         return currentAngle;
@@ -265,6 +340,5 @@ public class Schip extends Sprite{
             return angle;
         }
     }
-
     //endregion
 }
