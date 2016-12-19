@@ -27,6 +27,7 @@ public class GamePanel extends GPanel{
     private ArrayList<Enemy> enemyOnField = new ArrayList<Enemy>();
     private int enemyCounter = 1;
     private Timer spawnTimer;
+    private Timer gameTimer;
     private GLabel combo;
     private GLabel score;
     private JProgressBar currentHealthBar;
@@ -46,6 +47,7 @@ public class GamePanel extends GPanel{
         schip = new Schip(1, 100, 10, "src/Media/schip1.png", 0, 0);
         drone = new Drone(1, "Drone1", "a", 100, 5, "src/Media/drone1.png", 1, 0);
         spawnEnemies();
+
     }
 
     @Override
@@ -73,6 +75,8 @@ public class GamePanel extends GPanel{
         spawnTimer.start();
     }
 
+    public void pauseGame() { spawnTimer.stop(); }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -86,6 +90,7 @@ public class GamePanel extends GPanel{
     private void drawShip(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         schip.draw(g2d, schip.getCurrentAngle());
+        System.out.println(schip.getCurrentLocation());
         for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ) {
             Enemy enemy = enemyIterator.next();
             if (schip.collisionDetect(enemy.getHitBox())) {
@@ -180,9 +185,6 @@ public class GamePanel extends GPanel{
         });
     }
 
-
-
-
     public void update(){
         updateKogels();
         approachShip();
@@ -204,13 +206,15 @@ public class GamePanel extends GPanel{
     }
 
     private void updateCombo(){
-
+        //TODO cleanup
     }
+
 
 
     private class TAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
+
             schip.keyPressed(e);
         }
 

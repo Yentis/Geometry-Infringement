@@ -1,11 +1,7 @@
 package GUI;
 
-import GComponents.GButton;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /**
@@ -20,9 +16,9 @@ public class Window extends JFrame{
     private StartGameCampaign startGameCampaign;
     private Logout logout;
     private Login login;
-    private InGameSinglePlayer inGameSinglePlayer;
+    private InGame inGame;
     private Scoreboard scoreboard;
-    private Pause pause;
+
 
 
 
@@ -82,7 +78,7 @@ public class Window extends JFrame{
         startGameCampaign = new StartGameCampaign();
         logout  = new Logout();
         login = new Login();
-        inGameSinglePlayer = new InGameSinglePlayer();
+        inGame = new InGame();
         scoreboard = new Scoreboard();
 
         // Add UI panels
@@ -92,7 +88,7 @@ public class Window extends JFrame{
         cp.add(startGameCampaign);
         cp.add(logout);
         cp.add(login);
-        cp.add(inGameSinglePlayer);
+        cp.add(inGame);
         cp.add(scoreboard);
 
 
@@ -102,7 +98,7 @@ public class Window extends JFrame{
         startGameCampaign.setVisible(false);
         logout.setVisible(false);
         login.setVisible(false);
-        inGameSinglePlayer.setVisible(false);
+        inGame.setVisible(false);
         scoreboard.setVisible(false);
     }
 
@@ -126,11 +122,10 @@ public class Window extends JFrame{
 
     public Login getLogin() {return login;}
 
-    public InGameSinglePlayer getInGameSinglePlayer() {return inGameSinglePlayer;}
+    public InGame getInGameSinglePlayer() {return inGame;}
 
     public Scoreboard getScoreboard() {return scoreboard;}
 
-    public Pause getPause() {return pause;}
 
 
 }
