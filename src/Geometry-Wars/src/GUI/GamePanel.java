@@ -108,7 +108,7 @@ public class GamePanel extends GPanel{
     private void drawShip(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         schip.draw(g2d, schip.getCurrentAngle());
-        System.out.println(schip.getCurrentLocation());
+        //System.out.println(schip.getCurrentLocation());
         for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ) {
             Enemy enemy = enemyIterator.next();
             if (schip.collisionDetect(enemy.getHitBox())) {
@@ -150,11 +150,11 @@ public class GamePanel extends GPanel{
                     schip.addCombo();
                     schip.checkForUpgrade(schip.getCombo());
                     System.out.println(schip.getHp());
-                    while (schip.getHp() < 100){
-                        if (schip.isLifesteal()){
-                            schip.addHp(5);
-                        }
+                    System.out.println(schip.isLifesteal());
+                    if (schip.getHp() < 100 && schip.isLifesteal()){
+                        schip.addHp(2);
                     }
+
 
                 }
             }
@@ -226,8 +226,8 @@ public class GamePanel extends GPanel{
 
     private void updateHealthBar(){
         if (schip.getHp() != 0){
-            ratio = currentHealthBar.getWidth() / schip.getHp();
-            healthBarWidth = ratio * schip.getHp();
+            ratio = 425 / schip.getMaxhp();
+            healthBarWidth = (int)ratio * schip.getHp();
         } else {
             //TODO
             System.out.println("GameOver");

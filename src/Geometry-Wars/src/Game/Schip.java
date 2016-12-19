@@ -17,6 +17,7 @@ public class Schip extends Sprite{
 
     private int nr;
     private int hp = 100;
+    private int maxhp = 100;
     private int kracht = 10;
     private double dx;
     private double dy;
@@ -66,6 +67,9 @@ public class Schip extends Sprite{
     //endregion
 
     //region Properties
+    public int getMaxhp(){
+        return maxhp;
+    }
 
     public void setHp(int hp) {
         this.hp = hp;
@@ -94,7 +98,7 @@ public class Schip extends Sprite{
             System.out.println("setInvulnerability");
         }
         switch (combo){
-            case 0:
+            case 1:
                 setLifesteal(false);
                 break;
             case 20 :
@@ -102,7 +106,6 @@ public class Schip extends Sprite{
                 //setExtraPowerActive()
                 break;
             case 50 :
-                System.out.println("setLifeStealActive");
                 setLifesteal(true);
                 break;
             case 125 :
@@ -127,6 +130,7 @@ public class Schip extends Sprite{
     public void resetCombo(){
         setCombo(0);
     }
+
     public void addCombo(){
         combo += 1;
         addScore(100, combo);

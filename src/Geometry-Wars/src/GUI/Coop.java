@@ -181,7 +181,7 @@ public class Coop extends GPanel implements ActionListener {
 
         });
 
-        pauze.addActionListener(new java.awt.event.ActionListener() {
+       /* pauze.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
@@ -190,7 +190,7 @@ public class Coop extends GPanel implements ActionListener {
 
 
 
-        });
+        });*/
 
 
 
