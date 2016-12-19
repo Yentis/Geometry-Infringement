@@ -1,10 +1,15 @@
 package Game;
 
 
+import GUI.GamePanel;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static java.lang.Math.abs;
 
@@ -34,6 +39,11 @@ public class Schip extends Sprite{
     private int keyUp;
     private int keyDown;
     private boolean lifesteal;
+    private boolean invulnerability;
+    private boolean randomBullets;
+    private int SCREEN_WIDTH = 1024;
+    private int SCREEN_HEIGHT = 768;
+
 
 
     //endregion
@@ -89,6 +99,14 @@ public class Schip extends Sprite{
 
     //endregion
 
+    public boolean isInvulnerability() {
+        return invulnerability;
+    }
+
+    public void setInvulnerability(boolean invulnerability) {
+        this.invulnerability = invulnerability;
+    }
+
     public boolean isLifesteal() {
         return lifesteal;
     }
@@ -97,21 +115,32 @@ public class Schip extends Sprite{
         this.lifesteal = lifesteal;
     }
 
+    public boolean isRandomBullets() {
+        return randomBullets;
+    }
+
+    public void setRandomBullets(boolean randomBullets) {
+        this.randomBullets = randomBullets;
+    }
+
     public void checkForUpgrade(int combo){
 
         if (combo % 100 == 0){
-            System.out.println("setHp(100);");
+            //System.out.println("setHp(100);");
             setHp(100);
-            //setInvulnerability()
-            System.out.println("setInvulnerability");
+            setInvulnerability(true);
+            //System.out.println("setInvulnerability");
         }
         switch (combo){
             case 1:
                 setLifesteal(false);
+                setInvulnerability(false);
+                setRandomBullets(false);
                 break;
             case 20 :
-                System.out.println("setExtraPowerActive");
+                //System.out.println("setExtraPowerActive");
                 //setExtraPowerActive()
+
                 break;
             case 50 :
                 setLifesteal(true);
@@ -126,7 +155,7 @@ public class Schip extends Sprite{
                 //setDroneMorePower()
                 break;
             case 350:
-                //setRandomBullets()
+                setRandomBullets(true);
                 break;
         }
     }
@@ -143,6 +172,7 @@ public class Schip extends Sprite{
         combo += 1;
         addScore(100, combo);
     }
+
 
     public void addScore(int enemyscore, int combo){
         score = enemyscore * combo;
@@ -213,6 +243,10 @@ public class Schip extends Sprite{
 
     public void mousePressed(MouseEvent e) {
         fire(e.getPoint());
+        if (isRandomBullets()){
+            randomFire();
+        }
+
     }
 
     public void mouseReleased(MouseEvent e) {
@@ -236,7 +270,7 @@ public class Schip extends Sprite{
             mousePressedTimer = new Timer(50, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {*/
-        System.out.println("shit fired");
+        //System.out.println("shit fired");
                     double kogelX = locationX;
                     double kogelY = locationY;
                     addKogels(new Kogel(kogelX, kogelY, mousePointer,"src/Media/kogel1.png"));
@@ -247,6 +281,38 @@ public class Schip extends Sprite{
             mousePressedTimer.start();
         }
             */
+    }
+
+    public int randomX(){
+        Random randomGenerator = new Random();
+
+        int randGetal = randomGenerator.nextInt(SCREEN_WIDTH);
+
+
+        return  randGetal;
+
+    }
+
+    public int randomY(){
+
+        Random randomGenerator = new Random();
+
+        int randGetal = randomGenerator.nextInt(SCREEN_HEIGHT);
+
+        return  randGetal;
+
+    }
+
+    public void randomFire(){
+
+        double kogelX = locationX;
+        double kogelY = locationY;
+        int kogelX2 = randomX();
+        int kogelY2 = randomY();
+        Point mousePointer2 = new Point(kogelX2,kogelY2);
+
+        addKogels(new Kogel(kogelX,kogelY, mousePointer2,"src/Media/kogel1.png"));
+        System.out.println(kogelX2 + " " + kogelY2);
     }
 
     public double getCurrentAngle() {
