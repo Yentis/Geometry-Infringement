@@ -62,6 +62,7 @@ public class GamePanel extends GPanel{
         score = new GLabel("0", 30f, 140, 65, 300, 60, false, Color.white);
         currentHealthBar = new JProgressBar();
         currentHealthBar.setBounds(20, 27, 425, 40);
+
         currentHealthBar.setBackground(new Color(0, 200, 0));
         currentHealthBar.setOpaque(true);
 
@@ -183,6 +184,7 @@ public class GamePanel extends GPanel{
             for (Kogel k : schip.getKogels()) {
                 if (k.collisionDetect(enemy.getHitBox())) {
                     enemy.setHit(true);
+                    enemy.
 
                 }
             }
@@ -205,6 +207,7 @@ public class GamePanel extends GPanel{
             k.updateLocation(k.getTarget(), k.getStartingPoint(), k.getKogelSnelheid());
             if (k.isHit()) {
                 kogeliterator.remove();
+
             }
         }
     }
@@ -243,6 +246,7 @@ public class GamePanel extends GPanel{
         } else {
             //TODO
             System.out.println("GameOver");
+
         }
     }
 
