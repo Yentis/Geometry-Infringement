@@ -28,9 +28,16 @@ public class InGame extends GPanel implements ActionListener {
     private GPanel pause = new GPanel() {
         @Override
         public void initComponents() throws IOException, FontFormatException {
+
             pause.add(Continue);
             pause.add(restart);
             pause.add(menu);
+            JLabel pane = new JLabel();
+            pane.setOpaque(true);
+            pane.setBackground(new Color(255, 255, 255, 2));
+            pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
+            pane.setBounds(50, 125, 900, 500);
+            pause.add(pane);
         }
     };
 
