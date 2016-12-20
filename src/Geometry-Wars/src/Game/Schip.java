@@ -259,8 +259,8 @@ public class Schip extends Sprite {
     public void beweegSchip() {
 
 
-        locationX = limitToBorders(locationX, 0, 1024);
-        locationY = limitToBorders(locationY, 0, 768);
+        locationX = limitToBorders(locationX, 75, 875);
+        locationY = limitToBorders(locationY, 125, 525);
 
         currentLocation.setLocation(locationX += dx, locationY += dy);
     }
