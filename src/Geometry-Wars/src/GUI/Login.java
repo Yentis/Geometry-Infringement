@@ -13,6 +13,8 @@ import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.MalformedURLException;
@@ -48,7 +50,7 @@ public class Login extends GPanel{
         GInputField username = new GInputField(360,170,200,50);
         GPasswordField password = new GPasswordField(360,240,200,50);
         GButton register = new GButton("Register", 24f, 200,300,170,50);
-        GButton login = new GButton("Login", 24f, 390,300,170,50);
+        JButton loginButton = new GButton("Login", 24f, 390,300,170,50);
         JButton Exit = new GButton("Exit", 24f, 820, 650, 170, 63);
 
         label.setOpaque(true);
@@ -64,11 +66,17 @@ public class Login extends GPanel{
         this.add(username);
         this.add(password);
         this.add(register);
-        this.add(login);
+        this.add(loginButton);
         this.add(Exit);
         this.add(message);
 
         //Action Listeners
+        password.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButton.doClick();
+            }
+        });
+
         Exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 System.exit(0);
@@ -83,7 +91,7 @@ public class Login extends GPanel{
             }
         });
 
-        login.addActionListener(new ActionListener() {
+        loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(Objects.equals(username.getText(), "")){

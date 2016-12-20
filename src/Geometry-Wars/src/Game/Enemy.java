@@ -9,7 +9,7 @@ import java.util.Random;
 /**
  * Created by Yentl-PC on 8/11/2016.
  */
-public class Enemy extends Sprite{
+public class Enemy extends Sprite {
     //region Instance Variables
 
     private int nr;
@@ -24,14 +24,16 @@ public class Enemy extends Sprite{
     private int speed = 2;
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
+    private Rectangle2D hpBar;
+    private Rectangle2D maxHpBar;
+    private int maxHp = 100;
 
     //endregion
 
     //region Constructors
 
 
-
-    public Enemy(int nr, String naam, String beschrijving, int hp, int kracht, String image, int experience, int score){
+    public Enemy(int nr, String naam, String beschrijving, int hp, int kracht, String image, int experience, int score) {
         super(image);
         this.nr = nr;
         this.naam = naam;
@@ -44,13 +46,21 @@ public class Enemy extends Sprite{
 
 
         currentLocation = new Point();
-        currentLocation.setLocation(locationX,locationY);
+        currentLocation.setLocation(locationX, locationY);
         isHit = false;
     }
 
     public void loseHP(int amount) {
 
         this.hp -= amount;
+    }
+
+    public void setHpBar(Rectangle2D hpBar) {
+        this.hpBar = hpBar;
+    }
+
+    public void setMaxHpBar(Rectangle2D maxHpBar) {
+        this.maxHpBar = maxHpBar;
     }
 
     public int getKracht() {
@@ -64,6 +74,7 @@ public class Enemy extends Sprite{
     public double getHeight() {
         return height;
     }
+
     public int getHP() {
         return hp;
     }
@@ -76,30 +87,30 @@ public class Enemy extends Sprite{
         this.speed = speed;
     }
 
-    public double randomX(){
+    public double randomX() {
         Random randomGenerator = new Random();
 
         int randGetal = randomGenerator.nextInt(SCREEN_WIDTH);
 
 
-        while (randGetal > 100 && randGetal < (SCREEN_WIDTH-100)){
+        while (randGetal > 100 && randGetal < (SCREEN_WIDTH - 100)) {
             randGetal = randomGenerator.nextInt(SCREEN_WIDTH);
         }
 
-        return  randGetal;
+        return randGetal;
 
     }
 
-    public double randomY(){
+    public double randomY() {
 
         Random randomGenerator = new Random();
 
         int randGetal = randomGenerator.nextInt(SCREEN_HEIGHT);
-        while (randGetal > 100 && randGetal < (SCREEN_HEIGHT-100)){
+        while (randGetal > 100 && randGetal < (SCREEN_HEIGHT - 100)) {
             randGetal = randomGenerator.nextInt(SCREEN_HEIGHT);
         }
 
-        return  randGetal;
+        return randGetal;
 
     }
 
@@ -122,12 +133,12 @@ public class Enemy extends Sprite{
         }
     }*/
 
-    public Image getImage(){
+    public Image getImage() {
         return image;
     }
 
 
-    public void move(double velocityX, double velocityY){
+    public void move(double velocityX, double velocityY) {
         locationX += velocityX;
         locationY += velocityY;
 
@@ -135,7 +146,33 @@ public class Enemy extends Sprite{
 
     }
 
+    public void drawHPBar(Graphics2D g2d) {
 
+        if (this.hpBar == null || this.maxHpBar == null) {
+            this.setHpBar(new Rectangle2D.Double(this.getCurrentLocation().getX(), this.getCurrentLocation().getY() - 100,  hpBarWidthRatio(), 10));
+            this.setMaxHpBar(new Rectangle2D.Double(getCurrentLocation().getX(), getCurrentLocation().getY() -100, getWidth(), 10));
+        } else {
+            if (hp != 0) {
+                hpBar.setRect(getCurrentLocation().getX(), getCurrentLocation().getY() - 100,  hpBarWidthRatio(), 10);
+                maxHpBar.setRect(getCurrentLocation().getX(), getCurrentLocation().getY() -100, getWidth(), 10);
+            }
+        }
+
+        g2d.setPaint(Color.RED);
+        g2d.fill(maxHpBar);
+        g2d.draw(maxHpBar);
+        g2d.setPaint(Color.GREEN);
+        g2d.fill(hpBar);
+        g2d.draw(hpBar);
+    }
+
+    public double hpBarWidthRatio() {
+
+        double ratio = width / maxHp;
+        double healthBarWidth = ratio * hp;
+
+        return healthBarWidth;
+    }
 
     //endregion
 }
