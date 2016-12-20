@@ -87,6 +87,13 @@ public class Enemy extends Sprite {
         this.speed = speed;
     }
 
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void setKracht(int kracht) {
+        this.kracht = kracht;
+    }
     public double randomX() {
         Random randomGenerator = new Random();
 

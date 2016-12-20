@@ -17,7 +17,8 @@ public class Spel {
     private List<Schip> schepen = new ArrayList<>();
     private List<Drone> drones = new ArrayList<>();
     private List<Upgrade> upgrades = new ArrayList<>();
-    private List<Enemy> vijanden = new ArrayList<>();
+    private List<Enemy> enemies = new ArrayList<>();
+    private String currentDifficulty = "Normal";
     private String url = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7150029";
     private String user = "sql7150029";
     private String pass = "3Ngdr6LYhR";
@@ -25,6 +26,23 @@ public class Spel {
     //endregion
 
     //region Properties
+
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public String getCurrentDifficulty() {
+        return currentDifficulty;
+    }
+
+    public void setEnemies(List<Enemy> enemies) {
+        this.enemies = enemies;
+    }
+
+    public void setCurrentDifficulty(String currentDifficulty) {
+        this.currentDifficulty = currentDifficulty;
+    }
+
     //endregion
 
     //region Behaviour
@@ -64,12 +82,12 @@ public class Spel {
         }
         //endregion
 
-        //region Vijanden
-        ResultSet vijand = myStmt.executeQuery("select * from vijand");
+        //region Enemies
+        ResultSet enemy = myStmt.executeQuery("select * from vijand");
 
         i = 0;
-        while (vijand.next()){
-            vijanden.add(i, new Enemy(vijand.getInt("nr") - 1, vijand.getString("naam"), vijand.getString("beschrijving"), vijand.getInt("hp"), vijand.getInt("kracht"), vijand.getString("uiterlijk"), vijand.getInt("experience"), vijand.getInt("score")));
+        while (enemy.next()){
+            enemies.add(i, new Enemy(enemy.getInt("nr") - 1, enemy.getString("naam"), enemy.getString("beschrijving"), enemy.getInt("hp"), enemy.getInt("kracht"), enemy.getString("uiterlijk"), enemy.getInt("experience"), enemy.getInt("score")));
             i++;
         }
         //endregion
