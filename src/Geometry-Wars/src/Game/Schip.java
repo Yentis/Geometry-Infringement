@@ -253,6 +253,10 @@ public class Schip extends Sprite{
         return currentAngle;
     }
 
+    public void setImage(String image){
+
+    }
+
     public void setCurrentAngle(double currentAngle) {
         this.currentAngle = currentAngle;
     }

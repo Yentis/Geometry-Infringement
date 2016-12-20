@@ -18,7 +18,7 @@ public class Spel {
     private List<Drone> drones = new ArrayList<>();
     private List<Upgrade> upgrades = new ArrayList<>();
     private List<Enemy> vijanden = new ArrayList<>();
-    private String url = "http://www.phpmyadmin.co/index.php?db=sql7150029";
+    private String url = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7150029";
     private String user = "sql7150029";
     private String pass = "3Ngdr6LYhR";
 
@@ -100,6 +100,42 @@ public class Spel {
 
         int a = myStmt.executeUpdate("insert into speler (gebruikersnaam, wachtwoord, email, rank)" +
                 "values('" + gebruikersnaam +"', '" + test + "', '" + email + "', 0)");
+    }
+
+    public String loginChecker(String gebruikersnaam, char[] wachtwoord) throws SQLException, NoSuchAlgorithmException, UnsupportedEncodingException {
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        Connection myConn = DriverManager.getConnection(url, user, pass);
+        Statement myStmt = myConn.createStatement();
+
+        //Gebruikersnaam
+        ResultSet myRs = myStmt.executeQuery("select count(*) from speler where gebruikersnaam = '" + gebruikersnaam + "'");
+
+        while(myRs.next()){
+            if(myRs.getInt("count(*)") == 0){
+                return "Gebruikersnaam";
+            }
+        }
+
+        //Wachtwoord
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(new String(wachtwoord).getBytes("UTF-8"));
+        byte[] digest = md.digest();
+        String test = "";
+        for (byte item:digest) {
+            test += item;
+        }
+
+        //close?
+
+        ResultSet myRsPW = myStmt.executeQuery("select count(*) from speler where wachtwoord = '" + wachtwoord + "'");
+
+        while(myRsPW.next()){
+            if(myRs.getInt("count(*)") == 0){
+                return "Wachtwoord";
+            }
+        }
+
+        return "";
     }
 
     public String infoChecker(String gebruikersnaam, String email) throws SQLException {

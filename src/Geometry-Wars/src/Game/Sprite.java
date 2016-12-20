@@ -173,4 +173,8 @@ public class Sprite {
         g2d.draw(this.getHitBox());
     }
 
+    public void setImage(Image image) {
+        ImageIcon ii = new ImageIcon(image);
+        this.image = ii.getImage();
+    }
 }
