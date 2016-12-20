@@ -42,8 +42,13 @@ public class GamePanel extends GPanel {
     private double ratio;
     private boolean coop;
     private boolean gameFinished;
+<<<<<<< HEAD
+    private int baseDamage = 50;
+    private int wave = 1;
+=======
     private Timer shootingDroneTimer;
 
+>>>>>>> 79a9231d61a75f0ebb611e1aab1c896cff24f01d
 
     public GamePanel() throws IOException, FontFormatException {
         addKeyListener(new TAdapter());
@@ -150,6 +155,10 @@ public class GamePanel extends GPanel {
     }
 
     private void schipHit(Schip schip){
+<<<<<<< HEAD
+
+=======
+>>>>>>> 79a9231d61a75f0ebb611e1aab1c896cff24f01d
         for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ) {
             Enemy enemy = enemyIterator.next();
             if (schip.collisionDetect(enemy.getHitBox())) {
@@ -213,7 +222,12 @@ public class GamePanel extends GPanel {
 
                 for (Kogel k : closestShip(enemy).getKogels()) {
                     if (k.collisionDetect(enemy.getHitBox())) {
-                        enemy.setHit(true);
+                        enemy.loseHP(baseDamage);
+                        if (enemy.getHP() == 0){
+
+                            enemy.setHit(true);
+
+                        }
 
                     }
                 }
@@ -224,7 +238,7 @@ public class GamePanel extends GPanel {
                 for (Kogel k : schip.getKogels()) {
                     if (k.collisionDetect(enemy.getHitBox())) {
 
-                        enemy.loseHP(50);
+                        enemy.loseHP(baseDamage);
                         if (enemy.getHP() == 0){
 
                             enemy.setHit(true);
@@ -233,7 +247,7 @@ public class GamePanel extends GPanel {
                         System.out.println(enemy.getHP());
 
                     }
-                    
+
                 }
             }
         }
@@ -299,10 +313,41 @@ public class GamePanel extends GPanel {
         spawnTimer = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < enemyCounter; i++) {
-                    enemyOnField.add(new Enemy(1, "WutFace", "euh wa moek ier zetten", 100, 10, "src/Media/vijand1.png", 20, 20));
+                if (enemyCounter < 10){
+
+                    for (int i = 0; i < 10; i++) {
+
+                    enemyOnField.add(new Enemy(1, "WutFace", "enemy", 100, 10, "src/Media/vijand1.png", 20, 20));
+                        
+
+                    enemyCounter++;
+
+                }}
+
+                if (enemyCounter <20){
+
+                    for(int i = 0; i < 10; i++) {
+                        enemyOnField.add(new Enemy(1, "WutFace", "enemy", 150, 10, "src/Media/vijand1.png", 20, 20));
+                        enemyCounter++;
+                    }
+
                 }
+
+
+/*
+                for (int i = 0; i < 20; i++){
+                    enemyOnField.add(new Enemy(1, "WutFace", "enemy", 150, 10, "src/Media/vijand1.png", 20, 20));
+                }
+
+                for (int i = 0; i < enemyCounter; i++){
+                    enemyOnField.add(new Enemy(1, "WutFace", "enemy", 200, 10, "src/Media/vijand1.png", 20, 20));
+                }
+<<<<<<< HEAD
+                //System.out.println("spawned");*/
+
+=======
                 enemyCounter++;
+>>>>>>> 79a9231d61a75f0ebb611e1aab1c896cff24f01d
             }
         });
     }
@@ -317,14 +362,21 @@ public class GamePanel extends GPanel {
         approachShip();
         schip.beweegSchip();
 
+<<<<<<< HEAD
+        //updateHealthBar();
+=======
+>>>>>>> 79a9231d61a75f0ebb611e1aab1c896cff24f01d
         if(schip.isInvulnerability()){
             System.out.println("invulnerability start");
             invulnerabilityTimer.start();
         }
+<<<<<<< HEAD
+=======
         if (schip.isSlowerEnemies()){
             System.out.println("slower enemies");
             slowerEnemiesTimer.start();
         }
+>>>>>>> 79a9231d61a75f0ebb611e1aab1c896cff24f01d
 
         combo.setText("x " + schip.getCombo());
         score.setText("" + schip.getScore());
@@ -422,5 +474,7 @@ public class GamePanel extends GPanel {
         public void mouseReleased(MouseEvent e) {
             schip.mouseReleased(e);
         }
+
+
     }
 }
