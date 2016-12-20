@@ -179,6 +179,7 @@ public class InGame extends GPanel implements ActionListener {
 
 
     }
+
     public void initGamePanel() {
         setupGameTimer();
         gameTimer.start();

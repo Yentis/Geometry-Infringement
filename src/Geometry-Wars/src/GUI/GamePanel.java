@@ -236,7 +236,6 @@ public class GamePanel extends GPanel {
         }
     }
 
-
     public void collisionEffect(ArrayList<Kogel> kogels, Enemy enemy) {
         for (Kogel k : kogels) {
             if (k.collisionDetect(enemy.getHitBox())) {
@@ -249,7 +248,6 @@ public class GamePanel extends GPanel {
             }
         }
     }
-
 
     private Schip closestShip(Enemy enemy) {
         //berekent distance tussen 2 points
@@ -339,8 +337,6 @@ public class GamePanel extends GPanel {
         updateKogels(drone.getKogels());
         approachShip();
         schip.beweegSchip();
-
-       
             if (schip.isInvulnerability()) {
 
                 System.out.println("invulnerability start");
@@ -441,7 +437,5 @@ public class GamePanel extends GPanel {
         public void mouseReleased(MouseEvent e) {
             schip.mouseReleased(e);
         }
-
-
     }
 }
