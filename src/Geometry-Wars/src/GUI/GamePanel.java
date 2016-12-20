@@ -42,21 +42,10 @@ public class GamePanel extends GPanel {
     private double ratio;
     private boolean coop;
     private boolean gameFinished;
-<<<<<<< HEAD
-
-    private int baseDamage = 50;
-    private int wave = 1;
-
-    private Timer shootingDroneTimer;
-
-
-
-=======
     private int baseDamage = 50;
     private int wave = 1;
     private Timer shootingDroneTimer;
 
->>>>>>> 852c7e47ce7d4a42552d954d39a7da0ef17fc7f2
     public GamePanel() throws IOException, FontFormatException {
         addKeyListener(new TAdapter());
         addMouseListener(new MAdapter());
@@ -161,12 +150,7 @@ public class GamePanel extends GPanel {
         schipHit(schip);
     }
 
-<<<<<<< HEAD
-    private void schipHit(Schip schip){
-
-=======
     private void schipHit(Schip schip) {
->>>>>>> 852c7e47ce7d4a42552d954d39a7da0ef17fc7f2
         for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ) {
             Enemy enemy = enemyIterator.next();
             if (schip.collisionDetect(enemy.getHitBox())) {
@@ -333,39 +317,11 @@ public class GamePanel extends GPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-<<<<<<< HEAD
-
-                    for (int i = 0; i < enemyCounter; i++) {
-
-                        enemyOnField.add(new Enemy(1, "WutFace", "enemy", 100, 10, "src/Media/vijand1.png", 20, 20));
-
-                    }
-                    enemyCounter++;
-
-
-
-
-/*
-                for (int i = 0; i < 20; i++){
-                    enemyOnField.add(new Enemy(1, "WutFace", "enemy", 150, 10, "src/Media/vijand1.png", 20, 20));
-                }
-
-                for (int i = 0; i < enemyCounter; i++){
-                    enemyOnField.add(new Enemy(1, "WutFace", "enemy", 200, 10, "src/Media/vijand1.png", 20, 20));
-                }
-
-                //System.out.println("spawned");*/
-
-
-
-
-=======
                 for (int i = 0; i < enemyCounter; i++) {
                     enemyOnField.add(new Enemy(1, "WutFace", "euh wa moek ier zetten", 100, 10, "src/Media/vijand1.png", 20, 20));
 
                 }
                 enemyCounter++;
->>>>>>> 852c7e47ce7d4a42552d954d39a7da0ef17fc7f2
             }
         });
     }
@@ -380,46 +336,29 @@ public class GamePanel extends GPanel {
         approachShip();
         schip.beweegSchip();
 
-<<<<<<< HEAD
 
-        //updateHealthBar();
+        if (schip.isInvulnerability()) {
 
-
-        if(schip.isInvulnerability()){
             System.out.println("invulnerability start");
             invulnerabilityTimer.start();
         }
-
-
-        if (schip.isSlowerEnemies()){
+        if (schip.isSlowerEnemies()) {
             System.out.println("slower enemies");
             slowerEnemiesTimer.start();
         }
-=======
-       
-            if (schip.isInvulnerability()) {
->>>>>>> 852c7e47ce7d4a42552d954d39a7da0ef17fc7f2
 
-                System.out.println("invulnerability start");
-                invulnerabilityTimer.start();
-            }
-            if (schip.isSlowerEnemies()) {
-                System.out.println("slower enemies");
-                slowerEnemiesTimer.start();
-            }
-
-            combo.setText("x " + schip.getCombo());
-            score.setText("" + schip.getScore());
-            currentHealthBar.setSize((int) updateHealthBar(schip, healthBarWidth, currentHealthBar), currentHealthBar.getHeight());
-            if (coop) {
-                updateKogels(schipp2.getKogels());
-                schipp2.beweegSchip();
-                combop2.setText("x " + schipp2.getCombo());
-                scorep2.setText("" + schipp2.getScore());
-                currentHealthBarp2.setSize((int) updateHealthBar(schipp2, healthBarWidthp2, currentHealthBarp2), currentHealthBarp2.getHeight());
-            }
-            ;
+        combo.setText("x " + schip.getCombo());
+        score.setText("" + schip.getScore());
+        currentHealthBar.setSize((int) updateHealthBar(schip, healthBarWidth, currentHealthBar), currentHealthBar.getHeight());
+        if (coop) {
+            updateKogels(schipp2.getKogels());
+            schipp2.beweegSchip();
+            combop2.setText("x " + schipp2.getCombo());
+            scorep2.setText("" + schipp2.getScore());
+            currentHealthBarp2.setSize((int) updateHealthBar(schipp2, healthBarWidthp2, currentHealthBarp2), currentHealthBarp2.getHeight());
         }
+        ;
+    }
 
     private double updateHealthBar(Schip schip, double healthBarWidth, JProgressBar currentHealthBar) {
         if (schip.getHp() != 0) {

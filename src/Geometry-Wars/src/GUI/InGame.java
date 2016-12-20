@@ -18,13 +18,19 @@ public class InGame extends GPanel implements ActionListener {
     //GamePanel
     private GamePanel gamePanel;
 
-    private GButton startGame = new GButton("Start", 24f, 200, 200, 500, 200);
+    private GButton startGame = new GButton("Click to Start", 35f, 280, 250, 400, 200);
     private Timer gameTimer;
 
     //PausePanel
     private GButton Continue = new GButton("Continue", 24f, 325, 84, 375, 120);
     private GButton restart = new GButton("Restart", 24f, 325, 284, 375, 120);
-    private GButton menu = new GButton("Back to Main Menu", 24f, 325, 484, 375, 120);
+    private GButton menu = new GButton("Main Menu", 24f, 325, 484, 375, 120);
+    private ImageIcon PauseImage = new ImageIcon("src\\Media\\pause-128.png");
+    private JButton pauze = new JButton(PauseImage);
+    private GLabel gameOver = new GLabel("Oopsy daisy! u dead fam", 25f, 325,260,375,120, true, Color.white);
+
+
+
     private GPanel pause = new GPanel() {
         @Override
         public void initComponents() throws IOException, FontFormatException {
@@ -32,37 +38,96 @@ public class InGame extends GPanel implements ActionListener {
             pause.add(Continue);
             pause.add(restart);
             pause.add(menu);
+
             JLabel pane = new JLabel();
             pane.setOpaque(true);
             pane.setBackground(new Color(255, 255, 255, 2));
             pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
             pane.setBounds(50, 125, 900, 500);
             pause.add(pane);
+
         }
     };
+    private GPanel gameEnd = new GPanel() {
+        @Override
+        public void initComponents() throws IOException, FontFormatException {
 
+
+            JLabel pane = new JLabel();
+            pane.setOpaque(true);
+            pane.setBackground(new Color(255, 255, 255, 2));
+            pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
+            pane.setBounds(50, 125, 900, 500);
+
+            restart.setBounds(150, 420, 275, 120);
+            restart.setBackground(Color.black);
+            restart.setForeground(Color.white);
+            restart.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
+
+            menu.setBounds(550, 420, 275, 120);
+            menu.setBackground(Color.black);
+            menu.setForeground(Color.white);
+            menu.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
+
+            gameOver.setHorizontalAlignment(SwingConstants.CENTER);
+            gameOver.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
+            gameOver.setBackground(Color.black);
+            gameEnd.add(pane);
+            gameEnd.add(gameOver);
+            gameEnd.add(restart);
+            gameEnd.add(menu);
+
+            menu.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    panel.setVisible(false);
+                    GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                    window.getMainMenu().setVisible(true);
+
+                }
+            });
+
+
+
+
+
+
+        }
+    };
 
     public InGame() throws IOException, FontFormatException {
         gamePanel = new GamePanel();
         pause.initComponents();
+        gameEnd.initComponents();
+
+
         initComponents();
 
         this.add(pause);
         pause.setVisible(false);
 
+        this.add(gameEnd);
+        gameEnd.setVisible(false);
+
         this.add(gamePanel);
         gamePanel.setOpaque(false);
+
+
+        startGame.setBackground(Color.black);
+        startGame.setForeground(Color.white);
+        startGame.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
         this.add(startGame);
 
+
+
         addActionListeners();
+
 
         gamePanel.setVisible(false);
 
     }
     @Override
     public void initComponents() throws IOException, FontFormatException {
-        ImageIcon PauseImage = new ImageIcon("src\\Media\\pause-128.png");
-        JButton pauze = new JButton(PauseImage);
+
         JLabel pane = new JLabel();
 
         GLabel healthp1 = new GLabel("Health:", 24, 40,18,169,62, false, Color.black);
@@ -113,6 +178,7 @@ public class InGame extends GPanel implements ActionListener {
         this.add(healthp1);
         this.add(schipLvlp1);
         this.add(droneLvlp1);
+
 
         //this.add(Quit);
         this.add(confirmationlabel);
@@ -178,6 +244,10 @@ public class InGame extends GPanel implements ActionListener {
         });
 
 
+
+
+
+
     }
     public void initGamePanel() {
         setupGameTimer();
@@ -191,11 +261,14 @@ public class InGame extends GPanel implements ActionListener {
     public void addActionListeners() { //TODO
         startGame.addActionListener(panel);
         Continue.addActionListener(panel);
+        restart.addActionListener(panel);
+
     }
 
     public void checkGameFinished(){
         if (gamePanel.getGameFinished()) {
-            pauseGameLoop();
+            pauze.setVisible(false);
+            initEndGamePanel();
             System.out.println("game over");
         }
     }
@@ -215,7 +288,12 @@ public class InGame extends GPanel implements ActionListener {
         pause.setVisible(true);
     }
 
+    public void initEndGamePanel() {
+        gameEnd.setVisible(true);
+        gameTimer.stop();
+        gamePanel.setFocusable(false);
 
+    }
 
 
     @Override
@@ -234,8 +312,10 @@ public class InGame extends GPanel implements ActionListener {
         gamePanel.pauseGame();
         gamePanel.setFocusable(false);
         initPausePanel();
-        gameTimer.stop();
+
     }
+
+
 
     private void runGameLoop() {
         gameTimer.start();
@@ -247,6 +327,7 @@ public class InGame extends GPanel implements ActionListener {
         gamePanel.setFocusable(true);
         gamePanel.requestFocus(); // anders werkt de keybinds niet meer
         gameTimer.start();
+
     }
 
 
