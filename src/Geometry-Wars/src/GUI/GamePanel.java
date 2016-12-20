@@ -239,10 +239,7 @@ public class GamePanel extends GPanel {
 
                 enemy.loseHP(baseDamage);
                 if (enemy.getHP() == 0) {
-
-
                     enemy.setHit(true);
-
                 }
                 System.out.println(enemy.getHP());
             }
@@ -296,11 +293,14 @@ public class GamePanel extends GPanel {
                     shootingDroneTimer.start();
                 }
                 //schip.addCurrentXp(enemy.get);
+
                 enemyIterator.remove();
 
             }
         }
     }
+
+
 
     private void updateKogels(ArrayList<Kogel> kogels) {
         for (Iterator<Kogel> kogeliterator = kogels.iterator(); kogeliterator.hasNext(); ) {
