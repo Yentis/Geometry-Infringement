@@ -80,6 +80,8 @@ public class Sprite {
         this.currentLocation = currentLocation;
     }
 
+    public void setCurrentLocation(double x, double y){ this.currentLocation.setLocation(x,y); }
+
     public Point getTarget() {
         return target;
     }
@@ -173,4 +175,8 @@ public class Sprite {
         g2d.draw(this.getHitBox());
     }
 
+    public void setImage(Image image) {
+        ImageIcon ii = new ImageIcon(image);
+        this.image = ii.getImage();
+    }
 }

@@ -1,5 +1,7 @@
 package GUI;
 
+import Game.Spel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -18,8 +20,9 @@ public class Window extends JFrame{
     private Login login;
     private InGame inGame;
     private Scoreboard scoreboard;
-
+    private Register register;
     private Coop startCoop;
+    private Spel spel = new Spel();
 
 
     private Container cp = getContentPane();
@@ -56,6 +59,10 @@ public class Window extends JFrame{
         new Window("Geometry Wars");
     }
 
+    public Spel getSpel(){
+        return spel;
+    }
+
     // Set Background
     public void setBackground(){
         JLabel bg = new JLabel();
@@ -80,6 +87,7 @@ public class Window extends JFrame{
         inGame = new InGame();
         scoreboard = new Scoreboard();
         startCoop = new Coop();
+        register = new Register();
 
         // Add UI panels
         cp.add(mainMenu);
@@ -91,17 +99,19 @@ public class Window extends JFrame{
         cp.add(inGame);
         cp.add(scoreboard);
         cp.add(startCoop);
+        cp.add(register);
 
 
         // Set all panels invisible except the starting panel
+        mainMenu.setVisible(false);
         startGame.setVisible(false);
         profile.setVisible(false);
         startGameCampaign.setVisible(false);
         logout.setVisible(false);
-        login.setVisible(false);
         inGame.setVisible(false);
         scoreboard.setVisible(false);
         startCoop.setVisible(false);
+        register.setVisible(false);
     }
 
 
@@ -128,6 +138,9 @@ public class Window extends JFrame{
 
     public Scoreboard getScoreboard() {return scoreboard;}
 
+    public Register getRegister() {
+        return register;
+    }
 
     public Coop getStartCoop() {
         return startCoop;

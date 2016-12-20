@@ -5,15 +5,22 @@
  */
 package GUI;
 
-import GComponents.GFont;
-import GComponents.GPanel;
+import GComponents.*;
+import Game.Spel;
 
 import java.awt.Color;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.MalformedURLException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Objects;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -25,133 +32,110 @@ public class Login extends GPanel{
     
     private Login panel = this;
 
-    private String url = "https://discordapp.com/";
-    /**
-     * @param args the command line arguments
-     */
     public Login() throws MalformedURLException, IOException, FontFormatException {
-        
-        
+
+        initComponents();
       
     }
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
-        //Make components
-        //==================================================
-        
-        JLabel LoginPane = new JLabel();
-        JLabel UsernameLabel = new JLabel("Username");
-        JLabel PasswordLabel = new JLabel("Password:");
-        JLabel RegisterLabel = new JLabel("Not Registered yet?");
-        JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
-        JButton Login = new JButton("Login");
-        JButton Register = new JButton("Register");
-        JTextField Username = new JTextField();
-        JPasswordField Password = new JPasswordField();
 
+        JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
+        GLabel message = new GLabel("", 24f, 220,120,600,50, false, Color.white);
+        GLabel lblusername = new GLabel("Username: ", 24f, 200,170,150,50, false, Color.white);
+        GLabel lblpassword = new GLabel("Password: ", 24f, 200,240,150,50, false, Color.white);
+        GInputField username = new GInputField(360,170,200,50);
+        GPasswordField password = new GPasswordField(360,240,200,50);
+        GButton register = new GButton("Register", 24f, 200,300,170,50);
+        GButton login = new GButton("Login", 24f, 390,300,170,50);
+        JButton Exit = new GButton("Exit", 24f, 820, 650, 170, 63);
 
+        label.setOpaque(true);
+        label.setFont(new GFont(65));
+        label.setBackground(new Color(255,255,255,95));
+        message.setVisible(false);
 
-        //==================================================
+        label.setBounds(25,25,650,100);
 
+        this.add(label);
+        this.add(lblusername);
+        this.add(lblpassword);
+        this.add(username);
+        this.add(password);
+        this.add(register);
+        this.add(login);
+        this.add(Exit);
+        this.add(message);
 
+        //Action Listeners
+        Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                System.exit(0);
+            }
+        });
 
-        //Add Action Listener
-        //==================================================
+        register.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getRegister().setVisible(true);
+            }
+        });
 
-        //==================================================
+        login.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(Objects.equals(username.getText(), "")){
+                    message.setText("Please enter a username");
+                } else if (password.getPassword().length == 0){
+                    message.setText("Please enter a password");
+                } else {
+                    String result = null;
+                    try {
+                        result = checkAndCreate(username.getText(), password.getPassword());
+                    } catch (NoSuchAlgorithmException e1) {
+                        e1.printStackTrace();
+                    } catch (UnsupportedEncodingException e1) {
+                        e1.printStackTrace();
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
 
+                    if(Objects.equals(result, "")){
+                        panel.setVisible(false);
+                        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                        window.getMainMenu().setVisible(true);
+                    } else {
+                        message.setText(result + " is not correct.");
+                    }
+                }
+                message.setVisible(true);
+            }
+        });
+    }
 
-        //Set Properties
-        //==================================================
-        Title.setFont(new GFont(80));
-        Title.setOpaque(true);
-        Title.setBackground(new Color(255,255,255,95));
+    private String checkAndCreate(String gebruikersnaam, char[] password) throws NoSuchAlgorithmException, UnsupportedEncodingException, SQLException {
+        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+        String result = "";
 
-        LoginPane.setOpaque(true);
-        LoginPane.setBackground(new Color(255,255,255,95));
+        //hash
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(new String(password).getBytes("UTF-8"));
+        byte[] digest = md.digest();
+        String hashed = "";
+        for (byte item:digest) {
+            hashed += item;
+        }
 
-        Username.setFont(new GFont(24));
-        Username.setOpaque(true);
-        Username.setBackground(new Color(255,255,255,200));
+        result = window.getSpel().loginChecker(gebruikersnaam, hashed);
 
-        Password.setFont(new GFont(24));
-        Password.setOpaque(true);
-        Password.setBackground(new Color(255,255,255,200));
-
-
-        UsernameLabel.setFont(new GFont(20));
-        UsernameLabel.setForeground(Color.BLACK);
-
-        PasswordLabel.setFont(new GFont(20));
-        PasswordLabel.setForeground(Color.black);
-
-        RegisterLabel.setFont(new GFont(16));
-        RegisterLabel.setForeground(Color.black);
-
-        Login.setFont(new GFont(24));
-        Login.setOpaque(true);
-        Login.setBackground(new Color(255,255,255,200));
-        Login.setForeground(Color.black);
-
-        Register.setFont(new GFont(24));
-        Register.setOpaque(true);
-        Register.setBackground(new Color(255,255,255,200));
-        Register.setForeground(Color.black);
-
-
-
-
-
-
-
-
-
-
-
-        //==================================================
-
-
-
-
-
-
-
-        //Set Bounds
-        //==================================================
-
-
-        Title.setBounds(300,187,900,131);
-        LoginPane.setBounds(1241,187,679,724);
-        Username.setBounds(1535,346,357,49);
-        Password.setBounds(1535,440,357,49);
-        UsernameLabel.setBounds(1395, 358, 130,24);
-        PasswordLabel.setBounds(1395,452,130,24);
-        RegisterLabel.setBounds(1712,665,185,21);
-        Login.setBounds(1775,531,117,44);
-        Register.setBounds(1681,711,209,44);
-
-
-        //==================================================
-
-        //Add Components
-        //==================================================
-
-        panel.add(Title);
-
-        panel.add(Username);
-        panel.add(Password);
-
-        panel.add(UsernameLabel);
-        panel.add(PasswordLabel);
-        panel.add(RegisterLabel);
-        panel.add(Login);
-        panel.add(Register);
-
-        panel.add(LoginPane);
-
-
-
-        //==================================================
+        if(Objects.equals(result, "")){
+            window.getSpel().logIn(gebruikersnaam);
+            System.out.println("login successful");
+        } else {
+            return result;
+        }
+        return "";
     }
 }

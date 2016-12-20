@@ -1,0 +1,8 @@
+
+- extra kracht
+
+- drone schiet mee met schip
+- drone schiet automatisch op enemies
+- drone meer kracht
+
+

@@ -87,7 +87,6 @@ public class Movement implements KeyListener {
         //keyPressed = true;
 
         int key = e.getKeyCode();
-        System.out.println(key);
         // Movement: graden worden in radialen omgezet in Board
         if(key == keyLeft){
             targetAngle = 270;
@@ -108,7 +107,7 @@ public class Movement implements KeyListener {
     public void keyReleased(KeyEvent e) {
         //keyPressed = true;
         int key = e.getKeyCode();
-        // Movement: graden worden in radialen omgezet in Board
+        // Movement: graden worden in radialen omgezet in GamePanel
         if(key == keyLeft){
             schip.moveLeft(0);
         } else if (key == keyRight){

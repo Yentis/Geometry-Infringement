@@ -13,12 +13,12 @@ import java.util.List;
 public class Spel {
     //region Instance Variables
 
-    private List<Speler> spelers = new ArrayList<>();
+    private Speler speler;
     private List<Schip> schepen = new ArrayList<>();
     private List<Drone> drones = new ArrayList<>();
     private List<Upgrade> upgrades = new ArrayList<>();
     private List<Enemy> vijanden = new ArrayList<>();
-    private String url = "http://www.phpmyadmin.co/index.php?db=sql7150029";
+    private String url = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7150029";
     private String user = "sql7150029";
     private String pass = "3Ngdr6LYhR";
 
@@ -34,20 +34,10 @@ public class Spel {
         Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
 
-        //region Spelers
-        ResultSet myRs = myStmt.executeQuery("select * from speler");
-
-        int i = 0;
-        while (myRs.next()){
-            spelers.add(i, new Speler(myRs.getInt("nr") - 1, myRs.getString("gebruikersnaam"), myRs.getString("wachtwoord"), myRs.getString("email"), myRs.getInt("level"), myRs.getInt("experience"), myRs.getString("profielfoto"), myRs.getInt("rank"), myRs.getInt("nuggets"), myRs.getInt("golden nuggets")));
-            i++;
-        }
-        //endregion
-
         //region Schepen
         ResultSet schip = myStmt.executeQuery("select * from schip");
 
-        i = 0;
+        int i = 0;
         while (schip.next()){
             schepen.add(i, new Schip(schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image"), schip.getInt("score"), schip.getInt("combo"), 37, 39, 38, 40));
             i++;
@@ -85,21 +75,46 @@ public class Spel {
         //endregion
     }
 
-    public void registerPlayer(String gebruikersnaam, char[] wachtwoord, String email) throws SQLException, NoSuchAlgorithmException, UnsupportedEncodingException {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(new String(wachtwoord).getBytes("UTF-8"));
-        byte[] digest = md.digest();
-        String test = "";
-        for (byte item:digest) {
-            test += item;
-        }
+    public void logIn(String gebruikersnaam) throws SQLException {
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        Connection myConn = DriverManager.getConnection(url, user, pass);
+        Statement myStmt = myConn.createStatement();
 
+        ResultSet myRs = myStmt.executeQuery("select * from speler where gebruikersnaam = '" + gebruikersnaam + "'");
+
+        while(myRs.next()){
+            speler = new Speler(myRs.getInt("nr") - 1, myRs.getString("gebruikersnaam"), myRs.getString("wachtwoord"), myRs.getString("email"), myRs.getInt("level"), myRs.getInt("experience"), myRs.getString("profielfoto"), myRs.getInt("rank"), myRs.getInt("nuggets"), myRs.getInt("golden nuggets"));
+        }
+    }
+
+    public void logOut(){
+        speler = null;
+    }
+
+    public void registerPlayer(String gebruikersnaam, String wachtwoord, String email) throws SQLException, NoSuchAlgorithmException, UnsupportedEncodingException {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
 
         int a = myStmt.executeUpdate("insert into speler (gebruikersnaam, wachtwoord, email, rank)" +
-                "values('" + gebruikersnaam +"', '" + test + "', '" + email + "', 0)");
+                "values('" + gebruikersnaam +"', '" + wachtwoord + "', '" + email + "', 0)");
+    }
+
+    public String loginChecker(String gebruikersnaam, String wachtwoord) throws SQLException, NoSuchAlgorithmException, UnsupportedEncodingException {
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        Connection myConn = DriverManager.getConnection(url, user, pass);
+        Statement myStmt = myConn.createStatement();
+
+        System.out.println("Password: " + wachtwoord);
+
+        ResultSet myRs = myStmt.executeQuery("select count(*) from speler where gebruikersnaam = '" + gebruikersnaam + "' AND wachtwoord = '" + wachtwoord + "'");
+
+        while(myRs.next()){
+            if(myRs.getInt("count(*)") == 0){
+                return "Username or password";
+            }
+        }
+        return "";
     }
 
     public String infoChecker(String gebruikersnaam, String email) throws SQLException {
