@@ -71,10 +71,12 @@ public class Settings extends GPanel {
                                     enemy.setHp(enemy.getHP()*2);
                                     enemy.setKracht(enemy.getKracht()*2);
                                     enemy.setSpeed(enemy.getSpeed()*2);
+                                    window.getSpel().changeSchipspeed(1.2);
                                 } else if (Objects.equals(currentDifficulty, "Easy")) {
                                     enemy.setHp(enemy.getHP()*4);
                                     enemy.setKracht(enemy.getKracht()*4);
                                     enemy.setSpeed(enemy.getSpeed()*4);
+                                    window.getSpel().changeSchipspeed(2.4);
                                 }
                                 break;
                             case "Normal":
@@ -120,7 +122,7 @@ public class Settings extends GPanel {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                window.getLogin().setVisible(true);
+                window.getMainMenu().setVisible(true);
             }
         });
     }

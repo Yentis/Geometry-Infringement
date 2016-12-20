@@ -90,16 +90,16 @@ public class Movement implements KeyListener {
         // Movement: graden worden in radialen omgezet in Board
         if(key == keyLeft){
             targetAngle = 270;
-            schip.moveLeft(3);
+            schip.moveLeft(schip.getSpeed());
         } else if (key == keyRight){
             targetAngle = 90;
-            schip.moveRight(3);
+            schip.moveRight(schip.getSpeed());
         } else if (key == keyUp){
             targetAngle = 0;
-            schip.moveUp(3);
+            schip.moveUp(schip.getSpeed());
         } else if (key == keyDown){
             targetAngle = 180;
-            schip.moveDown(3);
+            schip.moveDown(schip.getSpeed());
         }
     }
 

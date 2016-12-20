@@ -45,9 +45,10 @@ public class Game {
     }
 
     public void setupGame(boolean coop) {
+       // GUI.Window window = (GUI.Window) SwingUtilities.getRoot(.getParent());
         //make schip, drone
-        schip = new Schip(1, 100, 10, "src/Media/schip1.png", 0, 0, 37, 39, 38, 40);
-        drone = new Drone(1, "Drone1", "a", 100, 5, "src/Media/drone1.png", 1, 0);
+        //schip = new Schip(1, 100, 10, "src/Media/schip1.png", 0, 0, 37, 39, 38, 40);
+       // drone = new Drone(1, "Drone1", "a", 100, 5, "src/Media/drone1.png", 1, 0);
 
         if (coop) {
             setupGameCoop();
@@ -67,8 +68,8 @@ public class Game {
 
     public void setupGameCoop() {
 
-        schipp2 = new Schip(1, 100, 10, "src/Media/schip1.png", 0, 0, 81, 68, 90, 83);
-        dronep2 = new Drone(1, "Drone1", "a", 100, 5, "src/Media/drone1.png", 1, 0);
+       // schipp2 = new Schip(1, 100, 10, "src/Media/schip1.png", 0, 0, 81, 68, 90, 83);
+       // dronep2 = new Drone(1, "Drone1", "a", 100, 5, "src/Media/drone1.png", 1, 0);
 
     }
 
@@ -180,7 +181,7 @@ public class Game {
             public void actionPerformed(ActionEvent e) {
 
                 for (int i = 0; i < enemyCounter; i++) {
-                    enemyOnField.add(new Enemy(1, "WutFace", "euh wa moek ier zetten", 100, 10, "src/Media/vijand1.png", 20, 20));
+                 //   enemyOnField.add(new Enemy(1, "WutFace", "euh wa moek ier zetten", 100, 10, "src/Media/vijand1.png", 20, 20));
 
                 }
                 enemyCounter++;
