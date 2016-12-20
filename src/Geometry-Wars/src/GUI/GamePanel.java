@@ -100,6 +100,7 @@ public class GamePanel extends GPanel {
 
 
     public void startGame() {
+        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         gameFinished = false;
         spawnTimer.start();
 
@@ -114,11 +115,11 @@ public class GamePanel extends GPanel {
         } catch (FontFormatException e) {
             e.printStackTrace();
         }
-        schip = new Schip(1, 100, 10, "src/Media/schip1.png", 0, 0, 37, 39, 38, 40);
-        drone = new Drone(1, "Drone1", "a", 100, 5, "src/Media/drone1.png", 1, 0);
+        schip = window.getSpel().getSchepen().get(0);
+        drone = window.getSpel().getDrones().get(0);
         if (coop) {
-            schipp2 = new Schip(1, 100, 10, "src/Media/schip1.png", 0, 0, 81, 68, 90, 83);
-            dronep2 = new Drone(1, "Drone1", "a", 100, 5, "src/Media/drone1.png", 1, 0);
+            schipp2 = window.getSpel().getSchepen().get(0);
+            dronep2 = window.getSpel().getDrones().get(0);
         }
         setUpShootingDroneTimer(drone);
 
@@ -318,14 +319,17 @@ public class GamePanel extends GPanel {
     }
 
     public void spawnEnemies() {
+        Enemy testenemy = enemies.get(0);
+        ImageIcon ii = new ImageIcon(testenemy.getImage());
+
         spawnTimer = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 for (int i = 0; i < enemyCounter; i++) {
 
-                    //enemyOnField.add(enemies.get(0));
-                    enemyOnField.add(new Enemy(1, "vijand1", "vijand1", 100, 5, "src/Media/vijand1.png", 20, 100, 2));
+
+                    enemyOnField.add(new Enemy(testenemy.getNr(), testenemy.getNaam(), testenemy.getBeschrijving(), testenemy.getHP(), testenemy.getKracht(), testenemy.getImageString(), testenemy.getExperience(), testenemy.getScore(), testenemy.getSpeed()));
 
                 }
                 enemyCounter++;

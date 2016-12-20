@@ -27,6 +27,7 @@ public class Enemy extends Sprite {
     private Rectangle2D hpBar;
     private Rectangle2D maxHpBar;
     private int maxHp = 100;
+    private String imageString;
 
     //endregion
 
@@ -35,6 +36,7 @@ public class Enemy extends Sprite {
 
     public Enemy(int nr, String naam, String beschrijving, int hp, int kracht, String image, int experience, int score, int speed) {
         super(image);
+        imageString = image;
         this.nr = nr;
         this.naam = naam;
         this.beschrijving = beschrijving;
@@ -66,6 +68,14 @@ public class Enemy extends Sprite {
 
     public String getNaam() {
         return naam;
+    }
+
+    public int getNr() {
+        return nr;
+    }
+
+    public String getBeschrijving() {
+        return beschrijving;
     }
 
     public int getKracht() {
@@ -149,6 +159,17 @@ public class Enemy extends Sprite {
         return image;
     }
 
+    public String getImageString() {
+        return imageString;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public int getScore() {
+        return score;
+    }
 
     public void move(double velocityX, double velocityY) {
         locationX += velocityX;
