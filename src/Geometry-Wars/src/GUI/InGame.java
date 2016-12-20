@@ -23,8 +23,8 @@ public class InGame extends GPanel implements ActionListener {
 
     //PausePanel
     private GButton Continue = new GButton("Continue", 24f, 325, 84, 375, 120);
-    private GButton restart = new GButton("Restart", 24f, 325, 284, 375, 120);
-    private GButton menu = new GButton("Main Menu", 24f, 325, 484, 375, 120);
+    private GButton restart = new GButton("Restart", 24f, 150, 420, 275, 120);
+    private GButton menu = new GButton("Main Menu", 24f, 550, 420, 275, 120);
     private ImageIcon PauseImage = new ImageIcon("src\\Media\\pause-128.png");
     private JButton pauze = new JButton(PauseImage);
     private GLabel gameOver = new GLabel("Oopsy daisy! u dead fam", 25f, 325,260,375,120, true, Color.white);
@@ -34,17 +34,15 @@ public class InGame extends GPanel implements ActionListener {
     private GPanel pause = new GPanel() {
         @Override
         public void initComponents() throws IOException, FontFormatException {
-
-            pause.add(Continue);
-            pause.add(restart);
-            pause.add(menu);
-
             JLabel pane = new JLabel();
             pane.setOpaque(true);
             pane.setBackground(new Color(255, 255, 255, 2));
             pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
             pane.setBounds(50, 125, 900, 500);
             pause.add(pane);
+            pause.add(Continue);
+            pause.add(restart);
+            pause.add(menu);
 
         }
     };
@@ -59,12 +57,12 @@ public class InGame extends GPanel implements ActionListener {
             pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
             pane.setBounds(50, 125, 900, 500);
 
-            restart.setBounds(150, 420, 275, 120);
+
             restart.setBackground(Color.black);
             restart.setForeground(Color.white);
             restart.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
 
-            menu.setBounds(550, 420, 275, 120);
+
             menu.setBackground(Color.black);
             menu.setForeground(Color.white);
             menu.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
@@ -174,6 +172,8 @@ public class InGame extends GPanel implements ActionListener {
         this.add(schipbarp1);
         this.add(dronebarp1);
         this.add(pauze);
+
+
         this.add(scorep1);
         this.add(healthp1);
         this.add(schipLvlp1);
@@ -184,6 +184,7 @@ public class InGame extends GPanel implements ActionListener {
         this.add(confirmationlabel);
         this.add(Yes);
         this.add(No);
+
 
 
 
