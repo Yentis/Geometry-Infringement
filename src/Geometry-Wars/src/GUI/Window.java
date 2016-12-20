@@ -57,10 +57,9 @@ public class Window extends JFrame{
 
     }
 
-    public static void main(String args[]) throws IOException, FontFormatException, SQLException {
-        new Window("Geometry Wars");
+    public static void main(String args[]) throws IOException, FontFormatException, SQLException, InterruptedException {
         spel.initDankabank();
-        spel.setCurrentDifficulty("Normal");
+        new Window("Geometry Wars");
     }
 
     public Spel getSpel(){
@@ -88,9 +87,9 @@ public class Window extends JFrame{
         startGameCampaign = new StartGameCampaign();
         logout  = new Logout();
         login = new Login();
-        inGame = new InGame();
+        inGame = new InGame(spel.getEnemies());
         scoreboard = new Scoreboard();
-        startCoop = new Coop();
+        startCoop = new Coop(spel.getEnemies());
         register = new Register();
         settings = new Settings();
 

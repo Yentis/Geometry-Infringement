@@ -3,9 +3,13 @@ package GUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.*;
+import java.util.List;
 import javax.swing.*;
+import javax.swing.Timer;
 
 import GComponents.*;
+import Game.Enemy;
 
 
 /**
@@ -42,8 +46,8 @@ public class InGame extends GPanel implements ActionListener {
     };
 
 
-    public InGame() throws IOException, FontFormatException {
-        gamePanel = new GamePanel();
+    public InGame(List<Enemy> enemies) throws IOException, FontFormatException {
+        gamePanel = new GamePanel(enemies);
         pause.initComponents();
         initComponents();
 

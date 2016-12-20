@@ -9,11 +9,10 @@ import java.awt.event.*;
 import java.awt.geom.*;
 import java.io.IOException;
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ListIterator;
-import java.util.TimerTask;
+import java.util.*;
+import java.util.List;
 import javax.swing.*;
+import javax.swing.Timer;
 
 
 /**
@@ -27,6 +26,7 @@ public class GamePanel extends GPanel {
     private Drone drone;
     private Drone dronep2;
     private ArrayList<Enemy> enemyOnField = new ArrayList<Enemy>();
+    private List<Enemy> enemies = new ArrayList<>();
     private int enemyCounter = 1;
     private Timer spawnTimer;
     private Timer invulnerabilityTimer;
@@ -46,7 +46,8 @@ public class GamePanel extends GPanel {
     private int wave = 1;
     private Timer shootingDroneTimer;
 
-    public GamePanel() throws IOException, FontFormatException {
+    public GamePanel(List<Enemy> enemies) throws IOException, FontFormatException {
+        this.enemies = enemies;
         addKeyListener(new TAdapter());
         addMouseListener(new MAdapter());
         setFocusable(true);
@@ -318,7 +319,9 @@ public class GamePanel extends GPanel {
             public void actionPerformed(ActionEvent e) {
 
                 for (int i = 0; i < enemyCounter; i++) {
-                    enemyOnField.add(new Enemy(1, "WutFace", "euh wa moek ier zetten", 100, 10, "src/Media/vijand1.png", 20, 20));
+
+                    //enemyOnField.add(enemies.get(0));
+                    enemyOnField.add(new Enemy(1, "vijand1", "vijand1", 100, 5, "src/Media/vijand1.png", 20, 100, 2));
 
                 }
                 enemyCounter++;

@@ -21,7 +21,7 @@ public class Enemy extends Sprite {
     private double locationY;
     private int experience;
     private int score;
-    private int speed = 2;
+    private int speed;
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
     private Rectangle2D hpBar;
@@ -33,13 +33,14 @@ public class Enemy extends Sprite {
     //region Constructors
 
 
-    public Enemy(int nr, String naam, String beschrijving, int hp, int kracht, String image, int experience, int score) {
+    public Enemy(int nr, String naam, String beschrijving, int hp, int kracht, String image, int experience, int score, int speed) {
         super(image);
         this.nr = nr;
         this.naam = naam;
         this.beschrijving = beschrijving;
         this.hp = hp;
         this.kracht = kracht;
+        this.speed = speed;
 
         locationX = randomX();
         locationY = randomY();
@@ -61,6 +62,10 @@ public class Enemy extends Sprite {
 
     public void setMaxHpBar(Rectangle2D maxHpBar) {
         this.maxHpBar = maxHpBar;
+    }
+
+    public String getNaam() {
+        return naam;
     }
 
     public int getKracht() {
