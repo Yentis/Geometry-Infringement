@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -90,7 +91,16 @@ public class Register extends GPanel {
                 } else if (!Arrays.equals(password.getPassword(), passwordconfirm.getPassword())){
                     registered.setText("Your passwords do not match, please try again");
                 } else {
-                    String result = checkAndCreate(username.getText(), password.getPassword(), email.getText());
+                    String result = null;
+                    try {
+                        result = checkAndCreate(username.getText(), password.getPassword(), email.getText());
+                    } catch (NoSuchAlgorithmException e1) {
+                        e1.printStackTrace();
+                    } catch (UnsupportedEncodingException e1) {
+                        e1.printStackTrace();
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
 
                     if(Objects.equals(result, "")){
                         registered.setText("Registration Successful");
@@ -117,25 +127,24 @@ public class Register extends GPanel {
         });
     }
 
-    private String checkAndCreate(String gebruikersnaam, char[] password, String email){
+    private String checkAndCreate(String gebruikersnaam, char[] password, String email) throws NoSuchAlgorithmException, UnsupportedEncodingException, SQLException {
         Spel spel = new Spel();
         String result = "";
-        try {
-            result = spel.infoChecker(gebruikersnaam, email);
-        } catch (SQLException e1) {
-            e1.printStackTrace();
+
+        //hash
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(new String(password).getBytes("UTF-8"));
+        byte[] digest = md.digest();
+        String hashed = "";
+        for (byte item:digest) {
+            hashed += item;
         }
 
+        result = spel.infoChecker(gebruikersnaam, email);
+
+
         if(Objects.equals(result, "")){
-            try {
-                spel.registerPlayer(gebruikersnaam, password, email);
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            } catch (NoSuchAlgorithmException e1) {
-                e1.printStackTrace();
-            } catch (UnsupportedEncodingException e1) {
-                e1.printStackTrace();
-            }
+            spel.registerPlayer(gebruikersnaam, hashed, email);
         } else {
             return result;
         }
