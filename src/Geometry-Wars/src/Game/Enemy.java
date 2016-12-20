@@ -87,6 +87,13 @@ public class Enemy extends Sprite {
         this.speed = speed;
     }
 
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void setKracht(int kracht) {
+        this.kracht = kracht;
+    }
     public double randomX() {
         Random randomGenerator = new Random();
 
@@ -149,12 +156,12 @@ public class Enemy extends Sprite {
     public void drawHPBar(Graphics2D g2d) {
 
         if (this.hpBar == null || this.maxHpBar == null) {
-            this.setHpBar(new Rectangle2D.Double(this.getCurrentLocation().getX(), this.getCurrentLocation().getY() - 100,  hpBarWidthRatio(), 10));
-            this.setMaxHpBar(new Rectangle2D.Double(getCurrentLocation().getX(), getCurrentLocation().getY() -100, getWidth(), 10));
+            this.setHpBar(new Rectangle2D.Double(this.getCurrentLocation().getX(), this.getCurrentLocation().getY() - 50,  hpBarWidthRatio() * 0.75, 8));
+            this.setMaxHpBar(new Rectangle2D.Double(getCurrentLocation().getX(), getCurrentLocation().getY() - 50, getWidth()* 0.75, 8));
         } else {
             if (hp != 0) {
-                hpBar.setRect(getCurrentLocation().getX(), getCurrentLocation().getY() - 100,  hpBarWidthRatio(), 10);
-                maxHpBar.setRect(getCurrentLocation().getX(), getCurrentLocation().getY() -100, getWidth(), 10);
+                hpBar.setRect(getCurrentLocation().getX(), getCurrentLocation().getY() - 50,  hpBarWidthRatio()* 0.75, 8);
+                maxHpBar.setRect(getCurrentLocation().getX(), getCurrentLocation().getY() - 50, getWidth()* 0.75, 8);
             }
         }
 

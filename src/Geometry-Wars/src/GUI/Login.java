@@ -77,6 +77,12 @@ public class Login extends GPanel{
             }
         });
 
+        username.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButton.doClick();
+            }
+        });
+
         Exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 System.exit(0);
