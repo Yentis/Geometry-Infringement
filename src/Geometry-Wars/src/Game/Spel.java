@@ -27,12 +27,31 @@ public class Spel {
 
     //region Properties
 
+
+    public Speler getSpeler() {
+        return speler;
+    }
+
     public List<Enemy> getEnemies() {
         return enemies;
     }
 
+    public List<Schip> getSchepen() {
+        return schepen;
+    }
+
+    public List<Drone> getDrones() {
+        return drones;
+    }
+
     public String getCurrentDifficulty() {
         return currentDifficulty;
+    }
+
+    public void changeSchipspeed(double multiplier){
+        for (Schip schip:schepen) {
+            schip.setSpeed(schip.getSpeed() * multiplier);
+        }
     }
 
     public void setEnemies(List<Enemy> enemies) {
@@ -57,7 +76,7 @@ public class Spel {
 
         int i = 0;
         while (schip.next()){
-            schepen.add(i, new Schip(schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image"), schip.getInt("score"), schip.getInt("combo"), 37, 39, 38, 40));
+            schepen.add(i, new Schip(schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image"), 37, 39, 38, 40, schip.getInt("speed")));
             i++;
         }
         //endregion
@@ -67,7 +86,7 @@ public class Spel {
 
         i = 0;
         while (drone.next()){
-            drones.add(i, new Drone(drone.getInt("nr") - 1, drone.getString("naam"), drone.getString("beschrijving"), drone.getInt("hp"), drone.getInt("kracht"), drone.getString("uiterlijk"), drone.getInt("level"), drone.getInt("experience")));
+            drones.add(i, new Drone(drone.getInt("nr") - 1, drone.getString("naam"), drone.getString("beschrijving"), drone.getInt("hp"), drone.getInt("kracht"), drone.getString("uiterlijk")));
             i++;
         }
         //endregion
@@ -87,7 +106,7 @@ public class Spel {
 
         i = 0;
         while (enemy.next()){
-            enemies.add(i, new Enemy(enemy.getInt("nr") - 1, enemy.getString("naam"), enemy.getString("beschrijving"), enemy.getInt("hp"), enemy.getInt("kracht"), enemy.getString("uiterlijk"), enemy.getInt("experience"), enemy.getInt("score")));
+            enemies.add(i, new Enemy(enemy.getInt("nr") - 1, enemy.getString("naam"), enemy.getString("beschrijving"), enemy.getInt("hp"), enemy.getInt("kracht"), enemy.getString("uiterlijk"), enemy.getInt("experience"), enemy.getInt("score"), enemy.getInt("snelheid")));
             i++;
         }
         //endregion
@@ -101,7 +120,7 @@ public class Spel {
         ResultSet myRs = myStmt.executeQuery("select * from speler where gebruikersnaam = '" + gebruikersnaam + "'");
 
         while(myRs.next()){
-            speler = new Speler(myRs.getInt("nr") - 1, myRs.getString("gebruikersnaam"), myRs.getString("wachtwoord"), myRs.getString("email"), myRs.getInt("level"), myRs.getInt("experience"), myRs.getString("profielfoto"), myRs.getInt("rank"), myRs.getInt("nuggets"), myRs.getInt("golden nuggets"));
+            speler = new Speler(myRs.getInt("nr") - 1, myRs.getString("gebruikersnaam"), myRs.getString("wachtwoord"), myRs.getString("email"), myRs.getInt("level"), myRs.getInt("experience"), myRs.getString("rank"), myRs.getInt("nuggets"), myRs.getInt("golden nuggets"), myRs.getString("comment"));
         }
     }
 

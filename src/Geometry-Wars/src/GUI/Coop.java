@@ -3,12 +3,16 @@ package GUI;
 import GComponents.GButton;
 import GComponents.GLabel;
 import GComponents.GPanel;
+import Game.Enemy;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by Yentl-PC on 19/12/2016.
@@ -37,8 +41,8 @@ public class Coop extends GPanel implements ActionListener {
 
 
 
-    public Coop() throws IOException, FontFormatException {
-        gamePanel = new GamePanel();
+    public Coop(List<Enemy> enemies) throws IOException, FontFormatException {
+        gamePanel = new GamePanel(enemies);
         initComponents();
         panel.add(gamePanel);
         gamePanel.setOpaque(false);

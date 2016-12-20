@@ -121,6 +121,13 @@ public class MainMenu extends GPanel {
 
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                try {
+                    window.getProfile().initComponents();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (FontFormatException e) {
+                    e.printStackTrace();
+                }
                 window.getProfile().setVisible(true);
 
 
