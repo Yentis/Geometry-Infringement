@@ -2,6 +2,7 @@ package Game;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
 
 /**
  * Created by Yentl-PC on 8/11/2016.
@@ -17,10 +18,9 @@ public class Drone extends Sprite{
     private String uiterlijk;
     private int level;
     private int experience;
-    /*private Point location = new Point();
-    private double locationX = location.getX();
-    private double locationY = location.getY();*/
     private double currentAngle;
+    private int fireSpeed = 500; // om de 0,5 seconden
+    private ArrayList<Kogel> kogels = new ArrayList<Kogel>();
 
     //endregion
 
@@ -51,6 +51,15 @@ public class Drone extends Sprite{
         this.uiterlijk = "Vierkant";
     }
 
+    public ArrayList<Kogel> getKogels() {
+        return kogels;
+    }
+
+    public int getFireSpeed() {
+        return fireSpeed;
+    }
+
+
     public double getCurrentAngle() {
         return currentAngle;
     }
@@ -64,6 +73,5 @@ public class Drone extends Sprite{
         g2d.rotate(Math.toRadians(this.getCurrentAngle()) , schip.getWidth() / 2, schip.getHeight()  / 2);
         g2d.translate(-schip.getCurrentLocation().getX(), -schip.getCurrentLocation().getY() );
     }
-
     //endregion
 }
