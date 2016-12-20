@@ -18,7 +18,7 @@ public class Window extends JFrame{
     private Login login;
     private InGame inGame;
     private Scoreboard scoreboard;
-
+    private Register register;
     private Coop startCoop;
 
 
@@ -80,6 +80,7 @@ public class Window extends JFrame{
         inGame = new InGame();
         scoreboard = new Scoreboard();
         startCoop = new Coop();
+        register = new Register();
 
         // Add UI panels
         cp.add(mainMenu);
@@ -91,6 +92,7 @@ public class Window extends JFrame{
         cp.add(inGame);
         cp.add(scoreboard);
         cp.add(startCoop);
+        cp.add(register);
 
 
         // Set all panels invisible except the starting panel
@@ -102,6 +104,7 @@ public class Window extends JFrame{
         inGame.setVisible(false);
         scoreboard.setVisible(false);
         startCoop.setVisible(false);
+        register.setVisible(false);
     }
 
 
@@ -128,6 +131,9 @@ public class Window extends JFrame{
 
     public Scoreboard getScoreboard() {return scoreboard;}
 
+    public Register getRegister() {
+        return register;
+    }
 
     public Coop getStartCoop() {
         return startCoop;

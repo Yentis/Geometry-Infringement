@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import GComponents.GPanel;
+import GComponents.*;
 import Game.Spel;
 
 import java.awt.*;
@@ -27,129 +27,55 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author Renzie
+ * @author Yentl
  */
 public class Register extends GPanel {
+    private Register panel = this;
 
     public Register() throws MalformedURLException, IOException, FontFormatException {
-        // TODO code application logic here
 
-        //create the font to use. Specify the size!
-        Font font80 = Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")).deriveFont(80f);
-        GraphicsEnvironment ge64 = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        //register the font
-        ge64.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")));
+        initComponents();
 
-        Font font36 = Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")).deriveFont(36f);
-        GraphicsEnvironment ge36 = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        //register the font
-        ge36.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")));
+    }
 
-        Font font20 = Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")).deriveFont(20f);
-        GraphicsEnvironment ge20 = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        //register the font
-        ge20.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src\\font\\Audiowide-Regular.ttf")));
-
-        //Make components
-        //==================================================
-
-        JFrame frame = new JFrame("Test");
-        JButton register = new JButton("Register");
-        JLabel registered = new JLabel("Registration Successful");
-        JTextField username = new JTextField();
-        JLabel lblusername = new JLabel("Username");
-        JPasswordField password = new JPasswordField();
-        JLabel lblpassword = new JLabel("Password");
-        JPasswordField passwordconfirm = new JPasswordField();
-        JLabel lblpasswordconfirm = new JLabel("Repeat Password");
-        JTextField email = new JTextField();
-        JLabel lblemail = new JLabel("E-mail");
+    @Override
+    public void initComponents() throws IOException, FontFormatException {
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
+        GButton register = new GButton("Register", 24f, 220,500,170,50);
+        GButton Back = new GButton("Back", 24f, 635,650, 170, 63);
+        GLabel registered = new GLabel("Registration Successful", 24f, 220,120,350,50, false, Color.white);
+        GInputField username = new GInputField(480,190,200,50);
+        GLabel lblusername = new GLabel("Username", 24f, 220,190,150,50, false, Color.white);
+        GPasswordField password = new GPasswordField(480, 260, 200, 50);
+        GLabel lblpassword = new GLabel("Password", 24f, 220, 260, 150, 50, false, Color.white);
+        GPasswordField passwordconfirm = new GPasswordField(480,330,200,50);
+        GLabel lblpasswordconfirm = new GLabel("Repeat Password", 24f, 220, 330, 300, 50, false, Color.white);
+        GInputField email = new GInputField(480,400,200,50);
+        GLabel lblemail = new GLabel("E-mail", 24f, 220, 400, 150, 50, false, Color.white);
+        JButton Exit = new GButton("Exit", 24f, 820, 650, 170, 63);
 
-        //==================================================
-
-        //Set Properties
-        //==================================================
-
-        registered.setFont(font20);
-        registered.setForeground(Color.WHITE);
-        registered.setVisible(false);
-        lblusername.setFont(font20);
-        lblusername.setOpaque(true);
-        lblusername.setBackground(new Color(255,255,255,95));
-        lblpassword.setFont(font20);
-        lblpassword.setOpaque(true);
-        lblpassword.setBackground(new Color(255,255,255,95));
-        lblpasswordconfirm.setFont(font20);
-        lblpasswordconfirm.setOpaque(true);
-        lblpasswordconfirm.setBackground(new Color(255,255,255,95));
-        lblemail.setFont(font20);
-        lblemail.setOpaque(true);
-        lblemail.setBackground(new Color(255,255,255,95));
-        label.setFont(font80);
         label.setOpaque(true);
+        label.setFont(new GFont(65));
         label.setBackground(new Color(255,255,255,95));
-        register.setFont(font36);
-        register.setOpaque(true);
-        register.setBackground(new Color(255,255,255,200));
-                /*.setFont(font36);
-                Upgrades.setOpaque(true);
-                Upgrades.setBackground(new Color(255,255,255,200));
-                Profile.setFont(font36);
-                Profile.setOpaque(true);
-                Profile.setBackground(new Color(255,255,255,200));
-                Settings.setFont(font36);
-                Settings.setOpaque(true);
-                Settings.setBackground(new Color(255,255,255,200));*/
+        registered.setVisible(false);
 
-        //==================================================
+        label.setBounds(25,25,650,100);
 
-        frame.setContentPane(new JPanel() {
-            BufferedImage image = ImageIO.read(new File("src\\Media\\Background.png"));
-            public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(image, 0, 0, 1920, 1080, this);
+        this.add(label);
+        this.add(register);
+        this.add(registered);
+        this.add(username);
+        this.add(lblusername);
+        this.add(password);
+        this.add(lblpassword);
+        this.add(passwordconfirm);
+        this.add(lblpasswordconfirm);
+        this.add(email);
+        this.add(lblemail);
+        this.add(Exit);
+        this.add(Back);
 
-            }
-        });
-        frame.setLayout(null);
-
-        //Set Bounds
-        //==================================================
-
-        label.setBounds(25,25,800,125);
-
-        lblusername.setBounds(550,300,300,80);
-        lblpassword.setBounds(550,400,300,80);
-        lblpasswordconfirm.setBounds(550,500,300,80);
-        lblemail.setBounds(550,600,300,80);
-        username.setBounds(900,300,300,80);
-        password.setBounds(900,400,300,80);
-        passwordconfirm.setBounds(900,500,300,80);
-        email.setBounds(900,600,300,80);
-        register.setBounds(900,700,300,80);
-        registered.setBounds(900,800,550,80);
-
-        //==================================================
-
-        //Add Components
-        //==================================================
-
-        frame.add(register);
-        frame.add(username);
-        frame.add(password);
-        frame.add(passwordconfirm);
-        frame.add(email);
-        frame.add(lblusername);
-        frame.add(lblpassword);
-        frame.add(lblpasswordconfirm);
-        frame.add(lblemail);
-        frame.add(label);
-        frame.add(registered);
-
-        //==================================================
-
-        //Behaviour
+        //Action Listeners
         register.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -176,19 +102,19 @@ public class Register extends GPanel {
             }
         });
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1920, 1080);
-        frame.setVisible(true);
-    }
+        Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                System.exit(0);
+            }
+        });
 
-    @Override
-    public void initComponents() throws IOException, FontFormatException {
-
-    }
-
-
-    public static void main(String[] args)  throws MalformedURLException, IOException, FontFormatException {
-        new Register();
+        Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getLogin().setVisible(true);
+            }
+        });
     }
 
     private String checkAndCreate(String gebruikersnaam, char[] password, String email){

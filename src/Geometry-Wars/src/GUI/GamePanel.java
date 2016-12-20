@@ -11,7 +11,8 @@ import java.io.IOException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Iterator;
-
+import java.util.ListIterator;
+import java.util.TimerTask;
 import javax.swing.*;
 
 
@@ -51,7 +52,6 @@ public class GamePanel extends GPanel {
         requestFocus();
         setDoubleBuffered(true);
         spawnEnemies();
-
     }
 
     public boolean getGameFinished() {
