@@ -186,7 +186,11 @@ public class GamePanel extends GPanel {
         if (!kogels.isEmpty()) {
             for (Iterator<Kogel> kogelIterator = kogels.iterator(); kogelIterator.hasNext(); ) {
                 Kogel k = kogelIterator.next();
+                if (k.isOutOfBorder(k.getCurrentLocation().getX(), 60, 925) || k.isOutOfBorder(k.getCurrentLocation().getY(), 125, 600)){
+                    kogelIterator.remove();
+                }
                 k.draw(g2d, k.getDirection(k.getTarget(), k.getStartingPoint()));
+
                 for (Enemy enemy : enemyOnField) {
                     //wanneer isHit true is verdwijnt de bullet
                     if (k.collisionDetect(enemy.getHitBox())) {

@@ -131,6 +131,8 @@ public class Sprite {
         return approachingTarget != null && hitBox.getBounds2D().intersects(approachingTarget.getBounds2D());
     }
 
+
+
     public void move(double velocityX, double velocityY) {
         x += velocityX;
         y += velocityY;
