@@ -43,6 +43,11 @@ public class Speler {
 
     //region Properties
 
+
+    public String getGebruikersnaam() {
+        return gebruikersnaam;
+    }
+
     public void setProfielfoto(String profielfoto) {
         this.profielfoto = profielfoto;
     }
