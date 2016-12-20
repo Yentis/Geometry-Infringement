@@ -179,4 +179,6 @@ public class Sprite {
         ImageIcon ii = new ImageIcon(image);
         this.image = ii.getImage();
     }
+
+
 }
