@@ -94,6 +94,7 @@ public class MainMenu extends GPanel {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getSpel().logOut();
                 window.getLogout().setVisible(true);
             }
         });

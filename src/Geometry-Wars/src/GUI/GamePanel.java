@@ -42,8 +42,9 @@ public class GamePanel extends GPanel {
     private double ratio;
     private boolean coop;
     private boolean gameFinished;
+    private int baseDamage = 50;
+    private int wave = 1;
     private Timer shootingDroneTimer;
-
 
     public GamePanel() throws IOException, FontFormatException {
         addKeyListener(new TAdapter());
@@ -213,7 +214,12 @@ public class GamePanel extends GPanel {
 
                 for (Kogel k : closestShip(enemy).getKogels()) {
                     if (k.collisionDetect(enemy.getHitBox())) {
-                        enemy.setHit(true);
+                        enemy.loseHP(baseDamage);
+                        if (enemy.getHP() == 0) {
+
+                            enemy.setHit(true);
+
+                        }
 
                     }
                 }
@@ -227,12 +233,14 @@ public class GamePanel extends GPanel {
         }
     }
 
+
     public void collisionEffect(ArrayList<Kogel> kogels, Enemy enemy) {
         for (Kogel k : kogels) {
             if (k.collisionDetect(enemy.getHitBox())) {
 
-                enemy.loseHP(50);
+                enemy.loseHP(baseDamage);
                 if (enemy.getHP() == 0) {
+
 
                     enemy.setHit(true);
 
@@ -241,6 +249,7 @@ public class GamePanel extends GPanel {
             }
         }
     }
+
 
     private Schip closestShip(Enemy enemy) {
         //berekent distance tussen 2 points
@@ -302,8 +311,10 @@ public class GamePanel extends GPanel {
         spawnTimer = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 for (int i = 0; i < enemyCounter; i++) {
-                    enemyOnField.add(new Enemy(1, "WutFace", "euh wa moek ier zetten", 100 , 10, "src/Media/vijand1.png", 20, 20));
+                    enemyOnField.add(new Enemy(1, "WutFace", "euh wa moek ier zetten", 100, 10, "src/Media/vijand1.png", 20, 20));
+
                 }
                 enemyCounter++;
             }
@@ -320,27 +331,29 @@ public class GamePanel extends GPanel {
         approachShip();
         schip.beweegSchip();
 
-        if (schip.isInvulnerability()) {
-            System.out.println("invulnerability start");
-            invulnerabilityTimer.start();
-        }
-        if (schip.isSlowerEnemies()) {
-            System.out.println("slower enemies");
-            slowerEnemiesTimer.start();
-        }
+       
+            if (schip.isInvulnerability()) {
 
-        combo.setText("x " + schip.getCombo());
-        score.setText("" + schip.getScore());
-        currentHealthBar.setSize((int) updateHealthBar(schip, healthBarWidth, currentHealthBar), currentHealthBar.getHeight());
-        if (coop) {
-            updateKogels(schipp2.getKogels());
-            schipp2.beweegSchip();
-            combop2.setText("x " + schipp2.getCombo());
-            scorep2.setText("" + schipp2.getScore());
-            currentHealthBarp2.setSize((int) updateHealthBar(schipp2, healthBarWidthp2, currentHealthBarp2), currentHealthBarp2.getHeight());
+                System.out.println("invulnerability start");
+                invulnerabilityTimer.start();
+            }
+            if (schip.isSlowerEnemies()) {
+                System.out.println("slower enemies");
+                slowerEnemiesTimer.start();
+            }
+
+            combo.setText("x " + schip.getCombo());
+            score.setText("" + schip.getScore());
+            currentHealthBar.setSize((int) updateHealthBar(schip, healthBarWidth, currentHealthBar), currentHealthBar.getHeight());
+            if (coop) {
+                updateKogels(schipp2.getKogels());
+                schipp2.beweegSchip();
+                combop2.setText("x " + schipp2.getCombo());
+                scorep2.setText("" + schipp2.getScore());
+                currentHealthBarp2.setSize((int) updateHealthBar(schipp2, healthBarWidthp2, currentHealthBarp2), currentHealthBarp2.getHeight());
+            }
+            ;
         }
-        ;
-    }
 
     private double updateHealthBar(Schip schip, double healthBarWidth, JProgressBar currentHealthBar) {
         if (schip.getHp() != 0) {
@@ -419,5 +432,7 @@ public class GamePanel extends GPanel {
         public void mouseReleased(MouseEvent e) {
             schip.mouseReleased(e);
         }
+
+
     }
 }

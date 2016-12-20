@@ -1,5 +1,7 @@
 package GUI;
 
+import Game.Spel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -20,6 +22,7 @@ public class Window extends JFrame{
     private Scoreboard scoreboard;
     private Register register;
     private Coop startCoop;
+    private Spel spel = new Spel();
 
 
     private Container cp = getContentPane();
@@ -54,6 +57,10 @@ public class Window extends JFrame{
 
     public static void main(String args[]) throws IOException, FontFormatException {
         new Window("Geometry Wars");
+    }
+
+    public Spel getSpel(){
+        return spel;
     }
 
     // Set Background
@@ -96,11 +103,11 @@ public class Window extends JFrame{
 
 
         // Set all panels invisible except the starting panel
+        mainMenu.setVisible(false);
         startGame.setVisible(false);
         profile.setVisible(false);
         startGameCampaign.setVisible(false);
         logout.setVisible(false);
-        login.setVisible(false);
         inGame.setVisible(false);
         scoreboard.setVisible(false);
         startCoop.setVisible(false);
