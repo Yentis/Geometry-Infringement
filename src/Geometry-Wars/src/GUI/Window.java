@@ -26,6 +26,9 @@ public class Window extends JFrame{
     private Settings settings;
     private static Spel spel = new Spel();
 
+    //Game
+    private Game game;
+
 
     private Container cp = getContentPane();
 

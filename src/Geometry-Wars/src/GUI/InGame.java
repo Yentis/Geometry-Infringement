@@ -18,7 +18,6 @@ import Game.Enemy;
 public class InGame extends GPanel implements ActionListener {
     private InGame panel = this;
 
-
     //GamePanel
     private GamePanel gamePanel;
 
@@ -246,6 +245,7 @@ public class InGame extends GPanel implements ActionListener {
 
 
     }
+
     public void initGamePanel() {
         setupGameTimer();
         gameTimer.start();

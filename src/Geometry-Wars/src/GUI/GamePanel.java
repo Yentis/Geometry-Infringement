@@ -18,6 +18,7 @@ import javax.swing.Timer;
 /**
  * Created by Yentl-PC on 9/11/2016.
  */
+
 public class GamePanel extends GPanel {
     private GamePanel panel = this;
 
@@ -98,7 +99,6 @@ public class GamePanel extends GPanel {
         setAllComponentsVisible();
     }
 
-
     public void startGame() {
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         gameFinished = false;
@@ -129,6 +129,8 @@ public class GamePanel extends GPanel {
         spawnTimer.stop();
     }
 
+
+    //paints the "draw" region
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -145,25 +147,12 @@ public class GamePanel extends GPanel {
         Toolkit.getDefaultToolkit().sync();
     }
 
+    //region draw
     private void drawShip(Graphics g, Schip schip) {
         Graphics2D g2d = (Graphics2D) g;
         schip.draw(g2d, schip.getCurrentAngle());
 
         schipHit(schip);
-    }
-
-    private void schipHit(Schip schip) {
-        for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ) {
-            Enemy enemy = enemyIterator.next();
-            if (schip.collisionDetect(enemy.getHitBox())) {
-                schip.setHit(true);
-                if (!schip.isInvulnerability()) {
-                    schip.loseHP(enemy.getKracht());
-                    schip.resetCombo();
-                }
-                enemyIterator.remove();
-            }
-        }
     }
 
     private void drawDrone(Graphics g, Drone drone, Schip schip) {
@@ -238,6 +227,22 @@ public class GamePanel extends GPanel {
         }
     }
 
+    //endregion
+
+    //region hiteffect and stuff
+    private void schipHit(Schip schip) {
+        for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ) {
+            Enemy enemy = enemyIterator.next();
+            if (schip.collisionDetect(enemy.getHitBox())) {
+                schip.setHit(true);
+                if (!schip.isInvulnerability()) {
+                    schip.loseHP(enemy.getKracht());
+                    schip.resetCombo();
+                }
+                enemyIterator.remove();
+            }
+        }
+    }
 
     public void collisionEffect(ArrayList<Kogel> kogels, Enemy enemy) {
         for (Kogel k : kogels) {
@@ -251,8 +256,9 @@ public class GamePanel extends GPanel {
             }
         }
     }
+    //endregion
 
-
+    //region closestTarget
     private Schip closestShip(Enemy enemy) {
         //berekent distance tussen 2 points
         int distancep1 = (int) (enemy.getCurrentLocation().distanceSq(schip.getCurrentLocation()));
@@ -277,6 +283,18 @@ public class GamePanel extends GPanel {
             }
         }
         return closestEnemy;
+    }
+    //endregion
+
+    //region updates
+    private void updateKogels(ArrayList<Kogel> kogels) {
+        for (Iterator<Kogel> kogeliterator = kogels.iterator(); kogeliterator.hasNext(); ) {
+            Kogel k = kogeliterator.next();
+            k.updateLocation(k.getTarget(), k.getStartingPoint(), k.getKogelSnelheid());
+            if (k.isHit()) {
+                kogeliterator.remove();
+            }
+        }
     }
 
     private void approachShip() {
@@ -306,47 +324,24 @@ public class GamePanel extends GPanel {
         }
     }
 
-
-
-    private void updateKogels(ArrayList<Kogel> kogels) {
-        for (Iterator<Kogel> kogeliterator = kogels.iterator(); kogeliterator.hasNext(); ) {
-            Kogel k = kogeliterator.next();
-            k.updateLocation(k.getTarget(), k.getStartingPoint(), k.getKogelSnelheid());
-            if (k.isHit()) {
-                kogeliterator.remove();
-            }
+    private double updateHealthBar(Schip schip, double healthBarWidth, JProgressBar currentHealthBar) {
+        if (schip.getHp() != 0) {
+            ratio = 425 / schip.getMaxhp();
+            healthBarWidth = (int) ratio * schip.getHp();
+        } else {
+            //TODO
+            gameFinished = true;
         }
+        return healthBarWidth;
     }
+    //endregion
 
-    public void spawnEnemies() {
-        Enemy testenemy = enemies.get(0);
-        ImageIcon ii = new ImageIcon(testenemy.getImage());
-
-        spawnTimer = new Timer(5000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                for (int i = 0; i < enemyCounter; i++) {
-
-
-                    enemyOnField.add(new Enemy(testenemy.getNr(), testenemy.getNaam(), testenemy.getBeschrijving(), testenemy.getHP(), testenemy.getKracht(), testenemy.getImageString(), testenemy.getExperience(), testenemy.getScore(), testenemy.getSpeed()));
-
-                }
-                enemyCounter++;
-            }
-        });
-    }
-
-    public void setCoop(boolean coop) {
-        this.coop = coop;
-    }
-
+    //updates the "updates" region
     public void update() {
         updateKogels(schip.getKogels());
         updateKogels(drone.getKogels());
         approachShip();
         schip.beweegSchip();
-
 
         if (schip.isInvulnerability()) {
 
@@ -371,17 +366,7 @@ public class GamePanel extends GPanel {
         ;
     }
 
-    private double updateHealthBar(Schip schip, double healthBarWidth, JProgressBar currentHealthBar) {
-        if (schip.getHp() != 0) {
-            ratio = 425 / schip.getMaxhp();
-            healthBarWidth = (int) ratio * schip.getHp();
-        } else {
-            //TODO
-            gameFinished = true;
-        }
-        return healthBarWidth;
-    }
-
+    //region Timers
     public void setInvulnerabilityTimer() {
         invulnerabilityTimer = new Timer(5000, new ActionListener() {
             @Override
@@ -417,6 +402,32 @@ public class GamePanel extends GPanel {
         });
     }
 
+    public void spawnEnemies() {
+        Enemy testenemy = enemies.get(0);
+        ImageIcon ii = new ImageIcon(testenemy.getImage());
+
+        spawnTimer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                for (int i = 0; i < enemyCounter; i++) {
+
+
+                    enemyOnField.add(new Enemy(testenemy.getNr(), testenemy.getNaam(), testenemy.getBeschrijving(), testenemy.getHP(), testenemy.getKracht(), testenemy.getImageString(), testenemy.getExperience(), testenemy.getScore(), testenemy.getSpeed()));
+
+                }
+                enemyCounter++;
+            }
+        });
+    }
+    //endregion
+
+    public void setCoop(boolean coop) {
+        this.coop = coop;
+    }
+
+    //region mouse and key events
+
     private class TAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
@@ -448,7 +459,8 @@ public class GamePanel extends GPanel {
         public void mouseReleased(MouseEvent e) {
             schip.mouseReleased(e);
         }
-
-
     }
+
+    //endregion
+
 }
