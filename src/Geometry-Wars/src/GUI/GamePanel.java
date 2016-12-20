@@ -120,7 +120,7 @@ public class GamePanel extends GPanel {
             dronep2 = new Drone(1, "Drone1", "a", 100, 5, "src/Media/drone1.png", 1, 0);
         }
         setUpShootingDroneTimer(drone);
-        shootingDroneTimer.start();
+
     }
 
     public void pauseGame() {
@@ -193,8 +193,7 @@ public class GamePanel extends GPanel {
                     if (k.collisionDetect(enemy.getHitBox())) {
                         k.setHit(true);
                         //TODO combo bepalen en upgrades uitvoeren
-                        schip.addCombo();
-                        schip.checkForUpgrade(schip.getCombo());
+
                         if (schip.getHp() < 100 && schip.isLifesteal()) {
                             schip.addHp(2);
                         }
@@ -285,6 +284,12 @@ public class GamePanel extends GPanel {
             }
 
             if (enemy.isHit()) {
+                schip.addCombo();
+                schip.checkForUpgrade(schip.getCombo());
+                if (schip.isDroneActive()){
+                    shootingDroneTimer.start();
+                }
+                //schip.addCurrentXp(enemy.get);
                 enemyIterator.remove();
 
             }

@@ -29,6 +29,9 @@ public class Schip extends Sprite {
     private int score;
     private int newscore = 0;
     private int combo;
+    private int level = 0;
+    private int currentXp = 0;
+    private int maxXp;
     private ArrayList<Kogel> kogels = new ArrayList<Kogel>();
     private double locationX;
     private double locationY;
@@ -42,6 +45,7 @@ public class Schip extends Sprite {
     private boolean invulnerability;
     private boolean randomBullets;
     private boolean slowerEnemies;
+    private boolean droneActive;
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
 
@@ -99,6 +103,7 @@ public class Schip extends Sprite {
 
     //endregion
 
+    //region ComboProperties
     public boolean isInvulnerability() {
         return invulnerability;
     }
@@ -131,44 +136,79 @@ public class Schip extends Sprite {
         this.slowerEnemies = slowerEnemies;
     }
 
+    public boolean isDroneActive() {
+        return droneActive;
+    }
+
+    public void setDroneActive(boolean droneActive) {
+        this.droneActive = droneActive;
+    }
+
+    //endregion
+
+    //region levelProperties
+
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void addLevel() {
+        this.level += 1;
+    }
+
+    public int getCurrentXp() {
+        return currentXp;
+    }
+
+    public void addCurrentXp(int xp) {
+        this.currentXp += xp;
+    }
+
+    public int getMaxXp() {
+        return maxXp;
+    }
+
+    public void setMaxXp(int level) {
+        this.maxXp = (2 ^ level) * 1000;
+    }
+
+    //endregion
+
+
+    public void checkLevel(int level){
+
+    }
+
     public void checkForUpgrade(int combo) {
 
-        if (combo % 100 == 0) {
-            //System.out.println("setHp(100);");
-            setHp(100);
+        if (combo % 50 == 0) {
+            //Every 50 combo
             setInvulnerability(true);
 
             //System.out.println("setInvulnerability");
         } else if (combo % 75 == 0) {
+            //Every 75 combo
             setSlowerEnemies(true);
         }
         switch (combo) {
             case 1:
+                //when combo resets
                 setLifesteal(false);
-                setInvulnerability(false);
                 setRandomBullets(false);
-                setSlowerEnemies(false);
-                break;
-            case 20:
-                //System.out.println("setExtraPowerActive");
-                //setExtraPowerActive()
-
                 break;
             case 50:
                 setLifesteal(true);
                 break;
-            case 125:
-                //setDroneActive()
+            case 100:
+                //stays active when reached
+                setDroneActive(true);
                 break;
             case 150:
-                //setDroneAuto()
-                break;
-            case 250:
-                //setDroneMorePower()
-                break;
-            case 350:
                 setRandomBullets(true);
                 break;
+
+
         }
     }
 
@@ -198,6 +238,10 @@ public class Schip extends Sprite {
         System.out.println("score: " + newscore);
         System.out.println("combo: " + combo);
         return newscore;
+    }
+
+    public void setKracht(int kracht) {
+        this.kracht = kracht;
     }
 
     public void addKracht(int amount) {
