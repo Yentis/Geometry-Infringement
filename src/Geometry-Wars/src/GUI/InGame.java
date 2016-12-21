@@ -31,7 +31,7 @@ public class InGame extends GPanel implements ActionListener {
     private GButton menuPauze = new GButton("Main Menu", 24f, 550, 420, 275, 120);
     private GButton restartGameEnd = new GButton("Restart", 24f, 150, 420, 275, 120);
     private GButton menuGameEnd = new GButton("Main Menu", 24f, 550, 420, 275, 120);
-    private ImageIcon PauseImage = new ImageIcon("src\\Media\\pause-128.png");
+    private ImageIcon PauseImage = new ImageIcon("resources\\Media\\pause-128.png");
     private JButton pauze = new JButton(PauseImage);
     private GLabel gameOver = new GLabel("Oopsy daisy! u dead fam", 25f, 325,260,375,120, true, Color.white);
 

@@ -557,7 +557,7 @@ public class GamePanel extends GPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!enemyOnField.isEmpty()) {
-                        drone.getKogels().add(new Kogel(drone.getCurrentLocation().getX(), drone.getCurrentLocation().getY(), closestEnemy(drone, enemyOnField), "src/Media/kogel1.png"));
+                        drone.getKogels().add(new Kogel(drone.getCurrentLocation().getX(), drone.getCurrentLocation().getY(), closestEnemy(drone, enemyOnField), "resources/Media/kogel1.png"));
                     }
                 }
             });

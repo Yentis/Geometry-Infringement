@@ -456,7 +456,7 @@ public class Schip extends Sprite {
                 public void actionPerformed(ActionEvent e) {*/
                     double kogelX = locationX;
                     double kogelY = locationY;
-                    addKogels(new Kogel(kogelX, kogelY, mousePointer, "src/Media/kogel1.png"));
+                    addKogels(new Kogel(kogelX, kogelY, mousePointer, "resources/Media/kogel1.png"));
                /* }
             });
        }
@@ -494,7 +494,7 @@ public class Schip extends Sprite {
         int kogelY2 = randomY();
         Point mousePointer2 = new Point(kogelX2, kogelY2);
 
-        addKogels(new Kogel(kogelX, kogelY, mousePointer2, "src/Media/kogel1.png"));
+        addKogels(new Kogel(kogelX, kogelY, mousePointer2, "resources/Media/kogel1.png"));
         System.out.println(kogelX2 + " " + kogelY2);
     }
 

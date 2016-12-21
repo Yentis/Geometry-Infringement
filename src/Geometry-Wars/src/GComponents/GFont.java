@@ -11,7 +11,7 @@ public class GFont extends Font{
 
     public GFont(float size) throws IOException, FontFormatException {
 
-        super(Font.createFont(Font.TRUETYPE_FONT, new File("src\\GComponents\\Audiowide-Regular.ttf")).deriveFont(size));
+        super(Font.createFont(Font.TRUETYPE_FONT, new File("resources/Font/Audiowide-Regular.ttf")).deriveFont(size));
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
     }
