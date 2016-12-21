@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Kogel extends Sprite {
     private final int SCREEN_WIDTH = 1024;
-    private double kogelSnelheid = 5;
+    private double kogelSnelheid = 10;
     private Point startingPoint;
 
 

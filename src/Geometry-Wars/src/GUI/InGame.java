@@ -67,11 +67,12 @@ public class InGame extends GPanel implements ActionListener {
 
         GLabel healthp1 = new GLabel("Health:", 24, 40,18,169,62, false, Color.black);
         GLabel scorep1 = new GLabel("Score:", 24, 25,65,169,62, false, Color.cyan);
-        GLabel schipLvlp1 = new GLabel("Ship lvl:", 24, 25,667,222,62, false, Color.green);
-        GLabel droneLvlp1 = new GLabel("Drone lvl:", 24, 250,667,222,62, false, new Color(155,255,204));
+        /*GLabel schipLvlp1 = new GLabel("Ship lvl:", 24, 25,667,222,62, false, Color.green);
+        GLabel droneLvlp1 = new GLabel("Drone lvl:", 24, 250,667,222,62, false, new Color(155,255,204));*/
         GLabel healthbarp1 = new GLabel("", 24, 15,23,434,47, true, Color.black);
-        GLabel dronebarp1 = new GLabel("", 24, 380,672,70,47, true, Color.black);
-        GLabel schipbarp1 = new GLabel("", 24, 140,672,100,47, true, Color.black);
+        //GamePanel to change shipxp and level
+        /*GLabel dronebarp1 = new GLabel("", 24, 380,672,70,47, true, Color.black);
+        GLabel schipbarp1 = new GLabel("", 24, 140,672,100,47, true, Color.black);*/
         GLabel confirmationlabel = new GLabel("Are you sure?", 30, 470,285,500,60, false, Color.cyan);
         //JButton Quit = new GButton("Quit", 24f, 20, 675, 100, 47);
         JButton Yes = new GButton("Yes", 24f, 455, 380, 100, 47);
@@ -84,8 +85,8 @@ public class InGame extends GPanel implements ActionListener {
 
 
         healthbarp1.setBackground(new Color(255, 255, 255, 95));
-        dronebarp1.setBackground(new Color(255, 255, 255, 95));
-        schipbarp1.setBackground(new Color(255, 255, 255, 95));
+        /*dronebarp1.setBackground(new Color(255, 255, 255, 95));
+        schipbarp1.setBackground(new Color(255, 255, 255, 95));*/
 
         pauze.setOpaque(true);
         pauze.setBackground(new Color(155, 255, 204, 200));
@@ -106,13 +107,13 @@ public class InGame extends GPanel implements ActionListener {
         //==================================================
         this.add(pane);
         this.add(healthbarp1);
-        this.add(schipbarp1);
-        this.add(dronebarp1);
+        /*this.add(schipbarp1);
+        this.add(dronebarp1);*/
         this.add(pauze);
         this.add(scorep1);
         this.add(healthp1);
-        this.add(schipLvlp1);
-        this.add(droneLvlp1);
+        /*this.add(schipLvlp1);
+        this.add(droneLvlp1);*/
 
         //this.add(Quit);
         this.add(confirmationlabel);
