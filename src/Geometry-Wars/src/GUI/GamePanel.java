@@ -83,6 +83,7 @@ public class GamePanel extends GPanel {
         schip = null;
         drone = null;
         enemyCounter = 1;
+        enemyOnField.clear();
     }
 
     private void initGamePanel() {
@@ -159,13 +160,14 @@ public class GamePanel extends GPanel {
     }
 
     public void startGame() {
+        enemyOnField.clear(); //lol
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-
+        enemyCounter = 1;
         gameFinished = false;
         spawnTimer.start();
         Schip dummy = window.getSpel().getSchepen().get(0);
         Drone dummydr = window.getSpel().getDrones().get(0);
-
+        requestFocus();
         setSlowerEnemiesTimer(schip);
         setInvulnerabilityTimer(schip);
 
@@ -234,18 +236,19 @@ public class GamePanel extends GPanel {
     //paints the "draw" region
     @Override
     public void paintComponent(Graphics g) {
-
         super.paintComponent(g);
-        drawBullets(g, schip.getKogels(), schip);
-        drawBullets(g, drone.getKogels(), schip);
-        drawShip(g, schip);
-        drawDrone(g, drone, schip);
-        drawEnemy(g);
-        if (coop) {
-            drawBullets(g, schipp2.getKogels(), schipp2);
-            drawBullets(g, dronep2.getKogels(), schipp2);
-            drawShip(g, schipp2);
-            drawDrone(g, dronep2, schipp2);
+        if (schip != null){
+            drawBullets(g, schip.getKogels(), schip);
+            drawBullets(g, drone.getKogels(), schip);
+            drawShip(g, schip);
+            drawDrone(g, drone, schip);
+            drawEnemy(g);
+            if (coop) {
+                drawBullets(g, schipp2.getKogels(), schipp2);
+                drawBullets(g, dronep2.getKogels(), schipp2);
+                drawShip(g, schipp2);
+                drawDrone(g, dronep2, schipp2);
+            }
         }
     }
 
@@ -379,6 +382,7 @@ public class GamePanel extends GPanel {
     //endregion
 
     //region updates
+
     private void updateKogels(ArrayList<Kogel> kogels, Schip schip) {
         for (Iterator<Kogel> kogeliterator = kogels.iterator(); kogeliterator.hasNext(); ) {
             Kogel k = kogeliterator.next();
@@ -404,23 +408,26 @@ public class GamePanel extends GPanel {
                             }
                         }
                     }
-
-                    kogeliterator.remove();
                 }
+            }
+        }
+        clearHitBullets(kogels);
+    }
+
+    private void clearHitBullets(ArrayList<Kogel> kogels){
+        for (Iterator<Kogel> kogelIterator = kogels.iterator(); kogelIterator.hasNext(); ){
+            Kogel k = kogelIterator.next();
+            if (k.isHit()){
+                kogelIterator.remove();
             }
         }
     }
 
     private void approachShip() {
-        for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ) {
-            Enemy enemy = enemyIterator.next();
-
-            if (schip.isSlowerEnemies()) {
-                enemy.setSpeed(1);
-            }
-            if (coop) {
-                enemy.updateLocation(closestShip(enemy).getCurrentLocation(), enemy.getCurrentLocation(), enemy.getSpeed());
-            } else {
+        for (Enemy enemy : enemyOnField) {
+            if (schip.isSlowerEnemies()) { enemy.setSpeed(1); }
+            if (coop) {enemy.updateLocation(closestShip(enemy).getCurrentLocation(), enemy.getCurrentLocation(), enemy.getSpeed()); }
+            else {
                 enemy.updateLocation(schip.getCurrentLocation(), enemy.getCurrentLocation(), enemy.getSpeed());
             }
         }
@@ -432,8 +439,8 @@ public class GamePanel extends GPanel {
             ratioHP = 425 / schip.getMaxhp();
             healthBarWidth = (int) ratioHP * schip.getHp();
         } else {
-            //TODO
             gameFinished = true;
+            enemyOnField.clear();
         }
         return healthBarWidth;
     }
@@ -496,7 +503,6 @@ public class GamePanel extends GPanel {
         } else {
             //TODO
             gameFinished = true;
-
             System.out.println("invulnerability start");
             invulnerabilityTimer.start();
         }
