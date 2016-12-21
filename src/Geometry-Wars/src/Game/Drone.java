@@ -16,8 +16,8 @@ public class Drone extends Sprite{
     private int hp = 100;
     private int kracht = 2;
     private String uiterlijk;
-    private int level;
-    private int experience;
+    private int level = 1;
+    private int experience = 0;
     private double currentAngle;
     private int fireSpeed = 500; // om de 0,5 seconden
     private ArrayList<Kogel> kogels = new ArrayList<Kogel>();
@@ -26,7 +26,7 @@ public class Drone extends Sprite{
 
     //region Constructors
 
-    public Drone(int nr, String naam, String beschrijving, int hp, int kracht, String uiterlijk, int level, int experience){
+    public Drone(int nr, String naam, String beschrijving, int hp, int kracht, String uiterlijk){
         super(uiterlijk);
         x = 600;
         y = 300;
@@ -38,8 +38,6 @@ public class Drone extends Sprite{
         this.hp = hp;
         this.kracht = kracht;
         this.uiterlijk = uiterlijk;
-        this.level = level;
-        this.experience = experience;
         currentAngle = 0;
     }
 

@@ -11,22 +11,20 @@ public class Speler {
     private String email;
     private int level = 1;
     private int experience = 0;
-    private String profielfoto = "";
-    private int rank = 0;
+    private String rank = "Bronze 1";
     private int nuggets = 0;
     private int gnuggets = 0;
     //endregion
 
     //region Constructors
 
-    public Speler(int nr, String gebruikersnaam, String wachtwoord, String email, int level, int experience, String profielfoto, int rank, int nuggets, int gnuggets){
+    public Speler(int nr, String gebruikersnaam, String wachtwoord, String email, int level, int experience, String rank, int nuggets, int gnuggets){
         this.nr = nr;
         this.gebruikersnaam = gebruikersnaam;
         this.wachtwoord = wachtwoord;
         this.email = email;
         this.level = level;
         this.experience = experience;
-        this.profielfoto = profielfoto;
         this.rank = rank;
         this.nuggets = nuggets;
         this.gnuggets = gnuggets;
@@ -43,8 +41,29 @@ public class Speler {
 
     //region Properties
 
-    public void setProfielfoto(String profielfoto) {
-        this.profielfoto = profielfoto;
+
+    public int getGnuggets() {
+        return gnuggets;
+    }
+
+    public int getNuggets() {
+        return nuggets;
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public String getGebruikersnaam() {
+        return gebruikersnaam;
     }
 
     public void setGebruikersnaam(String gebruikersnaam) {
@@ -59,7 +78,7 @@ public class Speler {
         this.email = email;
     }
 
-    public void setRank(int rank) {
+    public void setRank(String rank) {
         this.rank = rank;
     }
 

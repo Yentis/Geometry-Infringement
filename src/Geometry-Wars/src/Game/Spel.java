@@ -17,7 +17,8 @@ public class Spel {
     private List<Schip> schepen = new ArrayList<>();
     private List<Drone> drones = new ArrayList<>();
     private List<Upgrade> upgrades = new ArrayList<>();
-    private List<Enemy> vijanden = new ArrayList<>();
+    private List<Enemy> enemies = new ArrayList<>();
+    private String currentDifficulty = "Normal";
     private String url = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7150029";
     private String user = "sql7150029";
     private String pass = "3Ngdr6LYhR";
@@ -25,6 +26,42 @@ public class Spel {
     //endregion
 
     //region Properties
+
+
+    public Speler getSpeler() {
+        return speler;
+    }
+
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public List<Schip> getSchepen() {
+        return schepen;
+    }
+
+    public List<Drone> getDrones() {
+        return drones;
+    }
+
+    public String getCurrentDifficulty() {
+        return currentDifficulty;
+    }
+
+    public void changeSchipspeed(double multiplier){
+        for (Schip schip:schepen) {
+            schip.setSpeed(schip.getSpeed() * multiplier);
+        }
+    }
+
+    public void setEnemies(List<Enemy> enemies) {
+        this.enemies = enemies;
+    }
+
+    public void setCurrentDifficulty(String currentDifficulty) {
+        this.currentDifficulty = currentDifficulty;
+    }
+
     //endregion
 
     //region Behaviour
@@ -39,7 +76,7 @@ public class Spel {
 
         int i = 0;
         while (schip.next()){
-            schepen.add(i, new Schip(schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image"), schip.getInt("score"), schip.getInt("combo"), 37, 39, 38, 40));
+            schepen.add(i, new Schip(schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image"), 37, 39, 38, 40, schip.getInt("speed")));
             i++;
         }
         //endregion
@@ -49,7 +86,7 @@ public class Spel {
 
         i = 0;
         while (drone.next()){
-            drones.add(i, new Drone(drone.getInt("nr") - 1, drone.getString("naam"), drone.getString("beschrijving"), drone.getInt("hp"), drone.getInt("kracht"), drone.getString("uiterlijk"), drone.getInt("level"), drone.getInt("experience")));
+            drones.add(i, new Drone(drone.getInt("nr") - 1, drone.getString("naam"), drone.getString("beschrijving"), drone.getInt("hp"), drone.getInt("kracht"), drone.getString("uiterlijk")));
             i++;
         }
         //endregion
@@ -64,12 +101,12 @@ public class Spel {
         }
         //endregion
 
-        //region Vijanden
-        ResultSet vijand = myStmt.executeQuery("select * from vijand");
+        //region Enemies
+        ResultSet enemy = myStmt.executeQuery("select * from vijand");
 
         i = 0;
-        while (vijand.next()){
-            vijanden.add(i, new Enemy(vijand.getInt("nr") - 1, vijand.getString("naam"), vijand.getString("beschrijving"), vijand.getInt("hp"), vijand.getInt("kracht"), vijand.getString("uiterlijk"), vijand.getInt("experience"), vijand.getInt("score")));
+        while (enemy.next()){
+            enemies.add(i, new Enemy(enemy.getInt("nr") - 1, enemy.getString("naam"), enemy.getString("beschrijving"), enemy.getInt("hp"), enemy.getInt("kracht"), enemy.getString("uiterlijk"), enemy.getInt("experience"), enemy.getInt("score"), enemy.getInt("snelheid")));
             i++;
         }
         //endregion
@@ -83,7 +120,7 @@ public class Spel {
         ResultSet myRs = myStmt.executeQuery("select * from speler where gebruikersnaam = '" + gebruikersnaam + "'");
 
         while(myRs.next()){
-            speler = new Speler(myRs.getInt("nr") - 1, myRs.getString("gebruikersnaam"), myRs.getString("wachtwoord"), myRs.getString("email"), myRs.getInt("level"), myRs.getInt("experience"), myRs.getString("profielfoto"), myRs.getInt("rank"), myRs.getInt("nuggets"), myRs.getInt("golden nuggets"));
+            speler = new Speler(myRs.getInt("nr") - 1, myRs.getString("gebruikersnaam"), myRs.getString("wachtwoord"), myRs.getString("email"), myRs.getInt("level"), myRs.getInt("experience"), myRs.getString("rank"), myRs.getInt("nuggets"), myRs.getInt("golden nuggets"));
         }
     }
 

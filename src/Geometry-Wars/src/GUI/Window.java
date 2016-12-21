@@ -5,6 +5,7 @@ import Game.Spel;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * Created by Renzie on 7/11/2016.
@@ -22,7 +23,11 @@ public class Window extends JFrame{
     private Scoreboard scoreboard;
     private Register register;
     private Coop startCoop;
-    private Spel spel = new Spel();
+    private Settings settings;
+    private static Spel spel = new Spel();
+
+    //Game
+    private Game game;
 
 
     private Container cp = getContentPane();
@@ -55,7 +60,8 @@ public class Window extends JFrame{
 
     }
 
-    public static void main(String args[]) throws IOException, FontFormatException {
+    public static void main(String args[]) throws IOException, FontFormatException, SQLException, InterruptedException {
+        spel.initDankabank();
         new Window("Geometry Wars");
     }
 
@@ -84,10 +90,11 @@ public class Window extends JFrame{
         startGameCampaign = new StartGameCampaign();
         logout  = new Logout();
         login = new Login();
-        inGame = new InGame();
+        inGame = new InGame(spel.getEnemies());
         scoreboard = new Scoreboard();
-        startCoop = new Coop();
+        startCoop = new Coop(spel.getEnemies());
         register = new Register();
+        settings = new Settings();
 
         // Add UI panels
         cp.add(mainMenu);
@@ -100,6 +107,7 @@ public class Window extends JFrame{
         cp.add(scoreboard);
         cp.add(startCoop);
         cp.add(register);
+        cp.add(settings);
 
 
         // Set all panels invisible except the starting panel
@@ -112,6 +120,7 @@ public class Window extends JFrame{
         scoreboard.setVisible(false);
         startCoop.setVisible(false);
         register.setVisible(false);
+        settings.setVisible(false);
     }
 
 
@@ -140,6 +149,10 @@ public class Window extends JFrame{
 
     public Register getRegister() {
         return register;
+    }
+
+    public Settings getSettings() {
+        return settings;
     }
 
     public Coop getStartCoop() {

@@ -24,23 +24,28 @@ public class Schip extends Sprite {
     private int hp = 100;
     private int maxhp = 100;
     private int kracht = 10;
+    private double speed;
     private double dx;
     private double dy;
-    private int score;
+    private int score = 0;
     private int newscore = 0;
-    private int combo;
+    private int combo = 0;
     private int level = 0;
     private int currentXp = 0;
+<<<<<<< HEAD
     private double maxXp = 1000;
+=======
+    private int maxXp;
+    private int keyLeft;
+    private int keyRight;
+    private int keyUp;
+    private int keyDown;
+>>>>>>> origin/master
     private ArrayList<Kogel> kogels = new ArrayList<Kogel>();
     private double locationX;
     private double locationY;
     private double currentAngle;
     private Movement move;
-    private int keyLeft;
-    private int keyRight;
-    private int keyUp;
-    private int keyDown;
     private boolean lifesteal;
     private boolean invulnerability;
     private boolean randomBullets;
@@ -54,15 +59,13 @@ public class Schip extends Sprite {
 
     //region Constructors
 
-    public Schip(int nr, int hp, int kracht, String image, int score, int combo, int keyLeft, int keyRight, int keyUp, int keyDown) {
+    public Schip(int nr, int hp, int kracht, String image, int keyLeft, int keyRight, int keyUp, int keyDown, double speed) {
         super(image);
         currentLocation = new Point();
         currentLocation.setLocation(700, 300);
         locationX = currentLocation.getX();
         locationY = currentLocation.getY();
         currentAngle = 0;
-        this.score = 0;
-        this.combo = 0;
         this.nr = nr;
         this.hp = hp;
         this.kracht = kracht;
@@ -70,6 +73,7 @@ public class Schip extends Sprite {
         this.keyRight = keyRight;
         this.keyUp = keyUp;
         this.keyDown = keyDown;
+        this.speed = speed;
         move = new Movement(this, keyLeft, keyRight, keyUp, keyDown);
     }
     //endregion
@@ -86,11 +90,19 @@ public class Schip extends Sprite {
         return hp;
     }
 
+    public double getSpeed() {
+        return speed;
+    }
+
     //endregion
 
     //region Properties
     public int getMaxhp() {
         return maxhp;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
     }
 
     public void setHp(int hp) {
@@ -281,8 +293,8 @@ public class Schip extends Sprite {
     public void beweegSchip() {
 
 
-        locationX = limitToBorders(locationX, 0, 1024);
-        locationY = limitToBorders(locationY, 0, 768);
+        locationX = limitToBorders(locationX, 75, 875);
+        locationY = limitToBorders(locationY, 125, 525);
 
         currentLocation.setLocation(locationX += dx, locationY += dy);
     }
@@ -304,19 +316,19 @@ public class Schip extends Sprite {
         move.keyReleased(e);
     }
 
-    public void moveUp(int speed) {
+    public void moveUp(double speed) {
         dy = -speed;
     }
 
-    public void moveDown(int speed) {
+    public void moveDown(double speed) {
         dy = speed;
     }
 
-    public void moveLeft(int speed) {
+    public void moveLeft(double speed) {
         dx = -speed;
     }
 
-    public void moveRight(int speed) {
+    public void moveRight(double speed) {
         dx = speed;
     }
 

@@ -20,6 +20,14 @@ public class Kogel extends Sprite {
         isHit = false;
     }
 
+    public boolean isOutOfBorder(double currlocation, double minBorder, double maxborder ){
+        if (currlocation < minBorder ){
+            return true;
+        } else if (currlocation > maxborder){
+            return true;
+        } return false;
+    }
+
     public Point getStartingPoint() {
         return startingPoint;
     }

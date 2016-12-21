@@ -6,6 +6,7 @@
 package GUI;
 
 import GComponents.*;
+import Game.Speler;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -33,17 +34,14 @@ public class Profile extends GPanel {
 
     private Profile panel = this;
 
-    /**
-     * @param args the command line arguments
-     */
-
     public Profile() throws MalformedURLException, IOException, FontFormatException {
-        initComponents();
+        //do not init
     }
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
-
+        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+        Speler speler = window.getSpel().getSpeler();
 
         //Make components
         //==================================================
@@ -52,14 +50,18 @@ public class Profile extends GPanel {
         JLabel Background = new JLabel(new ImageIcon(((new ImageIcon("src\\Media\\Background.png")).getImage().getScaledInstance(1920, 1080, java.awt.Image.SCALE_SMOOTH))));
         JLabel Profile = new GPane(220, 160, 234, 300);
         JLabel ProfileInfo = new GPane(480, 160, 500, 540);
-        JLabel Username = new GLabel("Username", 24f, 245, 175, 180, 64, true, Color.BLACK);
-        JLabel ProfilePicture = new GIcon("profilePicture.png", 245, 268, 180, 170, true);
-        JLabel Rank = new GLabel("Unranked", 24f, 550, 175, 280, 62, false, Color.BLACK);
-        JLabel RankPicture = new GIcon("Badges\\NoRank.png", 520, 175, 130, 130, false);
-        JButton MyClan = new GButton("My Clan", 24f, 220, 475, 234, 60);
-        JButton EditProfile = new GButton("Edit Profile", 18f, 260, 545, 165, 40);
+        JLabel Username = new GLabel("", 24f, 245, 175, 180, 64, true, Color.BLACK);
+        JLabel ProfilePicture = new GIcon("ProfilePictures\\" + speler.getGebruikersnaam() + ".png", 245, 268, 180, 170, true);
+        JLabel Rank = new GLabel(speler.getRank(), 24f, 660, 210, 280, 62, false, Color.BLACK);
+        JLabel RankPicture = new GIcon("Badges\\" + speler.getRank() + ".png", 520, 175, 130, 130, false);
         JButton Back = new GButton("Back", 24f, 320, 655, 140, 45);
         JButton Achievements = new GButton("Achievements", 24f, 60, 982, 340, 67);
+
+        Username.setText("  " + speler.getGebruikersnaam());
+        ProfileInfo.setFont(new GFont(22));
+        ProfileInfo.setForeground(Color.BLACK);
+        ProfileInfo.setBorder(new EmptyBorder(0, 10, 0, 0));
+        ProfileInfo.setText("<html>Level: " + speler.getLevel() + "<br>Experience: " + speler.getExperience() + "<br>Rank: " + speler.getRank() + "<br>Nuggets: " + speler.getNuggets() + "<br>Golden Nuggets: " + speler.getGnuggets() + "<html>");
 
 
         //==================================================
@@ -82,8 +84,6 @@ public class Profile extends GPanel {
 
         this.add(Title);
         this.add(ProfilePicture);
-        this.add(MyClan);
-        this.add(EditProfile);
         this.add(Back);
         this.add(Achievements);
         this.add(Username);

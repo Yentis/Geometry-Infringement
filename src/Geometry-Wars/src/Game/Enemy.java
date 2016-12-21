@@ -21,25 +21,28 @@ public class Enemy extends Sprite {
     private double locationY;
     private int experience;
     private int score;
-    private int speed = 2;
+    private int speed;
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
     private Rectangle2D hpBar;
     private Rectangle2D maxHpBar;
     private int maxHp = 100;
+    private String imageString;
 
     //endregion
 
     //region Constructors
 
 
-    public Enemy(int nr, String naam, String beschrijving, int hp, int kracht, String image, int experience, int score) {
+    public Enemy(int nr, String naam, String beschrijving, int hp, int kracht, String image, int experience, int score, int speed) {
         super(image);
+        imageString = image;
         this.nr = nr;
         this.naam = naam;
         this.beschrijving = beschrijving;
         this.hp = hp;
         this.kracht = kracht;
+        this.speed = speed;
 
         locationX = randomX();
         locationY = randomY();
@@ -61,6 +64,18 @@ public class Enemy extends Sprite {
 
     public void setMaxHpBar(Rectangle2D maxHpBar) {
         this.maxHpBar = maxHpBar;
+    }
+
+    public String getNaam() {
+        return naam;
+    }
+
+    public int getNr() {
+        return nr;
+    }
+
+    public String getBeschrijving() {
+        return beschrijving;
     }
 
     public int getKracht() {
@@ -87,6 +102,13 @@ public class Enemy extends Sprite {
         this.speed = speed;
     }
 
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void setKracht(int kracht) {
+        this.kracht = kracht;
+    }
     public double randomX() {
         Random randomGenerator = new Random();
 
@@ -137,6 +159,17 @@ public class Enemy extends Sprite {
         return image;
     }
 
+    public String getImageString() {
+        return imageString;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public int getScore() {
+        return score;
+    }
 
     public void move(double velocityX, double velocityY) {
         locationX += velocityX;
@@ -149,12 +182,12 @@ public class Enemy extends Sprite {
     public void drawHPBar(Graphics2D g2d) {
 
         if (this.hpBar == null || this.maxHpBar == null) {
-            this.setHpBar(new Rectangle2D.Double(this.getCurrentLocation().getX(), this.getCurrentLocation().getY() - 100,  hpBarWidthRatio(), 10));
-            this.setMaxHpBar(new Rectangle2D.Double(getCurrentLocation().getX(), getCurrentLocation().getY() -100, getWidth(), 10));
+            this.setHpBar(new Rectangle2D.Double(this.getCurrentLocation().getX(), this.getCurrentLocation().getY() - 50,  hpBarWidthRatio() * 0.75, 8));
+            this.setMaxHpBar(new Rectangle2D.Double(getCurrentLocation().getX(), getCurrentLocation().getY() - 50, getWidth()* 0.75, 8));
         } else {
             if (hp != 0) {
-                hpBar.setRect(getCurrentLocation().getX(), getCurrentLocation().getY() - 100,  hpBarWidthRatio(), 10);
-                maxHpBar.setRect(getCurrentLocation().getX(), getCurrentLocation().getY() -100, getWidth(), 10);
+                hpBar.setRect(getCurrentLocation().getX(), getCurrentLocation().getY() - 50,  hpBarWidthRatio()* 0.75, 8);
+                maxHpBar.setRect(getCurrentLocation().getX(), getCurrentLocation().getY() - 50, getWidth()* 0.75, 8);
             }
         }
 
