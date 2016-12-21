@@ -209,6 +209,8 @@ public class GamePanel extends GPanel {
     private void drawBullets(Graphics g, ArrayList<Kogel> kogels, Schip schip) {
         Graphics2D g2d = (Graphics2D) g;
         if (!kogels.isEmpty()) {
+
+
             for (Iterator<Kogel> kogelIterator = kogels.iterator(); kogelIterator.hasNext(); ) {
                 Kogel k = kogelIterator.next();
                 if (k.isOutOfBorder(k.getCurrentLocation().getX(), 60, 925) || k.isOutOfBorder(k.getCurrentLocation().getY(), 125, 600)){
@@ -549,7 +551,6 @@ public class GamePanel extends GPanel {
         @Override
         public void mousePressed(MouseEvent e) {
             schip.mousePressed(e);
-
         }
 
         @Override

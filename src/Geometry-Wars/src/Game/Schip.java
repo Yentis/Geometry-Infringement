@@ -4,12 +4,13 @@ package Game;
 import GUI.GamePanel;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import javax.swing.Timer;
 
 import static java.lang.Math.abs;
 
@@ -53,6 +54,7 @@ public class Schip extends Sprite {
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
     private String imageString;
+    private Timer mousePressedTimer;
 
 
     //endregion
@@ -383,6 +385,14 @@ public class Schip extends Sprite {
         dx = speed;
     }
 
+    public void controllerAim(int x, int y){
+        Point point = new Point(x, y);
+        fire(point);
+        if (isRandomBullets()) {
+            randomFire();
+        }
+    }
+
     public void mousePressed(MouseEvent e) {
         fire(e.getPoint());
         if (isRandomBullets()) {
@@ -407,16 +417,16 @@ public class Schip extends Sprite {
             mousePressedTimer = new Timer(50, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {*/
-        double kogelX = locationX;
-        double kogelY = locationY;
-        addKogels(new Kogel(kogelX, kogelY, mousePointer, "src/Media/kogel1.png"));
-              /*  }
+                    double kogelX = locationX;
+                    double kogelY = locationY;
+                    addKogels(new Kogel(kogelX, kogelY, mousePointer, "src/Media/kogel1.png"));
+               /* }
             });
        }
         else{
             mousePressedTimer.start();
         }
-            */
+*/
     }
 
     public int randomX() {

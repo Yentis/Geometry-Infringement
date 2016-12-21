@@ -139,7 +139,7 @@ public class Sprite {
     }
 
     public boolean collisionDetect(Rectangle2D approachingTarget) {
-        return approachingTarget != null && hitBox.getBounds2D().intersects(approachingTarget.getBounds2D());
+        return approachingTarget != null && hitBox != null && hitBox.getBounds2D().intersects(approachingTarget.getBounds2D());
     }
 
 
