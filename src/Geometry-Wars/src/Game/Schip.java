@@ -45,7 +45,7 @@ public class Schip extends Sprite {
     private double locationY;
     private double currentAngle;
     private Movement move;
-    private boolean lifesteal;
+    //private boolean lifesteal;
     private boolean invulnerability;
     private boolean randomBullets;
     private boolean slowerEnemies;
@@ -53,6 +53,13 @@ public class Schip extends Sprite {
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
     private Drone drone;
+
+    //IngameUpgrades
+    private InGameUpgrade inGameUpgrade = new InGameUpgrade();
+    private InGameUpgrade.LifeSteal lifesteal = inGameUpgrade.new LifeSteal(1, "LifeSteal", "resources/Media/IngameUpgradeIcons/LifeSteal.png", this);
+    private ArrayList<InGameUpgrade> buffs = new ArrayList<InGameUpgrade>();
+    private ArrayList<InGameUpgrade> activeBuffs = new ArrayList<InGameUpgrade>();
+
 
     //private HashMap<String, Boolean> buffs = new HashMap<String, Boolean>();
 
@@ -81,19 +88,29 @@ public class Schip extends Sprite {
         this.keyDown = keyDown;
         this.speed = speed;
         move = new Movement(this, keyLeft, keyRight, keyUp, keyDown);
+        addBuffs();
         //updateBuffs();
     }
     //endregion
 
-
-   /* private void updateBuffs(){
-        buffs.put("lifesteal", lifesteal);
-        buffs.put("invulnerability", invulnerability);
-        buffs.put("randomBullets", randomBullets);
-        buffs.put("slowerEnemies", slowerEnemies);
-        buffs.put("droneActive", droneActive);
+    private void addBuffs() {
+        buffs.add(lifesteal);
     }
-*/
+
+    public ArrayList<InGameUpgrade> getActiveBuffs() {
+        return activeBuffs;
+    }
+
+    public void updateBuffs() {
+        for (InGameUpgrade buff : buffs) {
+            if (buff.isActive() && !activeBuffs.contains(buff)) {
+                activeBuffs.add(buff); //indien de buff active is en nog niet in de ActiveBuffs zit, stop je hem erin
+            } else if (!buff.isActive() && activeBuffs.contains(buff)) {
+                activeBuffs.remove(buff); //indien de buff niet meer active is en in de ActiveBuffs zit, gooi je hem eruit
+            }
+        }
+    }
+
     //region Getters
 
 
@@ -181,7 +198,8 @@ public class Schip extends Sprite {
     public void setSpeed(double speed) {
         this.speed = speed;
     }
-    public void setControls(int keyLeft, int keyRight, int keyUp, int keyDown){
+
+    public void setControls(int keyLeft, int keyRight, int keyUp, int keyDown) {
         this.keyLeft = keyLeft;
         this.keyRight = keyRight;
         this.keyUp = keyUp;
@@ -196,6 +214,7 @@ public class Schip extends Sprite {
     public double getCurrentAngle() {
         return currentAngle;
     }
+
     public void setCurrentAngle(double currentAngle) {
         this.currentAngle = currentAngle;
     }
@@ -210,13 +229,13 @@ public class Schip extends Sprite {
         this.invulnerability = invulnerability;
     }
 
-    public boolean isLifesteal() {
+   /* public boolean isLifesteal() {
         return lifesteal;
     }
 
     public void setLifesteal(boolean lifesteal) {
         this.lifesteal = lifesteal;
-    }
+    }*/
 
     public boolean isRandomBullets() {
         return randomBullets;
@@ -255,28 +274,30 @@ public class Schip extends Sprite {
         this.currentXp += xp;
     }
 
-    public void resetCurrentXp() { this.currentXp = 0;}
+    public void resetCurrentXp() {
+        this.currentXp = 0;
+    }
 
     public double getMaxXp() {
         return maxXp;
     }
 
     public void setMaxXp(int level) {
-        this.maxXp = Math.pow(2,level) * 1000;
+        this.maxXp = Math.pow(2, level) * 1000;
     }
 
     //endregion
 
 
-    public void checkLevel(){
-        if(getCurrentXp() >= getMaxXp()){
+    public void checkLevel() {
+        if (getCurrentXp() >= getMaxXp()) {
             addLevel();
             setMaxXp(getLevel());
             checkLevel();
             resetCurrentXp();
         }
 
-        switch (getLevel()){
+        switch (getLevel()) {
             case 1:
                 setKracht(75);
                 break;
@@ -309,11 +330,13 @@ public class Schip extends Sprite {
         switch (combo) {
             case 1:
                 //when combo resets
-                setLifesteal(false);
+                //setLifesteal(false);
+                lifesteal.setActive(true);
+                lifesteal.doFunction();
                 setRandomBullets(false);
                 break;
             case 50:
-                setLifesteal(true);
+                // setLifesteal(true);
                 break;
             case 2:
                 //stays active when reached
@@ -326,6 +349,10 @@ public class Schip extends Sprite {
 
         }
         //updateBuffs();
+    }
+
+    public InGameUpgrade.LifeSteal getLifesteal() {
+        return lifesteal;
     }
 
     public void setCombo(int combo) {
@@ -390,11 +417,11 @@ public class Schip extends Sprite {
         return currLocation;
     }
 
-    public void controllerPressed(int key){
+    public void controllerPressed(int key) {
         move.controllerPressed(key);
     }
 
-    public void controllerReleased(int key){
+    public void controllerReleased(int key) {
         move.controllerReleased(key);
     }
 
@@ -422,7 +449,7 @@ public class Schip extends Sprite {
         dx = speed;
     }
 
-    public void controllerAim(int x, int y){
+    public void controllerAim(int x, int y) {
         Point point = new Point(x, y);
         fire(point);
         if (isRandomBullets()) {
@@ -454,9 +481,9 @@ public class Schip extends Sprite {
             mousePressedTimer = new Timer(50, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {*/
-                    double kogelX = locationX;
-                    double kogelY = locationY;
-                    addKogels(new Kogel(kogelX, kogelY, mousePointer, "resources/Media/kogel1.png"));
+        double kogelX = locationX;
+        double kogelY = locationY;
+        addKogels(new Kogel(kogelX, kogelY, mousePointer, "resources/Media/kogel1.png"));
                /* }
             });
        }
@@ -499,8 +526,7 @@ public class Schip extends Sprite {
     }
 
 
-
-    public void setImage(String image){
+    public void setImage(String image) {
 
     }
 
