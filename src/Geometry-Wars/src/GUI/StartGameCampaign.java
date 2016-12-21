@@ -66,6 +66,7 @@ public class StartGameCampaign extends GPanel {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                window.getInGameSinglePlayer().setCoop(false);
                 window.getInGameSinglePlayer().setVisible(true);
             }
         });

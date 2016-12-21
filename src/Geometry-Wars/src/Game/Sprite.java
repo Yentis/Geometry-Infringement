@@ -20,9 +20,12 @@ public class Sprite {
     protected Point currentLocation;
     protected Rectangle2D hitBox;
     protected boolean isHit;
+    private Schip hitter;
+    private String imageString;
 
 
     public Sprite(double x, double y, Point target, String image) {
+        imageString = image;
         this.x = x;
         this.y = y;
         this.target = target;
@@ -120,6 +123,14 @@ public class Sprite {
 
     public void setHit(boolean hit) {
         isHit = hit;
+    }
+
+    public void setHitter(Schip hitter) {
+        this.hitter = hitter;
+    }
+
+    public Schip getHitter() {
+        return hitter;
     }
 
     public double getDirection(Point target, Point start) {

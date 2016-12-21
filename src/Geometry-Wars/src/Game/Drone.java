@@ -21,6 +21,7 @@ public class Drone extends Sprite{
     private double currentAngle;
     private int fireSpeed = 500; // om de 0,5 seconden
     private ArrayList<Kogel> kogels = new ArrayList<Kogel>();
+    private String imageString;
 
     //endregion
 
@@ -28,6 +29,7 @@ public class Drone extends Sprite{
 
     public Drone(int nr, String naam, String beschrijving, int hp, int kracht, String uiterlijk){
         super(uiterlijk);
+        imageString = uiterlijk;
         x = 600;
         y = 300;
         currentLocation = new Point();
@@ -51,6 +53,30 @@ public class Drone extends Sprite{
 
     public ArrayList<Kogel> getKogels() {
         return kogels;
+    }
+
+    public String getImageString() {
+        return imageString;
+    }
+
+    public int getNr() {
+        return nr;
+    }
+
+    public String getNaam() {
+        return naam;
+    }
+
+    public String getBeschrijving() {
+        return beschrijving;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public int getKracht() {
+        return kracht;
     }
 
     public int getFireSpeed() {

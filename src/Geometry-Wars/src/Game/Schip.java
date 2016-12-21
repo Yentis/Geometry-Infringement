@@ -49,6 +49,7 @@ public class Schip extends Sprite {
     private boolean droneActive;
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
+    private String imageString;
 
 
     //endregion
@@ -57,6 +58,7 @@ public class Schip extends Sprite {
 
     public Schip(int nr, int hp, int kracht, String image, int keyLeft, int keyRight, int keyUp, int keyDown, double speed) {
         super(image);
+        imageString = image;
         currentLocation = new Point();
         currentLocation.setLocation(700, 300);
         locationX = currentLocation.getX();
@@ -73,6 +75,38 @@ public class Schip extends Sprite {
         move = new Movement(this, keyLeft, keyRight, keyUp, keyDown);
     }
     //endregion
+
+    public String getImageString() {
+        return imageString;
+    }
+
+    public int getKeyUp() {
+        return keyUp;
+    }
+
+    public int getKeyDown() {
+        return keyDown;
+    }
+
+    public int getKeyRight() {
+        return keyRight;
+    }
+
+    public int getKeyLeft() {
+        return keyLeft;
+    }
+
+    public int getKracht() {
+        return kracht;
+    }
+
+    public int getNr() {
+        return nr;
+    }
+
+    public Movement getMove() {
+        return move;
+    }
 
     public int getCombo() {
         return combo;
@@ -103,6 +137,13 @@ public class Schip extends Sprite {
 
     public void setHp(int hp) {
         this.hp = hp;
+    }
+
+    public void setControls(int keyLeft, int keyRight, int keyUp, int keyDown){
+        this.keyLeft = keyLeft;
+        this.keyRight = keyRight;
+        this.keyUp = keyUp;
+        this.keyDown = keyDown;
     }
 
     public ArrayList<Kogel> getKogels() {
@@ -280,6 +321,14 @@ public class Schip extends Sprite {
             return minBorder;
         }
         return currLocation;
+    }
+
+    public void controllerPressed(int key){
+        move.controllerPressed(key);
+    }
+
+    public void controllerReleased(int key){
+        move.controllerReleased(key);
     }
 
     public void keyPressed(KeyEvent e) {
