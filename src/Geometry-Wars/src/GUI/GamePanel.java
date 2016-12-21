@@ -8,9 +8,12 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.io.IOException;
-import java.sql.Time;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import java.util.List;
+
 import javax.swing.*;
 import javax.swing.Timer;
 
@@ -35,11 +38,19 @@ public class GamePanel extends GPanel {
     private GLabel combop2;
     private GLabel score;
     private GLabel scorep2;
+    private GLabel schipbarp1;
+    private GLabel dronebarp1;
+    private JProgressBar currentSchipXpBar;
+    private JProgressBar currentDroneXpBar;
     private JProgressBar currentHealthBar;
     private JProgressBar currentHealthBarp2;
     private double healthBarWidth;
     private double healthBarWidthp2;
-    private double ratio;
+    private double xpBarWidthSchip;
+    private double xpBarWidthDrone;
+    private double ratioHP;
+    private double ratioSchipXP;
+    private double ratioDroneXp;
     private boolean coop;
     private boolean gameFinished;
     private int baseDamage = 50;
@@ -65,6 +76,19 @@ public class GamePanel extends GPanel {
         //make Components
         combo = new GLabel("x 0", 36f, 30, 620, 200, 60, false, Color.white);
         score = new GLabel("0", 30f, 140, 65, 300, 60, false, Color.white);
+
+        GLabel schipLvlp1 = new GLabel("Ship:", 24, 25,667,222,62, false, new Color(50,50,255));
+        GLabel droneLvlp1 = new GLabel("Drone:", 24, 315,667,222,62, false, new Color(50,50,255));
+        schipbarp1 = new GLabel("", 24, 100,672,200,47, true, Color.gray);
+        dronebarp1 = new GLabel("", 24, 415,672,200,47, true, Color.gray);
+        currentSchipXpBar = new JProgressBar();
+        currentSchipXpBar.setBounds(100,673,0,45);
+        currentSchipXpBar.setBackground(new Color(50,50,255,100));
+        currentSchipXpBar.setOpaque(true);
+        currentDroneXpBar = new JProgressBar();
+        currentDroneXpBar.setBounds(415,673,0,45);
+        currentDroneXpBar.setBackground(new Color(50,50,255,100));
+        currentDroneXpBar.setOpaque(true);
         currentHealthBar = new JProgressBar();
         currentHealthBar.setBounds(20, 27, 425, 40);
         currentHealthBar.setBackground(new Color(0, 200, 0));
@@ -90,6 +114,15 @@ public class GamePanel extends GPanel {
             panel.add(scorep2);
             panel.add(currentHealthBarp2);
         }
+        panel.add(combo);
+        panel.add(score);
+        panel.add(currentSchipXpBar);
+        panel.add(currentHealthBar);
+        panel.add(schipbarp1);
+        panel.add(schipLvlp1);
+        panel.add(dronebarp1);
+        panel.add(droneLvlp1);
+        panel.add(currentDroneXpBar);
 
         setAllComponentsVisible();
     }
@@ -103,8 +136,10 @@ public class GamePanel extends GPanel {
 
         setSlowerEnemiesTimer(schip);
         setInvulnerabilityTimer(schip);
+
         try {
             initComponents();
+            schipbarp1.setText(" lvl: 0 ");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (FontFormatException e) {
@@ -191,9 +226,11 @@ public class GamePanel extends GPanel {
                         enemy.setHitter(schip);
                         //TODO combo bepalen en upgrades uitvoeren
 
-                        if (schip.getHp() < 100 && schip.isLifesteal()) {
-                            schip.addHp(2);
-                        }
+                            if (schip.getHp() < 100 && schip.isLifesteal()) {
+                                schip.addHp(2);
+                            }
+
+
                     }
                 }
             }
@@ -255,7 +292,7 @@ public class GamePanel extends GPanel {
                 if (enemy.getHP() == 0) {
                     enemy.setHit(true);
                 }
-                System.out.println(enemy.getHP());
+                //System.out.println(enemy.getHP());
             }
         }
     }
@@ -319,7 +356,13 @@ public class GamePanel extends GPanel {
                 if (enemy.getHitter().isDroneActive()){
                     shootingDroneTimer.start();
                 }
-                //schip.addCurrentXp(enemy.get);
+
+                enemy.getHitter().addCurrentXp(20);
+                enemy.getHitter().checkLevel();
+
+                currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, enemy.getHitter()), currentSchipXpBar.getHeight());
+
+                currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, enemy.getHitter()), currentDroneXpBar.getHeight());
 
                 enemyIterator.remove();
 
@@ -329,8 +372,8 @@ public class GamePanel extends GPanel {
 
     private double updateHealthBar(Schip schip, double healthBarWidth, JProgressBar currentHealthBar) {
         if (schip.getHp() != 0) {
-            ratio = 425 / schip.getMaxhp();
-            healthBarWidth = (int) ratio * schip.getHp();
+            ratioHP = 425 / schip.getMaxhp();
+            healthBarWidth = (int) ratioHP * schip.getHp();
         } else {
             //TODO
             gameFinished = true;
@@ -347,6 +390,36 @@ public class GamePanel extends GPanel {
         schip.beweegSchip();
 
         if (schip.isInvulnerability()) {
+
+
+                //System.out.println("invulnerability start");
+                invulnerabilityTimer.start();
+            }
+            if (schip.isSlowerEnemies()) {
+                //System.out.println("slower enemies");
+                slowerEnemiesTimer.start();
+            }
+
+            combo.setText("x " + schip.getCombo());
+            score.setText("" + schip.getScore());
+            currentHealthBar.setSize((int) updateHealthBar(schip, healthBarWidth), currentHealthBar.getHeight());
+            if (coop) {
+                updateKogels(schipp2.getKogels());
+                schipp2.beweegSchip();
+                combop2.setText("x " + schipp2.getCombo());
+                scorep2.setText("" + schipp2.getScore());
+                currentHealthBarp2.setSize((int) updateHealthBar(schipp2, healthBarWidthp2), currentHealthBarp2.getHeight());
+            }
+            ;
+        }
+
+    private double updateHealthBar(Schip schip, double healthBarWidth) {
+        if (schip.getHp() != 0) {
+            ratioHP = 425 / schip.getMaxhp();
+            healthBarWidth = (int) ratioHP * schip.getHp();
+        } else {
+            //TODO
+            gameFinished = true;
 
             System.out.println("invulnerability start");
             invulnerabilityTimer.start();
@@ -377,9 +450,30 @@ public class GamePanel extends GPanel {
             combop2.setText("x " + schipp2.getCombo());
             scorep2.setText("" + schipp2.getScore());
             currentHealthBarp2.setSize((int) updateHealthBar(schipp2, healthBarWidthp2, currentHealthBarp2), currentHealthBarp2.getHeight());
+
         }
-        ;
+
+        return healthBarWidth;
+
     }
+
+
+    private double updateSchipXpBar(double xpBarWidthSchip, Schip schip){
+        ratioSchipXP = 190 / schip.getMaxXp();
+        xpBarWidthSchip = ratioSchipXP * schip.getCurrentXp();
+        schipbarp1.setText(" lvl: " + schip.getLevel());
+        return xpBarWidthSchip;
+    }
+
+    private double updateDroneXpBar(double xpBarWidthDrone, Schip schip){
+        ratioDroneXp = 200 / drone.getMaxXp();
+        xpBarWidthDrone = ratioDroneXp * drone.getCurrentXp();
+        dronebarp1.setText(" lvl: " + drone.getLevel());
+        return xpBarWidthDrone;
+
+
+    }
+
 
     //region Timers
     public void setInvulnerabilityTimer(Schip schip) {
@@ -387,11 +481,9 @@ public class GamePanel extends GPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 schip.setInvulnerability(false);
-                System.out.println("invulnerability stop");
                 invulnerabilityTimer.stop();
             }
         });
-
     }
 
     public void setSlowerEnemiesTimer(Schip schip) {
@@ -399,7 +491,6 @@ public class GamePanel extends GPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 schip.setSlowerEnemies(false);
-                System.out.println("slower enemies stopped");
                 slowerEnemiesTimer.stop();
 
             }

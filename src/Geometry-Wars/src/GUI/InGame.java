@@ -26,9 +26,11 @@ public class InGame extends GPanel implements ActionListener {
     private Timer gameTimer;
 
     //PausePanel
-    private GButton Continue = new GButton("Continue", 24f, 325, 84, 375, 120);
-    private GButton restart = new GButton("Restart", 24f, 325, 284, 375, 120);
-    private GButton menu = new GButton("Main Menu", 24f, 325, 484, 375, 120);
+    private GButton Continue = new GButton("Continue", 24f, 315, 260, 375, 120);
+    private GButton restartPauze = new GButton("Restart", 24f, 150, 420, 275, 120);
+    private GButton menuPauze = new GButton("Main Menu", 24f, 550, 420, 275, 120);
+    private GButton restartGameEnd = new GButton("Restart", 24f, 150, 420, 275, 120);
+    private GButton menuGameEnd = new GButton("Main Menu", 24f, 550, 420, 275, 120);
     private ImageIcon PauseImage = new ImageIcon("src\\Media\\pause-128.png");
     private JButton pauze = new JButton(PauseImage);
     private GLabel gameOver = new GLabel("Oopsy daisy! u dead fam", 25f, 325,260,375,120, true, Color.white);
@@ -38,17 +40,31 @@ public class InGame extends GPanel implements ActionListener {
     private GPanel pause = new GPanel() {
         @Override
         public void initComponents() throws IOException, FontFormatException {
-
-            pause.add(Continue);
-            pause.add(restart);
-            pause.add(menu);
-
             JLabel pane = new JLabel();
             pane.setOpaque(true);
             pane.setBackground(new Color(255, 255, 255, 2));
             pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
             pane.setBounds(50, 125, 900, 500);
+
+            Continue.setBackground(Color.black);
+            Continue.setForeground(Color.white);
+            Continue.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
+
+
+            restartPauze.setBackground(Color.black);
+            restartPauze.setForeground(Color.white);
+            restartPauze.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
+
+
+            menuPauze.setBackground(Color.black);
+            menuPauze.setForeground(Color.white);
+            menuPauze.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
+
             pause.add(pane);
+            pause.add(Continue);
+            pause.add(restartPauze);
+            pause.add(menuPauze);
+
 
         }
     };
@@ -62,25 +78,25 @@ public class InGame extends GPanel implements ActionListener {
             pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
             pane.setBounds(50, 125, 900, 500);
 
-            restart.setBounds(150, 420, 275, 120);
-            restart.setBackground(Color.black);
-            restart.setForeground(Color.white);
-            restart.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
 
-            menu.setBounds(550, 420, 275, 120);
-            menu.setBackground(Color.black);
-            menu.setForeground(Color.white);
-            menu.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
+            restartGameEnd.setBackground(Color.black);
+            restartGameEnd.setForeground(Color.white);
+            restartGameEnd.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
+
+
+            menuGameEnd.setBackground(Color.black);
+            menuGameEnd.setForeground(Color.white);
+            menuGameEnd.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
 
             gameOver.setHorizontalAlignment(SwingConstants.CENTER);
             gameOver.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
             gameOver.setBackground(Color.black);
             gameEnd.add(pane);
             gameEnd.add(gameOver);
-            gameEnd.add(restart);
-            gameEnd.add(menu);
+            gameEnd.add(restartGameEnd);
+            gameEnd.add(menuGameEnd);
 
-            menu.addActionListener(new java.awt.event.ActionListener() {
+            menuGameEnd.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     panel.setVisible(false);
                     GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
@@ -153,17 +169,13 @@ public class InGame extends GPanel implements ActionListener {
 
         pane.setOpaque(true);
         pane.setBackground(new Color(255, 255, 255, 2));
-        pane.setBorder(BorderFactory.createMatteBorder(
-                5, 5, 5, 5, Color.green));
-
-
+        pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
         healthbarp1.setBackground(new Color(255,255,255,95));
         healthbarp2.setBackground(new Color(255,255,255,95));
         dronebarp1.setBackground(new Color(255,255,255,95));
         dronebarp2.setBackground(new Color(255,255,255,95));
         schipbarp1.setBackground(new Color(255,255,255,95));
         schipbarp2.setBackground(new Color(255,255,255,95));
-
         pauze.setOpaque(true);
         pauze.setBackground(new Color(155, 255, 204, 200));
         pauze.setBorder(null);
@@ -192,19 +204,22 @@ public class InGame extends GPanel implements ActionListener {
         }
         this.add(pane);
         this.add(healthbarp1);
-        this.add(schipbarp1);
-        this.add(dronebarp1);
+
+        //this.add(dronebarp1);
         this.add(pauze);
+
+
         this.add(scorep1);
         this.add(healthp1);
-        this.add(schipLvlp1);
-        this.add(droneLvlp1);
+
+        //this.add(droneLvlp1);
 
 
         //this.add(Quit);
         this.add(confirmationlabel);
         this.add(Yes);
         this.add(No);
+
 
 
 
@@ -283,7 +298,7 @@ public class InGame extends GPanel implements ActionListener {
     public void addActionListeners() { //TODO
         startGame.addActionListener(panel);
         Continue.addActionListener(panel);
-        restart.addActionListener(panel);
+        restartPauze.addActionListener(panel);
 
     }
 

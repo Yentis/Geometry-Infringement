@@ -69,6 +69,23 @@ public class MainMenu extends GPanel {
 
         });
 
+        Upgrades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                try {
+                    window.getSettings().initComponents();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (FontFormatException e) {
+                    e.printStackTrace();
+                }
+                window.getUpgrades().setVisible(true);
+
+            }
+
+        });
+
         Settings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 panel.setVisible(false);
