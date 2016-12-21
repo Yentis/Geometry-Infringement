@@ -35,7 +35,6 @@ public class Schip extends Sprite {
 
     private double maxXp = 1000;
 
-
     private int keyLeft;
     private int keyRight;
     private int keyUp;
