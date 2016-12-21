@@ -29,5 +29,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="jinput" level="project" />
+    <orderEntry type="library" name="jinput" level="project" />
   </component>
 </module>

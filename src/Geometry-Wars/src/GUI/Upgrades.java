@@ -19,6 +19,9 @@ public class Upgrades extends GPanel {
 
 
     private Upgrades panel = this;
+    private int upgradeRow = 3;
+    private int upgradeColumn = 2;
+    private String name;
 
 
     public Upgrades() throws IOException, FontFormatException {
@@ -48,6 +51,38 @@ public class Upgrades extends GPanel {
         JLabel fire = new GLabel("fire", 16f, 807,149,87,28, false, Color.black );
         JLabel upgradesPane = new GPane(368,30,287,98);
         JLabel upgrades = new GLabel("Upgrades", 36f, 400,42,218,74, false, Color.black);
+
+        /*
+            x for every column of upgrades
+            1: 75x
+            2: 211x
+            3: 392x
+            4: 528x
+            5: 704x
+            6: 841x
+
+            y for every row of upgrades
+            1: 218
+            2: 358
+            3: 504
+
+            width and height for buttons of upgrades
+            width: 104
+            height: 123
+
+         */
+
+        JButton upgradeShip1 = new GButton("", 16f,75,218,104,123);
+        JButton upgradeShip2 = new GButton("", 16f,211,218,104,123);
+        JButton upgradeShip3 = new GButton("",16f,75,358,104,123);
+
+        JButton upgradeDrone1 = new GButton("", 16f, 392,218,104,123);
+        JButton upgradeDrone2 = new GButton("",16f, 528,218,104,123);
+        JButton upgradeDrone3 = new GButton("",16f, 392,358,104,123);
+
+        JButton upgradeFire1 = new GButton("", 16f, 704,218,104,123);
+        JButton upgradeFire2 = new GButton("", 16f, 841,218,104,123);
+        JButton upgradeFire3 = new GButton("", 16f, 704,358,104,123);
 
         //==================================================
 
@@ -89,6 +124,15 @@ public class Upgrades extends GPanel {
         panel.add(spaceShip);
         panel.add(drone);
         panel.add(fire);
+        panel.add(upgradeDrone1);
+        panel.add(upgradeDrone2);
+        panel.add(upgradeDrone3);
+        panel.add(upgradeShip1);
+        panel.add(upgradeShip2);
+        panel.add(upgradeShip3);
+        panel.add(upgradeFire1);
+        panel.add(upgradeFire2);
+        panel.add(upgradeFire3);
         panel.add(spaceShipPane);
         panel.add(dronePane);
         panel.add(firePane);

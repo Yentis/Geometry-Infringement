@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.Timer;
+import java.util.*;
 
 import static java.lang.Math.abs;
 
@@ -33,14 +34,12 @@ public class Schip extends Sprite {
     private int combo = 0;
     private int level = 0;
     private int currentXp = 0;
-
     private double maxXp = 1000;
 
     private int keyLeft;
     private int keyRight;
     private int keyUp;
     private int keyDown;
-
     private ArrayList<Kogel> kogels = new ArrayList<Kogel>();
     private double locationX;
     private double locationY;
@@ -53,6 +52,9 @@ public class Schip extends Sprite {
     private boolean droneActive;
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
+
+    //private HashMap<String, Boolean> buffs = new HashMap<String, Boolean>();
+
     private String imageString;
     private Timer mousePressedTimer;
 
@@ -78,8 +80,20 @@ public class Schip extends Sprite {
         this.keyDown = keyDown;
         this.speed = speed;
         move = new Movement(this, keyLeft, keyRight, keyUp, keyDown);
+        //updateBuffs();
     }
     //endregion
+
+
+   /* private void updateBuffs(){
+        buffs.put("lifesteal", lifesteal);
+        buffs.put("invulnerability", invulnerability);
+        buffs.put("randomBullets", randomBullets);
+        buffs.put("slowerEnemies", slowerEnemies);
+        buffs.put("droneActive", droneActive);
+    }
+*/
+    //region Getters
 
     public String getImageString() {
         return imageString;
@@ -129,21 +143,33 @@ public class Schip extends Sprite {
         return speed;
     }
 
-    //endregion
-
-    //region Properties
     public int getMaxhp() {
         return maxhp;
     }
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
+    public int getLevel() {
+        return level;
     }
+
+    public int getCurrentXp() {
+        return currentXp;
+    }
+
+    /*public HashMap<String,Boolean> getBuffs() {
+        return buffs;
+    }*/
+
+    //endregion
+
+    //region Setters
 
     public void setHp(int hp) {
         this.hp = hp;
     }
 
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
     public void setControls(int keyLeft, int keyRight, int keyUp, int keyDown){
         this.keyLeft = keyLeft;
         this.keyRight = keyRight;
@@ -155,6 +181,13 @@ public class Schip extends Sprite {
         return kogels;
     }
 
+
+    public double getCurrentAngle() {
+        return currentAngle;
+    }
+    public void setCurrentAngle(double currentAngle) {
+        this.currentAngle = currentAngle;
+    }
     //endregion
 
     //region ComboProperties
@@ -203,16 +236,8 @@ public class Schip extends Sprite {
     //region levelProperties
 
 
-    public int getLevel() {
-        return level;
-    }
-
     public void addLevel() {
         this.level += 1;
-    }
-
-    public int getCurrentXp() {
-        return currentXp;
     }
 
     public void addCurrentXp(int xp) {
@@ -260,13 +285,13 @@ public class Schip extends Sprite {
     }
 
     public void checkForUpgrade(int combo) {
-
-        if (combo % 50 == 0) {
+        //TODO terugveranderen :p - Renzie dit is voor de upgrade arraylist check
+        if (combo % 4 == 0) {
             //Every 50 combo
             setInvulnerability(true);
 
             //System.out.println("setInvulnerability");
-        } else if (combo % 75 == 0) {
+        } else if (combo % 2 == 0) {
             //Every 75 combo
             setSlowerEnemies(true);
         }
@@ -279,7 +304,7 @@ public class Schip extends Sprite {
             case 50:
                 setLifesteal(true);
                 break;
-            case 100:
+            case 2:
                 //stays active when reached
                 setDroneActive(true);
                 break;
@@ -289,6 +314,7 @@ public class Schip extends Sprite {
 
 
         }
+        //updateBuffs();
     }
 
     public void setCombo(int combo) {
@@ -462,17 +488,11 @@ public class Schip extends Sprite {
     }
 
 
-    public double getCurrentAngle() {
-        return currentAngle;
-    }
 
     public void setImage(String image){
 
     }
 
-    public void setCurrentAngle(double currentAngle) {
-        this.currentAngle = currentAngle;
-    }
 
     // Dit zorgt ervoor dat de angle binnen 360 blijft.
     public double normalizeAngle(double angle) {

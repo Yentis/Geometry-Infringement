@@ -139,7 +139,6 @@ public class Drone extends Sprite{
         return fireSpeed;
     }
 
-
     public double getCurrentAngle() {
         return currentAngle;
     }

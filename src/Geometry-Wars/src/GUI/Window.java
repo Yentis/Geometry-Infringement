@@ -28,7 +28,7 @@ public class Window extends JFrame {
     private static Spel spel = new Spel();
 
     //Game
-    private Game game;
+
 
 
     private Container cp = getContentPane();
@@ -152,9 +152,8 @@ public class Window extends JFrame {
         return login;
     }
 
-    public InGame getInGameSinglePlayer() {
-        return inGame;
-    }
+    public InGame getInGame() {return inGame;}
+
 
     public Scoreboard getScoreboard() {
         return scoreboard;

@@ -40,11 +40,12 @@ public class InGame extends GPanel implements ActionListener {
     private GPanel pause = new GPanel() {
         @Override
         public void initComponents() throws IOException, FontFormatException {
-            JLabel pane = new JLabel();
-            pane.setOpaque(true);
-            pane.setBackground(new Color(255, 255, 255, 2));
-            pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
-            pane.setBounds(50, 125, 900, 500);
+
+
+
+
+
+
 
             Continue.setBackground(Color.black);
             Continue.setForeground(Color.white);
@@ -60,10 +61,11 @@ public class InGame extends GPanel implements ActionListener {
             menuPauze.setForeground(Color.white);
             menuPauze.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
 
-            pause.add(pane);
+
             pause.add(Continue);
             pause.add(restartPauze);
             pause.add(menuPauze);
+
 
 
         }
@@ -111,8 +113,6 @@ public class InGame extends GPanel implements ActionListener {
         gamePanel = new GamePanel(enemies);
         pause.initComponents();
         gameEnd.initComponents();
-
-
         initComponents();
 
         this.add(pause);
@@ -124,16 +124,12 @@ public class InGame extends GPanel implements ActionListener {
         this.add(gamePanel);
         gamePanel.setOpaque(false);
 
-
         startGame.setBackground(Color.black);
         startGame.setForeground(Color.white);
         startGame.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
-        this.add(startGame);
-
-
+        //this.add(startGame);
 
         addActionListeners();
-
 
         gamePanel.setVisible(false);
 
@@ -211,8 +207,10 @@ public class InGame extends GPanel implements ActionListener {
 
         this.add(scorep1);
         this.add(healthp1);
+        this.add(startGame);
+        /*this.add(schipLvlp1);
+        this.add(droneLvlp1);*/
 
-        //this.add(droneLvlp1);
 
 
         //this.add(Quit);
@@ -220,54 +218,6 @@ public class InGame extends GPanel implements ActionListener {
         this.add(Yes);
         this.add(No);
 
-
-
-
-
-        /*Quit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                pauzepane.setVisible(true);
-                Yes.setVisible(true);
-                No.setVisible(true);
-                confirmationlabel.setVisible(true);
-            }
-
-
-
-        });
-
-        No.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                pauzepane.setVisible(false);
-                Yes.setVisible(false);
-                No.setVisible(false);
-                confirmationlabel.setVisible(false);
-            }
-
-
-
-        });
-
-        Yes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pauzepane.setVisible(false);
-                Yes.setVisible(false);
-                No.setVisible(false);
-                confirmationlabel.setVisible(false);
-                panel.setVisible(false);
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                window.getScoreboard().setVisible(true);
-
-            }
-
-
-
-        });
-        */
         pauze.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 //panel.setVisible(false);
@@ -286,9 +236,16 @@ public class InGame extends GPanel implements ActionListener {
 
     }
 
+    public GButton getStartGame() {
+        return startGame;
+    }
+
+    public GPanel getGameEnd() {
+        return gameEnd;
+    }
+
     public void initGamePanel() {
         setupGameTimer();
-        gameTimer.start();
         gamePanel.setVisible(true);
         gamePanel.requestFocus();
         gamePanel.setCoop(coop);
@@ -305,8 +262,10 @@ public class InGame extends GPanel implements ActionListener {
     public void checkGameFinished(){
         if (gamePanel.getGameFinished()) {
             pauze.setVisible(false);
+
             initEndGamePanel();
             System.out.println("game over");
+            gamePanel.resetGame();
         }
     }
 
@@ -336,7 +295,11 @@ public class InGame extends GPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
+        System.out.println(source);
         if (source == startGame) {
+            System.out.println("tzou werken");
+            gameEnd.setVisible(false);
+            gamePanel.setGameFinished(false);
             startGame.setVisible(false);
             initGamePanel();
             runGameLoop();
@@ -346,13 +309,11 @@ public class InGame extends GPanel implements ActionListener {
     }
 
     private void pauseGameLoop() {
+        gameTimer.stop();
         gamePanel.pauseGame();
         gamePanel.setFocusable(false);
         initPausePanel();
-
     }
-
-
 
     private void runGameLoop() {
         gameTimer.start();
@@ -360,13 +321,11 @@ public class InGame extends GPanel implements ActionListener {
 
     private void resumeGameLoop() {
         pause.setVisible(false);
-        gamePanel.startGame();
+        gamePanel.resumeGame();
         gamePanel.setFocusable(true);
         gamePanel.requestFocus(); // anders werkt de keybinds niet meer
         gameTimer.start();
-
     }
-
 
     private void updateGame() {
         gamePanel.update();
