@@ -47,7 +47,7 @@ public class Profile extends GPanel {
         //==================================================
 
         JLabel Title = new GTitle(25, 25);
-        JLabel Background = new JLabel(new ImageIcon(((new ImageIcon("src\\Media\\Background.png")).getImage().getScaledInstance(1920, 1080, java.awt.Image.SCALE_SMOOTH))));
+        JLabel Background = new JLabel(new ImageIcon(((new ImageIcon("resources\\Media\\Background.png")).getImage().getScaledInstance(1920, 1080, java.awt.Image.SCALE_SMOOTH))));
         JLabel Profile = new GPane(220, 160, 234, 300);
         JLabel ProfileInfo = new GPane(480, 160, 500, 540);
         JLabel Username = new GLabel("", 24f, 245, 175, 180, 64, true, Color.BLACK);

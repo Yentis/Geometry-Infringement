@@ -4,8 +4,13 @@ package Game;
 import GUI.GamePanel;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Random;
+import javax.swing.Timer;
 import java.util.*;
 
 import static java.lang.Math.abs;
@@ -47,10 +52,12 @@ public class Schip extends Sprite {
     private boolean droneActive;
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
+    private Drone drone;
 
     //private HashMap<String, Boolean> buffs = new HashMap<String, Boolean>();
 
     private String imageString;
+    private Timer mousePressedTimer;
 
 
     //endregion
@@ -88,6 +95,11 @@ public class Schip extends Sprite {
     }
 */
     //region Getters
+
+
+    public Drone getDrone() {
+        return drone;
+    }
 
     public String getImageString() {
         return imageString;
@@ -156,6 +168,11 @@ public class Schip extends Sprite {
     //endregion
 
     //region Setters
+
+
+    public void setDrone(Drone drone) {
+        this.drone = drone;
+    }
 
     public void setHp(int hp) {
         this.hp = hp;
@@ -405,6 +422,14 @@ public class Schip extends Sprite {
         dx = speed;
     }
 
+    public void controllerAim(int x, int y){
+        Point point = new Point(x, y);
+        fire(point);
+        if (isRandomBullets()) {
+            randomFire();
+        }
+    }
+
     public void mousePressed(MouseEvent e) {
         fire(e.getPoint());
         if (isRandomBullets()) {
@@ -429,16 +454,16 @@ public class Schip extends Sprite {
             mousePressedTimer = new Timer(50, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {*/
-        double kogelX = locationX;
-        double kogelY = locationY;
-        addKogels(new Kogel(kogelX, kogelY, mousePointer, "src/Media/kogel1.png"));
-              /*  }
+                    double kogelX = locationX;
+                    double kogelY = locationY;
+                    addKogels(new Kogel(kogelX, kogelY, mousePointer, "resources/Media/kogel1.png"));
+               /* }
             });
        }
         else{
             mousePressedTimer.start();
         }
-            */
+*/
     }
 
     public int randomX() {
@@ -469,7 +494,7 @@ public class Schip extends Sprite {
         int kogelY2 = randomY();
         Point mousePointer2 = new Point(kogelX2, kogelY2);
 
-        addKogels(new Kogel(kogelX, kogelY, mousePointer2, "src/Media/kogel1.png"));
+        addKogels(new Kogel(kogelX, kogelY, mousePointer2, "resources/Media/kogel1.png"));
         System.out.println(kogelX2 + " " + kogelY2);
     }
 

@@ -64,7 +64,7 @@ public class Coop extends GPanel implements ActionListener {
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
-        ImageIcon PauseImage = new ImageIcon("src\\Media\\pause-128.png");
+        ImageIcon PauseImage = new ImageIcon("resources/Media/pause-128.png");
         JButton pauze = new JButton(PauseImage);
         JLabel pane = new JLabel();
         JLabel pauzepane = new JLabel();

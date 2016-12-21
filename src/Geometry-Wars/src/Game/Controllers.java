@@ -1,5 +1,7 @@
 package Game;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -10,12 +12,15 @@ import net.java.games.input.Component.Identifier;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
 
+import javax.swing.*;
+
 /**
  * Created by Yentl-PC on 21/12/2016.
  */
 public class Controllers implements Runnable {
     private ArrayList<Controller> foundControllers;
     private Schip schip;
+    private Timer mousePressedTimer;
 
     public void run() {
         startShowingControllerData();
@@ -58,56 +63,54 @@ public class Controllers implements Runnable {
             }
 
             // X axis and Y axis
-            int xAxisPercentage = 0;
-            int yAxisPercentage = 0;
+            final int[] rxAxis = {getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData())};
+            final int[] ryAxis = {getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData())};
 
-            Component[] components = controller.getComponents();
+            if (mousePressedTimer == null){
+            mousePressedTimer = new Timer(50, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(controller.getComponent(Identifier.Button._4).getPollData() != 0.0f){
 
-            for(int i=0; i < components.length; i++)
-            {
-                Component component = components[i];
-                Identifier componentIdentifier = component.getIdentifier();
+                        rxAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData());
+                        ryAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData());
 
-                // Axes
-                if(component.isAnalog()){
-                    float axisValue = component.getPollData();
-                    int axisValueInPercentage = getAxisValueInPercentage(axisValue);
-
-                    // X axis
-                    if(componentIdentifier == Component.Identifier.Axis.X){
-                        xAxisPercentage = axisValueInPercentage;
-
-                        if(xAxisPercentage <= 35){
-                            //Pointing left
-                            schip.controllerPressed(37);
-                        } else if (xAxisPercentage >= 65){
-                            //Pointing right
-                            schip.controllerPressed(39);
-                        } else {
-                            schip.controllerReleased(37);
-                            schip.controllerReleased(39);
-                        }
-                        continue; // Go to next component.
-                    }
-                    // Y axis
-                    if(componentIdentifier == Component.Identifier.Axis.Y){
-                        yAxisPercentage = axisValueInPercentage;
-
-                        if(yAxisPercentage <= 35){
-                            //Pointing up
-                            schip.controllerPressed(38);
-                        } else if (yAxisPercentage >= 65){
-                            //Pointing down
-                            schip.controllerPressed(40);
-                        } else {
-                            schip.controllerReleased(38);
-                            schip.controllerReleased(40);
-                        }
-                        continue; // Go to next component.
+                        schip.controllerAim(rxAxis[0] * 9, ryAxis[0] * 5);
                     }
                 }
+            });
+            }else{
+                mousePressedTimer.start();
             }
 
+
+
+            int xAxis = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.X).getPollData());
+            int yAxis = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.Y).getPollData());
+
+            // X axis
+            if(xAxis <= 35){
+                //Pointing left
+                schip.controllerPressed(81);
+            } else if (xAxis >= 65){
+                //Pointing right
+                schip.controllerPressed(68);
+            } else {
+                schip.controllerReleased(81);
+                schip.controllerReleased(68);
+            }
+
+            // Y axis
+            if(yAxis <= 35){
+                //Pointing up
+                schip.controllerPressed(90);
+            } else if (yAxis >= 65){
+                //Pointing down
+                schip.controllerPressed(83);
+            } else {
+                schip.controllerReleased(90);
+                schip.controllerReleased(83);
+            }
 
             // We have to give processor some rest.
             try {

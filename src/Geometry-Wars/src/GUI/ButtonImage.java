@@ -13,7 +13,7 @@ public class ButtonImage extends JFrame {
     JButton pauze;
     ButtonImage() {
 
-        ImageIcon PauseImage = new ImageIcon("src\\Media\\pause-128.png");
+        ImageIcon PauseImage = new ImageIcon("resources\\Media\\pause-128.png");
         pauze = new JButton(PauseImage);
 
         setLayout(new FlowLayout());
