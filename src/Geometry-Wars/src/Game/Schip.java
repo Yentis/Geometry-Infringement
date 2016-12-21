@@ -29,7 +29,7 @@ public class Schip extends Sprite {
     private int combo = 0;
     private int level = 0;
     private int currentXp = 0;
-    private int maxXp;
+    private double maxXp = 1000;
     private int keyLeft;
     private int keyRight;
     private int keyUp;
@@ -184,30 +184,49 @@ public class Schip extends Sprite {
     //region levelProperties
 
 
-    public int getMaxXp() {
-        return maxXp;
-    }
-
     public void addLevel() {
         this.level += 1;
     }
-
-
 
     public void addCurrentXp(int xp) {
         this.currentXp += xp;
     }
 
+    public double getMaxXp() {
+        return maxXp;
+    }
 
     public void setMaxXp(int level) {
-        this.maxXp = (2 ^ level) * 1000;
+        this.maxXp = Math.pow(2,level) * 1000;
     }
 
     //endregion
 
 
-    public void checkLevel(int level){
+    public void checkLevel(){
+        if(getCurrentXp() >= getMaxXp()){
+            addLevel();
+            setMaxXp(getLevel());
+            checkLevel();
+        }
 
+        switch (getLevel()){
+            case 1:
+                setKracht(75);
+                break;
+            case 2:
+                setKracht(100);
+                break;
+            case 3:
+                setKracht(150);
+                break;
+            case 4:
+                setKracht(200);
+                break;
+            case 5:
+                setKracht(250);
+                break;
+        }
     }
 
     public void checkForUpgrade(int combo) {
@@ -230,7 +249,7 @@ public class Schip extends Sprite {
             case 50:
                 setLifesteal(true);
                 break;
-            case 100:
+            case 2:
                 //stays active when reached
                 setDroneActive(true);
                 break;

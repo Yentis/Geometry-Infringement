@@ -110,7 +110,7 @@ public class InGame extends GPanel implements ActionListener {
         startGame.setBackground(Color.black);
         startGame.setForeground(Color.white);
         startGame.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
-        this.add(startGame);
+        //this.add(startGame);
 
         addActionListeners();
 
@@ -124,11 +124,12 @@ public class InGame extends GPanel implements ActionListener {
 
         GLabel healthp1 = new GLabel("Health:", 24, 40,18,169,62, false, Color.black);
         GLabel scorep1 = new GLabel("Score:", 24, 25,65,169,62, false, Color.cyan);
-        GLabel schipLvlp1 = new GLabel("Ship lvl:", 24, 25,667,222,62, false, Color.green);
-        GLabel droneLvlp1 = new GLabel("Drone lvl:", 24, 250,667,222,62, false, new Color(155,255,204));
+        /*GLabel schipLvlp1 = new GLabel("Ship lvl:", 24, 25,667,222,62, false, Color.green);
+        GLabel droneLvlp1 = new GLabel("Drone lvl:", 24, 250,667,222,62, false, new Color(155,255,204));*/
         GLabel healthbarp1 = new GLabel("", 24, 15,23,434,47, true, Color.black);
-        GLabel dronebarp1 = new GLabel("", 24, 380,672,70,47, true, Color.black);
-        GLabel schipbarp1 = new GLabel("", 24, 140,672,100,47, true, Color.black);
+        //GamePanel to change shipxp and level
+        /*GLabel dronebarp1 = new GLabel("", 24, 380,672,70,47, true, Color.black);
+        GLabel schipbarp1 = new GLabel("", 24, 140,672,100,47, true, Color.black);*/
         GLabel confirmationlabel = new GLabel("Are you sure?", 30, 470,285,500,60, false, Color.cyan);
         //JButton Quit = new GButton("Quit", 24f, 20, 675, 100, 47);
         JButton Yes = new GButton("Yes", 24f, 455, 380, 100, 47);
@@ -141,8 +142,8 @@ public class InGame extends GPanel implements ActionListener {
 
 
         healthbarp1.setBackground(new Color(255, 255, 255, 95));
-        dronebarp1.setBackground(new Color(255, 255, 255, 95));
-        schipbarp1.setBackground(new Color(255, 255, 255, 95));
+        /*dronebarp1.setBackground(new Color(255, 255, 255, 95));
+        schipbarp1.setBackground(new Color(255, 255, 255, 95));*/
 
         pauze.setOpaque(true);
         pauze.setBackground(new Color(155, 255, 204, 200));
@@ -163,13 +164,14 @@ public class InGame extends GPanel implements ActionListener {
         //==================================================
         this.add(pane);
         this.add(healthbarp1);
-        this.add(schipbarp1);
-        this.add(dronebarp1);
+        /*this.add(schipbarp1);
+        this.add(dronebarp1);*/
         this.add(pauze);
         this.add(scorep1);
         this.add(healthp1);
-        this.add(schipLvlp1);
-        this.add(droneLvlp1);
+        this.add(startGame);
+        /*this.add(schipLvlp1);
+        this.add(droneLvlp1);*/
 
 
         //this.add(Quit);
@@ -177,53 +179,6 @@ public class InGame extends GPanel implements ActionListener {
         this.add(Yes);
         this.add(No);
 
-
-
-
-        /*Quit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                pauzepane.setVisible(true);
-                Yes.setVisible(true);
-                No.setVisible(true);
-                confirmationlabel.setVisible(true);
-            }
-
-
-
-        });
-
-        No.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                pauzepane.setVisible(false);
-                Yes.setVisible(false);
-                No.setVisible(false);
-                confirmationlabel.setVisible(false);
-            }
-
-
-
-        });
-
-        Yes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pauzepane.setVisible(false);
-                Yes.setVisible(false);
-                No.setVisible(false);
-                confirmationlabel.setVisible(false);
-                panel.setVisible(false);
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                window.getScoreboard().setVisible(true);
-
-            }
-
-
-
-        });
-        */
         pauze.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 //panel.setVisible(false);
@@ -268,8 +223,10 @@ public class InGame extends GPanel implements ActionListener {
     public void checkGameFinished(){
         if (gamePanel.getGameFinished()) {
             pauze.setVisible(false);
+
             initEndGamePanel();
             System.out.println("game over");
+            gamePanel.resetGame();
         }
     }
 
@@ -292,13 +249,16 @@ public class InGame extends GPanel implements ActionListener {
         gameEnd.setVisible(true);
         gameTimer.stop();
         gamePanel.setFocusable(false);
+
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
+        System.out.println(source);
         if (source == startGame) {
+            System.out.println("tzou werken");
             gameEnd.setVisible(false);
             gamePanel.setGameFinished(false);
             startGame.setVisible(false);
@@ -310,12 +270,11 @@ public class InGame extends GPanel implements ActionListener {
     }
 
     private void pauseGameLoop() {
+        gameTimer.stop();
         gamePanel.pauseGame();
         gamePanel.setFocusable(false);
         initPausePanel();
     }
-
-
 
     private void runGameLoop() {
         gameTimer.start();
@@ -328,7 +287,6 @@ public class InGame extends GPanel implements ActionListener {
         gamePanel.requestFocus(); // anders werkt de keybinds niet meer
         gameTimer.start();
     }
-
 
     private void updateGame() {
         gamePanel.update();

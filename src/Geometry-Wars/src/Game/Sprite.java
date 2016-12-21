@@ -43,6 +43,10 @@ public class Sprite {
         isHit = false;
     }
 
+    public boolean isNull(){
+        return this == null;
+    }
+
     public void updateLocation(Point targetLocation, Point currentLocation, double speed) {
         double length;
         double velocityX;
