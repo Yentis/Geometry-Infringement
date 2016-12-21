@@ -83,6 +83,7 @@ public class GamePanel extends GPanel {
         schip = null;
         drone = null;
         enemyCounter = 1;
+        enemyOnField.clear();
     }
 
     private void initGamePanel() {
@@ -160,11 +161,12 @@ public class GamePanel extends GPanel {
 
     public void startGame() {
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-
+        enemyCounter = 1;
         gameFinished = false;
         spawnTimer.start();
         Schip dummy = window.getSpel().getSchepen().get(0);
         Drone dummydr = window.getSpel().getDrones().get(0);
+        requestFocus();
 
         setSlowerEnemiesTimer(schip);
         setInvulnerabilityTimer(schip);
@@ -232,7 +234,6 @@ public class GamePanel extends GPanel {
     //paints the "draw" region
     @Override
     public void paintComponent(Graphics g) {
-
         super.paintComponent(g);
         drawBullets(g, schip.getKogels(), schip);
         drawBullets(g, drone.getKogels(), schip);
@@ -376,6 +377,7 @@ public class GamePanel extends GPanel {
 
     //region updates
     private void updateKogels(ArrayList<Kogel> kogels) {
+
         for (Iterator<Kogel> kogeliterator = kogels.iterator(); kogeliterator.hasNext(); ) {
             Kogel k = kogeliterator.next();
             k.updateLocation(k.getTarget(), k.getStartingPoint(), k.getKogelSnelheid());
@@ -399,9 +401,6 @@ public class GamePanel extends GPanel {
                                 shootingDroneTimer.start();
                             }
                         }
-                    }
-                    if (schip.isDroneActive()) {
-                        shootingDroneTimer.start();
                     }
                     kogeliterator.remove();
                 }
@@ -479,7 +478,6 @@ public class GamePanel extends GPanel {
         } else {
             //TODO
             gameFinished = true;
-
             System.out.println("invulnerability start");
             invulnerabilityTimer.start();
         }

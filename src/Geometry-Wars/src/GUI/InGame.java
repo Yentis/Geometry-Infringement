@@ -247,7 +247,6 @@ public class InGame extends GPanel implements ActionListener {
     public void initGamePanel() {
         setupGameTimer();
         gamePanel.setVisible(true);
-        gamePanel.requestFocus();
         gamePanel.setCoop(coop);
         gamePanel.startGame();
     }
@@ -262,8 +261,8 @@ public class InGame extends GPanel implements ActionListener {
     public void checkGameFinished(){
         if (gamePanel.getGameFinished()) {
             pauze.setVisible(false);
-
             initEndGamePanel();
+            gameTimer.stop();
             System.out.println("game over");
             gamePanel.resetGame();
         }
@@ -286,7 +285,7 @@ public class InGame extends GPanel implements ActionListener {
 
     public void initEndGamePanel() {
         gameEnd.setVisible(true);
-        gameTimer.stop();
+
         gamePanel.setFocusable(false);
 
     }
@@ -295,9 +294,7 @@ public class InGame extends GPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
-        System.out.println(source);
         if (source == startGame) {
-            System.out.println("tzou werken");
             gameEnd.setVisible(false);
             gamePanel.setGameFinished(false);
             startGame.setVisible(false);
