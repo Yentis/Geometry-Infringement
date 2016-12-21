@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Yentl-PC on 8/11/2016.
  */
-public class Spel {
+public class Spel implements Cloneable{
     //region Instance Variables
 
     private Speler speler;
@@ -26,7 +26,6 @@ public class Spel {
     //endregion
 
     //region Properties
-
 
     public Speler getSpeler() {
         return speler;
@@ -65,6 +64,10 @@ public class Spel {
     //endregion
 
     //region Behaviour
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 
     public void initDankabank() throws SQLException{
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
@@ -141,8 +144,6 @@ public class Spel {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
-
-        System.out.println("Password: " + wachtwoord);
 
         ResultSet myRs = myStmt.executeQuery("select count(*) from speler where gebruikersnaam = '" + gebruikersnaam + "' AND wachtwoord = '" + wachtwoord + "'");
 

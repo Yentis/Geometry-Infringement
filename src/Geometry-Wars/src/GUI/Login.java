@@ -146,7 +146,6 @@ public class Login extends GPanel{
 
         if(Objects.equals(result, "")){
             window.getSpel().logIn(gebruikersnaam);
-            System.out.println("login successful");
         } else {
             return result;
         }

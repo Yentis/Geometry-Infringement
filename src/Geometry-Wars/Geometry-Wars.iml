@@ -17,16 +17,18 @@
         <CLASSES />
         <JAVADOC />
         <SOURCES>
-          <root url="file://$MODULE_DIR$/../../../../jbox2d-jbox2d-2.3.0-BETA/jbox2d-jni-broadphase/src/main/java" />
-          <root url="file://$MODULE_DIR$/../../../../jbox2d-jbox2d-2.3.0-BETA/jbox2d-jni-broadphase/src/test/java" />
-          <root url="file://$MODULE_DIR$/../../../../jbox2d-jbox2d-2.3.0-BETA/jbox2d-library/src/main/java" />
-          <root url="file://$MODULE_DIR$/../../../../jbox2d-jbox2d-2.3.0-BETA/jbox2d-library/src/test/java" />
-          <root url="file://$MODULE_DIR$/../../../../jbox2d-jbox2d-2.3.0-BETA/jbox2d-serialization/src/generated" />
-          <root url="file://$MODULE_DIR$/../../../../jbox2d-jbox2d-2.3.0-BETA/jbox2d-serialization/src/main/java" />
-          <root url="file://$MODULE_DIR$/../../../../jbox2d-jbox2d-2.3.0-BETA/jbox2d-testbed-jogl/src/main/java" />
-          <root url="file://$MODULE_DIR$/../../../../jbox2d-jbox2d-2.3.0-BETA/jbox2d-testbed/src/main/java" />
+          <root url="file://C:/jbox2d-jbox2d-2.3.0-BETA/jbox2d-jni-broadphase/src/main/java" />
+          <root url="file://C:/jbox2d-jbox2d-2.3.0-BETA/jbox2d-jni-broadphase/src/test/java" />
+          <root url="file://C:/jbox2d-jbox2d-2.3.0-BETA/jbox2d-library/src/main/java" />
+          <root url="file://C:/jbox2d-jbox2d-2.3.0-BETA/jbox2d-library/src/test/java" />
+          <root url="file://C:/jbox2d-jbox2d-2.3.0-BETA/jbox2d-serialization/src/generated" />
+          <root url="file://C:/jbox2d-jbox2d-2.3.0-BETA/jbox2d-serialization/src/main/java" />
+          <root url="file://C:/jbox2d-jbox2d-2.3.0-BETA/jbox2d-testbed-jogl/src/main/java" />
+          <root url="file://C:/jbox2d-jbox2d-2.3.0-BETA/jbox2d-testbed/src/main/java" />
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="jinput" level="project" />
+    <orderEntry type="library" name="jinput" level="project" />
   </component>
 </module>

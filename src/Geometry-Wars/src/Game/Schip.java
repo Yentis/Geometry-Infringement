@@ -30,6 +30,7 @@ public class Schip extends Sprite {
     private int level = 0;
     private int currentXp = 0;
     private double maxXp = 1000;
+
     private int keyLeft;
     private int keyRight;
     private int keyUp;
@@ -46,7 +47,11 @@ public class Schip extends Sprite {
     private boolean droneActive;
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
-    private HashMap<String, Boolean> buffs = new HashMap<String, Boolean>();
+
+    //private HashMap<String, Boolean> buffs = new HashMap<String, Boolean>();
+
+    private String imageString;
+
 
     //endregion
 
@@ -54,6 +59,7 @@ public class Schip extends Sprite {
 
     public Schip(int nr, int hp, int kracht, String image, int keyLeft, int keyRight, int keyUp, int keyDown, double speed) {
         super(image);
+        imageString = image;
         currentLocation = new Point();
         currentLocation.setLocation(700, 300);
         locationX = currentLocation.getX();
@@ -68,19 +74,53 @@ public class Schip extends Sprite {
         this.keyDown = keyDown;
         this.speed = speed;
         move = new Movement(this, keyLeft, keyRight, keyUp, keyDown);
-        updateBuffs();
+        //updateBuffs();
     }
     //endregion
 
-    private void updateBuffs(){
+
+   /* private void updateBuffs(){
         buffs.put("lifesteal", lifesteal);
         buffs.put("invulnerability", invulnerability);
         buffs.put("randomBullets", randomBullets);
         buffs.put("slowerEnemies", slowerEnemies);
         buffs.put("droneActive", droneActive);
     }
-
+*/
     //region Getters
+
+    public String getImageString() {
+        return imageString;
+    }
+
+    public int getKeyUp() {
+        return keyUp;
+    }
+
+    public int getKeyDown() {
+        return keyDown;
+    }
+
+    public int getKeyRight() {
+        return keyRight;
+    }
+
+    public int getKeyLeft() {
+        return keyLeft;
+    }
+
+    public int getKracht() {
+        return kracht;
+    }
+
+    public int getNr() {
+        return nr;
+    }
+
+    public Movement getMove() {
+        return move;
+    }
+
     public int getCombo() {
         return combo;
     }
@@ -101,10 +141,6 @@ public class Schip extends Sprite {
         return maxhp;
     }
 
-    public ArrayList<Kogel> getKogels() {
-        return kogels;
-    }
-
     public int getLevel() {
         return level;
     }
@@ -113,9 +149,9 @@ public class Schip extends Sprite {
         return currentXp;
     }
 
-    public HashMap<String,Boolean> getBuffs() {
+    /*public HashMap<String,Boolean> getBuffs() {
         return buffs;
-    }
+    }*/
 
     //endregion
 
@@ -127,6 +163,16 @@ public class Schip extends Sprite {
 
     public void setSpeed(double speed) {
         this.speed = speed;
+    }
+    public void setControls(int keyLeft, int keyRight, int keyUp, int keyDown){
+        this.keyLeft = keyLeft;
+        this.keyRight = keyRight;
+        this.keyUp = keyUp;
+        this.keyDown = keyDown;
+    }
+
+    public ArrayList<Kogel> getKogels() {
+        return kogels;
     }
 
 
@@ -192,6 +238,8 @@ public class Schip extends Sprite {
         this.currentXp += xp;
     }
 
+    public void resetCurrentXp() { this.currentXp = 0;}
+
     public double getMaxXp() {
         return maxXp;
     }
@@ -208,6 +256,7 @@ public class Schip extends Sprite {
             addLevel();
             setMaxXp(getLevel());
             checkLevel();
+            resetCurrentXp();
         }
 
         switch (getLevel()){
@@ -259,7 +308,7 @@ public class Schip extends Sprite {
 
 
         }
-        updateBuffs();
+        //updateBuffs();
     }
 
     public void setCombo(int combo) {
@@ -322,6 +371,14 @@ public class Schip extends Sprite {
             return minBorder;
         }
         return currLocation;
+    }
+
+    public void controllerPressed(int key){
+        move.controllerPressed(key);
+    }
+
+    public void controllerReleased(int key){
+        move.controllerReleased(key);
     }
 
     public void keyPressed(KeyEvent e) {
