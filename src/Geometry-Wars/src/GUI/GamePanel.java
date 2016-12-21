@@ -352,7 +352,7 @@ public class GamePanel extends GPanel {
                 if (schip.isDroneActive()){
                     shootingDroneTimer.start();
                 }
-               
+
                 schip.addCurrentXp(20);
                 schip.checkLevel();
 
