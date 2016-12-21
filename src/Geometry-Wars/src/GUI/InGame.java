@@ -42,12 +42,14 @@ public class InGame extends GPanel implements ActionListener {
             pause.add(restart);
             pause.add(menu);
 
-            JLabel pane = new JLabel();
+
+
+            /*JLabel pane = new JLabel();
             pane.setOpaque(true);
             pane.setBackground(new Color(255, 255, 255, 2));
             pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
             pane.setBounds(50, 125, 900, 500);
-            pause.add(pane);
+            pause.add(pane);*/
 
         }
     };
@@ -94,8 +96,6 @@ public class InGame extends GPanel implements ActionListener {
         gamePanel = new GamePanel(enemies);
         pause.initComponents();
         gameEnd.initComponents();
-
-
         initComponents();
 
         this.add(pause);
@@ -107,16 +107,12 @@ public class InGame extends GPanel implements ActionListener {
         this.add(gamePanel);
         gamePanel.setOpaque(false);
 
-
         startGame.setBackground(Color.black);
         startGame.setForeground(Color.white);
         startGame.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
         this.add(startGame);
 
-
-
         addActionListeners();
-
 
         gamePanel.setVisible(false);
 
@@ -246,9 +242,16 @@ public class InGame extends GPanel implements ActionListener {
 
     }
 
+    public GButton getStartGame() {
+        return startGame;
+    }
+
+    public GPanel getGameEnd() {
+        return gameEnd;
+    }
+
     public void initGamePanel() {
         setupGameTimer();
-        gameTimer.start();
         gamePanel.setVisible(true);
         gamePanel.requestFocus();
         gamePanel.setCoop(false);
@@ -289,7 +292,6 @@ public class InGame extends GPanel implements ActionListener {
         gameEnd.setVisible(true);
         gameTimer.stop();
         gamePanel.setFocusable(false);
-
     }
 
 
@@ -297,6 +299,8 @@ public class InGame extends GPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if (source == startGame) {
+            gameEnd.setVisible(false);
+            gamePanel.setGameFinished(false);
             startGame.setVisible(false);
             initGamePanel();
             runGameLoop();
@@ -309,7 +313,6 @@ public class InGame extends GPanel implements ActionListener {
         gamePanel.pauseGame();
         gamePanel.setFocusable(false);
         initPausePanel();
-
     }
 
 
@@ -320,11 +323,10 @@ public class InGame extends GPanel implements ActionListener {
 
     private void resumeGameLoop() {
         pause.setVisible(false);
-        gamePanel.startGame();
+        gamePanel.resumeGame();
         gamePanel.setFocusable(true);
         gamePanel.requestFocus(); // anders werkt de keybinds niet meer
         gameTimer.start();
-
     }
 
 

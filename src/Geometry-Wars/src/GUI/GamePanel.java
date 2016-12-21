@@ -28,7 +28,7 @@ public class GamePanel extends GPanel {
     private Drone dronep2;
     private ArrayList<Enemy> enemyOnField = new ArrayList<Enemy>();
     private List<Enemy> enemies = new ArrayList<>();
-    private int enemyCounter = 1;
+    private int enemyCounter;
     private Timer spawnTimer;
     private Timer invulnerabilityTimer;
     private Timer slowerEnemiesTimer;
@@ -44,8 +44,10 @@ public class GamePanel extends GPanel {
     private boolean coop;
     private boolean gameFinished;
     private int baseDamage = 50;
-    private int wave = 1;
+    private int wave = 1; //@laurens wave kan je ook gwn geven als enemycounter for now right
     private Timer shootingDroneTimer;
+    private HashMap<String, Boolean> activeBuffs = new HashMap<String, Boolean>();
+    private Rectangle2D slowerEnemies;
 
     public GamePanel(List<Enemy> enemies) throws IOException, FontFormatException {
         this.enemies = enemies;
@@ -59,6 +61,10 @@ public class GamePanel extends GPanel {
 
     public boolean getGameFinished() {
         return gameFinished;
+    }
+
+    public void setGameFinished(boolean gameFinished) {
+        this.gameFinished = gameFinished;
     }
 
     @Override
@@ -102,10 +108,10 @@ public class GamePanel extends GPanel {
     public void startGame() {
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         gameFinished = false;
+        enemyCounter = 1;
         spawnTimer.start();
 
         try {
-
             setSlowerEnemiesTimer();
             setInvulnerabilityTimer();
 
@@ -122,18 +128,49 @@ public class GamePanel extends GPanel {
             dronep2 = window.getSpel().getDrones().get(0);
         }
         setUpShootingDroneTimer(drone);
-
     }
 
     public void pauseGame() {
         spawnTimer.stop();
     }
 
+    public void resumeGame(){
+        spawnTimer.start();
+    }
+
+    public void updateBuffs() {
+        //wanneer de buff active is en nog niet in de activebuffs zit add je het
+        for (HashMap.Entry<String, Boolean> buff : schip.getBuffs().entrySet()) {
+            //als de buff active is en als de buff nog niet in de hashmap zit
+            if (buff.getValue() && !activeBuffs.containsKey(buff.getKey())) {
+                activeBuffs.put(buff.getKey(), buff.getValue());
+                //anders als de buff false is en als de buff nog steeds in de hashmap zit
+            } else if (!buff.getValue() && activeBuffs.containsKey(buff.getKey())) {
+                activeBuffs.remove(buff.getKey());
+            }
+        }
+    }
+
+    public void drawBuffs(Graphics g) {
+        //TODO probleem: het drawt maar 1 rectangle per keer
+        Graphics2D g2d = (Graphics2D) g;
+        if (activeBuffs.size() > 0){
+            //i = 1 want anders wordt het * 0
+            for(int i = 1; i < activeBuffs.size() + 1 ; i++)
+            if (slowerEnemies == null){
+                slowerEnemies = new Rectangle2D.Double(10, 125 + 30 * i, 30, 30) ;
+            } else {
+                slowerEnemies.setRect(10, 125 * i, 30, 30);
+            }
+            g2d.draw(slowerEnemies);
+        }
+    }
 
     //paints the "draw" region
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        drawBuffs(g);
         drawBullets(g, schip.getKogels());
         drawBullets(g, drone.getKogels());
         drawShip(g, schip);
@@ -151,7 +188,6 @@ public class GamePanel extends GPanel {
     private void drawShip(Graphics g, Schip schip) {
         Graphics2D g2d = (Graphics2D) g;
         schip.draw(g2d, schip.getCurrentAngle());
-
         schipHit(schip);
     }
 
@@ -177,7 +213,7 @@ public class GamePanel extends GPanel {
         if (!kogels.isEmpty()) {
             for (Iterator<Kogel> kogelIterator = kogels.iterator(); kogelIterator.hasNext(); ) {
                 Kogel k = kogelIterator.next();
-                if (k.isOutOfBorder(k.getCurrentLocation().getX(), 60, 925) || k.isOutOfBorder(k.getCurrentLocation().getY(), 125, 600)){
+                if (k.isOutOfBorder(k.getCurrentLocation().getX(), 60, 925) || k.isOutOfBorder(k.getCurrentLocation().getY(), 125, 600)) {
                     kogelIterator.remove();
                 }
                 k.draw(g2d, k.getDirection(k.getTarget(), k.getStartingPoint()));
@@ -313,7 +349,7 @@ public class GamePanel extends GPanel {
             if (enemy.isHit()) {
                 schip.addCombo();
                 schip.checkForUpgrade(schip.getCombo());
-                if (schip.isDroneActive()){
+                if (schip.isDroneActive()) {
                     shootingDroneTimer.start();
                 }
                 //schip.addCurrentXp(enemy.get);
@@ -338,6 +374,7 @@ public class GamePanel extends GPanel {
 
     //updates the "updates" region
     public void update() {
+        updateBuffs();
         updateKogels(schip.getKogels());
         updateKogels(drone.getKogels());
         approachShip();

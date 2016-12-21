@@ -6,10 +6,7 @@ import GUI.GamePanel;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 import static java.lang.Math.abs;
 
@@ -49,7 +46,7 @@ public class Schip extends Sprite {
     private boolean droneActive;
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
-
+    private HashMap<String, Boolean> buffs = new HashMap<String, Boolean>();
 
     //endregion
 
@@ -71,9 +68,19 @@ public class Schip extends Sprite {
         this.keyDown = keyDown;
         this.speed = speed;
         move = new Movement(this, keyLeft, keyRight, keyUp, keyDown);
+        updateBuffs();
     }
     //endregion
 
+    private void updateBuffs(){
+        buffs.put("lifesteal", lifesteal);
+        buffs.put("invulnerability", invulnerability);
+        buffs.put("randomBullets", randomBullets);
+        buffs.put("slowerEnemies", slowerEnemies);
+        buffs.put("droneActive", droneActive);
+    }
+
+    //region Getters
     public int getCombo() {
         return combo;
     }
@@ -90,25 +97,45 @@ public class Schip extends Sprite {
         return speed;
     }
 
-    //endregion
-
-    //region Properties
     public int getMaxhp() {
         return maxhp;
-    }
-
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
     }
 
     public ArrayList<Kogel> getKogels() {
         return kogels;
     }
 
+    public int getLevel() {
+        return level;
+    }
+
+    public int getCurrentXp() {
+        return currentXp;
+    }
+
+    public HashMap<String,Boolean> getBuffs() {
+        return buffs;
+    }
+
+    //endregion
+
+    //region Setters
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+
+    public double getCurrentAngle() {
+        return currentAngle;
+    }
+    public void setCurrentAngle(double currentAngle) {
+        this.currentAngle = currentAngle;
+    }
     //endregion
 
     //region ComboProperties
@@ -157,25 +184,20 @@ public class Schip extends Sprite {
     //region levelProperties
 
 
-    public int getLevel() {
-        return level;
+    public int getMaxXp() {
+        return maxXp;
     }
 
     public void addLevel() {
         this.level += 1;
     }
 
-    public int getCurrentXp() {
-        return currentXp;
-    }
+
 
     public void addCurrentXp(int xp) {
         this.currentXp += xp;
     }
 
-    public int getMaxXp() {
-        return maxXp;
-    }
 
     public void setMaxXp(int level) {
         this.maxXp = (2 ^ level) * 1000;
@@ -189,13 +211,13 @@ public class Schip extends Sprite {
     }
 
     public void checkForUpgrade(int combo) {
-
-        if (combo % 50 == 0) {
+        //TODO terugveranderen :p - Renzie dit is voor de upgrade arraylist check
+        if (combo % 4 == 0) {
             //Every 50 combo
             setInvulnerability(true);
 
             //System.out.println("setInvulnerability");
-        } else if (combo % 75 == 0) {
+        } else if (combo % 2 == 0) {
             //Every 75 combo
             setSlowerEnemies(true);
         }
@@ -218,6 +240,7 @@ public class Schip extends Sprite {
 
 
         }
+        updateBuffs();
     }
 
     public void setCombo(int combo) {
@@ -375,17 +398,11 @@ public class Schip extends Sprite {
     }
 
 
-    public double getCurrentAngle() {
-        return currentAngle;
-    }
 
     public void setImage(String image){
 
     }
 
-    public void setCurrentAngle(double currentAngle) {
-        this.currentAngle = currentAngle;
-    }
 
     // Dit zorgt ervoor dat de angle binnen 360 blijft.
     public double normalizeAngle(double angle) {
