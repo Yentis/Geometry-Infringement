@@ -70,12 +70,12 @@ public class Controllers implements Runnable {
             mousePressedTimer = new Timer(50, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if(controller.getComponent(Identifier.Button._4).getPollData() != 0.0f){
+                    if(controller.getComponent(Identifier.Button._5).getPollData() != 0.0f){
 
                         rxAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData());
                         ryAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData());
 
-                        schip.controllerAim(rxAxis[0] * 9, ryAxis[0] * 5);
+                        schip.controllerAim(rxAxis[0] * 10.24, ryAxis[0] * 7.68);
                     }
                 }
             });

@@ -1,4 +1,6 @@
-package Game;
+package Game.InGameUpgrade;
+
+import Game.Schip;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +22,8 @@ public class InGameUpgrade {
         this.naam = naam;
         this.foto = foto;
         active = false;
+        ImageIcon ii = new ImageIcon(foto);
+        this.image = ii.getImage();
     }
 
     public InGameUpgrade(){
@@ -60,27 +64,9 @@ public class InGameUpgrade {
     }
 
 
-    public class LifeSteal extends InGameUpgrade{
-        private Schip schip;
-        private Image image;
 
-        public LifeSteal(int nr, String naam, String foto, Schip schip) {
-            super(nr, naam, foto);
-            this.schip = schip;
-            ImageIcon ii = new ImageIcon(foto);
-            this.image = ii.getImage();
-        }
 
-        @Override
-        public Image getImage() {
-            return image;
-        }
+    public class Invulnerability extends InGameUpgrade{
 
-        @Override
-        public void doFunction(){
-            if (isActive()){
-                schip.addHp(2);
-            }
-        }
     }
 }

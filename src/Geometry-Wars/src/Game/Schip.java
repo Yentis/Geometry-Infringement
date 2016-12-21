@@ -1,17 +1,15 @@
 package Game;
 
 
-import GUI.GamePanel;
+import Game.InGameUpgrade.InGameUpgrade;
+import Game.InGameUpgrade.LifeSteal;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.Timer;
-import java.util.*;
 
 import static java.lang.Math.abs;
 
@@ -56,7 +54,7 @@ public class Schip extends Sprite {
 
     //IngameUpgrades
     private InGameUpgrade inGameUpgrade = new InGameUpgrade();
-    private InGameUpgrade.LifeSteal lifesteal = inGameUpgrade.new LifeSteal(1, "LifeSteal", "resources/Media/IngameUpgradeIcons/LifeSteal.png", this);
+    private LifeSteal lifesteal = new LifeSteal(1, "LifeSteal", "resources/Media/IngameUpgradeIcons/LifeSteal.png", this);
     private ArrayList<InGameUpgrade> buffs = new ArrayList<InGameUpgrade>();
     private ArrayList<InGameUpgrade> activeBuffs = new ArrayList<InGameUpgrade>();
 
@@ -229,14 +227,6 @@ public class Schip extends Sprite {
         this.invulnerability = invulnerability;
     }
 
-   /* public boolean isLifesteal() {
-        return lifesteal;
-    }
-
-    public void setLifesteal(boolean lifesteal) {
-        this.lifesteal = lifesteal;
-    }*/
-
     public boolean isRandomBullets() {
         return randomBullets;
     }
@@ -351,7 +341,7 @@ public class Schip extends Sprite {
         //updateBuffs();
     }
 
-    public InGameUpgrade.LifeSteal getLifesteal() {
+    public LifeSteal getLifesteal() {
         return lifesteal;
     }
 
@@ -449,8 +439,9 @@ public class Schip extends Sprite {
         dx = speed;
     }
 
-    public void controllerAim(int x, int y) {
-        Point point = new Point(x, y);
+
+    public void controllerAim(double x, double y) {
+        Point point = new Point((int) x, (int) y);
         fire(point);
         if (isRandomBullets()) {
             randomFire();
@@ -462,13 +453,11 @@ public class Schip extends Sprite {
         if (isRandomBullets()) {
             randomFire();
         }
-
     }
 
     public void mouseReleased(MouseEvent e) {
-        /*if (mousePressedTimer != null){
+        /*if (mousePressedTimer != null) {
             mousePressedTimer.stop();
-            System.out.println("mouse released");
         }*/
     }
 
@@ -477,21 +466,28 @@ public class Schip extends Sprite {
     }
 
     public void fire(Point mousePointer) {
-        /*if (mousePressedTimer == null){
-            mousePressedTimer = new Timer(50, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {*/
-        double kogelX = locationX;
-        double kogelY = locationY;
-        addKogels(new Kogel(kogelX, kogelY, mousePointer, "resources/Media/kogel1.png"));
-               /* }
-            });
-       }
-        else{
+        /*System.out.println(mousePointer);
+        int delay = 50;
+        ActionListener taskPerformer = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {*/
+                double kogelX = locationX;
+                double kogelY = locationY;
+
+                addKogels(new Kogel(kogelX, kogelY, mousePointer, "resources/Media/kogel1.png"));
+           /* }
+        };
+
+        if (mousePressedTimer == null) { //PROBLEEM: hij stelt de eerst geschoten angle in en savet het
+            mousePressedTimer = new Timer(delay, taskPerformer);
             mousePressedTimer.start();
-        }
-*/
+        }else {
+            mousePressedTimer.start();
+        }*/
     }
+
+
+
 
     public int randomX() {
         Random randomGenerator = new Random();
