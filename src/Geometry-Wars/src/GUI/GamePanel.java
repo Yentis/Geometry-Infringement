@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import java.sql.Time;
-import java.util.*;
 import java.util.List;
 
 import javax.swing.*;
@@ -43,14 +41,17 @@ public class GamePanel extends GPanel {
     private GLabel scorep2;
     private GLabel schipbarp1;
     private GLabel dronebarp1;
-    private JProgressBar currentXpBar;
+    private JProgressBar currentSchipXpBar;
+    private JProgressBar currentDroneXpBar;
     private JProgressBar currentHealthBar;
     private JProgressBar currentHealthBarp2;
     private double healthBarWidth;
     private double healthBarWidthp2;
-    private double xpBarWidth;
+    private double xpBarWidthSchip;
+    private double xpBarWidthDrone;
     private double ratioHP;
-    private double ratioXP;
+    private double ratioSchipXP;
+    private double ratioDroneXp;
     private boolean coop;
     private boolean gameFinished;
     private int baseDamage = 50;
@@ -81,13 +82,19 @@ public class GamePanel extends GPanel {
 
         combo = new GLabel("x 0", 36f, 30, 620, 200, 60, false, Color.white);
         score = new GLabel("0", 30f, 140, 65, 300, 60, false, Color.white);
-        //dronebarp1 = new GLabel("", 24, 380,672,70,47, true, Color.black);
-        GLabel schipLvlp1 = new GLabel("Ship lvl:", 24, 25,667,222,62, false, Color.green);
-        schipbarp1 = new GLabel("", 24, 140,672,200,47, true, Color.gray);
-        currentXpBar = new JProgressBar();
-        currentXpBar.setBounds(140,675,0,45);
-        currentXpBar.setBackground(new Color(0,200,0));
-        currentXpBar.setOpaque(true);
+
+        GLabel schipLvlp1 = new GLabel("Ship:", 24, 25,667,222,62, false, new Color(50,50,255));
+        GLabel droneLvlp1 = new GLabel("Drone:", 24, 315,667,222,62, false, new Color(50,50,255));
+        schipbarp1 = new GLabel("", 24, 100,672,200,47, true, Color.gray);
+        dronebarp1 = new GLabel("", 24, 415,672,200,47, true, Color.gray);
+        currentSchipXpBar = new JProgressBar();
+        currentSchipXpBar.setBounds(100,673,0,45);
+        currentSchipXpBar.setBackground(new Color(50,50,255,100));
+        currentSchipXpBar.setOpaque(true);
+        currentDroneXpBar = new JProgressBar();
+        currentDroneXpBar.setBounds(415,673,0,45);
+        currentDroneXpBar.setBackground(new Color(50,50,255,100));
+        currentDroneXpBar.setOpaque(true);
         currentHealthBar = new JProgressBar();
         currentHealthBar.setBounds(20, 27, 425, 40);
         currentHealthBar.setBackground(new Color(0, 200, 0));
@@ -110,12 +117,15 @@ public class GamePanel extends GPanel {
         }
         panel.add(combo);
         panel.add(score);
-        panel.add(currentXpBar);
+        panel.add(currentSchipXpBar);
         panel.add(currentHealthBar);
         panel.add(schipbarp1);
         panel.add(schipLvlp1);
+        panel.add(dronebarp1);
+        panel.add(droneLvlp1);
+        panel.add(currentDroneXpBar);
 
-        //panel.add(dronebarp1);
+
 
 
         setAllComponentsVisible();
@@ -133,7 +143,7 @@ public class GamePanel extends GPanel {
             setInvulnerabilityTimer();
 
             initComponents();
-            schipbarp1.setText(" 0 | xp: 0");
+            schipbarp1.setText(" lvl: 0 ");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (FontFormatException e) {
@@ -212,9 +222,11 @@ public class GamePanel extends GPanel {
                         k.setHit(true);
                         //TODO combo bepalen en upgrades uitvoeren
 
-                        if (schip.getHp() < 100 && schip.isLifesteal()) {
-                            schip.addHp(2);
-                        }
+                            if (schip.getHp() < 100 && schip.isLifesteal()) {
+                                schip.addHp(2);
+                            }
+
+
                     }
                 }
             }
@@ -340,15 +352,13 @@ public class GamePanel extends GPanel {
                 if (schip.isDroneActive()){
                     shootingDroneTimer.start();
                 }
-
+               
                 schip.addCurrentXp(20);
                 schip.checkLevel();
-                //schipbarp1.setText(" " + schip.getLevel() + " | XP: " + schip.getCurrentXp());
-                currentXpBar.setSize((int) updateXpBar(xpBarWidth), currentXpBar.getHeight());
-                //System.out.println("XP: " + schip.getCurrentXp());
-                //System.out.println("Level: " + schip.getLevel());
 
-                //schip.addCurrentXp(enemy.get);
+                currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip), currentSchipXpBar.getHeight());
+
+                currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone), currentDroneXpBar.getHeight());
 
                 enemyIterator.remove();
 
@@ -432,13 +442,20 @@ public class GamePanel extends GPanel {
     }
 
 
-    private double updateXpBar(double xpBarWidth){
-        ratioXP = 190 / schip.getMaxXp();
-        xpBarWidth = ratioXP * schip.getCurrentXp();
-        System.out.println("Current: " +schip.getCurrentXp());
-        System.out.println("maxXP: " +schip.getMaxXp());
-        System.out.println(xpBarWidth);
-        return xpBarWidth;
+    private double updateSchipXpBar(double xpBarWidthSchip){
+        ratioSchipXP = 190 / schip.getMaxXp();
+        xpBarWidthSchip = ratioSchipXP * schip.getCurrentXp();
+        schipbarp1.setText(" lvl: " + schip.getLevel());
+        return xpBarWidthSchip;
+    }
+
+    private double updateDroneXpBar(double xpBarWidthDrone){
+        ratioDroneXp = 200 / drone.getMaxXp();
+        xpBarWidthDrone = ratioDroneXp * drone.getCurrentXp();
+        dronebarp1.setText(" lvl: " + drone.getLevel());
+        return xpBarWidthDrone;
+
+
     }
 
 
