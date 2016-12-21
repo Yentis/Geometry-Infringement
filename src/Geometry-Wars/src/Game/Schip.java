@@ -32,15 +32,15 @@ public class Schip extends Sprite {
     private int combo = 0;
     private int level = 0;
     private int currentXp = 0;
-<<<<<<< HEAD
+
     private double maxXp = 1000;
-=======
-    private int maxXp;
+
+
     private int keyLeft;
     private int keyRight;
     private int keyUp;
     private int keyDown;
->>>>>>> origin/master
+
     private ArrayList<Kogel> kogels = new ArrayList<Kogel>();
     private double locationX;
     private double locationY;
@@ -177,6 +177,8 @@ public class Schip extends Sprite {
         this.currentXp += xp;
     }
 
+    public void resetCurrentXp() { this.currentXp = 0;}
+
     public double getMaxXp() {
         return maxXp;
     }
@@ -193,6 +195,7 @@ public class Schip extends Sprite {
             addLevel();
             setMaxXp(getLevel());
             checkLevel();
+            resetCurrentXp();
         }
 
         switch (getLevel()){
