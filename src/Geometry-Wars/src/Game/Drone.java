@@ -17,7 +17,7 @@ public class Drone extends Sprite{
     private int kracht = 2;
     private String uiterlijk;
     private int level = 1;
-    private int experience = 0;
+    private int XP = 0;
     private double currentAngle;
     private int fireSpeed = 500; // om de 0,5 seconden
     private ArrayList<Kogel> kogels = new ArrayList<Kogel>();
@@ -57,13 +57,20 @@ public class Drone extends Sprite{
         return fireSpeed;
     }
 
-
     public double getCurrentAngle() {
         return currentAngle;
     }
 
     public void setCurrentAngle(double currentAngle) {
         this.currentAngle = currentAngle;
+    }
+
+    public void addXP(int xp){
+        XP += xp;
+    }
+
+    public int getXP() {
+        return XP;
     }
 
     public void drawAccordingToShip(Graphics2D g2d, Schip schip){
