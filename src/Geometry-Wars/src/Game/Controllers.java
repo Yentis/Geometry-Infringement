@@ -79,15 +79,13 @@ public class Controllers implements Runnable {
 
                         if(xAxisPercentage <= 35){
                             //Pointing left
-                            System.out.println("left");
-                            schip.controllerPressed(0);
+                            schip.controllerPressed(37);
                         } else if (xAxisPercentage >= 65){
                             //Pointing right
-                            System.out.println("right");
-                            schip.controllerPressed(1);
+                            schip.controllerPressed(39);
                         } else {
-                            schip.controllerReleased(0);
-                            schip.controllerReleased(1);
+                            schip.controllerReleased(37);
+                            schip.controllerReleased(39);
                         }
                         continue; // Go to next component.
                     }
@@ -97,15 +95,13 @@ public class Controllers implements Runnable {
 
                         if(yAxisPercentage <= 35){
                             //Pointing up
-                            System.out.println("up");
-                            schip.controllerPressed(2);
+                            schip.controllerPressed(38);
                         } else if (yAxisPercentage >= 65){
                             //Pointing down
-                            System.out.println("down");
-                            schip.controllerPressed(3);
+                            schip.controllerPressed(40);
                         } else {
-                            schip.controllerReleased(2);
-                            schip.controllerReleased(3);
+                            schip.controllerReleased(38);
+                            schip.controllerReleased(40);
                         }
                         continue; // Go to next component.
                     }
