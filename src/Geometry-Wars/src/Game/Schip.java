@@ -52,6 +52,7 @@ public class Schip extends Sprite {
     private boolean droneActive;
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
+    private Drone drone;
 
     //private HashMap<String, Boolean> buffs = new HashMap<String, Boolean>();
 
@@ -94,6 +95,11 @@ public class Schip extends Sprite {
     }
 */
     //region Getters
+
+
+    public Drone getDrone() {
+        return drone;
+    }
 
     public String getImageString() {
         return imageString;
@@ -162,6 +168,11 @@ public class Schip extends Sprite {
     //endregion
 
     //region Setters
+
+
+    public void setDrone(Drone drone) {
+        this.drone = drone;
+    }
 
     public void setHp(int hp) {
         this.hp = hp;

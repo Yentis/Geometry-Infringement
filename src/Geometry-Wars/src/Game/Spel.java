@@ -79,7 +79,7 @@ public class Spel implements Cloneable{
 
         int i = 0;
         while (schip.next()){
-            schepen.add(i, new Schip(schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image"), 37, 39, 38, 40, schip.getInt("speed")));
+            schepen.add(i, new Schip(schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image"), 81, 68, 90, 83, schip.getInt("speed")));
             i++;
         }
         //endregion

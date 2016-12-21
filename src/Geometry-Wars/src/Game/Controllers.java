@@ -91,25 +91,25 @@ public class Controllers implements Runnable {
             // X axis
             if(xAxis <= 35){
                 //Pointing left
-                schip.controllerPressed(37);
+                schip.controllerPressed(81);
             } else if (xAxis >= 65){
                 //Pointing right
-                schip.controllerPressed(39);
+                schip.controllerPressed(68);
             } else {
-                schip.controllerReleased(37);
-                schip.controllerReleased(39);
+                schip.controllerReleased(81);
+                schip.controllerReleased(68);
             }
 
             // Y axis
             if(yAxis <= 35){
                 //Pointing up
-                schip.controllerPressed(38);
+                schip.controllerPressed(90);
             } else if (yAxis >= 65){
                 //Pointing down
-                schip.controllerPressed(40);
+                schip.controllerPressed(83);
             } else {
-                schip.controllerReleased(38);
-                schip.controllerReleased(40);
+                schip.controllerReleased(90);
+                schip.controllerReleased(83);
             }
 
             // We have to give processor some rest.
