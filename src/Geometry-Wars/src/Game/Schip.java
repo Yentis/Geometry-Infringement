@@ -422,8 +422,8 @@ public class Schip extends Sprite {
         dx = speed;
     }
 
-    public void controllerAim(int x, int y){
-        Point point = new Point(x, y);
+    public void controllerAim(double x, double y){
+        Point point = new Point((int)x, (int)y);
         fire(point);
         if (isRandomBullets()) {
             randomFire();

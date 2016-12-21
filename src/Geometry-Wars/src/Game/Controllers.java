@@ -75,7 +75,7 @@ public class Controllers implements Runnable {
                         rxAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData());
                         ryAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData());
 
-                        schip.controllerAim(rxAxis[0] * 9, ryAxis[0] * 5);
+                        schip.controllerAim(rxAxis[0] * 10.24, ryAxis[0] * 7.68);
                     }
                 }
             });
