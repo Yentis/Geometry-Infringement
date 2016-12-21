@@ -54,7 +54,6 @@ public class Profile extends GPanel {
         JLabel ProfilePicture = new GIcon("ProfilePictures\\" + speler.getGebruikersnaam() + ".png", 245, 268, 180, 170, true);
         JLabel Rank = new GLabel(speler.getRank(), 24f, 660, 210, 280, 62, false, Color.BLACK);
         JLabel RankPicture = new GIcon("Badges\\" + speler.getRank() + ".png", 520, 175, 130, 130, false);
-        JButton MyClan = new GButton("My Clan", 24f, 220, 475, 234, 60);
         JButton Back = new GButton("Back", 24f, 320, 655, 140, 45);
         JButton Achievements = new GButton("Achievements", 24f, 60, 982, 340, 67);
 
@@ -85,7 +84,6 @@ public class Profile extends GPanel {
 
         this.add(Title);
         this.add(ProfilePicture);
-        this.add(MyClan);
         this.add(Back);
         this.add(Achievements);
         this.add(Username);

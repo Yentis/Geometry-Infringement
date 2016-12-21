@@ -30,8 +30,7 @@ public class Settings extends GPanel {
         GLabel lbldifficulty = new GLabel("Difficulty: ", 24f, 200,170,150,50, false, Color.white);
         JComboBox<String> difficulty = new JComboBox<String>(difficulties);
         GButton set = new GButton("Set", 24f, 200,240,170,50);
-        GButton Back = new GButton("Back", 24f, 635,650, 170, 63);
-        JButton Exit = new GButton("Exit", 24f, 820, 650, 170, 63);
+        GButton Back = new GButton("Back", 24f, 820,650, 170, 63);
 
         label.setOpaque(true);
         label.setFont(new GFont(65));
@@ -49,7 +48,6 @@ public class Settings extends GPanel {
         this.add(difficulty);
         this.add(set);
         this.add(Back);
-        this.add(Exit);
         this.add(message);
 
         //Action Listeners
@@ -109,12 +107,6 @@ public class Settings extends GPanel {
                     message.setText("Difficulty set.");
                 }
                 message.setVisible(true);
-            }
-        });
-
-        Exit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                System.exit(0);
             }
         });
 
