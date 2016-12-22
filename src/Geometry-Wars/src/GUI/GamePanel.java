@@ -176,7 +176,9 @@ public class GamePanel extends GPanel {
         gameFinished = false;
         spawnTimer.start();
         Schip dummy = window.getSpel().getSchepen().get(0);
-        Drone dummydr = window.getSpel().getDrones().get(1);
+
+        //TODO: player can chose which drone he want
+        Drone dummydr = window.getSpel().getDrones().get(0);
         requestFocus();
         setSlowerEnemiesTimer(schip);
         setInvulnerabilityTimer(schip);
@@ -558,11 +560,40 @@ public class GamePanel extends GPanel {
         spawnTimer = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (enemyCounter % 20 == 0) {
 
-                for (int i = 0; i < enemyCounter; i++) {
-                    enemyOnField.add(new Enemy(testenemy.getNr(), testenemy.getNaam(), testenemy.getBeschrijving(), testenemy.getHP(), testenemy.getKracht(), testenemy.getImageString(), testenemy.getExperience(), testenemy.getScore(), testenemy.getSpeed()));
+                } else {
+                    for (int i = 0; i < enemyCounter; i++) {
+                        enemyOnField.add(new Enemy(testenemy.getNr(), testenemy.getNaam(), testenemy.getBeschrijving(), testenemy.getHP(), testenemy.getKracht(), testenemy.getImageString(), testenemy.getExperience(), testenemy.getScore(), testenemy.getSpeed()));
+                    }
+                    enemyCounter++;
+                    if (enemyCounter % 5 == 0) {
+                        Enemy enemy2 = enemies.get(1);
+                        enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
+                    }
+                    if (enemyCounter % 2 == 0) {
+                        Enemy enemy2 = enemies.get(2);
+                        enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
+                    }
+                    if (enemyCounter % 7 == 0) {
+                        Enemy enemy2 = enemies.get(3);
+                        enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
+                    }
+                    if (enemyCounter % 9 == 0) {
+                        Enemy enemy2 = enemies.get(4);
+                        enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
+                    }
+                    if (enemyCounter % 11 == 0) {
+                        Enemy enemy2 = enemies.get(5);
+                        enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
+                    }
+                    if (enemyCounter % 13 == 0) {
+                        Enemy enemy2 = enemies.get(6);
+                        enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
+                    }
+
+
                 }
-                enemyCounter++;
             }
         });
     }

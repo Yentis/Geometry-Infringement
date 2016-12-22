@@ -28,11 +28,9 @@ public class Drone extends Sprite{
 
     //region Constructors
 
-<<<<<<< HEAD
+
     public Drone(int nr, String naam, String beschrijving, int kracht, String uiterlijk, int type){
-=======
-    public Drone(int nr, String naam, String beschrijving, int hp, String uiterlijk){
->>>>>>> origin/master
+
         super(uiterlijk);
         imageString = uiterlijk;
         x = 600;
@@ -42,12 +40,10 @@ public class Drone extends Sprite{
         this.nr = nr;
         this.naam = naam;
         this.beschrijving = beschrijving;
-<<<<<<< HEAD
+
         this.type= type;
         this.kracht = kracht;
-=======
-        this.hp = hp;
->>>>>>> origin/master
+
         this.uiterlijk = uiterlijk;
         currentAngle = 0;
     }

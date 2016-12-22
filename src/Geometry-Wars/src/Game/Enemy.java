@@ -132,31 +132,10 @@ public class Enemy extends Sprite {
         Random randomGenerator = new Random();
 
         int randGetal = randomGenerator.nextInt(SCREEN_HEIGHT);
-        /*while (randGetal > 100 && randGetal < (SCREEN_HEIGHT - 100)) {
-            randGetal = randomGenerator.nextInt(SCREEN_HEIGHT);
-        }*/
-
         return randGetal;
 
     }
 
-    /*public Enemy() {
-        this.nr = 0;
-        this.naam = "Placeholder";
-        this.beschrijving = "Placeholder";
-
-    }*/
-
-    /*public void drawAndCheckCollisionWithBullet(Graphics2D g2d, Point targetPoint, Point currentLocation, ArrayList<Kogel> collidingSprites){
-        draw(g2d, targetPoint, currentLocation);
-        for (Kogel kogel : collidingSprites) {
-            //wanneer isHit true is verdwijnt de collidingsprite
-            if (kogel.collisionDetect(this.getHitBox())) {
-                kogel.setHit(true);
-                System.out.println("in true");
-            }
-        }
-    }*/
 
     public Image getImage() {
         return image;
