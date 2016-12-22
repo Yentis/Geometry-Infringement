@@ -136,7 +136,6 @@ public class Enemy extends Sprite {
 
     }
 
-
     /*public Enemy() {
         this.nr = 0;
         this.naam = "Placeholder";
@@ -159,10 +158,6 @@ public class Enemy extends Sprite {
         return image;
     }
 
-    public String getImageString() {
-        return imageString;
-    }
-
     public int getExperience() {
         return experience;
     }
@@ -177,6 +172,10 @@ public class Enemy extends Sprite {
 
         currentLocation.setLocation(locationX, locationY);
 
+    }
+
+    public String getImageString() {
+        return imageString;
     }
 
     public void drawHPBar(Graphics2D g2d) {

@@ -12,6 +12,7 @@ public class Upgrade {
     private int level = 1;
     private String foto = "";
     private int kost = 100;
+    //private boolean active;
 
     //endregion
 
@@ -24,6 +25,7 @@ public class Upgrade {
         this.level = level;
         this.foto = foto;
         this.kost = kost;
+        //active = false;
     }
 
     public Upgrade(){
@@ -33,4 +35,16 @@ public class Upgrade {
     }
 
     //endregion
+
+    //region Getters
+
+   // public boolean isActive() {
+   //     return active;
+   // }
+
+    //endregion
+
+
+
+
 }

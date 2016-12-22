@@ -75,12 +75,48 @@ public class Movement implements KeyListener {
         return startMoves.isRunning();
     }
 
+    public void controllerPressed(int key){
+        checkKeys(key, true);
+    }
+
+    public void controllerReleased(int key){
+        checkKeys(key, false);
+    }
+
+    private void checkKeys(int key, boolean pressed){
+        if(pressed){
+            if(key == keyLeft){
+                targetAngle = 270;
+                schip.moveLeft(schip.getSpeed());
+            } else if (key == keyRight){
+                targetAngle = 90;
+                schip.moveRight(schip.getSpeed());
+            } else if (key == keyUp){
+                targetAngle = 0;
+                schip.moveUp(schip.getSpeed());
+            } else if (key == keyDown){
+                targetAngle = 180;
+                schip.moveDown(schip.getSpeed());
+            }
+        } else if(!pressed){
+            if(key == keyLeft){
+                schip.moveLeft(0);
+            } else if (key == keyRight){
+                schip.moveRight(0);
+            } else if (key == keyUp){
+                schip.moveUp(0);
+            } else if (key == keyDown){
+                schip.moveDown(0);
+            }
+        }
+
+
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
         // do nothing
     }
-
-
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -88,19 +124,7 @@ public class Movement implements KeyListener {
 
         int key = e.getKeyCode();
         // Movement: graden worden in radialen omgezet in Board
-        if(key == keyLeft){
-            targetAngle = 270;
-            schip.moveLeft(schip.getSpeed());
-        } else if (key == keyRight){
-            targetAngle = 90;
-            schip.moveRight(schip.getSpeed());
-        } else if (key == keyUp){
-            targetAngle = 0;
-            schip.moveUp(schip.getSpeed());
-        } else if (key == keyDown){
-            targetAngle = 180;
-            schip.moveDown(schip.getSpeed());
-        }
+        checkKeys(key, true);
     }
 
 
@@ -108,17 +132,7 @@ public class Movement implements KeyListener {
         //keyPressed = true;
         int key = e.getKeyCode();
         // Movement: graden worden in radialen omgezet in GamePanel
-        if(key == keyLeft){
-            schip.moveLeft(0);
-        } else if (key == keyRight){
-            schip.moveRight(0);
-        } else if (key == keyUp){
-            schip.moveUp(0);
-        } else if (key == keyDown){
-            schip.moveDown(0);
-        }
+        checkKeys(key, false);
     }
-
-
 }
 

@@ -43,7 +43,7 @@ public class MainMenu extends GPanel {
         JButton FriendsBtn = new GButton("Friends", 24f, 820, 25, 170,63);
         JButton LogOut = new GButton("Logout", 24f, 635,650, 170, 63);
         JButton Quit = new GButton("Quit", 24f, 820, 650, 170, 63);
-        JButton Discord = new JButton(new ImageIcon(((new ImageIcon("src\\Media\\Discord.jpg")).getImage()).getScaledInstance(65, 65, java.awt.Image.SCALE_SMOOTH)));
+        JButton Discord = new JButton(new ImageIcon(((new ImageIcon("resources\\Media\\Discord.jpg")).getImage()).getScaledInstance(65, 65, java.awt.Image.SCALE_SMOOTH)));
         JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
         JLabel JoinDiscord = new JLabel("Join Server!");
         JList Friends = new JList();
@@ -65,6 +65,23 @@ public class MainMenu extends GPanel {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 window.getStartGame().setVisible(true);
+            }
+
+        });
+
+        Upgrades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                try {
+                    window.getSettings().initComponents();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (FontFormatException e) {
+                    e.printStackTrace();
+                }
+                window.getUpgrades().setVisible(true);
+
             }
 
         });

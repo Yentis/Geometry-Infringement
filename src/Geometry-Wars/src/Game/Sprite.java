@@ -20,9 +20,12 @@ public class Sprite {
     protected Point currentLocation;
     protected Rectangle2D hitBox;
     protected boolean isHit;
+    private Schip hitter;
+    private String imageString;
 
 
     public Sprite(double x, double y, Point target, String image) {
+        imageString = image;
         this.x = x;
         this.y = y;
         this.target = target;
@@ -41,6 +44,10 @@ public class Sprite {
         height = ii.getIconHeight();
         this.image = ii.getImage();
         isHit = false;
+    }
+
+    public boolean isNull(){
+        return this == null;
     }
 
     public void updateLocation(Point targetLocation, Point currentLocation, double speed) {
@@ -122,13 +129,21 @@ public class Sprite {
         isHit = hit;
     }
 
+    public void setHitter(Schip hitter) {
+        this.hitter = hitter;
+    }
+
+    public Schip getHitter() {
+        return hitter;
+    }
+
     public double getDirection(Point target, Point start) {
         double angle = Math.toDegrees(Math.atan2(target.getY() - start.getY(), target.x - start.getX()));
         return angle;
     }
 
     public boolean collisionDetect(Rectangle2D approachingTarget) {
-        return approachingTarget != null && hitBox.getBounds2D().intersects(approachingTarget.getBounds2D());
+        return approachingTarget != null && hitBox != null && hitBox.getBounds2D().intersects(approachingTarget.getBounds2D());
     }
 
 
@@ -181,6 +196,4 @@ public class Sprite {
         ImageIcon ii = new ImageIcon(image);
         this.image = ii.getImage();
     }
-
-
 }

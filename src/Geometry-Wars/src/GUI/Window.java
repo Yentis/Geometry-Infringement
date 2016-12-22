@@ -10,7 +10,7 @@ import java.sql.SQLException;
 /**
  * Created by Renzie on 7/11/2016.
  */
-public class Window extends JFrame{
+public class Window extends JFrame {
 
     // Panels
     private MainMenu mainMenu;
@@ -23,12 +23,13 @@ public class Window extends JFrame{
     private Scoreboard scoreboard;
     private Register register;
     private Coop startCoop;
+    private Upgrades upgrades;
     private Settings settings;
     private Highscores highscores;
     private static Spel spel = new Spel();
 
     //Game
-    private Game game;
+
 
 
     private Container cp = getContentPane();
@@ -66,21 +67,20 @@ public class Window extends JFrame{
         new Window("Geometry Wars");
     }
 
-    public Spel getSpel(){
+    public Spel getSpel() {
         return spel;
     }
 
     // Set Background
-    public void setBackground(){
+    public void setBackground() {
         JLabel bg = new JLabel();
         bg.setLayout(null);
-        bg.setSize(1024,768);
-        ImageIcon icon = new ImageIcon("src\\Media\\resized_background-768.png");
+        bg.setSize(1024, 768);
+        ImageIcon icon = new ImageIcon("resources\\Media\\resized_background-768.png");
         bg.setIcon(icon);
         cp.add(bg);
         bg.setVisible(true);
     }
-
 
 
     public void initPanels() throws IOException, FontFormatException {
@@ -89,10 +89,11 @@ public class Window extends JFrame{
         startGame = new StartGame();
         profile = new Profile();
         startGameCampaign = new StartGameCampaign();
-        logout  = new Logout();
+        logout = new Logout();
         login = new Login();
         inGame = new InGame(spel.getEnemies());
         scoreboard = new Scoreboard();
+        upgrades = new Upgrades();
         startCoop = new Coop(spel.getEnemies());
         register = new Register();
         settings = new Settings();
@@ -109,6 +110,7 @@ public class Window extends JFrame{
         cp.add(scoreboard);
         cp.add(startCoop);
         cp.add(register);
+        cp.add(upgrades);
         cp.add(settings);
         cp.add(highscores);
 
@@ -123,6 +125,7 @@ public class Window extends JFrame{
         scoreboard.setVisible(false);
         startCoop.setVisible(false);
         register.setVisible(false);
+        upgrades.setVisible(false);
         settings.setVisible(false);
         highscores.setVisible(false);
     }
@@ -141,15 +144,24 @@ public class Window extends JFrame{
         return startGameCampaign;
     }
 
-    public Profile getProfile(){ return profile; }
+    public Profile getProfile() {
+        return profile;
+    }
 
-    public Logout getLogout(){ return logout; }
+    public Logout getLogout() {
+        return logout;
+    }
 
-    public Login getLogin() {return login;}
+    public Login getLogin() {
+        return login;
+    }
 
-    public InGame getInGameSinglePlayer() {return inGame;}
+    public InGame getInGame() {return inGame;}
 
-    public Scoreboard getScoreboard() {return scoreboard;}
+
+    public Scoreboard getScoreboard() {
+        return scoreboard;
+    }
 
     public Register getRegister() {
         return register;
@@ -163,7 +175,12 @@ public class Window extends JFrame{
         return startCoop;
     }
 
+<<<<<<< HEAD
     public Highscores getHighScores() {
         return highscores;
+=======
+    public Upgrades getUpgrades() {
+        return upgrades;
+>>>>>>> f69ee794886ce9dc16a30c20c7f0a4e967cf8fe3
     }
 }

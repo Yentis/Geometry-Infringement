@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Yentl-PC on 8/11/2016.
  */
-public class Spel {
+public class Spel implements Cloneable{
     //region Instance Variables
 
     private Speler speler;
@@ -26,7 +26,6 @@ public class Spel {
     //endregion
 
     //region Properties
-
 
     public Speler getSpeler() {
         return speler;
@@ -66,6 +65,10 @@ public class Spel {
 
     //region Behaviour
 
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
     public void initDankabank() throws SQLException{
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         Connection myConn = DriverManager.getConnection(url, user, pass);
@@ -76,7 +79,7 @@ public class Spel {
 
         int i = 0;
         while (schip.next()){
-            schepen.add(i, new Schip(schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image"), 37, 39, 38, 40, schip.getInt("speed")));
+            schepen.add(i, new Schip(schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image"), 81, 68, 90, 83, schip.getInt("speed")));
             i++;
         }
         //endregion
@@ -141,8 +144,6 @@ public class Spel {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
-
-        System.out.println("Password: " + wachtwoord);
 
         ResultSet myRs = myStmt.executeQuery("select count(*) from speler where gebruikersnaam = '" + gebruikersnaam + "' AND wachtwoord = '" + wachtwoord + "'");
 
