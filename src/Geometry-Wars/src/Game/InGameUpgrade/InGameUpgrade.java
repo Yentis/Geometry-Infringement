@@ -62,11 +62,4 @@ public class InGameUpgrade {
     public void doFunction(){
         // overrideable
     }
-
-
-
-
-    public class Invulnerability extends InGameUpgrade{
-
-    }
 }
