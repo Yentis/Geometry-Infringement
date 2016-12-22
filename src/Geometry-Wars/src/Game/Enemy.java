@@ -43,6 +43,8 @@ public class Enemy extends Sprite {
         this.hp = hp;
         this.kracht = kracht;
         this.speed = speed;
+        this.experience = experience;
+        this.score = score;
 
         locationX = randomX();
         locationY = randomY();

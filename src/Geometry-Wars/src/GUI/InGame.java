@@ -28,9 +28,11 @@ public class InGame extends GPanel implements ActionListener {
     private Timer gameTimer;
 
     //PausePanel
-    private GButton Continue = new GButton("Continue", 24f, 315, 260, 375, 120);
-    private GButton restartPauze = new GButton("Restart", 24f, 150, 420, 275, 120);
-    private GButton menuPauze = new GButton("Main Menu", 24f, 550, 420, 275, 120);
+    private GButton Continue = new GButton("Continue", 24f, 185, 250, 275, 120);
+    private GButton controls = new GButton("Controls", 24f, 530, 250, 275, 120);
+    private GButton restartPauze = new GButton("Restart", 24f, 185, 405, 275, 120);
+    private GButton menuPauze = new GButton("Main Menu", 24f, 530, 405, 275, 120);
+
     private GButton restartGameEnd = new GButton("Restart", 24f, 150, 420, 275, 120);
     private GButton menuGameEnd = new GButton("Main Menu", 24f, 550, 420, 275, 120);
     private ImageIcon PauseImage = new ImageIcon("resources\\Media\\pause-128.png");
@@ -56,10 +58,15 @@ public class InGame extends GPanel implements ActionListener {
             menuPauze.setForeground(Color.white);
             menuPauze.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
 
+            controls.setBackground(Color.black);
+            controls.setForeground(Color.white);
+            controls.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
+
 
             pause.add(Continue);
             pause.add(restartPauze);
             pause.add(menuPauze);
+            pause.add(controls);
 
             menuPauze.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -254,6 +261,7 @@ public class InGame extends GPanel implements ActionListener {
 
     }
 
+
     public GButton getStartGame() {
         return startGame;
     }
@@ -273,6 +281,7 @@ public class InGame extends GPanel implements ActionListener {
         gamePanel.setCoop(coop);
         gamePanel.startGame();
     }
+
 
     public void addActionListeners() { //TODO
         menuPauze.addActionListener(panel);
@@ -328,6 +337,7 @@ public class InGame extends GPanel implements ActionListener {
 
         }
     }
+
 
     private void pauseGameLoop() {
         gameTimer.stop();
