@@ -175,12 +175,13 @@ public class Window extends JFrame {
         return startCoop;
     }
 
-<<<<<<< HEAD
+
     public Highscores getHighScores() {
         return highscores;
-=======
+    }
+
     public Upgrades getUpgrades() {
         return upgrades;
->>>>>>> f69ee794886ce9dc16a30c20c7f0a4e967cf8fe3
+
     }
 }

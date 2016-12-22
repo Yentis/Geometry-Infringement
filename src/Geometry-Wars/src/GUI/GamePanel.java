@@ -418,16 +418,7 @@ public class GamePanel extends GPanel {
     }
 
 
-    private double updateHealthBar(Schip schip, double healthBarWidth, JProgressBar currentHealthBar) {
-        if (schip.getHp() != 0) {
-            ratioHP = 425 / schip.getMaxhp();
-            healthBarWidth = (int) ratioHP * schip.getHp();
-        } else {
-            gameFinished = true;
-            enemyOnField.clear();
-        }
-        return healthBarWidth;
-    }
+
     //endregion
 
 
@@ -443,7 +434,7 @@ public class GamePanel extends GPanel {
             if (schip.isInvulnerability()) {
 
 
-                //System.out.println("invulnerability start");
+                //System.out.println("invulnerability start");q
                 invulnerabilityTimer.start();
             }
             if (schip.isSlowerEnemies()) {
@@ -471,33 +462,29 @@ public class GamePanel extends GPanel {
 
                 combop2.setText("x " + schipp2.getCombo());
                 scorep2.setText("" + schipp2.getScore());
-                currentHealthBarp2.setSize((int) updateHealthBar(schipp2, healthBarWidthp2, currentHealthBarp2), currentHealthBarp2.getHeight());
+                currentHealthBarp2.setSize((int) updateHealthBar(schipp2, healthBarWidthp2), currentHealthBarp2.getHeight());
             }
             combo.setText("x " + schip.getCombo());
             score.setText("" + schip.getScore());
-            currentHealthBar.setSize((int) updateHealthBar(schip, healthBarWidth, currentHealthBar), currentHealthBar.getHeight());
+            currentHealthBar.setSize((int) updateHealthBar(schip, healthBarWidth), currentHealthBar.getHeight());
             currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, schip), currentSchipXpBar.getHeight());
         }
     }
+
+
 
     private double updateHealthBar(Schip schip, double healthBarWidth) {
         if (schip.getHp() != 0) {
             ratioHP = 425 / schip.getMaxhp();
             healthBarWidth = (int) ratioHP * schip.getHp();
+            System.out.println(healthBarWidth);
         } else {
-            //TODO
             gameFinished = true;
-            System.out.println("invulnerability start");
-            invulnerabilityTimer.start();
-        }
-        if (schip.isSlowerEnemies()) {
-            //System.out.println("slower enemies");
-            slowerEnemiesTimer.start();
+            enemyOnField.clear();
         }
 
         return healthBarWidth;
     }
-
 
     private double updateSchipXpBar(double xpBarWidthSchip, Schip schip) {
         ratioSchipXP = 190 / schip.getMaxXp();

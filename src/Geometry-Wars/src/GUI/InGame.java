@@ -244,9 +244,8 @@ public class InGame extends GPanel implements ActionListener {
 
     }
 
-<<<<<<< HEAD
 
-=======
+
     public GButton getStartGame() {
         return startGame;
     }
@@ -261,7 +260,7 @@ public class InGame extends GPanel implements ActionListener {
         gamePanel.setCoop(coop);
         gamePanel.startGame();
     }
->>>>>>> f69ee794886ce9dc16a30c20c7f0a4e967cf8fe3
+
 
     public void addActionListeners() { //TODO
         startGame.addActionListener(panel);
@@ -317,14 +316,7 @@ public class InGame extends GPanel implements ActionListener {
         }
     }
 
-    public void initGamePanel() {
-        setupGameTimer();
-        gameTimer.start();
-        gamePanel.setVisible(true);
-        gamePanel.requestFocus();
-        gamePanel.setCoop(false);
-        gamePanel.startGame();
-    }
+
 
     private void pauseGameLoop() {
         gameTimer.stop();
@@ -334,15 +326,13 @@ public class InGame extends GPanel implements ActionListener {
         initPausePanel();
     }
 
-<<<<<<< HEAD
     public void initPausePanel() {
         pause.setVisible(true);
     }
 
 
 
-=======
->>>>>>> f69ee794886ce9dc16a30c20c7f0a4e967cf8fe3
+
     private void runGameLoop() {
         gameTimer.start();
     }
