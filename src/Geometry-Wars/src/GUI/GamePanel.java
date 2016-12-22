@@ -210,7 +210,11 @@ public class GamePanel extends GPanel {
 
         if (coop) {
             schipp2 = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed());
-            Controllers controller2 = new Controllers(schipp2, 0);
+            try{
+                Controllers controller2 = new Controllers(schipp2, 1);
+            } catch (NullPointerException e){
+                Controllers controller2 = new Controllers(schipp2, 0);
+            }
 
             dronep2 = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
 
@@ -492,7 +496,7 @@ public class GamePanel extends GPanel {
     }
 
     private double updateHealthBar(Schip schip, double healthBarWidth) {
-        if (schip.getHp() != 0) {
+        if (schip.getHp() <= 0) {
             ratioHP = 425 / schip.getMaxhp();
             healthBarWidth = ratioHP * schip.getHp();
         } else {
