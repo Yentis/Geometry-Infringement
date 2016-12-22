@@ -61,7 +61,7 @@ public class Profile extends GPanel {
         ProfileInfo.setFont(new GFont(22));
         ProfileInfo.setForeground(Color.BLACK);
         ProfileInfo.setBorder(new EmptyBorder(0, 10, 0, 0));
-        ProfileInfo.setText("<html>Level: " + speler.getLevel() + "<br>Experience: " + speler.getExperience() + "<br>Rank: " + speler.getRank() + "<br>Nuggets: " + speler.getNuggets() + "<br>Golden Nuggets: " + speler.getGnuggets() + "<html>");
+        ProfileInfo.setText("<html>Level: " + speler.getLevel() + "<br>Experience: " + speler.getExperience() + "<br>Rank: " + speler.getRank() + "<br>Nuggets: " + speler.getNuggets() + "<br>Golden Nuggets: " + speler.getGnuggets() + "<br>Highscore: " + speler.getHighscore() + "<html>");
 
 
         //==================================================

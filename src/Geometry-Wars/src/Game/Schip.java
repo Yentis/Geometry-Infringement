@@ -1,8 +1,8 @@
 package Game;
 
 
-import Game.InGameUpgrade.InGameUpgrade;
-import Game.InGameUpgrade.LifeSteal;
+import GUI.InGame;
+import Game.InGameUpgrade.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -43,18 +43,20 @@ public class Schip extends Sprite {
     private double locationY;
     private double currentAngle;
     private Movement move;
-    //private boolean lifesteal;
-    private boolean invulnerability;
-    private boolean randomBullets;
-    private boolean slowerEnemies;
-    private boolean droneActive;
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
     private Drone drone;
 
     //IngameUpgrades
-    private InGameUpgrade inGameUpgrade = new InGameUpgrade();
     private LifeSteal lifesteal = new LifeSteal(1, "LifeSteal", "resources/Media/IngameUpgradeIcons/LifeSteal.png", this);
+    private Invulnerability invulnerability = new Invulnerability(2, "Invulnerability", "resources/Media/IngameUpgradeIcons/Invulnerability.png", this);
+    private RandomBullets randomBullets = new RandomBullets(3, "RandomBullets", "resources/Media/IngameUpgradeIcons/RandomBullets.png", this);
+    private SlowEnemies slowEnemies = new SlowEnemies(4, "RandomBullets", "resources/Media/IngameUpgradeIcons/SlowEnemies.png", this);
+    private ActiveDrone activeDrone = new ActiveDrone(5, "ActiveDrone", "resources/Media/IngameUpgradeIcons/ActiveDrone.png", this);
+
+
+
+    //check voor activebuffs, en total aantal buffs in de game
     private ArrayList<InGameUpgrade> buffs = new ArrayList<InGameUpgrade>();
     private ArrayList<InGameUpgrade> activeBuffs = new ArrayList<InGameUpgrade>();
 
@@ -93,6 +95,10 @@ public class Schip extends Sprite {
 
     private void addBuffs() {
         buffs.add(lifesteal);
+        buffs.add(invulnerability);
+        buffs.add(randomBullets);
+        buffs.add(slowEnemies);
+        buffs.add(activeDrone);
     }
 
     public ArrayList<InGameUpgrade> getActiveBuffs() {
@@ -103,6 +109,7 @@ public class Schip extends Sprite {
         for (InGameUpgrade buff : buffs) {
             if (buff.isActive() && !activeBuffs.contains(buff)) {
                 activeBuffs.add(buff); //indien de buff active is en nog niet in de ActiveBuffs zit, stop je hem erin
+                System.out.println("amount of active buffs: " + activeBuffs.size());
             } else if (!buff.isActive() && activeBuffs.contains(buff)) {
                 activeBuffs.remove(buff); //indien de buff niet meer active is en in de ActiveBuffs zit, gooi je hem eruit
             }
@@ -176,9 +183,6 @@ public class Schip extends Sprite {
         return currentXp;
     }
 
-    /*public HashMap<String,Boolean> getBuffs() {
-        return buffs;
-    }*/
 
     //endregion
 
@@ -219,36 +223,16 @@ public class Schip extends Sprite {
     //endregion
 
     //region ComboProperties
-    public boolean isInvulnerability() {
+    public Invulnerability getInvulnerability() {
         return invulnerability;
     }
 
-    public void setInvulnerability(boolean invulnerability) {
-        this.invulnerability = invulnerability;
+    public SlowEnemies getSlowEnemies() {
+        return slowEnemies;
     }
 
-    public boolean isRandomBullets() {
-        return randomBullets;
-    }
-
-    public void setRandomBullets(boolean randomBullets) {
-        this.randomBullets = randomBullets;
-    }
-
-    public boolean isSlowerEnemies() {
-        return slowerEnemies;
-    }
-
-    public void setSlowerEnemies(boolean slowerEnemies) {
-        this.slowerEnemies = slowerEnemies;
-    }
-
-    public boolean isDroneActive() {
-        return droneActive;
-    }
-
-    public void setDroneActive(boolean droneActive) {
-        this.droneActive = droneActive;
+    public ActiveDrone getActiveDrone() {
+        return activeDrone;
     }
 
     //endregion
@@ -304,36 +288,35 @@ public class Schip extends Sprite {
                 setKracht(250);
                 break;
         }
-    }
+    }//lifesteal 100, invul 50, slow 75, drone 150, randombullets 250
+    //wanneer je combo verliest, zet alle upgrades af
+    //debuff : als je < 50% hp hebt, vertraag je
 
     public void checkForUpgrade(int combo) {
         //TODO terugveranderen :p - Renzie dit is voor de upgrade arraylist check
-        if (combo % 4 == 0) {
+        if (combo % 50 == 0) {
             //Every 50 combo
-            setInvulnerability(true);
-
-            //System.out.println("setInvulnerability");
-        } else if (combo % 2 == 0) {
+            invulnerability.setActive(true);
+        } else if (combo % 75 == 0) {
             //Every 75 combo
-            setSlowerEnemies(true);
+            slowEnemies.setActive(true);
         }
         switch (combo) {
             case 1:
                 //when combo resets
-                //setLifesteal(false);
-                lifesteal.setActive(true);
-                lifesteal.doFunction();
-                setRandomBullets(false);
+               for (InGameUpgrade buff : buffs){
+                   buff.setActive(false);
+               }
                 break;
             case 50:
-                // setLifesteal(true);
-                break;
-            case 2:
-                //stays active when reached
-                setDroneActive(true);
+                 lifesteal.setActive(true);
                 break;
             case 150:
-                setRandomBullets(true);
+                //stays active when reached
+                activeDrone.setActive(true);
+                break;
+            case 250:
+             randomBullets.setActive(true);
                 break;
 
 
@@ -443,14 +426,14 @@ public class Schip extends Sprite {
     public void controllerAim(double x, double y) {
         Point point = new Point((int) x, (int) y);
         fire(point);
-        if (isRandomBullets()) {
+        if (randomBullets.isActive()) {
             randomFire();
         }
     }
 
     public void mousePressed(MouseEvent e) {
         fire(e.getPoint());
-        if (isRandomBullets()) {
+        if (randomBullets.isActive()) {
             randomFire();
         }
     }
@@ -471,10 +454,10 @@ public class Schip extends Sprite {
         ActionListener taskPerformer = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {*/
-                double kogelX = locationX;
-                double kogelY = locationY;
+        double kogelX = locationX;
+        double kogelY = locationY;
 
-                addKogels(new Kogel(kogelX, kogelY, mousePointer, "resources/Media/kogel1.png"));
+        addKogels(new Kogel(kogelX, kogelY, mousePointer, "resources/Media/kogel1.png"));
            /* }
         };
 
@@ -485,8 +468,6 @@ public class Schip extends Sprite {
             mousePressedTimer.start();
         }*/
     }
-
-
 
 
     public int randomX() {
