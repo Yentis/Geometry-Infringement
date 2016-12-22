@@ -93,7 +93,6 @@ public class GamePanel extends GPanel {
     private void initGamePanel() {
         try {
             initComponents();
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (FontFormatException e) {
@@ -170,17 +169,19 @@ public class GamePanel extends GPanel {
     }
 
 
-    private void clearComboAndScore(){
+    private void clearUI(){
         score.setText("");
         combo.setText("x");
+        currentHealthBar.setSize(0,currentHealthBar.getHeight());
         if (coop){
             scorep2.setText("");
             combo.setText("x");
         }
+
     }
 
     public void startGame() {
-        clearComboAndScore();
+
         enemyOnField.clear(); //lol
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         enemyCounter = 1;
@@ -213,7 +214,11 @@ public class GamePanel extends GPanel {
             try{
                 Controllers controller2 = new Controllers(schipp2, 1);
             } catch (NullPointerException e){
-                Controllers controller2 = new Controllers(schipp2, 0);
+                try{
+                    Controllers controller2 = new Controllers(schipp2, 0);
+                } catch (NullPointerException ef){
+
+                }
             }
 
             dronep2 = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
@@ -226,7 +231,7 @@ public class GamePanel extends GPanel {
         initTimers();
 
         gameFinished = false;
-
+        clearUI();
     }
 
     public void pauseGame() {
@@ -515,12 +520,16 @@ public class GamePanel extends GPanel {
     private double updateHealthBar(Schip schip, double healthBarWidth) {
         if (schip.getHp() >= 0) {
             ratioHP = 425 / schip.getMaxhp();
+<<<<<<< HEAD
 
             healthBarWidth = (int) ratioHP * schip.getHp();
             System.out.println(healthBarWidth);
 
             healthBarWidth = ratioHP * schip.getHp();
 
+=======
+            healthBarWidth = ratioHP * schip.getHp();
+>>>>>>> e1a3619e9c40b6f896bc227f011244fb4dfd2bc3
         } else {
             gameFinished = true;
             enemyOnField.clear();

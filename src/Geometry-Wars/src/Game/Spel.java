@@ -148,7 +148,7 @@ public class Spel implements Cloneable{
         //endregion
     }
 
-    public void changeSchipspeed(double multiplier){
+    public void increaseSchipSpeed(double multiplier){
         for (Schip schip:schepen) {
             schip.setSpeed(schip.getSpeed() * multiplier);
         }
