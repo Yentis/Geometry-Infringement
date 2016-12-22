@@ -169,7 +169,18 @@ public class GamePanel extends GPanel {
         setAllComponentsVisible();
     }
 
+
+    private void clearComboAndScore(){
+        score.setText("");
+        combo.setText("x");
+        if (coop){
+            scorep2.setText("");
+            combo.setText("x");
+        }
+    }
+
     public void startGame() {
+        clearComboAndScore();
         enemyOnField.clear(); //lol
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         enemyCounter = 1;
@@ -394,11 +405,11 @@ public class GamePanel extends GPanel {
                         enemyIterator.remove();
                         schip.addCombo();
                         if (kogels == schip.getDrone().getKogels()) {
-                            schip.getDrone().addCurrentXp(20);
+                            schip.getDrone().addCurrentXp(enemy.getExperience());
                             drone.checkLevel();
                             //currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, enemy.getHitter()), currentDroneXpBar.getHeight());
                         } else if (kogels == schip.getKogels()) {
-                            schip.addCurrentXp(20);
+                            schip.addCurrentXp(enemy.getExperience());
                             schip.checkLevel();
                             //currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, enemy.getHitter()), currentSchipXpBar.getHeight());
                             schip.checkForUpgrade(schip.getCombo());
@@ -553,16 +564,18 @@ public class GamePanel extends GPanel {
         Enemy testenemy = enemies.get(0);
         ImageIcon ii = new ImageIcon(testenemy.getImage());
 
-        spawnTimer = new Timer(5000, new ActionListener() {
+        spawnTimer = new Timer(7000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (enemyCounter % 20 == 0) {
-
+                    Enemy boss1 = enemies.get(6);
+                    enemyOnField.add(new Enemy(boss1.getNr(), boss1.getNaam(), boss1.getBeschrijving(), boss1.getHP(), boss1.getKracht(), boss1.getImageString(), boss1.getExperience(), boss1.getScore(), boss1.getSpeed()));
+                    enemyCounter++;
                 } else {
                     for (int i = 0; i < enemyCounter; i++) {
                         enemyOnField.add(new Enemy(testenemy.getNr(), testenemy.getNaam(), testenemy.getBeschrijving(), testenemy.getHP(), testenemy.getKracht(), testenemy.getImageString(), testenemy.getExperience(), testenemy.getScore(), testenemy.getSpeed()));
                     }
-                    enemyCounter++;
+
                     if (enemyCounter % 5 == 0) {
                         Enemy enemy2 = enemies.get(1);
                         enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
@@ -583,10 +596,8 @@ public class GamePanel extends GPanel {
                         Enemy enemy2 = enemies.get(5);
                         enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
                     }
-                    if (enemyCounter % 13 == 0) {
-                        Enemy enemy2 = enemies.get(6);
-                        enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
-                    }
+                    enemyCounter++;
+
 
 
                 }
