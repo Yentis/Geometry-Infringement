@@ -206,7 +206,7 @@ public class InGame extends GPanel implements ActionListener {
         pauze.setBorder(null);
 
         //BOUNDS
-        pauze.setBounds(510, 23, 60, 58);
+        pauze.setBounds(482, 23, 60, 58);
         pane.setBounds(50, 125, 900, 500);
 
         Yes.setVisible(false);
