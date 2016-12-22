@@ -260,7 +260,6 @@ public class Schip extends Sprite {
         this.maxXp = Math.pow(2, level) * 1000;
     }
 
-    //endregion
 
 
     public void checkLevel() {
@@ -270,9 +269,10 @@ public class Schip extends Sprite {
             checkLevel();
             resetCurrentXp();
         }
-        setKracht(25 * getLevel());
+        setKracht(kracht +( 50000 * getLevel()));
     }
-    //lifesteal 100, invul 50, slow 75, drone 150, randombullets 250
+    //lifesteal 100, invul 50, slow 75, drone 150, randombullets 250    //endregion
+
     //wanneer je combo verliest, zet alle upgrades af
     //debuff : als je < 50% hp hebt, vertraag je
 

@@ -520,16 +520,16 @@ public class GamePanel extends GPanel {
     private double updateHealthBar(Schip schip, double healthBarWidth) {
         if (schip.getHp() >= 0) {
             ratioHP = 425 / schip.getMaxhp();
-<<<<<<< HEAD
+
 
             healthBarWidth = (int) ratioHP * schip.getHp();
             System.out.println(healthBarWidth);
 
             healthBarWidth = ratioHP * schip.getHp();
 
-=======
+
             healthBarWidth = ratioHP * schip.getHp();
->>>>>>> e1a3619e9c40b6f896bc227f011244fb4dfd2bc3
+
         } else {
             gameFinished = true;
             enemyOnField.clear();
