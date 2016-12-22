@@ -69,6 +69,7 @@ public class StartGameCampaign extends GPanel {
                 window.getInGame().setVisible(true);
                 window.getInGame().getStartGame().setVisible(true);
                 window.getInGame().getGameEnd().setVisible(false);
+                window.getInGame().getPause().setVisible(false);
             }
         });
     }
