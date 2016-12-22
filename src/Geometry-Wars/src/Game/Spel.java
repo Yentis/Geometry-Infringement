@@ -136,12 +136,15 @@ public class Spel implements Cloneable{
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
+        Statement myStmt2 = myConn.createStatement();
 
         ResultSet highscore = myStmt.executeQuery("select * from speler where gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
 
         while(highscore.next()){
+            System.out.println("Old score: " + highscore.getInt("highscore"));
+            System.out.println("New score: " + score);
             if(highscore.getInt("highscore") < score){
-                int a = myStmt.executeUpdate("UPDATE speler SET highscore = " + score + " WHERE gebruikersnaam = " + speler.getGebruikersnaam() + "");
+                int a = myStmt2.executeUpdate("UPDATE speler SET highscore = " + 0 + " WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
             }
         }
     }
