@@ -9,7 +9,6 @@ public class Upgrade {
     private int nr;
     private String naam;
     private String beschrijving;
-    private int level = 1;
     private String foto = "";
     private int kost = 100;
     //private boolean active;
@@ -18,11 +17,10 @@ public class Upgrade {
 
     //region Constructors
 
-    public Upgrade(int nr, String naam, String beschrijving, int level, String foto, int kost){
+    public Upgrade(int nr, String naam, String beschrijving, String foto, int kost){
         this.nr = nr;
         this.naam = naam;
         this.beschrijving = beschrijving;
-        this.level = level;
         this.foto = foto;
         this.kost = kost;
         //active = false;
