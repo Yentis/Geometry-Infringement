@@ -83,6 +83,7 @@ public class Window extends JFrame {
     }
 
 
+
     public void initPanels() throws IOException, FontFormatException {
         // Make UI panels
         login = new Login();
