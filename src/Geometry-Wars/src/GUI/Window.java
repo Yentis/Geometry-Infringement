@@ -1,11 +1,13 @@
 package GUI;
 
 import Game.Spel;
+import com.mysql.jdbc.CommunicationsException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * Created by Renzie on 7/11/2016.
@@ -20,7 +22,6 @@ public class Window extends JFrame {
     private Logout logout;
     private Login login;
     private InGame inGame;
-    private Scoreboard scoreboard;
     private Register register;
     private Coop startCoop;
     private Upgrades upgrades;
@@ -63,7 +64,6 @@ public class Window extends JFrame {
     }
 
     public static void main(String args[]) throws IOException, FontFormatException, SQLException, InterruptedException {
-        spel.initDankabank();
         new Window("Geometry Wars");
     }
 
@@ -83,51 +83,55 @@ public class Window extends JFrame {
     }
 
 
+
     public void initPanels() throws IOException, FontFormatException {
         // Make UI panels
-        mainMenu = new MainMenu();
-        startGame = new StartGame();
-        profile = new Profile();
-        startGameCampaign = new StartGameCampaign();
-        logout = new Logout();
         login = new Login();
-        inGame = new InGame(spel.getEnemies());
-        scoreboard = new Scoreboard();
-        upgrades = new Upgrades();
-        startCoop = new Coop(spel.getEnemies());
-        register = new Register();
-        settings = new Settings();
-        highscores = new Highscores();
-
-        // Add UI panels
-        cp.add(mainMenu);
-        cp.add(startGame);
-        cp.add(profile);
-        cp.add(startGameCampaign);
-        cp.add(logout);
         cp.add(login);
-        cp.add(inGame);
-        cp.add(scoreboard);
-        cp.add(startCoop);
-        cp.add(register);
-        cp.add(upgrades);
-        cp.add(settings);
-        cp.add(highscores);
+        try {
+            spel.initDankabank();
+
+            mainMenu = new MainMenu();
+            startGame = new StartGame();
+            profile = new Profile();
+            startGameCampaign = new StartGameCampaign();
+            logout = new Logout();
+            inGame = new InGame(spel.getEnemies());
+            upgrades = new Upgrades();
+            startCoop = new Coop(spel.getEnemies());
+            register = new Register();
+            settings = new Settings();
+            highscores = new Highscores();
+
+            // Add UI panels
+            cp.add(mainMenu);
+            cp.add(startGame);
+            cp.add(profile);
+            cp.add(startGameCampaign);
+            cp.add(logout);
+            cp.add(inGame);
+            cp.add(startCoop);
+            cp.add(register);
+            cp.add(upgrades);
+            cp.add(settings);
+            cp.add(highscores);
 
 
-        // Set all panels invisible except the starting panel
-        mainMenu.setVisible(false);
-        startGame.setVisible(false);
-        profile.setVisible(false);
-        startGameCampaign.setVisible(false);
-        logout.setVisible(false);
-        inGame.setVisible(false);
-        scoreboard.setVisible(false);
-        startCoop.setVisible(false);
-        register.setVisible(false);
-        upgrades.setVisible(false);
-        settings.setVisible(false);
-        highscores.setVisible(false);
+            // Set all panels invisible except the starting panel
+            mainMenu.setVisible(false);
+            startGame.setVisible(false);
+            profile.setVisible(false);
+            startGameCampaign.setVisible(false);
+            logout.setVisible(false);
+            inGame.setVisible(false);
+            startCoop.setVisible(false);
+            register.setVisible(false);
+            upgrades.setVisible(false);
+            settings.setVisible(false);
+            highscores.setVisible(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -158,11 +162,6 @@ public class Window extends JFrame {
 
     public InGame getInGame() {return inGame;}
 
-
-    public Scoreboard getScoreboard() {
-        return scoreboard;
-    }
-
     public Register getRegister() {
         return register;
     }
@@ -175,13 +174,19 @@ public class Window extends JFrame {
         return startCoop;
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6025d968831b73698edf3645b28daaae1e98028b
     public Highscores getHighScores() {
         return highscores;
     }
 
     public Upgrades getUpgrades() {
         return upgrades;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6025d968831b73698edf3645b28daaae1e98028b
     }
 }

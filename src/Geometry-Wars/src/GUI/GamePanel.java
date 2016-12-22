@@ -1,6 +1,7 @@
 package GUI;
 
 import GComponents.GLabel;
+import GComponents.GPane;
 import GComponents.GPanel;
 import Game.*;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.*;
 import javax.swing.Timer;
@@ -70,6 +72,9 @@ public class GamePanel extends GPanel {
         initGamePanel();
     }
 
+    public int getScore() {
+        return Integer.parseInt(score.getText());
+    }
 
     public boolean getGameFinished() {
         return gameFinished;
@@ -89,7 +94,7 @@ public class GamePanel extends GPanel {
     private void initGamePanel() {
         try {
             initComponents();
-            schipbarp1.setText(" 0 | xp: 0");
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (FontFormatException e) {
@@ -111,15 +116,17 @@ public class GamePanel extends GPanel {
 
         GLabel schipLvlp1 = new GLabel("Ship:", 24, 25, 667, 222, 62, false, new Color(50, 50, 255));
         GLabel droneLvlp1 = new GLabel("Drone:", 24, 315, 667, 222, 62, false, new Color(50, 50, 255));
-        schipbarp1 = new GLabel("", 24, 100, 672, 200, 47, true, Color.gray);
-        dronebarp1 = new GLabel("", 24, 415, 672, 200, 47, true, Color.gray);
+        JLabel schipbarp1Pane = new GPane(100,672,200,47);
+        JLabel dronebarp1Pane = new GPane(415,672,200,47);
+        schipbarp1 = new GLabel("", 24, 100, 672, 200, 47, false, Color.black);
+        dronebarp1 = new GLabel("", 24, 415, 672, 200, 47, false, Color.black);
         currentSchipXpBar = new JProgressBar();
         currentSchipXpBar.setBounds(100, 673, 0, 45);
-        currentSchipXpBar.setBackground(new Color(50, 50, 255, 100));
+        currentSchipXpBar.setBackground(new Color(50, 50, 255));
         currentSchipXpBar.setOpaque(true);
         currentDroneXpBar = new JProgressBar();
         currentDroneXpBar.setBounds(415, 673, 0, 45);
-        currentDroneXpBar.setBackground(new Color(50, 50, 255, 100));
+        currentDroneXpBar.setBackground(new Color(50, 50, 255));
         currentDroneXpBar.setOpaque(true);
         currentHealthBar = new JProgressBar();
         currentHealthBar.setBounds(20, 27, 425, 40);
@@ -146,15 +153,19 @@ public class GamePanel extends GPanel {
             panel.add(scorep2);
             panel.add(currentHealthBarp2);
         }
+
         panel.add(combo);
         panel.add(score);
-        panel.add(currentSchipXpBar);
-        panel.add(currentHealthBar);
         panel.add(schipbarp1);
-        panel.add(schipLvlp1);
         panel.add(dronebarp1);
-        panel.add(droneLvlp1);
+        panel.add(currentSchipXpBar);
         panel.add(currentDroneXpBar);
+        panel.add(currentHealthBar);
+        panel.add(schipbarp1Pane);
+        panel.add(dronebarp1Pane);
+        panel.add(schipLvlp1);
+        panel.add(droneLvlp1);
+
 
         setAllComponentsVisible();
     }
@@ -179,13 +190,13 @@ public class GamePanel extends GPanel {
         }
 
         schip = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed());
-        drone = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getHp(), dummydr.getKracht(), dummydr.getImageString());
+        drone = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString());
         schip.setDrone(drone);
 
         if (coop) {
             schipp2 = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed());
             Controllers controller = new Controllers(schipp2);
-            dronep2 = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getHp(), dummydr.getKracht(), dummydr.getImageString());
+            dronep2 = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString());
             schipp2.setDrone(dronep2);
 
             setSlowerEnemiesTimer(schipp2);
@@ -302,9 +313,6 @@ public class GamePanel extends GPanel {
         }
     }
 
-    public void checkBullet() {
-
-    }
 
     //endregion
 
@@ -381,6 +389,7 @@ public class GamePanel extends GPanel {
                         schip.addCombo();
                         if (kogels == schip.getDrone().getKogels()) {
                             schip.getDrone().addCurrentXp(20);
+                            drone.checkLevel();
                             //currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, enemy.getHitter()), currentDroneXpBar.getHeight());
                         } else if (kogels == schip.getKogels()) {
                             schip.addCurrentXp(20);
@@ -417,8 +426,11 @@ public class GamePanel extends GPanel {
         }
     }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 6025d968831b73698edf3645b28daaae1e98028b
     //endregion
 
 
@@ -433,18 +445,22 @@ public class GamePanel extends GPanel {
 
             if (schip.isInvulnerability()) {
 
+<<<<<<< HEAD
 
                 //System.out.println("invulnerability start");q
+=======
+>>>>>>> 6025d968831b73698edf3645b28daaae1e98028b
                 invulnerabilityTimer.start();
             }
             if (schip.isSlowerEnemies()) {
-                //System.out.println("slower enemies");
                 slowerEnemiesTimer.start();
             }
 
             combo.setText("x " + schip.getCombo());
             score.setText("" + schip.getScore());
             currentHealthBar.setSize((int) updateHealthBar(schip, healthBarWidth), currentHealthBar.getHeight());
+            currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, schip), currentSchipXpBar.getHeight());
+            currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, drone), currentDroneXpBar.getHeight());
             if (coop) {
                 updateKogels(schipp2.getKogels(), schipp2);
                 updateKogels(dronep2.getKogels(), schipp2);
@@ -452,11 +468,9 @@ public class GamePanel extends GPanel {
 
                 if (schipp2.isInvulnerability()) {
 
-                    System.out.println("invulnerability start");
                     invulnerabilityTimer.start();
                 }
                 if (schipp2.isSlowerEnemies()) {
-                    System.out.println("slower enemies");
                     slowerEnemiesTimer.start();
                 }
 
@@ -464,10 +478,13 @@ public class GamePanel extends GPanel {
                 scorep2.setText("" + schipp2.getScore());
                 currentHealthBarp2.setSize((int) updateHealthBar(schipp2, healthBarWidthp2), currentHealthBarp2.getHeight());
             }
+<<<<<<< HEAD
             combo.setText("x " + schip.getCombo());
             score.setText("" + schip.getScore());
             currentHealthBar.setSize((int) updateHealthBar(schip, healthBarWidth), currentHealthBar.getHeight());
             currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, schip), currentSchipXpBar.getHeight());
+=======
+>>>>>>> 6025d968831b73698edf3645b28daaae1e98028b
         }
     }
 
@@ -494,7 +511,7 @@ public class GamePanel extends GPanel {
 
     }
 
-    private double updateDroneXpBar(double xpBarWidthDrone, Schip schip) {
+    private double updateDroneXpBar(double xpBarWidthDrone, Drone drone) {
         ratioDroneXp = 200 / drone.getMaxXp();
         xpBarWidthDrone = ratioDroneXp * drone.getCurrentXp();
         dronebarp1.setText(" lvl: " + drone.getLevel());
@@ -542,7 +559,17 @@ public class GamePanel extends GPanel {
 
     }
 
+    public int randomEnemies(int level){
+        Random randomGenerator = new Random();
+
+        int random = randomGenerator.nextInt(level +1);
+        System.out.println("enemy: " + random);
+        return random;
+    }
+
     public void spawnEnemies() {
+        //int random = randomEnemies(schip.getLevel());
+        //System.out.println(randomEnemies(schip.getLevel()));
         Enemy testenemy = enemies.get(0);
         ImageIcon ii = new ImageIcon(testenemy.getImage());
 

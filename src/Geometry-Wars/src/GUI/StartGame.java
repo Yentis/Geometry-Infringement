@@ -92,6 +92,13 @@ public class StartGame extends GPanel {
             public void actionPerformed(java.awt.event.ActionEvent evt){
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                try {
+                    window.getHighScores().initComponents();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (FontFormatException e) {
+                    e.printStackTrace();
+                }
                 window.getHighScores().setVisible(true);
             }
         });

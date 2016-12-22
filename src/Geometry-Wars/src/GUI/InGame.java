@@ -3,6 +3,7 @@ package GUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -41,13 +42,6 @@ public class InGame extends GPanel implements ActionListener {
     private GPanel pause = new GPanel() {
         @Override
         public void initComponents() throws IOException, FontFormatException {
-
-
-
-
-
-
-
             Continue.setBackground(Color.black);
             Continue.setForeground(Color.white);
             Continue.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
@@ -114,6 +108,11 @@ public class InGame extends GPanel implements ActionListener {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     panel.setVisible(false);
                     GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                    try {
+                        window.getSpel().submitScore(gamePanel.getScore());
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                     window.getMainMenu().setVisible(true);
 
                 }
@@ -244,8 +243,11 @@ public class InGame extends GPanel implements ActionListener {
 
     }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 6025d968831b73698edf3645b28daaae1e98028b
     public GButton getStartGame() {
         return startGame;
     }
@@ -256,13 +258,19 @@ public class InGame extends GPanel implements ActionListener {
 
     public void initGamePanel() {
         setupGameTimer();
+        gameTimer.start();
         gamePanel.setVisible(true);
+        gamePanel.requestFocus();
         gamePanel.setCoop(coop);
         gamePanel.startGame();
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6025d968831b73698edf3645b28daaae1e98028b
 
     public void addActionListeners() { //TODO
+        menuPauze.addActionListener(panel);
         startGame.addActionListener(panel);
         Continue.addActionListener(panel);
         restartPauze.addActionListener(panel);
@@ -316,8 +324,11 @@ public class InGame extends GPanel implements ActionListener {
         }
     }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 6025d968831b73698edf3645b28daaae1e98028b
     private void pauseGameLoop() {
         gameTimer.stop();
         gamePanel.pauseGame();
@@ -330,9 +341,12 @@ public class InGame extends GPanel implements ActionListener {
         pause.setVisible(true);
     }
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 6025d968831b73698edf3645b28daaae1e98028b
     private void runGameLoop() {
         gameTimer.start();
     }
