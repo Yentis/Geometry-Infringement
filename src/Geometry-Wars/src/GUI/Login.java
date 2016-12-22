@@ -127,6 +127,13 @@ public class Login extends GPanel{
                     if(Objects.equals(result, "")){
                         panel.setVisible(false);
                         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                        try {
+                            window.initPanels();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        } catch (FontFormatException e1) {
+                            e1.printStackTrace();
+                        }
                         window.getMainMenu().setVisible(true);
                     } else if (result == null){
                         message.setText("Database connection failed.");

@@ -51,7 +51,7 @@ public class Window extends JFrame {
         this.setLocationRelativeTo(null);
 
         // Set the panels
-        initPanels();
+        initLogin();
 
         // Set the background
         setBackground();
@@ -82,11 +82,7 @@ public class Window extends JFrame {
         bg.setVisible(true);
     }
 
-
     public void initPanels() throws IOException, FontFormatException {
-        // Make UI panels
-        login = new Login();
-        cp.add(login);
         try {
             spel.initDankabank();
 
@@ -131,6 +127,12 @@ public class Window extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void initLogin() throws IOException, FontFormatException {
+        // Make UI panels
+        login = new Login();
+        cp.add(login);
     }
 
 
