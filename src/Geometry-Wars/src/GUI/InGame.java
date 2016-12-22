@@ -312,9 +312,7 @@ public class InGame extends GPanel implements ActionListener {
 
     public void initGamePanel() {
         setupGameTimer();
-        System.out.println("coop active: " + coop);
         gamePanel.setVisible(true);
-        // gamePanel.requestFocus();
         gamePanel.setCoop(coop);
         if (coop){
             showCoopUI();

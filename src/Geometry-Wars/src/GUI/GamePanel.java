@@ -514,11 +514,6 @@ public class GamePanel extends GPanel {
     private double updateHealthBar(Schip schip, double healthBarWidth) {
         if (schip.getHp() >= 0) {
             ratioHP = 425 / schip.getMaxhp();
-
-
-            healthBarWidth = (int) ratioHP * schip.getHp();
-            System.out.println(healthBarWidth);
-
             healthBarWidth = ratioHP * schip.getHp();
         }
         return healthBarWidth;
