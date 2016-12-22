@@ -21,13 +21,15 @@ public class Controllers implements Runnable {
     private ArrayList<Controller> foundControllers;
     private Schip schip;
     private Timer mousePressedTimer;
+    private int index;
 
     public void run() {
-        startShowingControllerData();
+        startShowingControllerData(index);
     }
 
-    public Controllers(Schip schip) {
+    public Controllers(Schip schip, int index) {
         this.schip = schip;
+        this.index = index;
         foundControllers = new ArrayList<>();
         searchForControllers();
 
@@ -53,10 +55,10 @@ public class Controllers implements Runnable {
         }
     }
 
-    private void startShowingControllerData(){
+    private void startShowingControllerData(int index){
         while(true){
             // Currently selected controller.
-            Controller controller = foundControllers.get(0);
+            Controller controller = foundControllers.get(index);
 
             if( !controller.poll() ){
                 break;

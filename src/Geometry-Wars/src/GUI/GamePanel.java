@@ -202,16 +202,19 @@ public class GamePanel extends GPanel {
         }
 
         schip = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed());
+        //Controllers controller = new Controllers(schip, 0);
 
         drone = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
-
-
 
         schip.setDrone(drone);
 
         if (coop) {
             schipp2 = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed());
-            Controllers controller = new Controllers(schipp2);
+            try{
+                Controllers controller2 = new Controllers(schipp2, 1);
+            } catch (NullPointerException e){
+                Controllers controller2 = new Controllers(schipp2, 0);
+            }
 
             dronep2 = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
 
@@ -408,12 +411,10 @@ public class GamePanel extends GPanel {
                         schip.addCombo();
                         if (kogels == schip.getDrone().getKogels()) {
                             schip.getDrone().addCurrentXp(enemy.getExperience());
-
                             drone.checkLevel();
                             //currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, enemy.getHitter()), currentDroneXpBar.getHeight());
                         } else if (kogels == schip.getKogels()) {
                             schip.addCurrentXp(enemy.getExperience());
-                            System.out.println(enemy.getExperience());
                             schip.checkLevel();
                             //currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, enemy.getHitter()), currentSchipXpBar.getHeight());
                             schip.checkForUpgrade(schip.getCombo());
@@ -496,7 +497,7 @@ public class GamePanel extends GPanel {
     }
 
     private double updateHealthBar(Schip schip, double healthBarWidth) {
-        if (schip.getHp() != 0) {
+        if (schip.getHp() >= 0) {
             ratioHP = 425 / schip.getMaxhp();
             healthBarWidth = ratioHP * schip.getHp();
         } else {
@@ -568,12 +569,14 @@ public class GamePanel extends GPanel {
         Enemy testenemy = enemies.get(0);
         ImageIcon ii = new ImageIcon(testenemy.getImage());
 
-        spawnTimer = new Timer(5000, new ActionListener() {
+        spawnTimer = new Timer(7000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (enemyOnField.isEmpty()){
                     if (enemyCounter % 20 == 0) {
-
+                        Enemy boss1 = enemies.get(6);
+                        enemyOnField.add(new Enemy(boss1.getNr(), boss1.getNaam(), boss1.getBeschrijving(), boss1.getHP(), boss1.getKracht(), boss1.getImageString(), boss1.getExperience(), boss1.getScore(), boss1.getSpeed()));
+                        enemyCounter++;
                     } else {
                         for (int i = 0; i < enemyCounter; i++) {
                             enemyOnField.add(new Enemy(testenemy.getNr(), testenemy.getNaam(), testenemy.getBeschrijving(), testenemy.getHP(), testenemy.getKracht(), testenemy.getImageString(), testenemy.getExperience(), testenemy.getScore(), testenemy.getSpeed()));
@@ -603,8 +606,7 @@ public class GamePanel extends GPanel {
                             Enemy enemy2 = enemies.get(6);
                             enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
                         }
-
-
+                        enemyCounter++;
                     }
                 }
 

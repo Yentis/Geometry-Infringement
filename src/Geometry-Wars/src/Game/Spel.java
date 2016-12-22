@@ -54,10 +54,8 @@ public class Spel implements Cloneable{
         return currentDifficulty;
     }
 
-    public void changeSchipspeed(double multiplier){
-        for (Schip schip:schepen) {
-            schip.setSpeed(schip.getSpeed() * multiplier);
-        }
+    public List<Speler> getSpelers() {
+        return spelers;
     }
 
     public void setEnemies(List<Enemy> enemies) {
@@ -71,6 +69,8 @@ public class Spel implements Cloneable{
     //endregion
 
     //region Behaviour
+
+
 
     public void reInitSpelers() throws SQLException {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
@@ -148,8 +148,10 @@ public class Spel implements Cloneable{
         //endregion
     }
 
-    public List<Speler> getSpelers() {
-        return spelers;
+    public void changeSchipspeed(double multiplier){
+        for (Schip schip:schepen) {
+            schip.setSpeed(schip.getSpeed() * multiplier);
+        }
     }
 
     public void submitScore(int score) throws SQLException {
