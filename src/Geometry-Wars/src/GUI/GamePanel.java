@@ -93,7 +93,6 @@ public class GamePanel extends GPanel {
     private void initGamePanel() {
         try {
             initComponents();
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (FontFormatException e) {
@@ -213,7 +212,11 @@ public class GamePanel extends GPanel {
             try{
                 Controllers controller2 = new Controllers(schipp2, 1);
             } catch (NullPointerException e){
-                Controllers controller2 = new Controllers(schipp2, 0);
+                try{
+                    Controllers controller2 = new Controllers(schipp2, 0);
+                } catch (NullPointerException ef){
+
+                }
             }
 
             dronep2 = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());

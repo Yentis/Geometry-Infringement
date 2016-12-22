@@ -69,12 +69,10 @@ public class Settings extends GPanel {
                                     enemy.setHp(enemy.getHP()*2);
                                     enemy.setKracht(enemy.getKracht()*2);
                                     enemy.setSpeed(enemy.getSpeed()*2);
-                                    window.getSpel().changeSchipspeed(1.2);
                                 } else if (Objects.equals(currentDifficulty, "Easy")) {
                                     enemy.setHp(enemy.getHP()*4);
                                     enemy.setKracht(enemy.getKracht()*4);
                                     enemy.setSpeed(enemy.getSpeed()*4);
-                                    window.getSpel().changeSchipspeed(2.4);
                                 }
                                 break;
                             case "Normal":
