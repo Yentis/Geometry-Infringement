@@ -36,7 +36,12 @@ public class Upgrade {
 
     //region Getters
 
-   // public boolean isActive() {
+    public String getFoto() {
+        return foto;
+    }
+
+
+    // public boolean isActive() {
    //     return active;
    // }
 

@@ -80,6 +80,13 @@ public class MainMenu extends GPanel {
                 } catch (FontFormatException e) {
                     e.printStackTrace();
                 }
+                try {
+                    window.getUpgrades().initComponents();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (FontFormatException e) {
+                    e.printStackTrace();
+                }
                 window.getUpgrades().setVisible(true);
 
             }
