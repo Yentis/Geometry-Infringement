@@ -446,14 +446,14 @@ public class GamePanel extends GPanel {
             schip.beweegSchip();
 
 
-<<<<<<< HEAD
+
 
 
                 //System.out.println("invulnerability start");q
 
-=======
+
             if (schip.getInvulnerability().isActive()) {
->>>>>>> 0f5d068827483b4036993d6205045eb94d9a7f4e
+
                 invulnerabilityTimer.start();
             }
             if (schip.getSlowEnemies().isActive()) {
