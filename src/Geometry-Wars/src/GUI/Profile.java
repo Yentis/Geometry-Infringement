@@ -76,7 +76,6 @@ public class Profile extends GPanel {
             }
         });
 
-
         //==================================================
 
         //Add Components
