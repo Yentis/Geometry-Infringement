@@ -78,7 +78,7 @@ public class Spel implements Cloneable{
         Statement myStmt = myConn.createStatement();
 
         //region Spelers
-        ResultSet speler = myStmt.executeQuery("select * from speler");
+        ResultSet speler = myStmt.executeQuery("select * from speler order by highscore desc");
 
         int i = 0;
         while (speler.next()){
@@ -102,7 +102,7 @@ public class Spel implements Cloneable{
 
         i = 0;
         while (drone.next()){
-            drones.add(i, new Drone(drone.getInt("nr") - 1, drone.getString("naam"), drone.getString("beschrijving"), drone.getInt("kracht"), drone.getString("uiterlijk")));
+            drones.add(i, new Drone(drone.getInt("nr") - 1, drone.getString("naam"), drone.getString("beschrijving"), drone.getInt("kracht"), drone.getString("uiterlijk"), drone.getInt("type")));
             i++;
         }
         //endregion
