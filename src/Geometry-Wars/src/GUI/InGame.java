@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.*;
 import javax.swing.Timer;
 
@@ -64,6 +65,16 @@ public class InGame extends GPanel implements ActionListener {
             pause.add(restartPauze);
             pause.add(menuPauze);
 
+            menuGameEnd.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    panel.setVisible(false);
+                    GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                    window.getMainMenu().setVisible(true);
+
+
+                }
+            });
+
 
         }
     };
@@ -94,6 +105,7 @@ public class InGame extends GPanel implements ActionListener {
             gameEnd.add(gameOver);
             gameEnd.add(restartGameEnd);
             gameEnd.add(menuGameEnd);
+
 
             menuGameEnd.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -252,6 +264,7 @@ public class InGame extends GPanel implements ActionListener {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 //panel.setVisible(false);
                 pauseGameLoop();
+
                 //pause.setVisible(true);
                 //pane.setVisible(true);
             }
@@ -259,21 +272,9 @@ public class InGame extends GPanel implements ActionListener {
 
         });
 
-
-
-
-
-
     }
 
-    public void initGamePanel() {
-        setupGameTimer();
-        gameTimer.start();
-        gamePanel.setVisible(true);
-        gamePanel.requestFocus();
-        gamePanel.setCoop(false);
-        gamePanel.startGame();
-    }
+
 
     public void addActionListeners() { //TODO
         startGame.addActionListener(panel);
@@ -286,6 +287,7 @@ public class InGame extends GPanel implements ActionListener {
         if (gamePanel.getGameFinished()) {
             pauze.setVisible(false);
             initEndGamePanel();
+            gameTimer.stop();
             System.out.println("game over");
         }
     }
@@ -301,9 +303,7 @@ public class InGame extends GPanel implements ActionListener {
         });
     }
 
-    public void initPausePanel() {
-        pause.setVisible(true);
-    }
+
 
     public void initEndGamePanel() {
         gameEnd.setVisible(true);
@@ -322,14 +322,29 @@ public class InGame extends GPanel implements ActionListener {
             runGameLoop();
         } else if (source == Continue) {
             resumeGameLoop();
+
         }
+    }
+
+    public void initGamePanel() {
+        setupGameTimer();
+        gameTimer.start();
+        gamePanel.setVisible(true);
+        gamePanel.requestFocus();
+        gamePanel.setCoop(false);
+        gamePanel.startGame();
     }
 
     private void pauseGameLoop() {
         gamePanel.pauseGame();
         gamePanel.setFocusable(false);
+        gameTimer.stop();
         initPausePanel();
 
+    }
+
+    public void initPausePanel() {
+        pause.setVisible(true);
     }
 
 

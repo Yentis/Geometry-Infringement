@@ -36,7 +36,7 @@ public class MainMenu extends GPanel {
         //Make components
         //==================================================
 
-        JButton StartGame = new GButton("Start Game", 24f, 120,200,260,70);
+        JButton StartGame = new GButton("Play", 24f, 120,200,260,70);
         JButton Upgrades = new GButton("Upgrades", 24f, 190,320,260,70);
         JButton Profile = new GButton("Profile", 24f, 237,440,260,70);
         JButton Settings = new GButton("Settings", 24f, 235,560,260,70);
