@@ -128,7 +128,7 @@ public class GamePanel extends GPanel {
         currentDroneXpBar.setBackground(new Color(50, 50, 255));
         currentDroneXpBar.setOpaque(true);
         currentHealthBar = new JProgressBar();
-        currentHealthBar.setBounds(20, 27, 425, 40);
+        currentHealthBar.setBounds(20, 27, 0, 40);
         currentHealthBar.setBackground(new Color(0, 200, 0));
         currentHealthBar.setOpaque(true);
 
@@ -235,7 +235,6 @@ public class GamePanel extends GPanel {
             drawDrone(g, drone, schip);
             drawEnemy(g);
             drawBuffs(g,schip,schipbarp1);
-
             if (coop) {
                 drawBullets(g, schipp2.getKogels(), schipp2);
                 drawBullets(g, dronep2.getKogels(), schipp2);
@@ -456,6 +455,7 @@ public class GamePanel extends GPanel {
 
             combo.setText("x " + schip.getCombo());
             score.setText("" + schip.getScore());
+            System.out.println(currentHealthBar.getWidth());
             currentHealthBar.setSize((int) updateHealthBar(schip, healthBarWidth), currentHealthBar.getHeight());
             currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, schip), currentSchipXpBar.getHeight());
             currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, drone), currentDroneXpBar.getHeight());
@@ -483,7 +483,7 @@ public class GamePanel extends GPanel {
     private double updateHealthBar(Schip schip, double healthBarWidth) {
         if (schip.getHp() != 0) {
             ratioHP = 425 / schip.getMaxhp();
-            healthBarWidth = (int) ratioHP * schip.getHp();
+            healthBarWidth = ratioHP * schip.getHp();
         } else {
             //TODO
             gameFinished = true;
@@ -550,8 +550,6 @@ public class GamePanel extends GPanel {
     }
 
     public void spawnEnemies() {
-        //int random = randomEnemies(schip.getLevel());
-        //System.out.println(randomEnemies(schip.getLevel()));
         Enemy testenemy = enemies.get(0);
         ImageIcon ii = new ImageIcon(testenemy.getImage());
 
