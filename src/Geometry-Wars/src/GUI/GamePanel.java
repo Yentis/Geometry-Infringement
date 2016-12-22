@@ -173,9 +173,12 @@ public class GamePanel extends GPanel {
         score.setText("");
         combo.setText("x");
         currentHealthBar.setSize(0,currentHealthBar.getHeight());
+        currentSchipXpBar.setSize(0, currentSchipXpBar.getHeight());
+        currentDroneXpBar.setSize(0, currentDroneXpBar.getHeight());
         if (coop){
             scorep2.setText("");
-            combo.setText("x");
+            combop2.setText("x");
+            currentHealthBarp2.setSize(0, currentHealthBarp2.getHeight());
         }
 
     }
@@ -529,7 +532,7 @@ public class GamePanel extends GPanel {
     }
 
     private double updateSchipXpBar(double xpBarWidthSchip, Schip schip) {
-        ratioSchipXP = 190 / schip.getMaxXp();
+        ratioSchipXP = 200 / schip.getMaxXp();
         xpBarWidthSchip = ratioSchipXP * schip.getCurrentXp();
         schipbarp1.setText(" lvl: " + schip.getLevel());
         return xpBarWidthSchip;

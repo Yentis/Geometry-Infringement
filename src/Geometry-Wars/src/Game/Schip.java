@@ -23,7 +23,7 @@ public class Schip extends Sprite {
     private int nr;
     private int hp = 100;
     private int maxhp = 100;
-    private int kracht = 10;
+    private int kracht = 25;
     private double speed;
     private double dx;
     private double dy;
@@ -270,25 +270,9 @@ public class Schip extends Sprite {
             checkLevel();
             resetCurrentXp();
         }
-
-        switch (getLevel()) {
-            case 1:
-                setKracht(75);
-                break;
-            case 2:
-                setKracht(100);
-                break;
-            case 3:
-                setKracht(150);
-                break;
-            case 4:
-                setKracht(200);
-                break;
-            case 5:
-                setKracht(250);
-                break;
-        }
-    }//lifesteal 100, invul 50, slow 75, drone 150, randombullets 250
+        setKracht(kracht + (25 * getLevel()));
+    }
+    //lifesteal 100, invul 50, slow 75, drone 150, randombullets 250
     //wanneer je combo verliest, zet alle upgrades af
     //debuff : als je < 50% hp hebt, vertraag je
 
