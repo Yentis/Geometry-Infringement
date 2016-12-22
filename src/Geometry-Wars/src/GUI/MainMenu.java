@@ -98,7 +98,6 @@ public class MainMenu extends GPanel {
                     e.printStackTrace();
                 }
                 window.getSettings().setVisible(true);
-
             }
 
         });
@@ -180,8 +179,6 @@ public class MainMenu extends GPanel {
 
         No.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 pauzepane.setVisible(false);
                 Yes.setVisible(false);
                 No.setVisible(false);
@@ -206,8 +203,6 @@ public class MainMenu extends GPanel {
 
         Yes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 System.exit(0);
             }
         });
