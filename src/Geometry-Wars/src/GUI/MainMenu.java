@@ -208,14 +208,8 @@ public class MainMenu extends GPanel {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                window.getScoreboard().setVisible(true);
                 System.exit(0);
-
-
             }
-
-
-
         });
 
 

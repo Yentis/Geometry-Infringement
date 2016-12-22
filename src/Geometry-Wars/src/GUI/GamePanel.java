@@ -71,6 +71,9 @@ public class GamePanel extends GPanel {
         initGamePanel();
     }
 
+    public int getScore() {
+        return Integer.parseInt(score.getText());
+    }
 
     public boolean getGameFinished() {
         return gameFinished;
@@ -180,13 +183,13 @@ public class GamePanel extends GPanel {
         }
 
         schip = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed());
-        drone = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getHp(), dummydr.getKracht(), dummydr.getImageString());
+        drone = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString());
         schip.setDrone(drone);
 
         if (coop) {
             schipp2 = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed());
             Controllers controller = new Controllers(schipp2);
-            dronep2 = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getHp(), dummydr.getKracht(), dummydr.getImageString());
+            dronep2 = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString());
             schipp2.setDrone(dronep2);
 
             setSlowerEnemiesTimer(schipp2);

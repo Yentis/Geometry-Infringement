@@ -1,6 +1,8 @@
 package Game;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.*;
+import java.lang.reflect.Array;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
@@ -14,6 +16,7 @@ public class Spel implements Cloneable{
     //region Instance Variables
 
     private Speler speler;
+    private List<Speler> spelers = new ArrayList<>();
     private List<Schip> schepen = new ArrayList<>();
     private List<Drone> drones = new ArrayList<>();
     private List<Upgrade> upgrades = new ArrayList<>();
@@ -65,19 +68,25 @@ public class Spel implements Cloneable{
 
     //region Behaviour
 
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
     public void initDankabank() throws SQLException{
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
 
+        //region Spelers
+        ResultSet speler = myStmt.executeQuery("select * from speler");
+
+        int i = 0;
+        while (speler.next()){
+            spelers.add(i, new Speler(speler.getInt("nr") - 1, speler.getString("gebruikersnaam"), speler.getString("wachtwoord"), speler.getString("email"), speler.getInt("level"), speler.getInt("experience"), speler.getString("rank"), speler.getInt("nuggets"), speler.getInt("golden nuggets"), speler.getInt("highscore")));
+            i++;
+        }
+        //endregion
+
         //region Schepen
         ResultSet schip = myStmt.executeQuery("select * from schip");
 
-        int i = 0;
+        i = 0;
         while (schip.next()){
             schepen.add(i, new Schip(schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image"), 81, 68, 90, 83, schip.getInt("speed")));
             i++;
@@ -89,7 +98,7 @@ public class Spel implements Cloneable{
 
         i = 0;
         while (drone.next()){
-            drones.add(i, new Drone(drone.getInt("nr") - 1, drone.getString("naam"), drone.getString("beschrijving"), drone.getInt("hp"), drone.getInt("kracht"), drone.getString("uiterlijk")));
+            drones.add(i, new Drone(drone.getInt("nr") - 1, drone.getString("naam"), drone.getString("beschrijving"), drone.getInt("kracht"), drone.getString("uiterlijk")));
             i++;
         }
         //endregion
@@ -115,6 +124,24 @@ public class Spel implements Cloneable{
         //endregion
     }
 
+    public List<Speler> getSpelers() {
+        return spelers;
+    }
+
+    public void submitScore(int score) throws SQLException {
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        Connection myConn = DriverManager.getConnection(url, user, pass);
+        Statement myStmt = myConn.createStatement();
+
+        ResultSet highscore = myStmt.executeQuery("select * from speler where gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+
+        while(highscore.next()){
+            if(highscore.getInt("highscore") < score){
+                int a = myStmt.executeUpdate("UPDATE speler SET highscore = " + score + " WHERE gebruikersnaam = " + speler.getGebruikersnaam() + "");
+            }
+        }
+    }
+
     public void logIn(String gebruikersnaam) throws SQLException {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         Connection myConn = DriverManager.getConnection(url, user, pass);
@@ -123,7 +150,7 @@ public class Spel implements Cloneable{
         ResultSet myRs = myStmt.executeQuery("select * from speler where gebruikersnaam = '" + gebruikersnaam + "'");
 
         while(myRs.next()){
-            speler = new Speler(myRs.getInt("nr") - 1, myRs.getString("gebruikersnaam"), myRs.getString("wachtwoord"), myRs.getString("email"), myRs.getInt("level"), myRs.getInt("experience"), myRs.getString("rank"), myRs.getInt("nuggets"), myRs.getInt("golden nuggets"));
+            speler = new Speler(myRs.getInt("nr") - 1, myRs.getString("gebruikersnaam"), myRs.getString("wachtwoord"), myRs.getString("email"), myRs.getInt("level"), myRs.getInt("experience"), myRs.getString("rank"), myRs.getInt("nuggets"), myRs.getInt("golden nuggets"), myRs.getInt("highscore"));
         }
     }
 

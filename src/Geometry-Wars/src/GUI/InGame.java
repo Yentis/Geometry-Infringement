@@ -3,6 +3,7 @@ package GUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -107,6 +108,11 @@ public class InGame extends GPanel implements ActionListener {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     panel.setVisible(false);
                     GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                    try {
+                        window.getSpel().submitScore(gamePanel.getScore());
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                     window.getMainMenu().setVisible(true);
 
                 }

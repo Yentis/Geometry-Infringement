@@ -20,7 +20,6 @@ public class Window extends JFrame {
     private Logout logout;
     private Login login;
     private InGame inGame;
-    private Scoreboard scoreboard;
     private Register register;
     private Coop startCoop;
     private Upgrades upgrades;
@@ -92,7 +91,6 @@ public class Window extends JFrame {
         logout = new Logout();
         login = new Login();
         inGame = new InGame(spel.getEnemies());
-        scoreboard = new Scoreboard();
         upgrades = new Upgrades();
         startCoop = new Coop(spel.getEnemies());
         register = new Register();
@@ -107,7 +105,6 @@ public class Window extends JFrame {
         cp.add(logout);
         cp.add(login);
         cp.add(inGame);
-        cp.add(scoreboard);
         cp.add(startCoop);
         cp.add(register);
         cp.add(upgrades);
@@ -122,7 +119,6 @@ public class Window extends JFrame {
         startGameCampaign.setVisible(false);
         logout.setVisible(false);
         inGame.setVisible(false);
-        scoreboard.setVisible(false);
         startCoop.setVisible(false);
         register.setVisible(false);
         upgrades.setVisible(false);
@@ -157,11 +153,6 @@ public class Window extends JFrame {
     }
 
     public InGame getInGame() {return inGame;}
-
-
-    public Scoreboard getScoreboard() {
-        return scoreboard;
-    }
 
     public Register getRegister() {
         return register;
