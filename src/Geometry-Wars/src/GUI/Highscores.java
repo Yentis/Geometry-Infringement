@@ -103,6 +103,7 @@ public class Highscores extends GPanel {
 
         //bounds
         label.setBounds(220,25,650,100);
+
         listPlayer.setBounds(221,230,318,469);
         listScore.setBounds(551,230,318,469);
 
