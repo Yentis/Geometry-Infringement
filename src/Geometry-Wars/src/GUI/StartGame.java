@@ -99,6 +99,8 @@ public class StartGame extends GPanel {
                     e.printStackTrace();
                 }
 
+
+
                 try {
                     window.getHighScores().initComponents();
                 } catch (IOException e) {
