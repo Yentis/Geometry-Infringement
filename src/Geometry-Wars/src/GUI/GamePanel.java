@@ -26,8 +26,6 @@ import javax.swing.Timer;
 
 public class GamePanel extends GPanel {
     private GamePanel panel = this;
-    private GPanel coopPanel;
-
     private Schip schip;
     private Schip schipp2;
     private Drone drone;
@@ -62,6 +60,7 @@ public class GamePanel extends GPanel {
     private Timer shootingDroneTimer;
     private Rectangle2D slowerEnemies;
 
+
     public GamePanel(List<Enemy> enemies) throws IOException, FontFormatException {
         this.enemies = enemies;
         addKeyListener(new TAdapter());
@@ -88,7 +87,7 @@ public class GamePanel extends GPanel {
 
     public void resetGame() {
         schip = null;
-        drone = null;
+        schipp2 = null;
         enemyCounter = 1;
         enemyOnField.clear();
     }
@@ -96,7 +95,6 @@ public class GamePanel extends GPanel {
     private void initGamePanel() {
         try {
             initComponents();
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (FontFormatException e) {
@@ -112,7 +110,6 @@ public class GamePanel extends GPanel {
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
-
         //make Components
         combo = new GLabel("", 24f, 30, 620, 200, 60, false, Color.white);
         score = new GLabel("", 30f, 140, 65, 300, 60, false, Color.white);
@@ -148,11 +145,16 @@ public class GamePanel extends GPanel {
         currentHealthBarp2.setBackground(new Color(0, 200, 0));
         currentHealthBarp2.setOpaque(true);
         scorep2.setHorizontalAlignment(SwingConstants.RIGHT);
-        initCoopPanel();
         if (coop) {
-            coopPanel.setVisible(true);
+            currentHealthBarp2.setVisible(true);
+            combop2.setVisible(true);
+            scorep2.setVisible(true);
+
         } else {
-            coopPanel.setVisible(false);
+            currentHealthBarp2.setVisible(false);
+            combop2.setVisible(false);
+            scorep2.setVisible(false);
+            //hideCoopUI();
         }
         panel.add(combo);
         panel.add(score);
@@ -162,6 +164,9 @@ public class GamePanel extends GPanel {
         panel.add(currentSchipXpBar);
         panel.add(currentDroneXpBar);
         panel.add(currentHealthBar);
+        panel.add(combop2);
+        panel.add(scorep2);
+        panel.add(currentHealthBarp2);
         panel.add(schipbarp1Pane);
         panel.add(dronebarp1Pane);
         panel.add(schipLvlp1);
@@ -171,27 +176,17 @@ public class GamePanel extends GPanel {
         setAllComponentsVisible();
     }
 
-    private void initCoopPanel() {
-        coopPanel = new GPanel() {
-            @Override
-            public void initComponents() throws IOException, FontFormatException {
-                this.add(combop2);
-                this.add(scorep2);
-                this.add(currentHealthBarp2);
-                combop2.setVisible(true);
-                scorep2.setVisible(true);
-                currentHealthBarp2.setVisible(true);
-            }
-        };
-    }
 
     private void clearUI() {
         score.setText("");
         combo.setText("x");
         currentHealthBar.setSize(0, currentHealthBar.getHeight());
+        currentSchipXpBar.setSize(0, currentSchipXpBar.getHeight());
+        currentDroneXpBar.setSize(0, currentDroneXpBar.getHeight());
         if (coop) {
             scorep2.setText("");
-            combo.setText("x");
+            combop2.setText("x");
+            currentHealthBarp2.setSize(0, currentHealthBarp2.getHeight());
         }
     }
 
@@ -219,11 +214,18 @@ public class GamePanel extends GPanel {
         schip.setDrone(drone);
 
         if (coop) {
+            //set layouts
+         //   showCoopUI();
             schipp2 = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed());
             try {
                 Controllers controller2 = new Controllers(schipp2, 1);
+
             } catch (NullPointerException e) {
-                Controllers controller2 = new Controllers(schipp2, 0);
+                try {
+                    Controllers controller2 = new Controllers(schipp2, 0);
+                } catch (NullPointerException ef) {
+
+                }
             }
 
             dronep2 = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
@@ -232,11 +234,13 @@ public class GamePanel extends GPanel {
 
             setSlowerEnemiesTimer(schipp2);
             setInvulnerabilityTimer(schipp2);
-            coopPanel.setVisible(true);
+
+        } else {
+          //  hideCoopUI();
         }
         initTimers();
 
-        gameFinished = false;
+
         clearUI();
 
     }
@@ -330,7 +334,6 @@ public class GamePanel extends GPanel {
         }
     }
 
-
     private void drawEnemy(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         //loop over alle enemies, zodat ze allemaal geupdate worden
@@ -362,19 +365,6 @@ public class GamePanel extends GPanel {
             }
         }
     }
-/*
-    public void collisionEffect(ArrayList<Kogel> kogels, Enemy enemy) {
-        for (Kogel k : kogels) {
-            if (k.collisionDetect(enemy.getHitBox())) {
-
-                enemy.loseHP(schip.getKracht());
-                if (enemy.getHP() == 0) {
-                    enemy.setHit(true);
-                }
-                //System.out.println(enemy.getHP());
-            }
-        }
-    }*/
     //endregion
 
     //region closestTarget
@@ -467,6 +457,7 @@ public class GamePanel extends GPanel {
     //updates the "updates" region
     public void update() {
         if (schip != null) {
+            checkGameFinished();
             schip.updateBuffs();
             updateKogels(schip.getKogels(), schip);
             updateKogels(drone.getKogels(), schip);
@@ -524,15 +515,25 @@ public class GamePanel extends GPanel {
         if (schip.getHp() >= 0) {
             ratioHP = 425 / schip.getMaxhp();
             healthBarWidth = ratioHP * schip.getHp();
-        } else {
-            gameFinished = true;
-            enemyOnField.clear();
         }
         return healthBarWidth;
     }
 
+    private void checkGameFinished(){
+        if (coop){
+            if (schip.getHp() <= 0 && schipp2.getHp() <= 0){
+                gameFinished = true;
+            }
+        } else {
+            if (schip.getHp() <=0 ){
+                gameFinished = true;
+            }
+        }
+
+    }
+
     private double updateSchipXpBar(double xpBarWidthSchip, Schip schip) {
-        ratioSchipXP = 190 / schip.getMaxXp();
+        ratioSchipXP = 200 / schip.getMaxXp();
         xpBarWidthSchip = ratioSchipXP * schip.getCurrentXp();
         schipbarp1.setText(" lvl: " + schip.getLevel());
         return xpBarWidthSchip;

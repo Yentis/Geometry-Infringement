@@ -132,7 +132,7 @@ public class Spel implements Cloneable{
 
         i = 0;
         while (upgrade.next()){
-            upgrades.add(i, new Upgrade(upgrade.getInt("nr") - 1, upgrade.getString("naam"), upgrade.getString("beschrijving"), upgrade.getInt("level"), upgrade.getString("foto"), upgrade.getInt("kost")));
+            upgrades.add(i, new Upgrade(upgrade.getInt("nr") - 1, upgrade.getString("naam"), upgrade.getString("beschrijving"), upgrade.getString("foto"), upgrade.getInt("kost")));
             i++;
         }
         //endregion
@@ -148,7 +148,7 @@ public class Spel implements Cloneable{
         //endregion
     }
 
-    public void changeSchipspeed(double multiplier){
+    public void increaseSchipSpeed(double multiplier){
         for (Schip schip:schepen) {
             schip.setSpeed(schip.getSpeed() * multiplier);
         }

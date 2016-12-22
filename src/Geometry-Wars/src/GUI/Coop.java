@@ -111,7 +111,7 @@ public class Coop extends GPanel implements ActionListener {
         pauze.setBorder(null);
 
         //BOUNDS
-        pauze.setBounds(480,23,60,58);
+        pauze.setBounds(482,23,60,58);
         pane.setBounds(50,125,900,500);
         pauzepane.setBounds(395,265,370,245);
 
