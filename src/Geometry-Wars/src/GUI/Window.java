@@ -25,6 +25,7 @@ public class Window extends JFrame {
     private Coop startCoop;
     private Upgrades upgrades;
     private Settings settings;
+    private Highscores highscores;
     private static Spel spel = new Spel();
 
     //Game
@@ -96,6 +97,7 @@ public class Window extends JFrame {
         startCoop = new Coop(spel.getEnemies());
         register = new Register();
         settings = new Settings();
+        highscores = new Highscores();
 
         // Add UI panels
         cp.add(mainMenu);
@@ -110,6 +112,7 @@ public class Window extends JFrame {
         cp.add(register);
         cp.add(upgrades);
         cp.add(settings);
+        cp.add(highscores);
 
 
         // Set all panels invisible except the starting panel
@@ -124,6 +127,7 @@ public class Window extends JFrame {
         register.setVisible(false);
         upgrades.setVisible(false);
         settings.setVisible(false);
+        highscores.setVisible(false);
     }
 
 
@@ -171,7 +175,12 @@ public class Window extends JFrame {
         return startCoop;
     }
 
+<<<<<<< HEAD
+    public Highscores getHighScores() {
+        return highscores;
+=======
     public Upgrades getUpgrades() {
         return upgrades;
+>>>>>>> f69ee794886ce9dc16a30c20c7f0a4e967cf8fe3
     }
 }

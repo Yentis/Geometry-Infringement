@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.*;
 import javax.swing.Timer;
 
@@ -59,6 +60,16 @@ public class InGame extends GPanel implements ActionListener {
             pause.add(restartPauze);
             pause.add(menuPauze);
 
+            menuGameEnd.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    panel.setVisible(false);
+                    GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                    window.getMainMenu().setVisible(true);
+
+
+                }
+            });
+
 
 
         }
@@ -90,6 +101,7 @@ public class InGame extends GPanel implements ActionListener {
             gameEnd.add(gameOver);
             gameEnd.add(restartGameEnd);
             gameEnd.add(menuGameEnd);
+
 
             menuGameEnd.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -215,6 +227,7 @@ public class InGame extends GPanel implements ActionListener {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 //panel.setVisible(false);
                 pauseGameLoop();
+
                 //pause.setVisible(true);
                 //pane.setVisible(true);
             }
@@ -222,13 +235,11 @@ public class InGame extends GPanel implements ActionListener {
 
         });
 
-
-
-
-
-
     }
 
+<<<<<<< HEAD
+
+=======
     public GButton getStartGame() {
         return startGame;
     }
@@ -243,6 +254,7 @@ public class InGame extends GPanel implements ActionListener {
         gamePanel.setCoop(coop);
         gamePanel.startGame();
     }
+>>>>>>> f69ee794886ce9dc16a30c20c7f0a4e967cf8fe3
 
     public void addActionListeners() { //TODO
         menuPauze.addActionListener(panel);
@@ -274,9 +286,7 @@ public class InGame extends GPanel implements ActionListener {
         });
     }
 
-    public void initPausePanel() {
-        pause.setVisible(true);
-    }
+
 
     public void initEndGamePanel() {
         gameEnd.setVisible(true);
@@ -297,16 +307,36 @@ public class InGame extends GPanel implements ActionListener {
             runGameLoop();
         } else if (source == Continue) {
             resumeGameLoop();
+
         }
+    }
+
+    public void initGamePanel() {
+        setupGameTimer();
+        gameTimer.start();
+        gamePanel.setVisible(true);
+        gamePanel.requestFocus();
+        gamePanel.setCoop(false);
+        gamePanel.startGame();
     }
 
     private void pauseGameLoop() {
         gameTimer.stop();
         gamePanel.pauseGame();
         gamePanel.setFocusable(false);
+        gameTimer.stop();
         initPausePanel();
     }
 
+<<<<<<< HEAD
+    public void initPausePanel() {
+        pause.setVisible(true);
+    }
+
+
+
+=======
+>>>>>>> f69ee794886ce9dc16a30c20c7f0a4e967cf8fe3
     private void runGameLoop() {
         gameTimer.start();
     }

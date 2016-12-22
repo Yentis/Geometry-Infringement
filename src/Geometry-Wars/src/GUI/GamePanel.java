@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.*;
 import javax.swing.Timer;
@@ -302,9 +303,6 @@ public class GamePanel extends GPanel {
         }
     }
 
-    public void checkBullet() {
-
-    }
 
     //endregion
 
@@ -536,7 +534,17 @@ public class GamePanel extends GPanel {
 
     }
 
+    public int randomEnemies(int level){
+        Random randomGenerator = new Random();
+
+        int random = randomGenerator.nextInt(level +1);
+        System.out.println("enemy: " + random);
+        return random;
+    }
+
     public void spawnEnemies() {
+        //int random = randomEnemies(schip.getLevel());
+        System.out.println(randomEnemies(schip.getLevel()));
         Enemy testenemy = enemies.get(0);
         ImageIcon ii = new ImageIcon(testenemy.getImage());
 
