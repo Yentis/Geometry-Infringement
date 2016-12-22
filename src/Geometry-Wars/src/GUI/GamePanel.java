@@ -170,17 +170,20 @@ public class GamePanel extends GPanel {
     }
 
 
-    private void clearComboAndScore(){
+    private void clearUI(){
         score.setText("");
         combo.setText("x");
+        currentHealthBar.setSize(0,currentHealthBar.getHeight());
+      
         if (coop){
             scorep2.setText("");
             combo.setText("x");
         }
+
     }
 
     public void startGame() {
-        clearComboAndScore();
+        clearUI();
         enemyOnField.clear(); //lol
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         enemyCounter = 1;
