@@ -171,8 +171,6 @@ public class GamePanel extends GPanel {
         panel.add(dronebarp1Pane);
         panel.add(schipLvlp1);
         panel.add(droneLvlp1);
-
-
         setAllComponentsVisible();
     }
 
@@ -477,7 +475,7 @@ public class GamePanel extends GPanel {
 
                 slowerEnemiesTimer.start();
             }
-
+            System.out.println("this isn't the problem");
             combo.setText("x " + schip.getCombo());
             score.setText("" + schip.getScore());
             currentHealthBar.setSize((int) updateHealthBar(schip, healthBarWidth), currentHealthBar.getHeight());

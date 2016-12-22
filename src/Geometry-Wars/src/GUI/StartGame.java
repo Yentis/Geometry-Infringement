@@ -77,7 +77,10 @@ public class StartGame extends GPanel {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 window.getInGame().setCoop(true);
+                window.getInGame().getGameEnd().setVisible(false);
+                window.getInGame().getStartGame().setVisible(true);
                 window.getInGame().setVisible(true);
+                window.getInGame().getPause().setVisible(false);
             }
         });
 
