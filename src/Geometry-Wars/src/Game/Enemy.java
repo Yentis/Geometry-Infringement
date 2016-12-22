@@ -47,6 +47,10 @@ public class Enemy extends Sprite {
         locationX = randomX();
         locationY = randomY();
 
+        while ((locationX > 100 && locationY >100) && (locationX < SCREEN_WIDTH -100 && locationY < SCREEN_HEIGHT -100)){
+            locationX = randomX();
+            locationY = randomY();
+        }
 
         currentLocation = new Point();
         currentLocation.setLocation(locationX, locationY);
@@ -115,9 +119,9 @@ public class Enemy extends Sprite {
         int randGetal = randomGenerator.nextInt(SCREEN_WIDTH);
 
 
-        while (randGetal > 100 && randGetal < (SCREEN_WIDTH - 100)) {
+       /* while (randGetal > 100 && randGetal < (SCREEN_WIDTH - 100)) {
             randGetal = randomGenerator.nextInt(SCREEN_WIDTH);
-        }
+        }*/
 
         return randGetal;
 
@@ -128,9 +132,9 @@ public class Enemy extends Sprite {
         Random randomGenerator = new Random();
 
         int randGetal = randomGenerator.nextInt(SCREEN_HEIGHT);
-        while (randGetal > 100 && randGetal < (SCREEN_HEIGHT - 100)) {
+        /*while (randGetal > 100 && randGetal < (SCREEN_HEIGHT - 100)) {
             randGetal = randomGenerator.nextInt(SCREEN_HEIGHT);
-        }
+        }*/
 
         return randGetal;
 

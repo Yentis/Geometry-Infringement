@@ -29,6 +29,7 @@ public class StartGame extends GPanel {
         JButton SoloGame = new GButton("Solo Game", 24f, 200,350,300,80);
         JButton Coop = new GButton("Co-op", 24f, 250,470,300,80);
         JButton Back = new GButton("Back", 24f, 820, 650, 170, 63);
+        JButton Highscores = new GButton("High Scores", 24f, 600, 350, 300, 80);
 
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
 
@@ -41,6 +42,7 @@ public class StartGame extends GPanel {
         SoloGame.setBackground(new Color(255,255,255,200));
         Coop.setBackground(new Color(255,255,255,200));
         Back.setBackground(new Color(255,255,255,200));
+        Highscores.setBackground(new Color(255,255,255,200));
 
 
 
@@ -56,6 +58,7 @@ public class StartGame extends GPanel {
         this.add(Coop);
         this.add(label);
         this.add(Back);
+        this.add(Highscores);
 
         //ActionListeners
 
@@ -82,6 +85,21 @@ public class StartGame extends GPanel {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 window.getMainMenu().setVisible(true);
+            }
+        });
+
+        Highscores.addActionListener(new java.awt.event.ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent evt){
+                panel.setVisible(false);
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                try {
+                    window.getHighScores().initComponents();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (FontFormatException e) {
+                    e.printStackTrace();
+                }
+                window.getHighScores().setVisible(true);
             }
         });
     }}

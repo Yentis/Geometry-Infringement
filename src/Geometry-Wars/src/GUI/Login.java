@@ -33,6 +33,7 @@ import javax.swing.*;
 public class Login extends GPanel{
     
     private Login panel = this;
+    private String errormessage = "";
 
     public Login() throws MalformedURLException, IOException, FontFormatException {
 
@@ -40,11 +41,19 @@ public class Login extends GPanel{
       
     }
 
+    public void setMessage(String message) {
+        errormessage = message;
+    }
+
+    public String getMessage() {
+        return errormessage;
+    }
+
     @Override
     public void initComponents() throws IOException, FontFormatException {
 
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
-        GLabel message = new GLabel("", 24f, 220,120,600,50, false, Color.white);
+        GLabel message = new GLabel(errormessage, 24f, 220,120,600,50, false, Color.white);
         GLabel lblusername = new GLabel("Username: ", 24f, 200,170,150,50, false, Color.white);
         GLabel lblpassword = new GLabel("Password: ", 24f, 200,240,150,50, false, Color.white);
         GInputField username = new GInputField(360,170,200,50);
@@ -56,7 +65,6 @@ public class Login extends GPanel{
         label.setOpaque(true);
         label.setFont(new GFont(65));
         label.setBackground(new Color(255,255,255,95));
-        message.setVisible(false);
 
         label.setBounds(25,25,650,100);
 
@@ -120,11 +128,14 @@ public class Login extends GPanel{
                         panel.setVisible(false);
                         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                         window.getMainMenu().setVisible(true);
+                    } else if (result == null){
+                        message.setText("Database connection failed.");
                     } else {
                         message.setText(result + " is not correct.");
                     }
                 }
                 message.setVisible(true);
+                errormessage = message.getText();
             }
         });
     }
@@ -151,4 +162,6 @@ public class Login extends GPanel{
         }
         return "";
     }
+
+
 }

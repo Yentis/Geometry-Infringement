@@ -3,8 +3,10 @@ package GUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.*;
 import javax.swing.Timer;
 
@@ -40,13 +42,6 @@ public class InGame extends GPanel implements ActionListener {
     private GPanel pause = new GPanel() {
         @Override
         public void initComponents() throws IOException, FontFormatException {
-
-
-
-
-
-
-
             Continue.setBackground(Color.black);
             Continue.setForeground(Color.white);
             Continue.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
@@ -65,6 +60,16 @@ public class InGame extends GPanel implements ActionListener {
             pause.add(Continue);
             pause.add(restartPauze);
             pause.add(menuPauze);
+
+            menuGameEnd.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    panel.setVisible(false);
+                    GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                    window.getMainMenu().setVisible(true);
+
+
+                }
+            });
 
 
 
@@ -98,10 +103,16 @@ public class InGame extends GPanel implements ActionListener {
             gameEnd.add(restartGameEnd);
             gameEnd.add(menuGameEnd);
 
+
             menuGameEnd.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     panel.setVisible(false);
                     GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                    try {
+                        window.getSpel().submitScore(gamePanel.getScore());
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                     window.getMainMenu().setVisible(true);
 
                 }
@@ -222,17 +233,13 @@ public class InGame extends GPanel implements ActionListener {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 //panel.setVisible(false);
                 pauseGameLoop();
+
                 //pause.setVisible(true);
                 //pane.setVisible(true);
             }
 
 
         });
-
-
-
-
-
 
     }
 
@@ -246,12 +253,15 @@ public class InGame extends GPanel implements ActionListener {
 
     public void initGamePanel() {
         setupGameTimer();
+        gameTimer.start();
         gamePanel.setVisible(true);
+        gamePanel.requestFocus();
         gamePanel.setCoop(coop);
         gamePanel.startGame();
     }
 
     public void addActionListeners() { //TODO
+        menuPauze.addActionListener(panel);
         startGame.addActionListener(panel);
         Continue.addActionListener(panel);
         restartPauze.addActionListener(panel);
@@ -280,9 +290,7 @@ public class InGame extends GPanel implements ActionListener {
         });
     }
 
-    public void initPausePanel() {
-        pause.setVisible(true);
-    }
+
 
     public void initEndGamePanel() {
         gameEnd.setVisible(true);
@@ -303,6 +311,7 @@ public class InGame extends GPanel implements ActionListener {
             runGameLoop();
         } else if (source == Continue) {
             resumeGameLoop();
+
         }
     }
 
@@ -310,7 +319,12 @@ public class InGame extends GPanel implements ActionListener {
         gameTimer.stop();
         gamePanel.pauseGame();
         gamePanel.setFocusable(false);
+        gameTimer.stop();
         initPausePanel();
+    }
+
+    public void initPausePanel() {
+        pause.setVisible(true);
     }
 
     private void runGameLoop() {
