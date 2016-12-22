@@ -451,6 +451,7 @@ public class GamePanel extends GPanel {
         }
     }
 
+
     //endregion
 
 
@@ -464,7 +465,14 @@ public class GamePanel extends GPanel {
             schip.beweegSchip();
 
 
+
+
+
+                //System.out.println("invulnerability start");q
+
+
             if (schip.getInvulnerability().isActive()) {
+
                 invulnerabilityTimer.start();
             }
             if (schip.getSlowEnemies().isActive()) {
@@ -496,21 +504,27 @@ public class GamePanel extends GPanel {
                 scorep2.setText("" + schipp2.getScore());
                 currentHealthBarp2.setSize((int) updateHealthBar(schipp2, healthBarWidthp2), currentHealthBarp2.getHeight());
             }
+
+            combo.setText("x " + schip.getCombo());
+            score.setText("" + schip.getScore());
+            currentHealthBar.setSize((int) updateHealthBar(schip, healthBarWidth), currentHealthBar.getHeight());
+            currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, schip), currentSchipXpBar.getHeight());
+
         }
     }
+
+
 
     private double updateHealthBar(Schip schip, double healthBarWidth) {
         if (schip.getHp() >= 0) {
             ratioHP = 425 / schip.getMaxhp();
             healthBarWidth = ratioHP * schip.getHp();
         } else {
-            //TODO
             gameFinished = true;
             enemyOnField.clear();
         }
         return healthBarWidth;
     }
-
 
     private double updateSchipXpBar(double xpBarWidthSchip, Schip schip) {
         ratioSchipXP = 190 / schip.getMaxXp();
