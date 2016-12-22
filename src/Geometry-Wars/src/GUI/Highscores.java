@@ -66,7 +66,7 @@ public class Highscores extends GPanel {
             listModelPlayer.addElement(string);
         }
 
-        //JList listPlayer = new JList(listModelPlayer);
+        JList listPlayer = new JList(listModelPlayer);
 
         strings = processScores();
 
@@ -84,11 +84,11 @@ public class Highscores extends GPanel {
         label.setBackground(Color.black);
         label.setForeground(Color.white);
 
-        /*listPlayer.setLayoutOrientation(JList.VERTICAL);
+        listPlayer.setLayoutOrientation(JList.VERTICAL);
         listPlayer.setFont(new GFont(24));
         listPlayer.setBackground(Color.black);
         listPlayer.setForeground(Color.white);
-        listPlayer.setBorder(new EmptyBorder(20, 20, 0, 0));*/
+        listPlayer.setBorder(new EmptyBorder(20, 20, 0, 0));
 
         listScore.setLayoutOrientation(JList.VERTICAL);
         listScore.setFont(new GFont(24));
@@ -103,19 +103,17 @@ public class Highscores extends GPanel {
 
         //bounds
         label.setBounds(220,25,650,100);
-        //listPlayer.setBounds(221,230,324,469);
-        listScore.setBounds(551,230,319,469);
+        listPlayer.setBounds(221,230,318,469);
+        listScore.setBounds(551,230,318,469);
 
         //components toevoegen
         this.add(label);
         this.add(Back);
         this.add(Player);
         this.add(Score);
-        //this.add(listPlayer);
+        this.add(listPlayer);
         this.add(listScore);
         this.add(backgroundpane);
-
-
 
         //actionlisteners
 

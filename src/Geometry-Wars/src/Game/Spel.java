@@ -1,5 +1,9 @@
 package Game;
 
+import com.mysql.jdbc.CommunicationsException;
+
+import javax.swing.*;
+import java.awt.*;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.*;
 import java.lang.reflect.Array;
@@ -68,7 +72,7 @@ public class Spel implements Cloneable{
 
     //region Behaviour
 
-    public void initDankabank() throws SQLException{
+    public void initDankabank() throws SQLException {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
