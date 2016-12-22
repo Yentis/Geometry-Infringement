@@ -371,6 +371,7 @@ public class InGame extends GPanel implements ActionListener {
             gamePanel.setGameFinished(false);
             gamePanel.setFocusable(true);
             startGame.setVisible(false);
+            pauze.setVisible(true);
             initGamePanel();
             runGameLoop();
         } else if (source == Continue) {

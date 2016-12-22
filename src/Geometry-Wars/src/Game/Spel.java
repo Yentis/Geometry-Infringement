@@ -34,6 +34,11 @@ public class Spel implements Cloneable{
 
     //region Properties
 
+
+    public List<Upgrade> getUpgrades() {
+        return upgrades;
+    }
+
     public Speler getSpeler() {
         return speler;
     }
@@ -70,7 +75,10 @@ public class Spel implements Cloneable{
 
     //region Behaviour
 
+    public boolean buyUpgrade(){
 
+        return false;
+    }
 
     public void reInitSpelers() throws SQLException {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
@@ -155,6 +163,7 @@ public class Spel implements Cloneable{
     }
 
     public void submitScore(int score) throws SQLException {
+        int nuggets = score / 10000;
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
@@ -164,7 +173,9 @@ public class Spel implements Cloneable{
 
         while(highscore.next()){
             if(highscore.getInt("highscore") < score){
-                int a = myStmt2.executeUpdate("UPDATE speler SET highscore = " + score + " WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+                int a = myStmt2.executeUpdate("UPDATE speler SET highscore = " + score + ", nuggets = nuggets + " + nuggets + " WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+            } else {
+                int a = myStmt2.executeUpdate("UPDATE speler SET nuggets = nuggets + " + nuggets + " WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
             }
         }
     }
