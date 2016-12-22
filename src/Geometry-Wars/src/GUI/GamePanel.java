@@ -426,11 +426,7 @@ public class GamePanel extends GPanel {
         }
     }
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 6025d968831b73698edf3645b28daaae1e98028b
     //endregion
 
 
@@ -445,11 +441,10 @@ public class GamePanel extends GPanel {
 
             if (schip.isInvulnerability()) {
 
-<<<<<<< HEAD
+
 
                 //System.out.println("invulnerability start");q
-=======
->>>>>>> 6025d968831b73698edf3645b28daaae1e98028b
+
                 invulnerabilityTimer.start();
             }
             if (schip.isSlowerEnemies()) {
@@ -478,13 +473,12 @@ public class GamePanel extends GPanel {
                 scorep2.setText("" + schipp2.getScore());
                 currentHealthBarp2.setSize((int) updateHealthBar(schipp2, healthBarWidthp2), currentHealthBarp2.getHeight());
             }
-<<<<<<< HEAD
+
             combo.setText("x " + schip.getCombo());
             score.setText("" + schip.getScore());
             currentHealthBar.setSize((int) updateHealthBar(schip, healthBarWidth), currentHealthBar.getHeight());
             currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, schip), currentSchipXpBar.getHeight());
-=======
->>>>>>> 6025d968831b73698edf3645b28daaae1e98028b
+
         }
     }
 

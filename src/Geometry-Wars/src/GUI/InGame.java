@@ -243,11 +243,7 @@ public class InGame extends GPanel implements ActionListener {
 
     }
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 6025d968831b73698edf3645b28daaae1e98028b
     public GButton getStartGame() {
         return startGame;
     }
@@ -264,10 +260,7 @@ public class InGame extends GPanel implements ActionListener {
         gamePanel.setCoop(coop);
         gamePanel.startGame();
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> 6025d968831b73698edf3645b28daaae1e98028b
 
     public void addActionListeners() { //TODO
         menuPauze.addActionListener(panel);
@@ -324,11 +317,7 @@ public class InGame extends GPanel implements ActionListener {
         }
     }
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 6025d968831b73698edf3645b28daaae1e98028b
     private void pauseGameLoop() {
         gameTimer.stop();
         gamePanel.pauseGame();
@@ -341,12 +330,6 @@ public class InGame extends GPanel implements ActionListener {
         pause.setVisible(true);
     }
 
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 6025d968831b73698edf3645b28daaae1e98028b
     private void runGameLoop() {
         gameTimer.start();
     }
