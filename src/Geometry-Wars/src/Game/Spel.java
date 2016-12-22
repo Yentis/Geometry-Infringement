@@ -54,10 +54,8 @@ public class Spel implements Cloneable{
         return currentDifficulty;
     }
 
-    public void changeSchipspeed(double multiplier){
-        for (Schip schip:schepen) {
-            schip.setSpeed(schip.getSpeed() * multiplier);
-        }
+    public List<Speler> getSpelers() {
+        return spelers;
     }
 
     public void setEnemies(List<Enemy> enemies) {
@@ -71,6 +69,25 @@ public class Spel implements Cloneable{
     //endregion
 
     //region Behaviour
+
+
+
+    public void reInitSpelers() throws SQLException {
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        Connection myConn = DriverManager.getConnection(url, user, pass);
+        Statement myStmt = myConn.createStatement();
+        //region Spelers
+        ResultSet speler = myStmt.executeQuery("select * from speler order by highscore desc");
+
+        spelers = new ArrayList<>();
+
+        int i = 0;
+        while (speler.next()){
+            spelers.add(i, new Speler(speler.getInt("nr") - 1, speler.getString("gebruikersnaam"), speler.getString("wachtwoord"), speler.getString("email"), speler.getInt("level"), speler.getInt("experience"), speler.getString("rank"), speler.getInt("nuggets"), speler.getInt("golden nuggets"), speler.getInt("highscore")));
+            i++;
+        }
+        //endregion
+    }
 
     public void initDankabank() throws SQLException {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
@@ -102,7 +119,10 @@ public class Spel implements Cloneable{
 
         i = 0;
         while (drone.next()){
+
+
             drones.add(i, new Drone(drone.getInt("nr") - 1, drone.getString("naam"), drone.getString("beschrijving"), drone.getInt("kracht"), drone.getString("uiterlijk"), drone.getInt("type")));
+
             i++;
         }
         //endregion
@@ -128,20 +148,23 @@ public class Spel implements Cloneable{
         //endregion
     }
 
-    public List<Speler> getSpelers() {
-        return spelers;
+    public void changeSchipspeed(double multiplier){
+        for (Schip schip:schepen) {
+            schip.setSpeed(schip.getSpeed() * multiplier);
+        }
     }
 
     public void submitScore(int score) throws SQLException {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
+        Statement myStmt2 = myConn.createStatement();
 
         ResultSet highscore = myStmt.executeQuery("select * from speler where gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
 
         while(highscore.next()){
             if(highscore.getInt("highscore") < score){
-                int a = myStmt.executeUpdate("UPDATE speler SET highscore = " + score + " WHERE gebruikersnaam = " + speler.getGebruikersnaam() + "");
+                int a = myStmt2.executeUpdate("UPDATE speler SET highscore = " + score + " WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
             }
         }
     }

@@ -3,6 +3,7 @@ package GUI;
 import java.awt.Color;
 import java.awt.FontFormatException;
 import java.io.*;
+import java.sql.SQLException;
 import javax.swing.*;
 
 import GComponents.*;
@@ -92,6 +93,14 @@ public class StartGame extends GPanel {
             public void actionPerformed(java.awt.event.ActionEvent evt){
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                try {
+                    window.getSpel().reInitSpelers();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+
+
                 try {
                     window.getHighScores().initComponents();
                 } catch (IOException e) {

@@ -70,18 +70,28 @@ public class InGame extends GPanel implements ActionListener {
 
             menuPauze.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    gamePanel.setGameFinished(true);
+                    gameEnd.setVisible(false);
                     panel.setVisible(false);
+
                     GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                     window.getMainMenu().setVisible(true);
+                }
+            });
 
-
+          /*  menuGameEnd.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    panel.setVisible(false);
+                    gameEnd.setVisible(false);
+                    GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                    window.getMainMenu().setVisible(true);
                 }
             });
 
 
 
-        }
-    };
+        }*/
+    }};
     private GPanel gameEnd = new GPanel() {
         @Override
         public void initComponents() throws IOException, FontFormatException {
@@ -115,6 +125,7 @@ public class InGame extends GPanel implements ActionListener {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     panel.setVisible(false);
                     GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                    pause.setVisible(false);
                     try {
                         window.getSpel().submitScore(gamePanel.getScore());
                     } catch (SQLException e) {
@@ -259,11 +270,14 @@ public class InGame extends GPanel implements ActionListener {
         return gameEnd;
     }
 
+    public GPanel getPause() {
+        return pause;
+    }
+
     public void initGamePanel() {
         setupGameTimer();
-        gameTimer.start();
         gamePanel.setVisible(true);
-        gamePanel.requestFocus();
+       // gamePanel.requestFocus();
         gamePanel.setCoop(coop);
         gamePanel.startGame();
     }
@@ -274,7 +288,6 @@ public class InGame extends GPanel implements ActionListener {
         startGame.addActionListener(panel);
         Continue.addActionListener(panel);
         restartPauze.addActionListener(panel);
-
     }
 
     public void checkGameFinished(){
@@ -315,6 +328,7 @@ public class InGame extends GPanel implements ActionListener {
         if (source == startGame) {
             gameEnd.setVisible(false);
             gamePanel.setGameFinished(false);
+            gamePanel.setFocusable(true);
             startGame.setVisible(false);
             initGamePanel();
             runGameLoop();

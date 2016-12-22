@@ -294,10 +294,10 @@ public class Schip extends Sprite {
 
     public void checkForUpgrade(int combo) {
         //TODO terugveranderen :p - Renzie dit is voor de upgrade arraylist check
-        if (combo % 50 == 0) {
+        if (combo % 20 == 0) {
             //Every 50 combo
             invulnerability.setActive(true);
-        } else if (combo % 75 == 0) {
+        } else if (combo % 50 == 0) {
             //Every 75 combo
             slowEnemies.setActive(true);
         }
@@ -308,14 +308,14 @@ public class Schip extends Sprite {
                    buff.setActive(false);
                }
                 break;
-            case 50:
+            case 20:
                  lifesteal.setActive(true);
                 break;
-            case 150:
+            case 75:
                 //stays active when reached
                 activeDrone.setActive(true);
                 break;
-            case 250:
+            case 100:
              randomBullets.setActive(true);
                 break;
 

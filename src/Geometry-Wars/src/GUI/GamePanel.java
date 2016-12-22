@@ -128,7 +128,7 @@ public class GamePanel extends GPanel {
         currentDroneXpBar.setBackground(new Color(50, 50, 255));
         currentDroneXpBar.setOpaque(true);
         currentHealthBar = new JProgressBar();
-        currentHealthBar.setBounds(20, 27, 425, 40);
+        currentHealthBar.setBounds(20, 27, 0, 40);
         currentHealthBar.setBackground(new Color(0, 200, 0));
         currentHealthBar.setOpaque(true);
 
@@ -169,14 +169,27 @@ public class GamePanel extends GPanel {
         setAllComponentsVisible();
     }
 
+
+    private void clearComboAndScore(){
+        score.setText("");
+        combo.setText("x");
+        if (coop){
+            scorep2.setText("");
+            combo.setText("x");
+        }
+    }
+
     public void startGame() {
+        clearComboAndScore();
         enemyOnField.clear(); //lol
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         enemyCounter = 1;
         gameFinished = false;
         spawnTimer.start();
         Schip dummy = window.getSpel().getSchepen().get(0);
-        Drone dummydr = window.getSpel().getDrones().get(1);
+
+        //TODO: player can chose which drone he want
+        Drone dummydr = window.getSpel().getDrones().get(0);
         requestFocus();
         setSlowerEnemiesTimer(schip);
         setInvulnerabilityTimer(schip);
@@ -189,16 +202,19 @@ public class GamePanel extends GPanel {
         }
 
         schip = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed());
+        //Controllers controller = new Controllers(schip, 0);
 
         drone = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
-
-
 
         schip.setDrone(drone);
 
         if (coop) {
             schipp2 = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed());
-            Controllers controller = new Controllers(schipp2);
+            try{
+                Controllers controller2 = new Controllers(schipp2, 1);
+            } catch (NullPointerException e){
+                Controllers controller2 = new Controllers(schipp2, 0);
+            }
 
             dronep2 = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
 
@@ -235,7 +251,6 @@ public class GamePanel extends GPanel {
             drawDrone(g, drone, schip);
             drawEnemy(g);
             drawBuffs(g,schip,schipbarp1);
-
             if (coop) {
                 drawBullets(g, schipp2.getKogels(), schipp2);
                 drawBullets(g, dronep2.getKogels(), schipp2);
@@ -336,19 +351,19 @@ public class GamePanel extends GPanel {
             }
         }
     }
-
+/*
     public void collisionEffect(ArrayList<Kogel> kogels, Enemy enemy) {
         for (Kogel k : kogels) {
             if (k.collisionDetect(enemy.getHitBox())) {
 
-                enemy.loseHP(baseDamage);
+                enemy.loseHP(schip.getKracht());
                 if (enemy.getHP() == 0) {
                     enemy.setHit(true);
                 }
                 //System.out.println(enemy.getHP());
             }
         }
-    }
+    }*/
     //endregion
 
     //region closestTarget
@@ -388,17 +403,18 @@ public class GamePanel extends GPanel {
             for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ) {
                 Enemy enemy = enemyIterator.next();
                 if (k.isHit() && enemy.isHit()) {
-                    enemy.loseHP(baseDamage);
+                    enemy.loseHP(schip.getKracht());
                     enemy.setHit(false);
                     if (enemy.getHP() <= 0) {
+
                         enemyIterator.remove();
                         schip.addCombo();
                         if (kogels == schip.getDrone().getKogels()) {
-                            schip.getDrone().addCurrentXp(20);
+                            schip.getDrone().addCurrentXp(100);
                             drone.checkLevel();
                             //currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, enemy.getHitter()), currentDroneXpBar.getHeight());
                         } else if (kogels == schip.getKogels()) {
-                            schip.addCurrentXp(20);
+                            schip.addCurrentXp(100);
                             schip.checkLevel();
                             //currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, enemy.getHitter()), currentSchipXpBar.getHeight());
                             schip.checkForUpgrade(schip.getCombo());
@@ -497,10 +513,14 @@ public class GamePanel extends GPanel {
 
 
     private double updateHealthBar(Schip schip, double healthBarWidth) {
-        if (schip.getHp() != 0) {
+        if (schip.getHp() >= 0) {
             ratioHP = 425 / schip.getMaxhp();
+<<<<<<< HEAD
             healthBarWidth = (int) ratioHP * schip.getHp();
             System.out.println(healthBarWidth);
+=======
+            healthBarWidth = ratioHP * schip.getHp();
+>>>>>>> c41cc0ea996be286bb2f1b0a426ffe981c5c53d5
         } else {
             gameFinished = true;
             enemyOnField.clear();
@@ -565,19 +585,50 @@ public class GamePanel extends GPanel {
     }
 
     public void spawnEnemies() {
-        //int random = randomEnemies(schip.getLevel());
-        //System.out.println(randomEnemies(schip.getLevel()));
         Enemy testenemy = enemies.get(0);
         ImageIcon ii = new ImageIcon(testenemy.getImage());
 
-        spawnTimer = new Timer(5000, new ActionListener() {
+        spawnTimer = new Timer(7000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                for (int i = 0; i < enemyCounter; i++) {
-                    enemyOnField.add(new Enemy(testenemy.getNr(), testenemy.getNaam(), testenemy.getBeschrijving(), testenemy.getHP(), testenemy.getKracht(), testenemy.getImageString(), testenemy.getExperience(), testenemy.getScore(), testenemy.getSpeed()));
+                if (enemyOnField.isEmpty()){
+                    if (enemyCounter % 20 == 0) {
+                        Enemy boss1 = enemies.get(6);
+                        enemyOnField.add(new Enemy(boss1.getNr(), boss1.getNaam(), boss1.getBeschrijving(), boss1.getHP(), boss1.getKracht(), boss1.getImageString(), boss1.getExperience(), boss1.getScore(), boss1.getSpeed()));
+                        enemyCounter++;
+                    } else {
+                        for (int i = 0; i < enemyCounter; i++) {
+                            enemyOnField.add(new Enemy(testenemy.getNr(), testenemy.getNaam(), testenemy.getBeschrijving(), testenemy.getHP(), testenemy.getKracht(), testenemy.getImageString(), testenemy.getExperience(), testenemy.getScore(), testenemy.getSpeed()));
+                        }
+                        enemyCounter++;
+                        if (enemyCounter % 5 == 0) {
+                            Enemy enemy2 = enemies.get(1);
+                            enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
+                        }
+                        if (enemyCounter % 2 == 0) {
+                            Enemy enemy2 = enemies.get(2);
+                            enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
+                        }
+                        if (enemyCounter % 7 == 0) {
+                            Enemy enemy2 = enemies.get(3);
+                            enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
+                        }
+                        if (enemyCounter % 9 == 0) {
+                            Enemy enemy2 = enemies.get(4);
+                            enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
+                        }
+                        if (enemyCounter % 11 == 0) {
+                            Enemy enemy2 = enemies.get(5);
+                            enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
+                        }
+                        if (enemyCounter % 13 == 0) {
+                            Enemy enemy2 = enemies.get(6);
+                            enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
+                        }
+                        enemyCounter++;
+                    }
                 }
-                enemyCounter++;
+
             }
         });
     }
