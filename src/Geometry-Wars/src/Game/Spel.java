@@ -89,7 +89,7 @@ public class Spel implements Cloneable{
 
         i = 0;
         while (drone.next()){
-            drones.add(i, new Drone(drone.getInt("nr") - 1, drone.getString("naam"), drone.getString("beschrijving"), drone.getInt("hp"), drone.getInt("kracht"), drone.getString("uiterlijk")));
+            drones.add(i, new Drone(drone.getInt("nr") - 1, drone.getString("naam"), drone.getString("beschrijving"), drone.getInt("kracht"), drone.getString("uiterlijk"), drone.getInt("type")));
             i++;
         }
         //endregion
