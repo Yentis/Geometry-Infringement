@@ -544,8 +544,6 @@ public class GamePanel extends GPanel {
     }
 
     public void spawnEnemies() {
-        //int random = randomEnemies(schip.getLevel());
-        //System.out.println(randomEnemies(schip.getLevel()));
         Enemy testenemy = enemies.get(0);
         ImageIcon ii = new ImageIcon(testenemy.getImage());
 
