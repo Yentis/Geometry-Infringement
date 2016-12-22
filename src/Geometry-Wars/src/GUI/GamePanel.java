@@ -174,7 +174,6 @@ public class GamePanel extends GPanel {
         score.setText("");
         combo.setText("x");
         currentHealthBar.setSize(0,currentHealthBar.getHeight());
-      
         if (coop){
             scorep2.setText("");
             combo.setText("x");
@@ -183,7 +182,7 @@ public class GamePanel extends GPanel {
     }
 
     public void startGame() {
-        clearUI();
+
         enemyOnField.clear(); //lol
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         enemyCounter = 1;
@@ -229,7 +228,7 @@ public class GamePanel extends GPanel {
         initTimers();
 
         gameFinished = false;
-
+        clearUI();
     }
 
     public void pauseGame() {
