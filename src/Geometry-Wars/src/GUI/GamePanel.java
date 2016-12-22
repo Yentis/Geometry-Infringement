@@ -351,19 +351,19 @@ public class GamePanel extends GPanel {
             }
         }
     }
-
+/*
     public void collisionEffect(ArrayList<Kogel> kogels, Enemy enemy) {
         for (Kogel k : kogels) {
             if (k.collisionDetect(enemy.getHitBox())) {
 
-                enemy.loseHP(baseDamage);
+                enemy.loseHP(schip.getKracht());
                 if (enemy.getHP() == 0) {
                     enemy.setHit(true);
                 }
                 //System.out.println(enemy.getHP());
             }
         }
-    }
+    }*/
     //endregion
 
     //region closestTarget
@@ -403,18 +403,18 @@ public class GamePanel extends GPanel {
             for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ) {
                 Enemy enemy = enemyIterator.next();
                 if (k.isHit() && enemy.isHit()) {
-                    enemy.loseHP(baseDamage);
+                    enemy.loseHP(schip.getKracht());
                     enemy.setHit(false);
                     if (enemy.getHP() <= 0) {
 
                         enemyIterator.remove();
                         schip.addCombo();
                         if (kogels == schip.getDrone().getKogels()) {
-                            schip.getDrone().addCurrentXp(enemy.getExperience());
+                            schip.getDrone().addCurrentXp(100);
                             drone.checkLevel();
                             //currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, enemy.getHitter()), currentDroneXpBar.getHeight());
                         } else if (kogels == schip.getKogels()) {
-                            schip.addCurrentXp(enemy.getExperience());
+                            schip.addCurrentXp(100);
                             schip.checkLevel();
                             //currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, enemy.getHitter()), currentSchipXpBar.getHeight());
                             schip.checkForUpgrade(schip.getCombo());
