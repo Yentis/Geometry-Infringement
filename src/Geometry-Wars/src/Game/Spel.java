@@ -75,7 +75,41 @@ public class Spel implements Cloneable{
 
     //region Behaviour
 
-    public boolean buyUpgrade(){
+    public List<Integer> checkUpgrades() throws SQLException {
+        List<Integer> upgradelist = new ArrayList<>();
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        Connection myConn = DriverManager.getConnection(url, user, pass);
+        Statement myStmt = myConn.createStatement();
+
+        ResultSet upgrades = myStmt.executeQuery("select * from spelerupgrades where pid = (select nr from speler where nr = " + (speler.getNr() + 1) + ")");
+
+        int i = 0;
+        while(upgrades.next()){
+            upgradelist.add(i, upgrades.getInt("uid"));
+            i++;
+        }
+
+        return upgradelist;
+    }
+
+    public boolean buyUpgrade(int cost, int uid) throws SQLException {
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        Connection myConn = DriverManager.getConnection(url, user, pass);
+        Statement myStmt = myConn.createStatement();
+        Statement myStmt2 = myConn.createStatement();
+        Statement myStmt3 = myConn.createStatement();
+
+        ResultSet upgrades = myStmt.executeQuery("select nuggets from speler where gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+
+        while(upgrades.next()){
+            if(upgrades.getInt("nuggets") >= cost){
+                int a = myStmt2.executeUpdate("UPDATE speler SET nuggets = nuggets - " + cost + " WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+                int b = myStmt3.executeUpdate("INSERT INTO spelerupgrades (pid, uid) VALUES (" + (speler.getNr() + 1) + ", " + uid + ")");
+                return true;
+            } else {
+                return false;
+            }
+        }
 
         return false;
     }

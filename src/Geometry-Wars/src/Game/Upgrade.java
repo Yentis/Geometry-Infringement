@@ -40,6 +40,13 @@ public class Upgrade {
         return foto;
     }
 
+    public int getKost() {
+        return kost;
+    }
+
+    public int getNr() {
+        return nr;
+    }
 
     // public boolean isActive() {
    //     return active;

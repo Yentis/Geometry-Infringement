@@ -43,6 +43,9 @@ public class Speler {
 
     //region Properties
 
+    public int getNr() {
+        return nr;
+    }
 
     public int getHighscore() {
         return highscore;
