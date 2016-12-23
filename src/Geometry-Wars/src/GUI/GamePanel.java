@@ -222,9 +222,7 @@ public class GamePanel extends GPanel {
         drone = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
 
         schip.setDrone(drone);
-        if (schip.getUpgrades().contains(1)) {
-            hpRegenTimer.start();
-        }
+
         if (schip.getUpgrades().contains(2)){
             schip.setSpeed(5);
         }
@@ -249,9 +247,7 @@ public class GamePanel extends GPanel {
 
             setSlowerEnemiesTimer(schipp2);
             setInvulnerabilityTimer(schipp2);
-            if (schipp2.getUpgrades().contains(1)) {
-                hpRegenTimer.start();
-            }
+
 
         } else {
             hideCoopUI();
@@ -263,12 +259,12 @@ public class GamePanel extends GPanel {
 
     public void pauseGame() {
         spawnTimer.stop();
-        hpRegenTimer.stop();
+
     }
 
     public void resumeGame() {
         spawnTimer.start();
-        hpRegenTimer.start();
+       
     }
 
 
