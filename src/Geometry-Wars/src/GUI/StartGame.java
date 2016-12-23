@@ -102,7 +102,7 @@ public class StartGame extends GPanel {
             public void actionPerformed(java.awt.event.ActionEvent evt){
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                
+
                 try {
                     window.getSpel().initDankabank();
                     window.getHighScores().initComponents();

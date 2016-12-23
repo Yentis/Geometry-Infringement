@@ -48,9 +48,9 @@ public class Upgrades extends GPanel {
         //==================================================
 
         JButton back = new GButton("Back", 18f, 52,690,133,35);
-        JButton skins = new GButton("Skins", 18f, 205,690,133,35);
-        JButton techTree = new GButton("Tech Tree", 18f, 365,690,287,35);
-        JButton goldenNuggets = new GButton("Buy Golden Nuggets", 18f, 681,690,287,35);
+        //JButton skins = new GButton("Skins", 18f, 205,690,133,35);
+        //JButton techTree = new GButton("Tech Tree", 18f, 365,690,287,35);
+        //JButton goldenNuggets = new GButton("Buy Golden Nuggets", 18f, 681,690,287,35);
         JLabel lblNuggets = new GLabel("Nuggets: ", 18f, 52,60,150,35, false, Color.white);
         JLabel nuggets = new GLabel("" + speler.getNuggets(), 18f, 200,60,150,35, false, Color.white);
         JLabel message = new GLabel("", 24f, 365, 82, 290, 74, false, Color.white);
@@ -226,9 +226,9 @@ public class Upgrades extends GPanel {
         panel.add(lblNuggets);
         panel.add(upgrades);
         panel.add(upgradesPane);
-        panel.add(skins);
-        panel.add(techTree);
-        panel.add(goldenNuggets);
+        //panel.add(skins);
+        //panel.add(techTree);
+        //panel.add(goldenNuggets);
         panel.add(spaceShip);
         panel.add(drone);
         panel.add(fire);
