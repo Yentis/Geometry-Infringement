@@ -197,6 +197,21 @@ public class GamePanel extends GPanel {
         }
     }
 
+    private Drone makeDrone(Schip schip){
+        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+        Drone dummydr = null;
+
+        if(schip.getUpgrades().contains(4)){
+            dummydr = window.getSpel().getDrones().get(1);
+        } else if (schip.getUpgrades().contains(5)){
+            dummydr = window.getSpel().getDrones().get(2);
+        } else if (schip.getUpgrades().contains(6)){
+            dummydr = window.getSpel().getDrones().get(3);
+        }
+
+        return dummydr;
+    }
+
     public void startGame() throws SQLException {
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         List<Integer> upgrades = new ArrayList<>();
@@ -207,24 +222,25 @@ public class GamePanel extends GPanel {
         spawnTimer.start();
 
         Schip dummy = window.getSpel().getSchepen().get(0);
+        Drone dummydr = null;
 
         //TODO: player can chose which drone he want
-        Drone dummydr = window.getSpel().getDrones().get(0);
+        makeDrone(schip);
+
         requestFocus();
         setSlowerEnemiesTimer(schip);
         setInvulnerabilityTimer(schip);
 
-
-
         schip = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
         //Controllers controller = new Controllers(schip, 0);
 
-        drone = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
+        dummydr = makeDrone(schip);
+
+        if (drone != null){
+            drone = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
+        }
 
         schip.setDrone(drone);
-        if (schip.getUpgrades().contains(1)) {
-            hpRegenTimer.start();
-        }
         if (schip.getUpgrades().contains(2)){
             schip.setSpeed(5);
         }
@@ -243,15 +259,15 @@ public class GamePanel extends GPanel {
                 }
             }
 
-            dronep2 = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
+            dummydr = makeDrone(schipp2);
 
-            schipp2.setDrone(dronep2);
+            if (dronep2 != null){
+                dronep2 = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
+                schipp2.setDrone(dronep2);
+            }
 
             setSlowerEnemiesTimer(schipp2);
             setInvulnerabilityTimer(schipp2);
-            if (schipp2.getUpgrades().contains(1)) {
-                hpRegenTimer.start();
-            }
 
         } else {
             hideCoopUI();
@@ -263,12 +279,10 @@ public class GamePanel extends GPanel {
 
     public void pauseGame() {
         spawnTimer.stop();
-        hpRegenTimer.stop();
     }
 
     public void resumeGame() {
         spawnTimer.start();
-        hpRegenTimer.start();
     }
 
 
@@ -690,10 +704,11 @@ public class GamePanel extends GPanel {
                         enemyCounter++;
                     }
                 }
-              //  if(schip)
-
-               if(coop){
-
+              if(schip.getUpgrades().contains(2)){
+                  healthRegen(schip);
+              }
+               if(coop && schipp2.getUpgrades().contains(2)){
+                   healthRegen(schipp2);
                }
             }
         });

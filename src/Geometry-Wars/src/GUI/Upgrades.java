@@ -94,8 +94,14 @@ public class Upgrades extends GPanel {
         JButton upgradeShip3 = new GButton("",16f,75,368,104,123);
 
         JButton upgradeDrone1 = new GButton("", 16f, 392,218,104,123);
+        upgradeShip2.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(3).getFoto()));
+        JLabel upgradeDrone1Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(3).getKost()), 16f, 407,143,104,123, false, Color.black);
         JButton upgradeDrone2 = new GButton("",16f, 528,218,104,123);
+        upgradeShip2.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(4).getFoto()));
+        JLabel upgradeDrone2Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(4).getKost()), 16f, 543,143,104,123, false, Color.black);
         JButton upgradeDrone3 = new GButton("",16f, 392,368,104,123);
+        upgradeShip2.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(5).getFoto()));
+        JLabel upgradeDrone3Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(5).getKost()), 16f, 407,293,104,123, false, Color.black);
 
         JButton upgradeFire1 = new GButton("", 16f, 704,218,104,123);
         upgradeFire1.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(0).getFoto()));
@@ -103,10 +109,24 @@ public class Upgrades extends GPanel {
         JButton upgradeFire2 = new GButton("", 16f, 841,218,104,123);
         JButton upgradeFire3 = new GButton("", 16f, 704,368,104,123);
 
-        if(upgradeList.contains(1)){
-            upgradeFire1.setVisible(false);
-        } else if (upgradeList.contains(2)){
-            upgradeShip1.setVisible(false);
+        for (int i:upgradeList) {
+            switch (i){
+                case 1:
+                    upgradeFire1.setVisible(false);
+                    break;
+                case 2:
+                    upgradeShip1.setVisible(false);
+                    break;
+                case 3:
+                    upgradeDrone1.setVisible(false);
+                    break;
+                case 4:
+                    upgradeDrone2.setVisible(false);
+                    break;
+                case 5:
+                    upgradeDrone3.setVisible(false);
+                    break;
+            }
         }
 
         //==================================================
@@ -139,6 +159,33 @@ public class Upgrades extends GPanel {
                 Upgrade upgrade = window.getSpel().getUpgrades().get(2);
 
                 buyUpgrade(window, upgrade, message, upgradeShip2);
+            }
+        });
+
+        upgradeDrone1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                Upgrade upgrade = window.getSpel().getUpgrades().get(3);
+
+                buyUpgrade(window, upgrade, message, upgradeDrone1);
+            }
+        });
+
+        upgradeDrone2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                Upgrade upgrade = window.getSpel().getUpgrades().get(4);
+
+                buyUpgrade(window, upgrade, message, upgradeDrone2);
+            }
+        });
+
+        upgradeDrone3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                Upgrade upgrade = window.getSpel().getUpgrades().get(5);
+
+                buyUpgrade(window, upgrade, message, upgradeDrone3);
             }
         });
 
@@ -177,8 +224,11 @@ public class Upgrades extends GPanel {
         panel.add(drone);
         panel.add(fire);
         panel.add(upgradeDrone1);
+        panel.add(upgradeDrone1Price);
         panel.add(upgradeDrone2);
+        panel.add(upgradeDrone2Price);
         panel.add(upgradeDrone3);
+        panel.add(upgradeDrone3Price);
         panel.add(upgradeShip1);
         panel.add(upgradeShip1Price);
         panel.add(upgradeShip2);
