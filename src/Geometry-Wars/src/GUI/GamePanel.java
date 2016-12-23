@@ -474,7 +474,12 @@ public class GamePanel extends GPanel {
 
 
                         if (drone != null && kogels == schip.getDrone().getKogels()) {
-                            schip.getDrone().addCurrentXp(enemy.getExperience());
+                            if (drone.isXpDrone()){
+                                schip.addCurrentXp(enemy.getExperience());
+                            } else {
+                                schip.getDrone().addCurrentXp(enemy.getExperience());
+                            }
+                           
                             drone.checkLevel();
                         } else if (kogels == schip.getKogels()) {
                             schip.addCurrentXp(enemy.getExperience());
