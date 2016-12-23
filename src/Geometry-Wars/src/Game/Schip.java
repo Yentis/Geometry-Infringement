@@ -442,6 +442,20 @@ public class Schip extends Sprite {
         double kogelY = locationY;
 
         addKogels(new Kogel(kogelX, kogelY, mousePointer, "resources/Media/kogel1.png"));
+
+         //if (setCone()){
+             double kogel2X = mousePointer.getX()+100;
+             double kogel2Y = mousePointer.getY();
+             double kogel3X = mousePointer.getX()-100;
+             double kogel3Y = mousePointer.getY();
+
+             Point mousePointer2 = new Point((int)kogel2X,(int)kogel2Y);
+             Point mousePointer3 = new Point((int)kogel3X, (int) kogel3Y);
+
+             addKogels(new Kogel(kogelX, kogelY, mousePointer2, "resources/Media/kogel1.png"));
+             addKogels(new Kogel(kogelX, kogelY, mousePointer3, "resources/Media/kogel1.png"));
+
+         //}
            /* }
         };
 
