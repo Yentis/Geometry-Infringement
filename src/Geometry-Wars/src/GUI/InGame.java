@@ -173,16 +173,16 @@ public class InGame extends GPanel implements ActionListener {
 
         JLabel pane = new JLabel();
 
-        GLabel healthp1 = new GLabel("Health:", 24, 40,18,169,62, false, Color.black);
-        GLabel healthp2 = new GLabel("Health:", 24, 595,18,169,62, false, Color.black);
-        GLabel scorep1 = new GLabel("Score:", 24, 25,65,169,62, false, Color.cyan);
+
+
+        //GLabel scorep1 = new GLabel("Score:", 24, 25,65,169,62, false, Color.cyan);
         GLabel scorep2 = new GLabel("Score:", 24, 580,65,169,62, false, Color.cyan);
         GLabel schipLvlp1 = new GLabel("Ship lvl:", 24, 25,667,222,62, false, Color.green);
         GLabel schipLvlp2 = new GLabel("Ship lvl:", 24, 580,667,222,62, false, Color.green);
         GLabel droneLvlp1 = new GLabel("Drone lvl:", 24, 250,667,222,62, false, new Color(155,255,204));
         GLabel droneLvlp2 = new GLabel("Drone lvl:", 24, 800,667,222,62, false, new Color(155,255,204));
-        GLabel healthbarp1 = new GLabel("", 24, 15,23,434,47, true, Color.black);
-        GLabel healthbarp2 = new GLabel("", 24, 570,23,434,47, true, Color.black);
+        //GLabel healthbarp1 = new GLabel("", 24, 15,23,434,47, true, Color.black);
+        //GLabel healthbarp2 = new GLabel("", 24, 570,23,434,47, true, Color.black);
         GLabel dronebarp1 = new GLabel("", 24, 380,672,70,47, true, Color.black);
         GLabel dronebarp2 = new GLabel("", 24, 930,672,70,47, true, Color.black);
         GLabel schipbarp1 = new GLabel("", 24, 140,672,100,47, true, Color.black);
@@ -195,12 +195,7 @@ public class InGame extends GPanel implements ActionListener {
         pane.setOpaque(true);
         pane.setBackground(new Color(255, 255, 255, 2));
         pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
-        healthbarp1.setBackground(new Color(255,255,255,95));
-        healthbarp2.setBackground(new Color(255,255,255,95));
-        dronebarp1.setBackground(new Color(255,255,255,95));
-        dronebarp2.setBackground(new Color(255,255,255,95));
-        schipbarp1.setBackground(new Color(255,255,255,95));
-        schipbarp2.setBackground(new Color(255,255,255,95));
+
         pauze.setOpaque(true);
         pauze.setBackground(new Color(155, 255, 204, 200));
         pauze.setBorder(null);
@@ -219,23 +214,24 @@ public class InGame extends GPanel implements ActionListener {
         //Add Components
         //==================================================
         if(coop){
-            this.add(healthbarp2);
+
             this.add(schipbarp2);
             this.add(dronebarp2);
             this.add(scorep2);
-            this.add(healthp2);
+
+            //this.add(healthbarp2);
             this.add(schipLvlp2);
             this.add(droneLvlp2);
         }
         this.add(pane);
-        this.add(healthbarp1);
+        //this.add(healthbarp1);
 
         //this.add(dronebarp1);
         this.add(pauze);
 
 
-        this.add(scorep1);
-        this.add(healthp1);
+        //this.add(scorep1);
+        //this.add(healthp1);
         this.add(startGame);
         /*this.add(schipLvlp1);
         this.add(droneLvlp1);*/

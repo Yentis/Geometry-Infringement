@@ -269,8 +269,10 @@ public class Schip extends Sprite {
             setMaxXp(getLevel());
             checkLevel();
             resetCurrentXp();
+            addKracht(25);
         }
-        setKracht(kracht + (25 * getLevel()));
+
+        System.out.println("kracht: " + getKracht());
     }
     //lifesteal 100, invul 50, slow 75, drone 150, randombullets 250
     //wanneer je combo verliest, zet alle upgrades af
