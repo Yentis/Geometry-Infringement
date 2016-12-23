@@ -10,12 +10,13 @@ import java.awt.event.*;
 import java.awt.geom.*;
 import java.io.IOException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import java.util.List;
-import java.util.Random;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.Timer;
 
@@ -33,6 +34,7 @@ public class GamePanel extends GPanel {
     private ArrayList<Enemy> enemyOnField = new ArrayList<Enemy>();
     private List<Enemy> enemies = new ArrayList<>();
     private int enemyCounter;
+    private Timer hpRegenTimer;
     private Timer spawnTimer;
     private Timer invulnerabilityTimer;
     private Timer slowerEnemiesTimer;
@@ -70,6 +72,10 @@ public class GamePanel extends GPanel {
         requestFocus();
         setDoubleBuffered(true);
         spawnEnemies();
+        setHpRegenTimer(schip);
+        if(coop){
+            setHpRegenTimer(schipp2);
+        }
         initGamePanel();
         initComponents();
     }
@@ -196,12 +202,15 @@ public class GamePanel extends GPanel {
         }
     }
 
-    public void startGame() {
-        enemyOnField.clear(); //lol
+    public void startGame() throws SQLException {
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+        List<Integer> upgrades = new ArrayList<>();
+        upgrades = window.getSpel().checkUpgrades();
+        enemyOnField.clear(); //lol
         enemyCounter = 1;
         gameFinished = false;
         spawnTimer.start();
+
         Schip dummy = window.getSpel().getSchepen().get(0);
 
         //TODO: player can chose which drone he want
@@ -211,17 +220,23 @@ public class GamePanel extends GPanel {
         setInvulnerabilityTimer(schip);
 
 
-        schip = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed());
-        Controllers controller = new Controllers(schip, 0);
+
+        schip = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
+        //Controllers controller = new Controllers(schip, 0);
 
         drone = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
 
         schip.setDrone(drone);
-
+        if (schip.getUpgrades().contains(1)) {
+            hpRegenTimer.start();
+        }
+        if (schip.getUpgrades().contains(2)){
+            schip.setSpeed(5);
+        }
         if (coop) {
             //set layouts
             showCoopUI();
-            schipp2 = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed());
+            schipp2 = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
             try {
                 Controllers controller2 = new Controllers(schipp2, 1);
 
@@ -239,6 +254,9 @@ public class GamePanel extends GPanel {
 
             setSlowerEnemiesTimer(schipp2);
             setInvulnerabilityTimer(schipp2);
+            if (schipp2.getUpgrades().contains(1)) {
+                hpRegenTimer.start();
+            }
 
         } else {
             hideCoopUI();
@@ -250,10 +268,12 @@ public class GamePanel extends GPanel {
 
     public void pauseGame() {
         spawnTimer.stop();
+        hpRegenTimer.stop();
     }
 
     public void resumeGame() {
         spawnTimer.start();
+        hpRegenTimer.start();
     }
 
 
@@ -419,7 +439,10 @@ public class GamePanel extends GPanel {
                     if (enemy.getHP() <= 0) {
 
                         enemyIterator.remove();
-                        schip.addCombo();
+                        if (schip.getCombo() < 999){
+                            schip.addCombo();
+                        }
+
                         if (kogels == schip.getDrone().getKogels()) {
                             schip.getDrone().addCurrentXp(enemy.getExperience());
                             drone.checkLevel();
@@ -482,7 +505,8 @@ public class GamePanel extends GPanel {
 
 
     //updates the "updates" region
-    public void update() {
+    public void update() throws IOException, UnsupportedAudioFileException {
+        System.out.println(schip.getHp());
         checkDeadShip();
         if (schip != null || schipp2 != null) {
             checkGameFinished();
@@ -559,13 +583,15 @@ public class GamePanel extends GPanel {
         return healthBarWidth;
     }
 
-    private void checkGameFinished() {
+    private void checkGameFinished() throws IOException, UnsupportedAudioFileException {
         if (coop) {
             if (schip == null && schipp2 == null) {
                 gameFinished = true;
             }
         } else {
             if (schip.getHp() <= 0) {
+                Sound sound = new Sound("resources/Sound/playerdeath.wav");
+                sound.playSound();
                 gameFinished = true;
             }
         }
@@ -589,6 +615,7 @@ public class GamePanel extends GPanel {
 
 
     //region Timers
+
     public void setInvulnerabilityTimer(Schip schip) {
         invulnerabilityTimer = new Timer(5000, new ActionListener() {
             @Override
@@ -608,6 +635,18 @@ public class GamePanel extends GPanel {
                 schip.getSlowEnemies().setActive(false);
                 slowerEnemiesTimer.stop();
 
+            }
+        });
+    }
+
+    private void setHpRegenTimer(Schip schip){
+        hpRegenTimer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (schip.getHp() < 100){
+                    schip.addHp(2);
+
+                }
             }
         });
     }
@@ -669,7 +708,7 @@ public class GamePanel extends GPanel {
                         enemyCounter++;
                     }
                 }
-                if(schip)
+              //  if(schip)
 
                if(coop){
 

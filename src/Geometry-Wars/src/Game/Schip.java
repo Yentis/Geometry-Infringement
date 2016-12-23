@@ -7,8 +7,9 @@ import Game.InGameUpgrade.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
+import java.util.List;
+import javax.swing.*;
 import javax.swing.Timer;
 
 import static java.lang.Math.abs;
@@ -54,7 +55,8 @@ public class Schip extends Sprite {
     private SlowEnemies slowEnemies = new SlowEnemies(4, "RandomBullets", "resources/Media/IngameUpgradeIcons/SlowEnemies.png", this);
     private ActiveDrone activeDrone = new ActiveDrone(5, "ActiveDrone", "resources/Media/IngameUpgradeIcons/ActiveDrone.png", this);
 
-
+    //MenuUpgrades
+    private List<Integer> upgrades = new ArrayList<>();
 
     //check voor activebuffs, en total aantal buffs in de game
     private ArrayList<InGameUpgrade> buffs = new ArrayList<InGameUpgrade>();
@@ -71,7 +73,7 @@ public class Schip extends Sprite {
 
     //region Constructors
 
-    public Schip(int nr, int hp, int kracht, String image, int keyLeft, int keyRight, int keyUp, int keyDown, double speed) {
+    public Schip(int nr, int hp, int kracht, String image, int keyLeft, int keyRight, int keyUp, int keyDown, double speed, List<Integer> upgrades) {
         super(image);
         imageString = image;
         currentLocation = new Point();
@@ -79,6 +81,7 @@ public class Schip extends Sprite {
         locationX = currentLocation.getX();
         locationY = currentLocation.getY();
         currentAngle = 0;
+        this.upgrades = upgrades;
         this.nr = nr;
         this.hp = hp;
         this.kracht = kracht;
@@ -443,7 +446,7 @@ public class Schip extends Sprite {
 
         addKogels(new Kogel(kogelX, kogelY, mousePointer, "resources/Media/kogel1.png"));
 
-         //if (setCone()){
+         if (upgrades.contains(1)){
              double kogel2X = mousePointer.getX()+100;
              double kogel2Y = mousePointer.getY();
              double kogel3X = mousePointer.getX()-100;
@@ -455,7 +458,7 @@ public class Schip extends Sprite {
              addKogels(new Kogel(kogelX, kogelY, mousePointer2, "resources/Media/kogel1.png"));
              addKogels(new Kogel(kogelX, kogelY, mousePointer3, "resources/Media/kogel1.png"));
 
-         //}
+         }
            /* }
         };
 
@@ -505,6 +508,9 @@ public class Schip extends Sprite {
 
     }
 
+    public List<Integer> getUpgrades() {
+        return upgrades;
+    }
 
     // Dit zorgt ervoor dat de angle binnen 360 blijft.
     public double normalizeAngle(double angle) {
