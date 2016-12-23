@@ -221,15 +221,18 @@ public class InGame extends GPanel implements ActionListener {
         this.add(droneLvlp2Background);
 
 
+
         pane.setOpaque(true);
         pane.setBackground(new Color(255, 255, 255, 2));
         pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
+
         /*healthbarp1.setBackground(new Color(255, 255, 255, 95));
         healthbarp2.setBackground(new Color(255, 255, 255, 95));
         dronebarp1.setBackground(new Color(255, 255, 255, 95));
         dronebarp2.setBackground(new Color(255, 255, 255, 95));
         schipbarp1.setBackground(new Color(255, 255, 255, 95));
         schipbarp2.setBackground(new Color(255, 255, 255, 95));*/
+
         pauze.setOpaque(true);
         pauze.setBackground(new Color(155, 255, 204, 200));
         pauze.setBorder(null);
@@ -243,6 +246,7 @@ public class InGame extends GPanel implements ActionListener {
 
         //Add Components
         //==================================================
+
         // coop components
        /* this.add(healthbarp2);
         this.add(schipbarp2);
@@ -251,6 +255,7 @@ public class InGame extends GPanel implements ActionListener {
         this.add(healthp2);
         this.add(schipLvlp2);
         this.add(droneLvlp2);*/
+
 
 
         this.add(pane);
@@ -262,6 +267,7 @@ public class InGame extends GPanel implements ActionListener {
 
        // this.add(scorep1);
        // this.add(healthp1);
+
         this.add(startGame);
 
 

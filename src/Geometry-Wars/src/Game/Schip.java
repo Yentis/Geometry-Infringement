@@ -268,8 +268,8 @@ public class Schip extends Sprite {
             setMaxXp(getLevel());
             checkLevel();
             resetCurrentXp();
+            addKracht(25);
         }
-        setKracht(kracht + (25 * getLevel()));
     }
     //lifesteal 100, invul 50, slow 75, drone 150, randombullets 250    //endregion
 
