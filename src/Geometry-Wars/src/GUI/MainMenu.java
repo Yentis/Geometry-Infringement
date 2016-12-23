@@ -7,6 +7,7 @@ package GUI;
 
 import java.awt.*;
 import java.io.*;
+import java.sql.SQLException;
 import javax.swing.*;
 
 import GComponents.*;
@@ -40,7 +41,7 @@ public class MainMenu extends GPanel {
         JButton Upgrades = new GButton("Upgrades", 24f, 190,320,260,70);
         JButton Profile = new GButton("Profile", 24f, 237,440,260,70);
         JButton Settings = new GButton("Settings", 24f, 235,560,260,70);
-        JButton FriendsBtn = new GButton("Friends", 24f, 820, 25, 170,63);
+        //JButton FriendsBtn = new GButton("Friends", 24f, 820, 25, 170,63);
         JButton LogOut = new GButton("Logout", 24f, 635,650, 170, 63);
         JButton Quit = new GButton("Quit", 24f, 820, 650, 170, 63);
         JButton Discord = new JButton(new ImageIcon(((new ImageIcon("resources\\Media\\Discord.jpg")).getImage()).getScaledInstance(65, 65, java.awt.Image.SCALE_SMOOTH)));
@@ -74,17 +75,9 @@ public class MainMenu extends GPanel {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 try {
-                    window.getSettings().initComponents();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (FontFormatException e) {
-                    e.printStackTrace();
-                }
-                try {
+                    window.getSpel().initDankabank();
                     window.getUpgrades().initComponents();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (FontFormatException e) {
+                } catch (IOException | FontFormatException | SQLException e) {
                     e.printStackTrace();
                 }
                 window.getUpgrades().setVisible(true);
@@ -99,9 +92,7 @@ public class MainMenu extends GPanel {
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 try {
                     window.getSettings().initComponents();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (FontFormatException e) {
+                } catch (IOException | FontFormatException e) {
                     e.printStackTrace();
                 }
                 window.getSettings().setVisible(true);
@@ -109,7 +100,7 @@ public class MainMenu extends GPanel {
 
         });
 
-        FriendsBtn.addActionListener(new java.awt.event.ActionListener() {
+        /*FriendsBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 if (!Friends.isShowing()) {
                     Friends.setVisible(true);
@@ -118,7 +109,7 @@ public class MainMenu extends GPanel {
                 }
 
             }
-        });
+        });*/
         Discord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -145,10 +136,9 @@ public class MainMenu extends GPanel {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 try {
+                    window.getSpel().initDankabank();
                     window.getProfile().initComponents();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (FontFormatException e) {
+                } catch (IOException | FontFormatException | SQLException e) {
                     e.printStackTrace();
                 }
                 window.getProfile().setVisible(true);
@@ -174,7 +164,7 @@ public class MainMenu extends GPanel {
                 Quit.setVisible(false);
                 LogOut.setVisible(false);
                 Discord.setVisible(false);
-                FriendsBtn.setVisible(false);
+                //FriendsBtn.setVisible(false);
                 JoinDiscord.setVisible(false);
 
 
@@ -199,7 +189,7 @@ public class MainMenu extends GPanel {
                 Quit.setVisible(true);
                 LogOut.setVisible(true);
                 Discord.setVisible(true);
-                FriendsBtn.setVisible(true);
+                //FriendsBtn.setVisible(true);
                 JoinDiscord.setVisible(true);
 
             }
@@ -267,7 +257,7 @@ public class MainMenu extends GPanel {
         panel.add(Quit);
         panel.add(LogOut);
         panel.add(Discord);
-        panel.add(FriendsBtn);
+        //panel.add(FriendsBtn);
         panel.add(JoinDiscord);
 
         panel.add(pauzepane);

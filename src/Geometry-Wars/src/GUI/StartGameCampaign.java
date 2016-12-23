@@ -33,18 +33,14 @@ public class StartGameCampaign extends GPanel {
     public void initComponents() throws IOException, FontFormatException {
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         List<Integer> upgradeList = new ArrayList<>();
-        JButton Continue = new GButton("Continue", 24f, 150,230,300,80);
-        JButton NewCampaign = new GButton("New Campaign", 24f, 200,350,350,80);
-        JButton ClearCampaign = new GButton("Clear Campaign", 24f, 250,470,350,80);
+        JButton Start = new GButton("Start", 24f, 150,230,300,80);
+        //JButton NewCampaign = new GButton("New Campaign", 24f, 200,350,350,80);
+        //JButton ClearCampaign = new GButton("Clear Campaign", 24f, 250,470,350,80);
         JButton Back = new GButton("Back", 24f, 820, 650, 170, 63);
 
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
         JLabel labelDrone = new GLabel("Choose drone: ", 18, 500,250,200,50,false, Color.white);
-<<<<<<< HEAD
-        String[] drones = new String[3];
-=======
         String[] drones = new String[4];
->>>>>>> origin/master
 
         try {
             upgradeList = window.getSpel().checkUpgrades();
@@ -72,9 +68,9 @@ public class StartGameCampaign extends GPanel {
         label.setOpaque(true);
         label.setFont(new GFont(65));
         label.setBackground(new Color(255,255,255,95));
-        Continue.setBackground(new Color(255,255,255,200));
-        NewCampaign.setBackground(new Color(255,255,255,200));
-        ClearCampaign.setBackground(new Color(255,255,255,200));
+        Start.setBackground(new Color(255,255,255,200));
+        //NewCampaign.setBackground(new Color(255,255,255,200));
+        //ClearCampaign.setBackground(new Color(255,255,255,200));
 
         Back.setBackground(new Color(255,255,255,200));
         chooseDrone.setFont(new GFont(18));
@@ -84,9 +80,9 @@ public class StartGameCampaign extends GPanel {
 
         this.add(labelDrone);
         this.add(chooseDrone);
-        this.add(Continue);
-        this.add(NewCampaign);
-        this.add(ClearCampaign);
+        this.add(Start);
+        //this.add(NewCampaign);
+        //this.add(ClearCampaign);
         this.add(label);
         this.add(Back);
 
@@ -98,7 +94,7 @@ public class StartGameCampaign extends GPanel {
                 window.getStartGame().setVisible(true);
             }
         });
-        Continue.addActionListener(new java.awt.event.ActionListener() {
+        Start.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());

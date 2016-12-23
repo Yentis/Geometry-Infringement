@@ -123,27 +123,16 @@ public class Spel implements Cloneable{
         return false;
     }
 
-    public void reInitSpelers() throws SQLException {
-        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        Connection myConn = DriverManager.getConnection(url, user, pass);
-        Statement myStmt = myConn.createStatement();
-        //region Spelers
-        ResultSet speler = myStmt.executeQuery("select * from speler order by highscore desc");
-
-        spelers = new ArrayList<>();
-
-        int i = 0;
-        while (speler.next()){
-            spelers.add(i, new Speler(speler.getInt("nr") - 1, speler.getString("gebruikersnaam"), speler.getString("wachtwoord"), speler.getString("email"), speler.getInt("level"), speler.getInt("experience"), speler.getString("rank"), speler.getInt("nuggets"), speler.getInt("golden nuggets"), speler.getInt("highscore")));
-            i++;
-        }
-        //endregion
-    }
-
     public void initDankabank() throws SQLException {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
+
+        spelers = new ArrayList<>();
+        schepen = new ArrayList<>();
+        drones = new ArrayList<>();
+        upgrades = new ArrayList<>();
+        enemies = new ArrayList<>();
 
         //region Spelers
         ResultSet speler = myStmt.executeQuery("select * from speler order by highscore desc");
@@ -229,6 +218,8 @@ public class Spel implements Cloneable{
         Statement myStmt = myConn.createStatement();
 
         ResultSet myRs = myStmt.executeQuery("select * from speler where gebruikersnaam = '" + gebruikersnaam + "'");
+
+        speler = null;
 
         while(myRs.next()){
             speler = new Speler(myRs.getInt("nr") - 1, myRs.getString("gebruikersnaam"), myRs.getString("wachtwoord"), myRs.getString("email"), myRs.getInt("level"), myRs.getInt("experience"), myRs.getString("rank"), myRs.getInt("nuggets"), myRs.getInt("golden nuggets"), myRs.getInt("highscore"));

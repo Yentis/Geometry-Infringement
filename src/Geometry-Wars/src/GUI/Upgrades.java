@@ -156,7 +156,7 @@ public class Upgrades extends GPanel {
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 Upgrade upgrade = window.getSpel().getUpgrades().get(1);
 
-                buyUpgrade(window, upgrade, message, upgradeShip1);
+                buyUpgrade(window, upgrade, message, upgradeShip1, nuggets);
             }
         });
 
@@ -165,7 +165,7 @@ public class Upgrades extends GPanel {
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 Upgrade upgrade = window.getSpel().getUpgrades().get(2);
 
-                buyUpgrade(window, upgrade, message, upgradeShip2);
+                buyUpgrade(window, upgrade, message, upgradeShip2, nuggets);
             }
         });
 
@@ -174,7 +174,7 @@ public class Upgrades extends GPanel {
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 Upgrade upgrade = window.getSpel().getUpgrades().get(3);
 
-                buyUpgrade(window, upgrade, message, upgradeDrone1);
+                buyUpgrade(window, upgrade, message, upgradeDrone1, nuggets);
             }
         });
 
@@ -183,7 +183,7 @@ public class Upgrades extends GPanel {
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 Upgrade upgrade = window.getSpel().getUpgrades().get(4);
 
-                buyUpgrade(window, upgrade, message, upgradeDrone2);
+                buyUpgrade(window, upgrade, message, upgradeDrone2, nuggets);
             }
         });
 
@@ -192,7 +192,7 @@ public class Upgrades extends GPanel {
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 Upgrade upgrade = window.getSpel().getUpgrades().get(5);
 
-                buyUpgrade(window, upgrade, message, upgradeDrone3);
+                buyUpgrade(window, upgrade, message, upgradeDrone3, nuggets);
             }
         });
 
@@ -201,7 +201,7 @@ public class Upgrades extends GPanel {
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 Upgrade upgrade = window.getSpel().getUpgrades().get(0);
 
-                buyUpgrade(window, upgrade, message, upgradeFire1);
+                buyUpgrade(window, upgrade, message, upgradeFire1, nuggets);
             }
         });
 
@@ -257,7 +257,7 @@ public class Upgrades extends GPanel {
 
     }
 
-    private void buyUpgrade(GUI.Window window, Upgrade upgrade, JLabel message, JButton button){
+    private void buyUpgrade(GUI.Window window, Upgrade upgrade, JLabel message, JButton button, JLabel nuggets){
         try {
             if(window.getSpel().buyUpgrade(upgrade.getKost(), (upgrade.getNr() + 1))){
                 button.setEnabled(false);
@@ -268,5 +268,13 @@ public class Upgrades extends GPanel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        try {
+            window.getSpel().initDankabank();
+            window.getSpel().logIn(window.getSpel().getSpeler().getGebruikersnaam());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        nuggets.setText(String.valueOf(window.getSpel().getSpeler().getNuggets()));
     }
 }
