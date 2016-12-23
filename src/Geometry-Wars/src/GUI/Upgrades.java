@@ -44,7 +44,7 @@ public class Upgrades extends GPanel {
         JButton skins = new GButton("Skins", 18f, 205,690,133,35);
         JButton techTree = new GButton("Tech Tree", 18f, 365,690,287,35);
         JButton goldenNuggets = new GButton("Buy Golden Nuggets", 18f, 681,690,287,35);
-        //JLabel message = new GLabel("Not enough nuggets.")
+        JLabel message = new GLabel("Not enough nuggets.", 24f, 400, 42, 218, 74, false, Color.black);
         JLabel spaceShipPane = new GPane(52,138,287,535);
         JLabel dronePane = new GPane(365,138,287,534);
         JLabel firePane = new GPane(681,138,287,534);
@@ -148,6 +148,7 @@ public class Upgrades extends GPanel {
         panel.add(spaceShipPane);
         panel.add(dronePane);
         panel.add(firePane);
+        panel.add(message);
 
 
 
