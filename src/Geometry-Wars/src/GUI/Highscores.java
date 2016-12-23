@@ -62,16 +62,24 @@ public class Highscores extends GPanel {
 
         strings = processNames();
 
+        int i = 0;
         for (String string:strings) {
-            listModelPlayer.addElement(string);
+            if(i<10){
+                listModelPlayer.addElement(string);
+            }
+            i++;
         }
 
         JList listPlayer = new JList(listModelPlayer);
 
         strings = processScores();
 
+        i = 0;
         for (String string:strings) {
-            listModelScore.addElement(string);
+            if(i<10){
+                listModelScore.addElement(string);
+            }
+            i++;
         }
 
         JList listScore = new JList(listModelScore);
