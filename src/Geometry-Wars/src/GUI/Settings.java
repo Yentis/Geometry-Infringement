@@ -111,6 +111,8 @@ public class Settings extends GPanel {
                 if(Objects.equals(currentDifficulty, selectedDifficulty)){
                     message.setText("Difficulty set.");
                 } else {
+                    window.getSpel().setCurrentDifficulty(selectedDifficulty);
+
                     for (Enemy enemy:window.getSpel().getEnemies())
                     {
                         switch(selectedDifficulty){

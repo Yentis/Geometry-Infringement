@@ -7,9 +7,13 @@ package GUI;
 
 import java.awt.*;
 import java.io.*;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.List;
 import javax.swing.*;
 
 import GComponents.*;
+import Game.Upgrade;
 
 
 /**
@@ -37,6 +41,7 @@ public class Upgrades extends GPanel {
     @Override
     public void initComponents() throws IOException, FontFormatException {
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+        List<Integer> upgradeList = new ArrayList<>();
         //Make components
         //==================================================
 
@@ -44,15 +49,15 @@ public class Upgrades extends GPanel {
         JButton skins = new GButton("Skins", 18f, 205,690,133,35);
         JButton techTree = new GButton("Tech Tree", 18f, 365,690,287,35);
         JButton goldenNuggets = new GButton("Buy Golden Nuggets", 18f, 681,690,287,35);
-        JLabel message = new GLabel("Not enough nuggets.", 24f, 400, 42, 218, 74, false, Color.black);
+        JLabel message = new GLabel("", 24f, 365, 82, 290, 74, false, Color.white);
         JLabel spaceShipPane = new GPane(52,138,287,535);
         JLabel dronePane = new GPane(365,138,287,534);
         JLabel firePane = new GPane(681,138,287,534);
         JLabel spaceShip = new GLabel("Spaceship", 16f, 151,149,100,28, false, Color.black );
         JLabel drone = new GLabel("Drone", 16f, 482,149,87,28, false, Color.black );
         JLabel fire = new GLabel("fire", 16f, 807,149,87,28, false, Color.black );
-        JLabel upgradesPane = new GPane(368,30,287,98);
-        JLabel upgrades = new GLabel("Upgrades", 36f, 400,42,218,74, false, Color.black);
+        JLabel upgradesPane = new GPane(368,10,287,98);
+        JLabel upgrades = new GLabel("Upgrades", 36f, 400,22,218,74, false, Color.black);
 
         /*
             x for every column of upgrades
@@ -74,18 +79,29 @@ public class Upgrades extends GPanel {
 
          */
 
+        try {
+            upgradeList = window.getSpel().checkUpgrades();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         JButton upgradeShip1 = new GButton("", 16f,75,218,104,123);
         JButton upgradeShip2 = new GButton("", 16f,211,218,104,123);
-        JButton upgradeShip3 = new GButton("",16f,75,358,104,123);
+        JButton upgradeShip3 = new GButton("",16f,75,368,104,123);
 
         JButton upgradeDrone1 = new GButton("", 16f, 392,218,104,123);
         JButton upgradeDrone2 = new GButton("",16f, 528,218,104,123);
-        JButton upgradeDrone3 = new GButton("",16f, 392,358,104,123);
+        JButton upgradeDrone3 = new GButton("",16f, 392,368,104,123);
 
         JButton upgradeFire1 = new GButton("", 16f, 704,218,104,123);
         upgradeFire1.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(0).getFoto()));
+        JLabel upgradeFire1Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(0).getKost()), 16f, 715,143,104,123, false, Color.black);
         JButton upgradeFire2 = new GButton("", 16f, 841,218,104,123);
-        JButton upgradeFire3 = new GButton("", 16f, 704,358,104,123);
+        JButton upgradeFire3 = new GButton("", 16f, 704,368,104,123);
+
+        if(upgradeList.contains(1)){
+            upgradeFire1.setVisible(false);
+        }
 
         //==================================================
 
@@ -105,8 +121,17 @@ public class Upgrades extends GPanel {
         upgradeFire1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                if(window.getSpel().buyUpgrade()){
-                    upgradeFire1.setVisible(false);
+                Upgrade upgrade = window.getSpel().getUpgrades().get(0);
+
+                try {
+                    if(window.getSpel().buyUpgrade(upgrade.getKost(), (upgrade.getNr() + 1))){
+                        upgradeFire1.setVisible(false);
+                        message.setText("Upgrade purchased.");
+                    } else {
+                        message.setText("Not enough nuggets.");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -143,6 +168,7 @@ public class Upgrades extends GPanel {
         panel.add(upgradeShip2);
         panel.add(upgradeShip3);
         panel.add(upgradeFire1);
+        panel.add(upgradeFire1Price);
         panel.add(upgradeFire2);
         panel.add(upgradeFire3);
         panel.add(spaceShipPane);

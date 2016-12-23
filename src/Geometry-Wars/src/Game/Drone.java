@@ -20,6 +20,9 @@ public class Drone extends Sprite{
     private int currentXp = 0;
     private double maxXp = 1000;
     private double currentAngle;
+    private boolean isAttackDrone;
+    private boolean isShieldDrone;
+    private boolean isXpDrone;
     private int fireSpeed = 500; // om de 0,5 seconden
     private ArrayList<Kogel> kogels = new ArrayList<Kogel>();
     private String imageString;
@@ -58,6 +61,48 @@ public class Drone extends Sprite{
         this.uiterlijk = "Vierkant";
     }
     // region level properties
+    public void setActiveDrone(int type){
+        setAttackDrone(false);
+        setShieldDrone(false);
+        setXpDrone(false);
+        switch (type){
+            case 1 :
+                setAttackDrone(true);
+                break;
+            case 2 :
+                setShieldDrone(true);
+                break;
+            case 3 :
+
+                setXpDrone(true);
+                break;
+        }
+    }
+
+    public boolean isAttackDrone() {
+        return isAttackDrone;
+    }
+
+    public void setAttackDrone(boolean attackDrone) {
+        isAttackDrone = attackDrone;
+    }
+
+    public boolean isShieldDrone() {
+        return isShieldDrone;
+    }
+
+    public void setShieldDrone(boolean shieldDrone) {
+        isShieldDrone = shieldDrone;
+    }
+
+    public boolean isXpDrone() {
+        return isXpDrone;
+    }
+
+    public void setXpDrone(boolean xpDrone) {
+        isXpDrone = xpDrone;
+    }
+
     public int getLevel() {
         return level;
     }
