@@ -298,11 +298,11 @@ public class Schip extends Sprite {
             case 20:
                  lifesteal.setActive(true);
                 break;
-            case 75:
-                //stays active when reached
+            case 30:
+
                 activeDrone.setActive(true);
                 break;
-            case 100:
+            case 50:
              randomBullets.setActive(true);
                 break;
 
