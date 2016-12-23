@@ -407,7 +407,12 @@ public class GamePanel extends GPanel {
                         enemyIterator.remove();
                         schip.addCombo();
                         if (kogels == schip.getDrone().getKogels()) {
-                            schip.getDrone().addCurrentXp(100);
+                            if (drone.isXpDrone()){
+                                schip.addCurrentXp(100);
+                            } else {
+                                schip.getDrone().addCurrentXp(100);
+                            }
+
                             drone.checkLevel();
                             //currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, enemy.getHitter()), currentDroneXpBar.getHeight());
                         } else if (kogels == schip.getKogels()) {
