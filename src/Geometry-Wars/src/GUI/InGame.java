@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.Timer;
 
@@ -354,7 +355,13 @@ public class InGame extends GPanel implements ActionListener {
                 checkGameFinished();
                 gamePanel.revalidate();
                 drawGame();
-                updateGame();
+                try {
+                    updateGame();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (UnsupportedAudioFileException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
     }
@@ -414,7 +421,7 @@ public class InGame extends GPanel implements ActionListener {
         gameTimer.start();
     }
 
-    private void updateGame() {
+    private void updateGame() throws IOException, UnsupportedAudioFileException {
         gamePanel.update();
     }
 

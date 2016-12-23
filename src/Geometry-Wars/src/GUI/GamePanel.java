@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.Timer;
 
@@ -478,7 +479,7 @@ public class GamePanel extends GPanel {
 
 
     //updates the "updates" region
-    public void update() {
+    public void update() throws IOException, UnsupportedAudioFileException {
         checkDeadShip();
         if (schip != null || schipp2 != null) {
             checkGameFinished();
@@ -555,13 +556,15 @@ public class GamePanel extends GPanel {
         return healthBarWidth;
     }
 
-    private void checkGameFinished() {
+    private void checkGameFinished() throws IOException, UnsupportedAudioFileException {
         if (coop) {
             if (schip == null && schipp2 == null) {
                 gameFinished = true;
             }
         } else {
             if (schip.getHp() <= 0) {
+                Sound sound = new Sound("resources/Sound/playerdeath.wav");
+                sound.playSound();
                 gameFinished = true;
             }
         }
