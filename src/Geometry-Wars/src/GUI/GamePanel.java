@@ -222,6 +222,9 @@ public class GamePanel extends GPanel {
         if (schip.getUpgrades().contains(1)) {
             hpRegenTimer.start();
         }
+        if (schip.getUpgrades().contains(2)){
+            schip.setSpeed(5);
+        }
         if (coop) {
             //set layouts
             showCoopUI();
@@ -262,7 +265,7 @@ public class GamePanel extends GPanel {
 
     public void resumeGame() {
         spawnTimer.start();
-        hpRegenTimer.stop();
+        hpRegenTimer.start();
     }
 
 
@@ -628,12 +631,13 @@ public class GamePanel extends GPanel {
         });
     }
 
-    private void  setHpRegenTimer(Schip schip){
+    private void setHpRegenTimer(Schip schip){
         hpRegenTimer = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (schip.getHp() < schip.getMaxhp()){
+                if (schip.getHp() < 100){
                     schip.addHp(2);
+
                 }
             }
         });
