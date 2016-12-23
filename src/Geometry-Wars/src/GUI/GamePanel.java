@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -54,9 +55,7 @@ public class GamePanel extends GPanel {
     private double healthBarWidth;
     private double healthBarWidthp2;
     private double xpBarWidthSchip;
-    private double xpBarWidthSchipp2;
     private double xpBarWidthDrone;
-    private double xpBarWidthDronep2;
     private double ratioHP;
     private double ratioSchipXP;
     private double ratioDroneXp;
@@ -253,7 +252,9 @@ public class GamePanel extends GPanel {
 
         schip = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
 
-        //Controllers controller = new Controllers(schip, 0);
+        if(!Objects.equals(window.getSpel().getCurrentControls(), "Keyboard + Mouse")){
+            Controllers controller = new Controllers(schip, 0);
+        }
 
         dummydr = makeDrone(schip);
 
@@ -319,7 +320,7 @@ public class GamePanel extends GPanel {
             drawShip(g, schip);
             drawBuffs(g, schip, schipbarp1);
         }
-        if (drone != null){
+        if (drone != null && schip != null){
             drawBullets(g, drone.getKogels(), schip);
             drawDrone(g, drone, schip);
         }
@@ -327,7 +328,9 @@ public class GamePanel extends GPanel {
             drawBullets(g, schipp2.getKogels(), schipp2);
             drawShip(g, schipp2);
             drawBuffs(g,schipp2,schipbarp2);
-        } else if (coop && dronep2 != null){
+        }
+        if (coop && dronep2 != null && schipp2 != null){
+
             drawBullets(g, dronep2.getKogels(), schipp2);
             drawDrone(g, dronep2, schipp2);
         }
@@ -479,7 +482,12 @@ public class GamePanel extends GPanel {
 
 
                         if (drone != null && kogels == schip.getDrone().getKogels()) {
-                            schip.getDrone().addCurrentXp(enemy.getExperience());
+                            if (Objects.equals(drone.getNaam(), "Experience Drone")){
+                                schip.addCurrentXp(enemy.getExperience());
+                            } else {
+                                schip.getDrone().addCurrentXp(enemy.getExperience());
+                            }
+                           
                             drone.checkLevel();
                         } else if (kogels == schip.getKogels()) {
                             schip.addCurrentXp(enemy.getExperience());
@@ -510,6 +518,7 @@ public class GamePanel extends GPanel {
         for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ){
             Enemy enemy = enemyIterator.next();
             if (drone.collisionDetect(enemy.getHitBox())){
+                System.out.println("hi");
                 drone.addCurrentXp(enemy.getExperience());
                 enemyIterator.remove();
             }
@@ -557,8 +566,11 @@ public class GamePanel extends GPanel {
             approachShip();
             if (schip != null) {
                 schip.updateBuffs();
-                if (drone != null){
+                if (drone != null && (Objects.equals(drone.getNaam(), "Attack Drone") || Objects.equals(drone.getNaam(), "Experience Drone"))){
                     updateKogels(drone.getKogels(), schip);
+                    currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, drone), currentDroneXpBar.getHeight());
+                } else if (drone != null && Objects.equals(drone.getNaam(), "Defense Drone")){
+                    collisionDrone(drone);
                     currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, drone), currentDroneXpBar.getHeight());
                 }
                 schip.beweegSchip();
@@ -587,9 +599,10 @@ public class GamePanel extends GPanel {
                 updateKogels(schipp2.getKogels(), schipp2);
                 if(dronep2 != null){
                     updateKogels(dronep2.getKogels(), schipp2);
-                    currentDroneXpBarp2.setSize((int) updateDroneXpBar(xpBarWidthDronep2, dronep2), currentDroneXpBarp2.getHeight());
+
+                    currentDroneXpBarp2.setSize((int) updateDroneXpBar(xpBarWidthDrone, dronep2), currentDroneXpBarp2.getHeight());
                     dronebarp2.setText("lvl: " +  schipp2.getDrone().getLevel());
-                    currentDroneXpBarp2.setSize((int) updateDroneXpBar(xpBarWidthDronep2, dronep2), currentDroneXpBarp2.getHeight());
+                    currentDroneXpBarp2.setSize((int) updateDroneXpBar(xpBarWidthDrone, dronep2), currentDroneXpBarp2.getHeight());
                 }
                 schipp2.beweegSchip();
                 if (schipp2.getInvulnerability().isActive()) {
@@ -602,7 +615,6 @@ public class GamePanel extends GPanel {
                 scorep2.setText("" + schipp2.getScore());
                 currentHealthBarp2.setSize((int) updateHealthBar(schipp2), currentHealthBarp2.getHeight());
                 currentSchipXpBarp2.setSize((int) updateSchipXpBar(xpBarWidthSchip, schipp2), currentSchipXpBarp2.getHeight());
-
                 schipbarp2.setText("lvl: " +  schipp2.getLevel());
             }
         }

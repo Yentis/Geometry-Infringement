@@ -26,6 +26,7 @@ public class Spel implements Cloneable{
     private List<Upgrade> upgrades = new ArrayList<>();
     private List<Enemy> enemies = new ArrayList<>();
     private String currentDifficulty = "Normal";
+    private String currentControls = "Keyboard + Mouse";
     private String url = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7150029";
     private String user = "sql7150029";
     private String pass = "3Ngdr6LYhR";
@@ -55,12 +56,20 @@ public class Spel implements Cloneable{
         return drones;
     }
 
+    public String getCurrentControls() {
+        return currentControls;
+    }
+
     public String getCurrentDifficulty() {
         return currentDifficulty;
     }
 
     public List<Speler> getSpelers() {
         return spelers;
+    }
+
+    public void setCurrentControls(String currentControls) {
+        this.currentControls = currentControls;
     }
 
     public void setEnemies(List<Enemy> enemies) {
