@@ -112,7 +112,9 @@ public class Settings extends GPanel {
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 List<Enemy> enemies = new ArrayList<>();
                 String currentDifficulty = window.getSpel().getCurrentDifficulty();
+                String currentControls = window.getSpel().getCurrentControls();
                 String selectedDifficulty = difficulty.getSelectedItem().toString();
+                String selectedControls = input.getSelectedItem().toString();
                 String selectedInput = input.getSelectedItem().toString();
 
                 if(Objects.equals(currentDifficulty, selectedDifficulty)){
@@ -162,6 +164,11 @@ public class Settings extends GPanel {
                     }
                     window.getSpel().setEnemies(enemies);
                     message.setText("Difficulty set.");
+                }
+
+                if (!Objects.equals(selectedControls, currentControls)){
+                    window.getSpel().setCurrentControls(selectedControls);
+                    message.setText("Input set.");
                 }
                 message.setVisible(true);
             }

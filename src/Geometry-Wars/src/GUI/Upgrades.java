@@ -91,7 +91,7 @@ public class Upgrades extends GPanel {
         JButton upgradeShip2 = new GButton("", 16f,211,218,104,123);
         upgradeShip2.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(2).getFoto()));
         JLabel upgradeShip2Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(2).getKost()), 16f, 226,143,104,123, false, Color.black);
-        JButton upgradeShip3 = new GButton("",16f,75,368,104,123);
+        //JButton upgradeShip3 = new GButton("",16f,75,368,104,123);
 
         JButton upgradeDrone1 = new GButton("", 16f, 392,218,104,123);
         upgradeDrone1.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(3).getFoto()));
@@ -106,8 +106,8 @@ public class Upgrades extends GPanel {
         JButton upgradeFire1 = new GButton("", 16f, 704,218,104,123);
         upgradeFire1.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(0).getFoto()));
         JLabel upgradeFire1Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(0).getKost()), 16f, 715,143,104,123, false, Color.black);
-        JButton upgradeFire2 = new GButton("", 16f, 841,218,104,123);
-        JButton upgradeFire3 = new GButton("", 16f, 704,368,104,123);
+        //JButton upgradeFire2 = new GButton("", 16f, 841,218,104,123);
+        //JButton upgradeFire3 = new GButton("", 16f, 704,368,104,123);
 
         for (int i:upgradeList) {
             switch (i){
@@ -240,11 +240,11 @@ public class Upgrades extends GPanel {
         panel.add(upgradeShip1Price);
         panel.add(upgradeShip2);
         panel.add(upgradeShip2Price);
-        panel.add(upgradeShip3);
+        //panel.add(upgradeShip3);
         panel.add(upgradeFire1);
         panel.add(upgradeFire1Price);
-        panel.add(upgradeFire2);
-        panel.add(upgradeFire3);
+        //panel.add(upgradeFire2);
+        //panel.add(upgradeFire3);
         panel.add(spaceShipPane);
         panel.add(dronePane);
         panel.add(firePane);

@@ -249,7 +249,9 @@ public class GamePanel extends GPanel {
 
         schip = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
 
-        //Controllers controller = new Controllers(schip, 0);
+        if(!Objects.equals(window.getSpel().getCurrentControls(), "Keyboard + Mouse")){
+            Controllers controller = new Controllers(schip, 0);
+        }
 
         dummydr = makeDrone(schip);
 
@@ -315,14 +317,15 @@ public class GamePanel extends GPanel {
             drawShip(g, schip);
             drawBuffs(g, schip, schipbarp1);
         }
-        if (drone != null){
+        if (drone != null && schip != null){
             drawBullets(g, drone.getKogels(), schip);
             drawDrone(g, drone, schip);
         }
         if (coop && schipp2 != null) {
             drawBullets(g, schipp2.getKogels(), schipp2);
             drawShip(g, schipp2);
-        } else if (coop && dronep2 != null){
+        }
+        if (coop && dronep2 != null && schipp2 != null){
             drawBullets(g, dronep2.getKogels(), schipp2);
             drawDrone(g, dronep2, schipp2);
         }
@@ -474,7 +477,7 @@ public class GamePanel extends GPanel {
 
 
                         if (drone != null && kogels == schip.getDrone().getKogels()) {
-                            if (drone.isXpDrone()){
+                            if (Objects.equals(drone.getNaam(), "Experience Drone")){
                                 schip.addCurrentXp(enemy.getExperience());
                             } else {
                                 schip.getDrone().addCurrentXp(enemy.getExperience());
@@ -558,7 +561,7 @@ public class GamePanel extends GPanel {
             approachShip();
             if (schip != null) {
                 schip.updateBuffs();
-                if (drone != null && Objects.equals(drone.getNaam(), "Attack Drone")){
+                if (drone != null && (Objects.equals(drone.getNaam(), "Attack Drone") || Objects.equals(drone.getNaam(), "Experience Drone"))){
                     updateKogels(drone.getKogels(), schip);
                     currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, drone), currentDroneXpBar.getHeight());
                 } else if (drone != null && Objects.equals(drone.getNaam(), "Defense Drone")){
