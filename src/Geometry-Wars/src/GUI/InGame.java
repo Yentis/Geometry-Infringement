@@ -37,7 +37,8 @@ public class InGame extends GPanel implements ActionListener {
     private GButton menuGameEnd = new GButton("Main Menu", 24f, 550, 420, 275, 120);
     private ImageIcon PauseImage = new ImageIcon("resources\\Media\\pause-128.png");
     private JButton pauze = new JButton(PauseImage);
-    private GLabel gameOver = new GLabel("Oopsy daisy! u dead fam", 25f, 325,260,375,120, true, Color.white);
+    private GLabel gameOver = new GLabel("Oopsy daisy! u dead fam", 25f, 325, 260, 375, 120, true, Color.white);
+
 
 
 
@@ -91,7 +92,8 @@ public class InGame extends GPanel implements ActionListener {
 
 
         }*/
-    }};
+        }
+    };
     private GPanel gameEnd = new GPanel() {
         @Override
         public void initComponents() throws IOException, FontFormatException {
@@ -138,6 +140,15 @@ public class InGame extends GPanel implements ActionListener {
         }
     };
 
+    //coop
+    private GLabel healthp2Background;
+    private GLabel scorep2Background;
+    private GLabel schipLvlp2Background;
+    private GLabel droneLvlp2Background;
+    private GLabel healthbarp2Background;
+    private GLabel dronebarp2Background;
+    private GLabel schipbarp2BackGround;
+
     public InGame(List<Enemy> enemies) throws IOException, FontFormatException {
         gamePanel = new GamePanel(enemies);
         pause.initComponents();
@@ -173,34 +184,52 @@ public class InGame extends GPanel implements ActionListener {
 
         JLabel pane = new JLabel();
 
-        GLabel healthp1 = new GLabel("Health:", 24, 40,18,169,62, false, Color.black);
-        GLabel healthp2 = new GLabel("Health:", 24, 595,18,169,62, false, Color.black);
-        GLabel scorep1 = new GLabel("Score:", 24, 25,65,169,62, false, Color.cyan);
-        GLabel scorep2 = new GLabel("Score:", 24, 580,65,169,62, false, Color.cyan);
-        GLabel schipLvlp1 = new GLabel("Ship lvl:", 24, 25,667,222,62, false, Color.green);
-        GLabel schipLvlp2 = new GLabel("Ship lvl:", 24, 580,667,222,62, false, Color.green);
-        GLabel droneLvlp1 = new GLabel("Drone lvl:", 24, 250,667,222,62, false, new Color(155,255,204));
-        GLabel droneLvlp2 = new GLabel("Drone lvl:", 24, 800,667,222,62, false, new Color(155,255,204));
-        GLabel healthbarp1 = new GLabel("", 24, 15,23,434,47, true, Color.black);
-        GLabel healthbarp2 = new GLabel("", 24, 570,23,434,47, true, Color.black);
-        GLabel dronebarp1 = new GLabel("", 24, 380,672,70,47, true, Color.black);
-        GLabel dronebarp2 = new GLabel("", 24, 930,672,70,47, true, Color.black);
-        GLabel schipbarp1 = new GLabel("", 24, 140,672,100,47, true, Color.black);
-        GLabel schipbarp2 = new GLabel("", 24, 690,672,100,47, true, Color.black);
-        GLabel confirmationlabel = new GLabel("Are you sure?", 30, 470,285,500,60, false, Color.cyan);
-        //JButton Quit = new GButton("Quit", 24f, 20, 675, 100, 47);
-        JButton Yes = new GButton("Yes", 24f, 455, 380, 100, 47);
-        JButton No = new GButton("No", 24f, 595, 380, 100, 47);
+        healthp2Background = new GLabel("Health:", 24, 595, 18, 169, 62, false, Color.black);
+        scorep2Background = new GLabel("Score:", 24, 580, 65, 169, 62, false, Color.cyan);
+        schipLvlp2Background = new GLabel("Ship lvl:", 24, 580, 667, 222, 62, false, Color.green);
+        droneLvlp2Background = new GLabel("Drone lvl:", 24, 800, 667, 222, 62, false, new Color(155, 255, 204));
+        healthbarp2Background = new GLabel("", 24, 570, 23, 434, 47, true, Color.black);
+        dronebarp2Background = new GLabel("", 24, 930, 672, 70, 47, true, Color.black);
+        schipbarp2BackGround = new GLabel("", 24, 140, 672, 100, 47, true, Color.black);
+
+        //single player
+        GLabel healthp1Background = new GLabel("Health:", 24, 40, 18, 169, 62, false, Color.black);
+        GLabel scorep1Background = new GLabel("Score:", 24, 25, 65, 169, 62, false, Color.cyan);
+        GLabel healthbarp1Background = new GLabel("", 24, 15, 23, 434, 47, true, Color.black);
+        GLabel dronebarp1Background = new GLabel("", 24, 380, 672, 70, 47, true, Color.black);
+        GLabel schipbarp1BackGround = new GLabel("", 24, 140, 672, 100, 47, true, Color.black);
+        healthbarp1Background.setBackground(new Color(255, 255, 255, 95));
+        dronebarp1Background.setBackground(new Color(255, 255, 255, 95));
+        schipbarp1BackGround.setBackground(new Color(255, 255, 255, 95));
+        this.add(healthbarp1Background);
+        this.add(scorep1Background);
+        this.add(healthp1Background);
+
+        //coop only
+
+
+        healthbarp2Background.setBackground(new Color(255, 255, 255, 95));
+        dronebarp2Background.setBackground(new Color(255, 255, 255, 95));
+        schipbarp2BackGround.setBackground(new Color(255, 255, 255, 95));
+
+        this.add(healthbarp2Background);
+        this.add(schipbarp2BackGround);
+        this.add(dronebarp2Background);
+        this.add(scorep2Background);
+        this.add(healthp2Background);
+        this.add(schipLvlp2Background);
+        this.add(droneLvlp2Background);
+
 
         pane.setOpaque(true);
         pane.setBackground(new Color(255, 255, 255, 2));
         pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
-        healthbarp1.setBackground(new Color(255,255,255,95));
-        healthbarp2.setBackground(new Color(255,255,255,95));
-        dronebarp1.setBackground(new Color(255,255,255,95));
-        dronebarp2.setBackground(new Color(255,255,255,95));
-        schipbarp1.setBackground(new Color(255,255,255,95));
-        schipbarp2.setBackground(new Color(255,255,255,95));
+        /*healthbarp1.setBackground(new Color(255, 255, 255, 95));
+        healthbarp2.setBackground(new Color(255, 255, 255, 95));
+        dronebarp1.setBackground(new Color(255, 255, 255, 95));
+        dronebarp2.setBackground(new Color(255, 255, 255, 95));
+        schipbarp1.setBackground(new Color(255, 255, 255, 95));
+        schipbarp2.setBackground(new Color(255, 255, 255, 95));*/
         pauze.setOpaque(true);
         pauze.setBackground(new Color(155, 255, 204, 200));
         pauze.setBorder(null);
@@ -209,43 +238,32 @@ public class InGame extends GPanel implements ActionListener {
         pauze.setBounds(482, 23, 60, 58);
         pane.setBounds(50, 125, 900, 500);
 
-        Yes.setVisible(false);
-        No.setVisible(false);
-        confirmationlabel.setVisible(false);
-
 
         //==================================================
 
         //Add Components
         //==================================================
-        if(coop){
-            this.add(healthbarp2);
-            this.add(schipbarp2);
-            this.add(dronebarp2);
-            this.add(scorep2);
-            this.add(healthp2);
-            this.add(schipLvlp2);
-            this.add(droneLvlp2);
-        }
-        this.add(pane);
-        this.add(healthbarp1);
+        // coop components
+       /* this.add(healthbarp2);
+        this.add(schipbarp2);
+        this.add(dronebarp2);
+        this.add(scorep2);
+        this.add(healthp2);
+        this.add(schipLvlp2);
+        this.add(droneLvlp2);*/
 
-        //this.add(dronebarp1);
+
+        this.add(pane);
+        //this.add(healthbarp1);
+
+       // this.add(dronebarp1);
         this.add(pauze);
 
 
-        this.add(scorep1);
-        this.add(healthp1);
+       // this.add(scorep1);
+       // this.add(healthp1);
         this.add(startGame);
-        /*this.add(schipLvlp1);
-        this.add(droneLvlp1);*/
 
-
-
-        //this.add(Quit);
-        this.add(confirmationlabel);
-        this.add(Yes);
-        this.add(No);
 
         pauze.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -255,10 +273,28 @@ public class InGame extends GPanel implements ActionListener {
                 //pause.setVisible(true);
                 //pane.setVisible(true);
             }
-
-
         });
 
+    }
+
+    public void showCoopUI(){
+        healthp2Background.setVisible(true);
+        scorep2Background.setVisible(true);
+        schipLvlp2Background.setVisible(true);
+        droneLvlp2Background.setVisible(true);
+        healthbarp2Background.setVisible(true);
+        dronebarp2Background.setVisible(true);
+        schipbarp2BackGround.setVisible(true);
+    }
+
+    public void hideCoopUI(){
+        healthp2Background.setVisible(false);
+        scorep2Background.setVisible(false);
+        schipLvlp2Background.setVisible(false);
+        droneLvlp2Background.setVisible(false);
+        healthbarp2Background.setVisible(false);
+        dronebarp2Background.setVisible(false);
+        schipbarp2BackGround.setVisible(false);
     }
 
 
@@ -277,8 +313,12 @@ public class InGame extends GPanel implements ActionListener {
     public void initGamePanel() {
         setupGameTimer();
         gamePanel.setVisible(true);
-       // gamePanel.requestFocus();
         gamePanel.setCoop(coop);
+        if (coop){
+            showCoopUI();
+        } else{
+            hideCoopUI();
+        }
         gamePanel.startGame();
     }
 
@@ -290,7 +330,7 @@ public class InGame extends GPanel implements ActionListener {
         restartPauze.addActionListener(panel);
     }
 
-    public void checkGameFinished(){
+    public void checkGameFinished() {
         if (gamePanel.getGameFinished()) {
             pauze.setVisible(false);
             initEndGamePanel();
@@ -311,7 +351,6 @@ public class InGame extends GPanel implements ActionListener {
             }
         });
     }
-
 
 
     public void initEndGamePanel() {
