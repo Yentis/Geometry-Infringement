@@ -68,7 +68,10 @@ public class GamePanel extends GPanel {
         requestFocus();
         setDoubleBuffered(true);
         spawnEnemies();
-        setHpRegenTimer();
+        setHpRegenTimer(schip);
+        if(coop){
+            setHpRegenTimer(schipp2);
+        }
         initGamePanel();
         initComponents();
     }
@@ -200,9 +203,7 @@ public class GamePanel extends GPanel {
         enemyCounter = 1;
         gameFinished = false;
         spawnTimer.start();
-        if (isHpRegenUpgrade()) {
-            hpRegenTimer.start();
-        }
+
         Schip dummy = window.getSpel().getSchepen().get(0);
 
         //TODO: player can chose which drone he want
@@ -218,7 +219,9 @@ public class GamePanel extends GPanel {
         drone = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
 
         schip.setDrone(drone);
-
+        if (schip.getUpgrades().contains(1)) {
+            hpRegenTimer.start();
+        }
         if (coop) {
             //set layouts
             showCoopUI();
@@ -240,6 +243,9 @@ public class GamePanel extends GPanel {
 
             setSlowerEnemiesTimer(schipp2);
             setInvulnerabilityTimer(schipp2);
+            if (schipp2.getUpgrades().contains(1)) {
+                hpRegenTimer.start();
+            }
 
         } else {
             hideCoopUI();
@@ -489,6 +495,7 @@ public class GamePanel extends GPanel {
 
     //updates the "updates" region
     public void update() throws IOException, UnsupportedAudioFileException {
+        System.out.println(schip.getHp());
         checkDeadShip();
         if (schip != null || schipp2 != null) {
             checkGameFinished();
@@ -621,7 +628,7 @@ public class GamePanel extends GPanel {
         });
     }
 
-    private void  setHpRegenTimer(){
+    private void  setHpRegenTimer(Schip schip){
         hpRegenTimer = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

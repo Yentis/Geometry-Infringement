@@ -508,6 +508,9 @@ public class Schip extends Sprite {
 
     }
 
+    public List<Integer> getUpgrades() {
+        return upgrades;
+    }
 
     // Dit zorgt ervoor dat de angle binnen 360 blijft.
     public double normalizeAngle(double angle) {
