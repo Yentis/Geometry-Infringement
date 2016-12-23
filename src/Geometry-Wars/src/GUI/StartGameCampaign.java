@@ -9,6 +9,7 @@ import javax.swing.*;
 
 import GComponents.GButton;
 import GComponents.GFont;
+import GComponents.GLabel;
 import GComponents.GPanel;
 
 /**
@@ -33,6 +34,10 @@ public class StartGameCampaign extends GPanel {
         JButton Back = new GButton("Back", 24f, 820, 650, 170, 63);
 
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
+        JLabel labelDrone = new GLabel("Chose drone: ", 18, 500,250,200,50,false, Color.white);
+        String[] drones = {"Attack Drone", "Defense Drone","Experience Drone"};
+        JComboBox<String> choseDrone = new JComboBox<String>(drones);
+
 
         //props
         label.setOpaque(true);
@@ -43,11 +48,13 @@ public class StartGameCampaign extends GPanel {
         ClearCampaign.setBackground(new Color(255,255,255,200));
 
         Back.setBackground(new Color(255,255,255,200));
-
+        choseDrone.setFont(new GFont(18));
         //Bounds
         label.setBounds(25,25,650,100);
+        choseDrone.setBounds(650,250,200,50);
 
-
+        this.add(labelDrone);
+        this.add(choseDrone);
         this.add(Continue);
         this.add(NewCampaign);
         this.add(ClearCampaign);
