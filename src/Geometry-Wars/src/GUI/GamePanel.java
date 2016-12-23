@@ -10,6 +10,7 @@ import java.awt.event.*;
 import java.awt.geom.*;
 import java.io.IOException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -189,9 +190,11 @@ public class GamePanel extends GPanel {
         }
     }
 
-    public void startGame() {
-        enemyOnField.clear(); //lol
+    public void startGame() throws SQLException {
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+        List<Integer> upgrades = new ArrayList<>();
+        upgrades = window.getSpel().checkUpgrades();
+        enemyOnField.clear(); //lol
         enemyCounter = 1;
         gameFinished = false;
         spawnTimer.start();
@@ -204,7 +207,7 @@ public class GamePanel extends GPanel {
         setInvulnerabilityTimer(schip);
 
 
-        schip = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed());
+        schip = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
         //Controllers controller = new Controllers(schip, 0);
 
         drone = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
@@ -214,7 +217,7 @@ public class GamePanel extends GPanel {
         if (coop) {
             //set layouts
             showCoopUI();
-            schipp2 = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed());
+            schipp2 = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
             try {
                 Controllers controller2 = new Controllers(schipp2, 1);
 

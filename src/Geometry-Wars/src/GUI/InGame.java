@@ -12,6 +12,7 @@ import javax.swing.Timer;
 
 import GComponents.*;
 import Game.Enemy;
+import Game.Upgrade;
 
 
 /**
@@ -316,7 +317,7 @@ public class InGame extends GPanel implements ActionListener {
         return pause;
     }
 
-    public void initGamePanel() {
+    public void initGamePanel() throws SQLException {
         setupGameTimer();
         gamePanel.setVisible(true);
         gamePanel.setCoop(coop);
@@ -376,7 +377,11 @@ public class InGame extends GPanel implements ActionListener {
             gamePanel.setFocusable(true);
             startGame.setVisible(false);
             pauze.setVisible(true);
-            initGamePanel();
+            try {
+                initGamePanel();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
             runGameLoop();
         } else if (source == Continue) {
             resumeGameLoop();
