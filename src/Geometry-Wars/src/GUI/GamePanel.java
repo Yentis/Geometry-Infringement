@@ -110,11 +110,13 @@ public class GamePanel extends GPanel {
         score = new GLabel("", 30f, 140, 65, 300, 60, false, Color.white);
 
         GLabel schipLvlp1 = new GLabel("Ship:", 24, 25, 667, 222, 62, false, new Color(50, 50, 255));
+
         GLabel droneLvlp1 = new GLabel("Drone:", 24, 275, 667, 222, 62, false, new Color(50, 50, 255));
         JLabel schipbarp1Pane = new GPane(100, 672, 150, 47);
         JLabel dronebarp1Pane = new GPane(375, 672, 150, 47);
         schipbarp1 = new GLabel("", 24, 100, 672, 100, 47, false, Color.black);
         dronebarp1 = new GLabel("", 24, 415, 672, 100, 47, false, Color.black);
+
         currentSchipXpBar = new JProgressBar();
         currentSchipXpBar.setBounds(100, 673, 0, 45);
         currentSchipXpBar.setBackground(new Color(50, 50, 255));
@@ -140,6 +142,7 @@ public class GamePanel extends GPanel {
         currentHealthBarp2.setBackground(new Color(0, 200, 0));
         currentHealthBarp2.setOpaque(true);
         scorep2.setHorizontalAlignment(SwingConstants.RIGHT);
+
         panel.add(combo);
         panel.add(score);
 
@@ -148,9 +151,11 @@ public class GamePanel extends GPanel {
         panel.add(currentSchipXpBar);
         panel.add(currentDroneXpBar);
         panel.add(currentHealthBar);
+
         panel.add(combop2);
         panel.add(scorep2);
         panel.add(currentHealthBarp2);
+
         panel.add(schipbarp1Pane);
         panel.add(dronebarp1Pane);
         panel.add(schipLvlp1);
@@ -531,7 +536,7 @@ public class GamePanel extends GPanel {
 
     private double updateHealthBar(Schip schip) {
         if (schip.getHp() >= 0) {
-            ratioHP = 425 / schip.getMaxhp();
+            ratioHP = 432 / schip.getMaxhp();
             healthBarWidth = ratioHP * schip.getHp();
         }
         return healthBarWidth;
