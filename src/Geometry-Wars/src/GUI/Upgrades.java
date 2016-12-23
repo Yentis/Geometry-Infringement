@@ -26,16 +26,17 @@ public class Upgrades extends GPanel {
 
     public Upgrades() throws IOException, FontFormatException {
 
-        initComponents();
+        //do not init
 
         // resize components according to frame size
-        resizeComponents(getWidth(), getHeight());
+        //resizeComponents(getWidth(), getHeight());
 
     }
 
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
+        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         //Make components
         //==================================================
 
@@ -43,6 +44,7 @@ public class Upgrades extends GPanel {
         JButton skins = new GButton("Skins", 18f, 205,690,133,35);
         JButton techTree = new GButton("Tech Tree", 18f, 365,690,287,35);
         JButton goldenNuggets = new GButton("Buy Golden Nuggets", 18f, 681,690,287,35);
+        JLabel message = new GLabel("Not enough nuggets.", 24f, 400, 42, 218, 74, false, Color.black);
         JLabel spaceShipPane = new GPane(52,138,287,535);
         JLabel dronePane = new GPane(365,138,287,534);
         JLabel firePane = new GPane(681,138,287,534);
@@ -81,6 +83,7 @@ public class Upgrades extends GPanel {
         JButton upgradeDrone3 = new GButton("",16f, 392,358,104,123);
 
         JButton upgradeFire1 = new GButton("", 16f, 704,218,104,123);
+        upgradeFire1.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(0).getFoto()));
         JButton upgradeFire2 = new GButton("", 16f, 841,218,104,123);
         JButton upgradeFire3 = new GButton("", 16f, 704,358,104,123);
 
@@ -96,6 +99,15 @@ public class Upgrades extends GPanel {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 window.getMainMenu().setVisible(true);
+            }
+        });
+
+        upgradeFire1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                if(window.getSpel().buyUpgrade()){
+                    upgradeFire1.setVisible(false);
+                }
             }
         });
 
@@ -136,6 +148,7 @@ public class Upgrades extends GPanel {
         panel.add(spaceShipPane);
         panel.add(dronePane);
         panel.add(firePane);
+        panel.add(message);
 
 
 

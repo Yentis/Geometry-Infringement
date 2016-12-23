@@ -26,7 +26,7 @@ public class Enemy extends Sprite {
     private int SCREEN_HEIGHT = 768;
     private Rectangle2D hpBar;
     private Rectangle2D maxHpBar;
-    private int maxHp = 100;
+    private int maxHp;
     private String imageString;
 
     //endregion
@@ -45,6 +45,7 @@ public class Enemy extends Sprite {
         this.speed = speed;
         this.experience = experience;
         this.score = score;
+        maxHp = hp;
 
         locationX = randomX();
         locationY = randomY();
