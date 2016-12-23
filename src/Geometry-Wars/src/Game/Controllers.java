@@ -70,7 +70,7 @@ public class Controllers implements Runnable {
                 final int[] ryAxis = {getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData())};
 
                 if (mousePressedTimer == null){
-                    mousePressedTimer = new Timer(50, new ActionListener() {
+                    mousePressedTimer = new Timer(100, new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             if(controller.getComponent(Identifier.Button._5).getPollData() != 0.0f){
