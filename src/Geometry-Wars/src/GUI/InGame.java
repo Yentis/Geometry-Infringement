@@ -190,14 +190,14 @@ public class InGame extends GPanel implements ActionListener {
         scorep2Background = new GLabel("Score:", 24, 580, 65, 169, 62, false, Color.cyan);
         schipLvlp2Background = new GLabel("Ship:", 20, 600, 680, 222, 62, false, Color.green);
         droneLvlp2Background = new GLabel("Drone:", 20, 800, 680, 222, 62, false, new Color(155, 255, 204));
-        healthbarp2Background = new GLabel("", 24, 570, 23, 434, 47, true, Color.black);
+        healthbarp2Background = new GLabel("", 24, 570, 23, 410, 47, true, Color.black);
         dronebarp2Background = new GLabel("", 20, 880, 695, 125, 35, true, Color.black);
         schipbarp2BackGround = new GLabel("", 20, 660, 695, 125, 35, true, Color.black);
 
         //single player
         GLabel healthp1Background = new GLabel("Health:", 24, 40, 18, 169, 62, false, Color.black);
         GLabel scorep1Background = new GLabel("Score:", 24, 25, 65, 169, 62, false, Color.cyan);
-        GLabel healthbarp1Background = new GLabel("", 24, 15, 23, 434, 47, true, Color.black);
+        GLabel healthbarp1Background = new GLabel("", 24, 15, 23, 410, 47, true, Color.black);
         //GLabel dronebarp1Background = new GLabel("", 24, 380, 672, 70, 47, true, Color.black);
         //GLabel schipbarp1BackGround = new GLabel("", 24, 140, 672, 100, 47, true, Color.black);
         healthbarp1Background.setBackground(new Color(255, 255, 255, 95));

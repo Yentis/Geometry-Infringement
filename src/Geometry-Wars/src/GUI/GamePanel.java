@@ -623,7 +623,6 @@ public class GamePanel extends GPanel {
     private void checkDeadShip() {
         if (coop) {
             if (schip != null && schip.getHp() <= 0) {
-                System.out.println("schip hp: " + schip.getHp());
                 schip = null;
             }
             if (schipp2 != null && schipp2.getHp() <= 0) {
@@ -717,7 +716,7 @@ public class GamePanel extends GPanel {
 
         spawnTimer = new Timer(7000, new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { System.out.println("enemy spawned size :" + enemyOnField.size());
+            public void actionPerformed(ActionEvent e) {
                 if (enemyOnField.isEmpty()) {
 
                     if (enemyCounter % 20 == 0) {
