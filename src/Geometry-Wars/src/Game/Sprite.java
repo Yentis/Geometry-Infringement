@@ -189,7 +189,7 @@ public class Sprite {
         } else {
             this.getHitBox().setRect(this.getCurrentLocation().getX(), this.getCurrentLocation().getY(), this.getWidth(), this.getHeight());
         }
-        g2d.draw(this.getHitBox());
+       // g2d.draw(this.getHitBox());
     }
 
     public void setImage(Image image) {

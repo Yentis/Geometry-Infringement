@@ -34,7 +34,6 @@ public class GamePanel extends GPanel {
     private ArrayList<Enemy> enemyOnField = new ArrayList<Enemy>();
     private List<Enemy> enemies = new ArrayList<>();
     private int enemyCounter;
-    private Timer hpRegenTimer;
     private Timer spawnTimer;
     private Timer invulnerabilityTimer;
     private Timer slowerEnemiesTimer;
@@ -44,10 +43,14 @@ public class GamePanel extends GPanel {
     private GLabel scorep2;
     private GLabel schipbarp1;
     private GLabel dronebarp1;
+    private GLabel schipbarp2;
+    private GLabel dronebarp2;
     private JProgressBar currentSchipXpBar;
     private JProgressBar currentDroneXpBar;
     private JProgressBar currentHealthBar;
     private JProgressBar currentHealthBarp2;
+    private JProgressBar currentSchipXpBarp2;
+    private JProgressBar currentDroneXpBarp2;
     private double healthBarWidth;
     private double healthBarWidthp2;
     private double xpBarWidthSchip;
@@ -70,10 +73,6 @@ public class GamePanel extends GPanel {
         spawnEnemies();
         initGamePanel();
         initComponents();
-        setHpRegenTimer(schip);
-        if(coop){
-            setHpRegenTimer(schipp2);
-        }
     }
 
     public int getScore() {
@@ -115,13 +114,16 @@ public class GamePanel extends GPanel {
         combo = new GLabel("", 24f, 30, 620, 200, 60, false, Color.white);
         score = new GLabel("", 30f, 140, 65, 300, 60, false, Color.white);
 
-        GLabel schipLvlp1 = new GLabel("Ship:", 24, 25, 667, 222, 62, false, new Color(50, 50, 255));
+        GLabel schipLvlp1 = new GLabel("Ship:", 20, 25, 680, 222, 62, false, Color.green);
 
-        GLabel droneLvlp1 = new GLabel("Drone:", 24, 275, 667, 222, 62, false, new Color(50, 50, 255));
-        JLabel schipbarp1Pane = new GPane(100, 672, 150, 47);
-        JLabel dronebarp1Pane = new GPane(375, 672, 150, 47);
-        schipbarp1 = new GLabel("", 24, 100, 672, 100, 47, false, Color.black);
-        dronebarp1 = new GLabel("", 24, 415, 672, 100, 47, false, Color.black);
+        GLabel droneLvlp1 = new GLabel("Drone:", 20, 250, 680, 222, 62, false, new Color(155, 255, 204));
+        JLabel schipbarp1Pane = new GPane(100, 695, 125, 35);
+        JLabel dronebarp1Pane = new GPane(350, 695, 125, 35);
+        schipbarp1 = new GLabel("", 20, 100, 690, 100, 47, false, Color.black);
+        dronebarp1 = new GLabel("", 20, 350, 690, 100, 47, false, Color.black);
+
+        schipbarp2 = new GLabel("", 20, 880, 695, 125, 35, true, Color.black);
+
 
         currentSchipXpBar = new JProgressBar();
         currentSchipXpBar.setBounds(100, 673, 0, 45);
@@ -141,7 +143,7 @@ public class GamePanel extends GPanel {
 
         //Add components to panel
 
-        combop2 = new GLabel("", 36f, 580, 620, 100, 60, false, Color.white);
+        combop2 = new GLabel("", 24f, 920, 620, 100, 60, false, Color.white);
         scorep2 = new GLabel("", 30f, 950, 65, 300, 60, false, Color.white);
         currentHealthBarp2 = new JProgressBar();
         currentHealthBarp2.setBounds(575, 27, 0, 40);
@@ -213,6 +215,7 @@ public class GamePanel extends GPanel {
         setInvulnerabilityTimer(schip);
 
 
+
         schip = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
         //Controllers controller = new Controllers(schip, 0);
 
@@ -221,6 +224,9 @@ public class GamePanel extends GPanel {
         schip.setDrone(drone);
         if (schip.getUpgrades().contains(1)) {
             hpRegenTimer.start();
+        }
+        if (schip.getUpgrades().contains(2)){
+            schip.setSpeed(5);
         }
         if (coop) {
             //set layouts
@@ -262,7 +268,7 @@ public class GamePanel extends GPanel {
 
     public void resumeGame() {
         spawnTimer.start();
-        hpRegenTimer.stop();
+        hpRegenTimer.start();
     }
 
 
@@ -627,18 +633,6 @@ public class GamePanel extends GPanel {
         });
     }
 
-    private void setHpRegenTimer(Schip schip){
-        hpRegenTimer = new Timer(5000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("hey");
-                if (schip.getHp() < schip.getMaxhp()){
-                    schip.addHp(2);
-                }
-            }
-        });
-    }
-
     private void setUpShootingDroneTimer(Drone drone) {
         if (!schip.isNull()) {
             shootingDroneTimer = new Timer(drone.getFireSpeed(), new ActionListener() {
@@ -696,9 +690,19 @@ public class GamePanel extends GPanel {
                         enemyCounter++;
                     }
                 }
+              //  if(schip)
 
+               if(coop){
+
+               }
             }
         });
+    }
+
+    private void healthRegen(Schip schip){
+        if (schip.getHp() < schip.getMaxhp()){
+            schip.addHp(2);
+        }
     }
     //endregion
 
