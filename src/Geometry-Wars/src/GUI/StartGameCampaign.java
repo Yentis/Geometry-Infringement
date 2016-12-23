@@ -40,7 +40,11 @@ public class StartGameCampaign extends GPanel {
 
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
         JLabel labelDrone = new GLabel("Choose drone: ", 18, 500,250,200,50,false, Color.white);
+<<<<<<< HEAD
         String[] drones = new String[3];
+=======
+        String[] drones = new String[4];
+>>>>>>> origin/master
 
         try {
             upgradeList = window.getSpel().checkUpgrades();
