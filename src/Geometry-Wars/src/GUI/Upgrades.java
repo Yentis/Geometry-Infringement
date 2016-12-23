@@ -14,6 +14,7 @@ import javax.swing.*;
 
 import GComponents.*;
 import Game.Upgrade;
+import Game.Speler;
 
 
 /**
@@ -42,6 +43,7 @@ public class Upgrades extends GPanel {
     public void initComponents() throws IOException, FontFormatException {
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         List<Integer> upgradeList = new ArrayList<>();
+        Speler speler = window.getSpel().getSpeler();
         //Make components
         //==================================================
 
@@ -49,6 +51,8 @@ public class Upgrades extends GPanel {
         JButton skins = new GButton("Skins", 18f, 205,690,133,35);
         JButton techTree = new GButton("Tech Tree", 18f, 365,690,287,35);
         JButton goldenNuggets = new GButton("Buy Golden Nuggets", 18f, 681,690,287,35);
+        JLabel lblNuggets = new GLabel("Nuggets: ", 18f, 52,60,150,35, false, Color.white);
+        JLabel nuggets = new GLabel("" + speler.getNuggets(), 18f, 200,60,150,35, false, Color.white);
         JLabel message = new GLabel("", 24f, 365, 82, 290, 74, false, Color.white);
         JLabel spaceShipPane = new GPane(52,138,287,535);
         JLabel dronePane = new GPane(365,138,287,534);
@@ -56,7 +60,7 @@ public class Upgrades extends GPanel {
         JLabel spaceShip = new GLabel("Spaceship", 16f, 151,149,100,28, false, Color.black );
         JLabel drone = new GLabel("Drone", 16f, 482,149,87,28, false, Color.black );
         JLabel fire = new GLabel("fire", 16f, 807,149,87,28, false, Color.black );
-        JLabel upgradesPane = new GPane(368,10,287,98);
+        JLabel upgradesPane = new GPane(365,10,287,98);
         JLabel upgrades = new GLabel("Upgrades", 36f, 400,22,218,74, false, Color.black);
 
         /*
@@ -112,20 +116,20 @@ public class Upgrades extends GPanel {
         for (int i:upgradeList) {
             switch (i){
                 case 1:
-                    upgradeFire1.setVisible(false);
+                    upgradeFire1.setEnabled(false);
                     break;
                 case 2:
-                    upgradeShip1.setVisible(false);
+                    upgradeShip1.setEnabled(false);
                     break;
                 case 3:
-                    upgradeShip2.setVisible(false);
+                    upgradeShip2.setEnabled(false);
                     break;
                 case 4:
                 case 5:
                 case 6:
-                    upgradeDrone1.setVisible(false);
-                    upgradeDrone2.setVisible(false);
-                    upgradeDrone3.setVisible(false);
+                    upgradeDrone1.setEnabled(false);
+                    upgradeDrone2.setEnabled(false);
+                    upgradeDrone3.setEnabled(false);
                     break;
             }
         }
@@ -222,6 +226,8 @@ public class Upgrades extends GPanel {
         //Add Components
         //==================================================
         panel.add(back);
+        panel.add(nuggets);
+        panel.add(lblNuggets);
         panel.add(upgrades);
         panel.add(upgradesPane);
         panel.add(skins);
