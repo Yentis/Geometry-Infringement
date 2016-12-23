@@ -8,11 +8,23 @@ import javax.sound.sampled.LineEvent.*;
 /**
  * Created by Yentl-PC on 23/12/2016.
  */
-public class Sound {
+public class Sound implements Runnable{
     private String location;
+
+    public void run() {
+        try {
+            playSound();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        }
+    }
 
     public Sound(String location){
         this.location = location;
+
+        (new Thread(this)).start();
     }
 
     class AudioListener implements LineListener {

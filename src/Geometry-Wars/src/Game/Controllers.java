@@ -58,67 +58,70 @@ public class Controllers implements Runnable {
     private void startShowingControllerData(int index){
         while(true){
             // Currently selected controller.
-            Controller controller = foundControllers.get(index);
+            try{
+                Controller controller = foundControllers.get(index);
 
-            if( !controller.poll() ){
-                break;
-            }
-
-            // X axis and Y axis
-            final int[] rxAxis = {getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData())};
-            final int[] ryAxis = {getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData())};
-
-            if (mousePressedTimer == null){
-            mousePressedTimer = new Timer(50, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if(controller.getComponent(Identifier.Button._5).getPollData() != 0.0f){
-
-                        rxAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData());
-                        ryAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData());
-
-                        schip.controllerAim(rxAxis[0] * 10.24, ryAxis[0] * 7.68);
-                    }
+                if( !controller.poll() ){
+                    break;
                 }
-            });
-            }else{
-                mousePressedTimer.start();
-            }
+
+                // X axis and Y axis
+                final int[] rxAxis = {getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData())};
+                final int[] ryAxis = {getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData())};
+
+                if (mousePressedTimer == null){
+                    mousePressedTimer = new Timer(50, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            if(controller.getComponent(Identifier.Button._5).getPollData() != 0.0f){
+
+                                rxAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData());
+                                ryAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData());
+
+                                schip.controllerAim(rxAxis[0] * 10.24, ryAxis[0] * 7.68);
+                            }
+                        }
+                    });
+                }else{
+                    mousePressedTimer.start();
+                }
 
 
 
-            int xAxis = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.X).getPollData());
-            int yAxis = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.Y).getPollData());
+                int xAxis = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.X).getPollData());
+                int yAxis = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.Y).getPollData());
 
-            // X axis
-            if(xAxis <= 35){
-                //Pointing left
-                schip.controllerPressed(81);
-            } else if (xAxis >= 65){
-                //Pointing right
-                schip.controllerPressed(68);
-            } else {
-                schip.controllerReleased(81);
-                schip.controllerReleased(68);
-            }
+                // X axis
+                if(xAxis <= 35){
+                    //Pointing left
+                    schip.controllerPressed(81);
+                } else if (xAxis >= 65){
+                    //Pointing right
+                    schip.controllerPressed(68);
+                } else {
+                    schip.controllerReleased(81);
+                    schip.controllerReleased(68);
+                }
 
-            // Y axis
-            if(yAxis <= 35){
-                //Pointing up
-                schip.controllerPressed(90);
-            } else if (yAxis >= 65){
-                //Pointing down
-                schip.controllerPressed(83);
-            } else {
-                schip.controllerReleased(90);
-                schip.controllerReleased(83);
-            }
+                // Y axis
+                if(yAxis <= 35){
+                    //Pointing up
+                    schip.controllerPressed(90);
+                } else if (yAxis >= 65){
+                    //Pointing down
+                    schip.controllerPressed(83);
+                } else {
+                    schip.controllerReleased(90);
+                    schip.controllerReleased(83);
+                }
 
-            // We have to give processor some rest.
-            try {
-                Thread.sleep(25);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                // We have to give processor some rest.
+                try {
+                    Thread.sleep(25);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } catch (IndexOutOfBoundsException e){
             }
         }
     }

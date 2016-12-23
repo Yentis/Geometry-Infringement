@@ -62,6 +62,7 @@ public class GamePanel extends GPanel {
     private boolean coop;
     private boolean gameFinished;
     private Timer shootingDroneTimer;
+    private boolean soundExecuted;
 
 
     public GamePanel(List<Enemy> enemies) throws IOException, FontFormatException {
@@ -270,10 +271,10 @@ public class GamePanel extends GPanel {
             try {
                 Controllers controller2 = new Controllers(schipp2, 1);
 
-            } catch (NullPointerException e) {
+            } catch (IndexOutOfBoundsException e) {
                 try {
                     Controllers controller2 = new Controllers(schipp2, 0);
-                } catch (NullPointerException ef) {
+                } catch (IndexOutOfBoundsException ef) {
 
                 }
             }
@@ -639,13 +640,23 @@ public class GamePanel extends GPanel {
 
     private void checkGameFinished() throws IOException, UnsupportedAudioFileException {
         if (coop) {
+            if(schip == null && !soundExecuted){
+                Sound sound = new Sound("resources/Sound/playerdeath.wav");
+                soundExecuted = true;
+            }
+
+            if (schipp2 == null && !soundExecuted){
+                Sound sound = new Sound("resources/Sound/playerdeath.wav");
+                soundExecuted = true;
+            }
+
             if (schip == null && schipp2 == null) {
+                Sound sound = new Sound("resources/Sound/playerdeath.wav");
                 gameFinished = true;
             }
         } else {
             if (schip.getHp() <= 0) {
                 Sound sound = new Sound("resources/Sound/playerdeath.wav");
-                sound.playSound();
                 gameFinished = true;
             }
         }
