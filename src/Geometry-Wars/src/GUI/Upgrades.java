@@ -125,10 +125,12 @@ public class Upgrades extends GPanel {
                     upgradeShip2.setEnabled(false);
                     break;
                 case 4:
-                case 5:
-                case 6:
                     upgradeDrone1.setEnabled(false);
+                    break;
+                case 5:
                     upgradeDrone2.setEnabled(false);
+                    break;
+                case 6:
                     upgradeDrone3.setEnabled(false);
                     break;
             }
@@ -258,7 +260,7 @@ public class Upgrades extends GPanel {
     private void buyUpgrade(GUI.Window window, Upgrade upgrade, JLabel message, JButton button){
         try {
             if(window.getSpel().buyUpgrade(upgrade.getKost(), (upgrade.getNr() + 1))){
-                button.setVisible(false);
+                button.setEnabled(false);
                 message.setText("Upgrade purchased.");
             } else {
                 message.setText("Not enough nuggets.");
