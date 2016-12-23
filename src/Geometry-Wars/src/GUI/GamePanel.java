@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -54,9 +55,7 @@ public class GamePanel extends GPanel {
     private double healthBarWidth;
     private double healthBarWidthp2;
     private double xpBarWidthSchip;
-    private double xpBarWidthSchipp2;
     private double xpBarWidthDrone;
-    private double xpBarWidthDronep2;
     private double ratioHP;
     private double ratioSchipXP;
     private double ratioDroneXp;
@@ -539,8 +538,11 @@ public class GamePanel extends GPanel {
             approachShip();
             if (schip != null) {
                 schip.updateBuffs();
-                if (drone != null){
+                if (drone != null && Objects.equals(drone.getNaam(), "Attack Drone")){
                     updateKogels(drone.getKogels(), schip);
+                    currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, drone), currentDroneXpBar.getHeight());
+                } else if (drone != null && Objects.equals(drone.getNaam(), "Defense Drone")){
+                    collisionDrone(drone);
                     currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, drone), currentDroneXpBar.getHeight());
                 }
                 schip.beweegSchip();
@@ -568,7 +570,7 @@ public class GamePanel extends GPanel {
                 updateKogels(schipp2.getKogels(), schipp2);
                 if(dronep2 != null){
                     updateKogels(dronep2.getKogels(), schipp2);
-                    currentDroneXpBarp2.setSize((int) updateDroneXpBar(xpBarWidthDronep2, dronep2), currentDroneXpBarp2.getHeight());
+                    currentDroneXpBarp2.setSize((int) updateDroneXpBar(xpBarWidthDrone, dronep2), currentDroneXpBarp2.getHeight());
                 }
                 schipp2.beweegSchip();
                 if (schipp2.getInvulnerability().isActive()) {
@@ -581,7 +583,7 @@ public class GamePanel extends GPanel {
                 combop2.setText("x " + schipp2.getCombo());
                 scorep2.setText("" + schipp2.getScore());
                 currentHealthBarp2.setSize((int) updateHealthBar(schipp2), currentHealthBarp2.getHeight());
-                currentSchipXpBarp2.setSize((int) updateSchipXpBar(xpBarWidthSchipp2, schipp2), currentSchipXpBarp2.getHeight());
+                currentSchipXpBarp2.setSize((int) updateSchipXpBar(xpBarWidthSchip, schipp2), currentSchipXpBarp2.getHeight());
             }
         }
     }
