@@ -415,7 +415,10 @@ public class GamePanel extends GPanel {
                     if (enemy.getHP() <= 0) {
 
                         enemyIterator.remove();
-                        schip.addCombo();
+                        if (schip.getCombo() < 999){
+                            schip.addCombo();
+                        }
+
                         if (kogels == schip.getDrone().getKogels()) {
                             schip.getDrone().addCurrentXp(enemy.getExperience());
                             drone.checkLevel();
