@@ -256,11 +256,14 @@ public class GamePanel extends GPanel {
             drawDrone(g, drone, schip);
             drawEnemy(g);
             drawBuffs(g, schip, schipbarp1);
-            if (coop) {
-                drawBullets(g, schipp2.getKogels(), schipp2);
-                drawBullets(g, dronep2.getKogels(), schipp2);
-                drawShip(g, schipp2);
-                drawDrone(g, dronep2, schipp2);
+            if (coop && schipp2 != null) {
+
+                    drawBullets(g, schipp2.getKogels(), schipp2);
+                    drawBullets(g, dronep2.getKogels(), schipp2);
+                    drawShip(g, schipp2);
+                    drawDrone(g, dronep2, schipp2);
+
+
             }
 
         }
@@ -332,6 +335,7 @@ public class GamePanel extends GPanel {
             Enemy enemy = iterator.next();
             enemy.drawHPBar(g2d);
             if (coop) {
+
                 enemy.draw(g2d, enemy.getDirection(closestShip(enemy).getCurrentLocation(), enemy.getCurrentLocation()));
             } else {
                 enemy.draw(g2d, enemy.getDirection(schip.getCurrentLocation(), enemy.getCurrentLocation()));
@@ -361,13 +365,18 @@ public class GamePanel extends GPanel {
     //region closestTarget
     private Schip closestShip(Enemy enemy) {
         //berekent distance tussen 2 points
-        int distancep1 = (int) (enemy.getCurrentLocation().distanceSq(schip.getCurrentLocation()));
-        int distancep2 = (int) (enemy.getCurrentLocation().distanceSq(schipp2.getCurrentLocation()));
-
-        if (distancep1 < distancep2) {
-            return schip;
-        } else {
+        if (schip != null && schipp2 != null) {
+            int distancep1 = (int) (enemy.getCurrentLocation().distanceSq(schip.getCurrentLocation()));
+            int distancep2 = (int) (enemy.getCurrentLocation().distanceSq(schipp2.getCurrentLocation()));
+            if (distancep1 < distancep2) {
+                return schip;
+            } else {
+                return schipp2;
+            }
+        } else if (schip == null) {
             return schipp2;
+        } else {
+            return schip;
         }
     }
 
@@ -402,11 +411,11 @@ public class GamePanel extends GPanel {
                         enemyIterator.remove();
                         schip.addCombo();
                         if (kogels == schip.getDrone().getKogels()) {
-                            schip.getDrone().addCurrentXp(100);
+                            schip.getDrone().addCurrentXp(enemy.getExperience());
                             drone.checkLevel();
                             //currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, enemy.getHitter()), currentDroneXpBar.getHeight());
                         } else if (kogels == schip.getKogels()) {
-                            schip.addCurrentXp(100);
+                            schip.addCurrentXp(enemy.getExperience());
                             schip.checkLevel();
                             //currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, enemy.getHitter()), currentSchipXpBar.getHeight());
                             schip.checkForUpgrade(schip.getCombo());
@@ -434,7 +443,12 @@ public class GamePanel extends GPanel {
         for (Enemy enemy : enemyOnField) {
             schip.getSlowEnemies().doFunction(enemy);
             if (coop) {
-                enemy.updateLocation(closestShip(enemy).getCurrentLocation(), enemy.getCurrentLocation(), enemy.getSpeed());
+                if (schip != null || schipp2 != null) {
+                    enemy.updateLocation(closestShip(enemy).getCurrentLocation(), enemy.getCurrentLocation(), enemy.getSpeed());
+                } else {
+                    enemy.updateLocation(schip.getCurrentLocation(), enemy.getCurrentLocation(), enemy.getSpeed());
+                }
+
             } else {
                 enemy.updateLocation(schip.getCurrentLocation(), enemy.getCurrentLocation(), enemy.getSpeed());
             }
@@ -448,34 +462,34 @@ public class GamePanel extends GPanel {
     //updates the "updates" region
     public void update() {
         checkDeadShip();
-        if (schip != null) {
+        if (schip != null || schipp2 != null) {
             checkGameFinished();
-            schip.updateBuffs();
-            updateKogels(schip.getKogels(), schip);
-            updateKogels(drone.getKogels(), schip);
             approachShip();
-            schip.beweegSchip();
+            if (schip != null){
+                schip.updateBuffs();
+                schip.beweegSchip();
+                updateKogels(schip.getKogels(), schip);
+                updateKogels(drone.getKogels(), schip);
+                if (schip.getInvulnerability().isActive()) {
 
+                    invulnerabilityTimer.start();
+                }
+                if (schip.getSlowEnemies().isActive()) {
+                    //System.out.println("slower enemies");
 
-            if (schip.getInvulnerability().isActive()) {
+                    slowerEnemiesTimer.start();
+                }
+                combo.setText("x " + schip.getCombo());
+                score.setText("" + schip.getScore());
+                currentHealthBar.setSize((int) updateHealthBar(schip), currentHealthBar.getHeight());
+                currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, schip), currentSchipXpBar.getHeight());
+                currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, drone), currentDroneXpBar.getHeight());
 
-                invulnerabilityTimer.start();
+                combo.setText("x " + schip.getCombo());
+                score.setText("" + schip.getScore());
+                currentHealthBar.setSize((int) updateHealthBar(schip), currentHealthBar.getHeight());
+                currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, schip), currentSchipXpBar.getHeight());
             }
-            if (schip.getSlowEnemies().isActive()) {
-                //System.out.println("slower enemies");
-
-                slowerEnemiesTimer.start();
-            }
-            combo.setText("x " + schip.getCombo());
-            score.setText("" + schip.getScore());
-            currentHealthBar.setSize((int) updateHealthBar(schip), currentHealthBar.getHeight());
-            currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, schip), currentSchipXpBar.getHeight());
-            currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, drone), currentDroneXpBar.getHeight());
-
-            combo.setText("x " + schip.getCombo());
-            score.setText("" + schip.getScore());
-            currentHealthBar.setSize((int) updateHealthBar(schip), currentHealthBar.getHeight());
-            currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, schip), currentSchipXpBar.getHeight());
         }
         if (coop && schipp2 != null) {
             checkDeadShip();
@@ -494,7 +508,6 @@ public class GamePanel extends GPanel {
                 combop2.setText("x " + schipp2.getCombo());
                 scorep2.setText("" + schipp2.getScore());
                 currentHealthBarp2.setSize((int) updateHealthBar(schipp2), currentHealthBarp2.getHeight());
-                System.out.println("healbarsize p2: " + currentHealthBarp2.isVisible());
 
             }
 
@@ -507,11 +520,11 @@ public class GamePanel extends GPanel {
                 System.out.println("schip hp: " + schip.getHp());
                 schip = null;
             }
-            if ( schipp2 != null && schipp2.getHp() <= 0) {
+            if (schipp2 != null && schipp2.getHp() <= 0) {
                 schipp2 = null;
             }
-            if (schip == null) {
-                System.out.println("schip died");
+            if (schip == null && schipp2 == null) {
+               gameFinished = true;
             }
         }
     }
@@ -526,7 +539,7 @@ public class GamePanel extends GPanel {
 
     private void checkGameFinished() {
         if (coop) {
-            if (schip.getHp() <= 0 && schipp2.getHp() <= 0) {
+            if (schip == null && schipp2 == null) {
                 gameFinished = true;
             }
         } else {
@@ -649,29 +662,32 @@ public class GamePanel extends GPanel {
     private class TAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
+            if (schip != null) {
+                schip.keyPressed(e);
 
-            schip.keyPressed(e);
+            }
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
-            schip.keyReleased(e);
+            if (schip != null) {
+                schip.keyReleased(e);
+            }
         }
+
     }
+        private class MAdapter extends MouseAdapter {
 
-    private class MAdapter extends MouseAdapter {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                schip.mousePressed(e);
+            }
 
-        @Override
-        public void mousePressed(MouseEvent e) {
-            schip.mousePressed(e);
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                schip.mouseReleased(e);
+            }
         }
 
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            schip.mouseReleased(e);
-        }
+        //endregion
     }
-
-    //endregion
-
-}
