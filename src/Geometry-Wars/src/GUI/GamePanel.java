@@ -34,7 +34,6 @@ public class GamePanel extends GPanel {
     private ArrayList<Enemy> enemyOnField = new ArrayList<Enemy>();
     private List<Enemy> enemies = new ArrayList<>();
     private int enemyCounter;
-    private Timer hpRegenTimer;
     private Timer spawnTimer;
     private Timer invulnerabilityTimer;
     private Timer slowerEnemiesTimer;
@@ -72,10 +71,6 @@ public class GamePanel extends GPanel {
         requestFocus();
         setDoubleBuffered(true);
         spawnEnemies();
-        setHpRegenTimer(schip);
-        if(coop){
-            setHpRegenTimer(schipp2);
-        }
         initGamePanel();
         initComponents();
     }
@@ -516,7 +511,6 @@ public class GamePanel extends GPanel {
 
     //updates the "updates" region
     public void update() throws IOException, UnsupportedAudioFileException {
-        System.out.println(schip.getHp());
         checkDeadShip();
         if (schip != null || schipp2 != null) {
             checkGameFinished();
@@ -643,18 +637,6 @@ public class GamePanel extends GPanel {
                 schip.getSlowEnemies().setActive(false);
                 slowerEnemiesTimer.stop();
 
-            }
-        });
-    }
-
-    private void setHpRegenTimer(Schip schip){
-        hpRegenTimer = new Timer(5000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (schip.getHp() < 100){
-                    schip.addHp(2);
-
-                }
             }
         });
     }
