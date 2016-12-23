@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import java.util.List;
-import java.util.Random;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -35,6 +34,7 @@ public class GamePanel extends GPanel {
     private ArrayList<Enemy> enemyOnField = new ArrayList<Enemy>();
     private List<Enemy> enemies = new ArrayList<>();
     private int enemyCounter;
+    private Timer hpRegenTimer;
     private Timer spawnTimer;
     private Timer invulnerabilityTimer;
     private Timer slowerEnemiesTimer;
@@ -68,6 +68,7 @@ public class GamePanel extends GPanel {
         requestFocus();
         setDoubleBuffered(true);
         spawnEnemies();
+        setHpRegenTimer();
         initGamePanel();
         initComponents();
     }
@@ -199,6 +200,9 @@ public class GamePanel extends GPanel {
         enemyCounter = 1;
         gameFinished = false;
         spawnTimer.start();
+        if (isHpRegenUpgrade()) {
+            hpRegenTimer.start();
+        }
         Schip dummy = window.getSpel().getSchepen().get(0);
 
         //TODO: player can chose which drone he want
@@ -247,10 +251,12 @@ public class GamePanel extends GPanel {
 
     public void pauseGame() {
         spawnTimer.stop();
+        hpRegenTimer.stop();
     }
 
     public void resumeGame() {
         spawnTimer.start();
+        hpRegenTimer.stop();
     }
 
 
@@ -416,7 +422,10 @@ public class GamePanel extends GPanel {
                     if (enemy.getHP() <= 0) {
 
                         enemyIterator.remove();
-                        schip.addCombo();
+                        if (schip.getCombo() < 999){
+                            schip.addCombo();
+                        }
+
                         if (kogels == schip.getDrone().getKogels()) {
                             schip.getDrone().addCurrentXp(enemy.getExperience());
                             drone.checkLevel();
@@ -588,6 +597,7 @@ public class GamePanel extends GPanel {
 
 
     //region Timers
+
     public void setInvulnerabilityTimer(Schip schip) {
         invulnerabilityTimer = new Timer(5000, new ActionListener() {
             @Override
@@ -607,6 +617,17 @@ public class GamePanel extends GPanel {
                 schip.getSlowEnemies().setActive(false);
                 slowerEnemiesTimer.stop();
 
+            }
+        });
+    }
+
+    private void  setHpRegenTimer(){
+        hpRegenTimer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (schip.getHp() < schip.getMaxhp()){
+                    schip.addHp(2);
+                }
             }
         });
     }
