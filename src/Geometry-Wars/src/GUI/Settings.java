@@ -36,35 +36,37 @@ public class Settings extends GPanel {
     public void initComponents() throws IOException, FontFormatException {
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         String[] difficulties = {"Hard", "Normal", "Easy"};
-
+        String[] inputs = {"Keyboard + Mouse", "Controller"};
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
         GLabel message = new GLabel("", 24f, 240,120,600,50, false, Color.white);
         GLabel lbldifficulty = new GLabel("Difficulty: ", 24f, 220,170,150,50, false, Color.white);
         JComboBox<String> difficulty = new JComboBox<String>(difficulties);
-        GButton set = new GButton("Set", 24f, 650,170,170,50);
+        GLabel lblInput = new GLabel("Input: ", 24f,220,230, 150,50, false, Color.white );
+        JComboBox<String> input = new JComboBox<String>(inputs);
+        GButton set = new GButton("Set", 24f, 720,170,100,50);
         GButton Back = new GButton("Back", 24f, 820,650, 170, 63);
-        JLabel backgroundpane = new GPane(220, 250, 600, 300);
-        GLabel controlLabel = new GLabel("Controls", 24f, 450,265,600,50, false, Color.white);
-        GLabel aim = new GLabel("Aim", 24f, 230,300,600,50, false, Color.white);
-        GLabel shoot = new GLabel("Shoot", 24f, 230,330,600,50, false, Color.white);
-        GLabel move = new GLabel("Move", 24f, 230,360,600,50, false, Color.white);
-        GLabel moveUp = new GLabel("Move up", 24f, 230,390,600,50, false, Color.white);
-        GLabel moveDown = new GLabel("Move down", 24f, 230,420,600,50, false, Color.white);
-        GLabel moveLeft = new GLabel("Move left", 24f, 230,450,600,50, false, Color.white);
-        GLabel moveRight = new GLabel("Move right", 24f, 230,480,600,50, false, Color.white);
-        GLabel aim2 = new GLabel("Mouse | Right joystick", 24f, 420,300,600,50, false, Color.white);
-        GLabel shoot2 = new GLabel("Mouse Click | R1", 24f, 420,330,600,50, false, Color.white);
-        GLabel move2 = new GLabel("Left joystick", 24f, 420,360,600,50, false, Color.white);
-        GLabel moveUp2 = new GLabel("Z", 24f, 420,390,600,50, false, Color.white);
-        GLabel moveDown2 = new GLabel("S", 24f, 420,420,600,50, false, Color.white);
-        GLabel moveLeft2 = new GLabel("Q", 24f, 420,450,600,50, false, Color.white);
-        GLabel moveRight2 = new GLabel("D", 24f, 420,480,600,50, false, Color.white);
+        JLabel backgroundpane = new GPane(220, 300, 600, 300);
+        GLabel controlLabel = new GLabel("Controls", 24f, 450,315,600,50, false, Color.white);
+        GLabel aim = new GLabel("Aim", 24f, 230,350,600,50, false, Color.white);
+        GLabel shoot = new GLabel("Shoot", 24f, 230,380,600,50, false, Color.white);
+        GLabel move = new GLabel("Move", 24f, 230,410,600,50, false, Color.white);
+        GLabel moveUp = new GLabel("Move up", 24f, 230,460,600,50, false, Color.white);
+        GLabel moveDown = new GLabel("Move down", 24f, 230,490,600,50, false, Color.white);
+        GLabel moveLeft = new GLabel("Move left", 24f, 230,520,600,50, false, Color.white);
+        GLabel moveRight = new GLabel("Move right", 24f, 230,550,600,50, false, Color.white);
+        GLabel aim2 = new GLabel("Mouse | Right joystick", 24f, 420,350,600,50, false, Color.white);
+        GLabel shoot2 = new GLabel("Mouse Click | R1", 24f, 420,380,600,50, false, Color.white);
+        GLabel move2 = new GLabel("Left joystick", 24f, 420,410,600,50, false, Color.white);
+        GLabel moveUp2 = new GLabel("Z", 24f, 420,460,600,50, false, Color.white);
+        GLabel moveDown2 = new GLabel("S", 24f, 420,490,600,50, false, Color.white);
+        GLabel moveLeft2 = new GLabel("Q", 24f, 420,520,600,50, false, Color.white);
+        GLabel moveRight2 = new GLabel("D", 24f, 420,550,600,50, false, Color.white);
 
 
         label.setOpaque(true);
         label.setFont(new GFont(65));
         label.setBackground(new Color(255,255,255,95));
-        difficulty.setFont(new GFont(24));
+        difficulty.setFont(new GFont(18));
         difficulty.setSelectedItem(window.getSpel().getCurrentDifficulty());
         message.setVisible(false);
 
@@ -72,12 +74,16 @@ public class Settings extends GPanel {
         backgroundpane.setBackground(new Color(0,0,0,150));
 
         label.setBounds(25,25,650,100);
-        difficulty.setBounds(420,170,150,50);
+        difficulty.setBounds(420,170,250,50);
+        input.setBounds(420,230,250,50);
+        input.setFont(new GFont(18));
 
         this.add(label);
         this.add(lbldifficulty);
+        this.add(lblInput);
         this.add(message);
         this.add(difficulty);
+        this.add(input);
         this.add(set);
         this.add(Back);
         this.add(message);
@@ -107,6 +113,7 @@ public class Settings extends GPanel {
                 List<Enemy> enemies = new ArrayList<>();
                 String currentDifficulty = window.getSpel().getCurrentDifficulty();
                 String selectedDifficulty = difficulty.getSelectedItem().toString();
+                String selectedInput = input.getSelectedItem().toString();
 
                 if(Objects.equals(currentDifficulty, selectedDifficulty)){
                     message.setText("Difficulty set.");
