@@ -94,13 +94,16 @@ public class Upgrades extends GPanel {
         JButton upgradeShip3 = new GButton("",16f,75,368,104,123);
 
         JButton upgradeDrone1 = new GButton("", 16f, 392,218,104,123);
-        upgradeShip2.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(3).getFoto()));
+        System.out.println("Drone 1: " + window.getSpel().getUpgrades().get(3).getFoto());
+        upgradeDrone1.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(3).getFoto()));
         JLabel upgradeDrone1Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(3).getKost()), 16f, 407,143,104,123, false, Color.black);
         JButton upgradeDrone2 = new GButton("",16f, 528,218,104,123);
-        upgradeShip2.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(4).getFoto()));
+        System.out.println("Drone 2: " + window.getSpel().getUpgrades().get(4).getFoto());
+        upgradeDrone2.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(4).getFoto()));
         JLabel upgradeDrone2Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(4).getKost()), 16f, 543,143,104,123, false, Color.black);
         JButton upgradeDrone3 = new GButton("",16f, 392,368,104,123);
-        upgradeShip2.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(5).getFoto()));
+        System.out.println("Drone 3: " + window.getSpel().getUpgrades().get(5).getFoto());
+        upgradeDrone3.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(5).getFoto()));
         JLabel upgradeDrone3Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(5).getKost()), 16f, 407,293,104,123, false, Color.black);
 
         JButton upgradeFire1 = new GButton("", 16f, 704,218,104,123);

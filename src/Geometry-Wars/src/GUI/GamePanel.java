@@ -54,7 +54,9 @@ public class GamePanel extends GPanel {
     private double healthBarWidth;
     private double healthBarWidthp2;
     private double xpBarWidthSchip;
+    private double xpBarWidthSchipp2;
     private double xpBarWidthDrone;
+    private double xpBarWidthDronep2;
     private double ratioHP;
     private double ratioSchipXP;
     private double ratioDroneXp;
@@ -103,9 +105,12 @@ public class GamePanel extends GPanel {
     }
 
     private void initTimers() {
+        if(drone != null && schip != null){
+            setUpShootingDroneTimer(drone);
+        }
         setSlowerEnemiesTimer(schip);
         setInvulnerabilityTimer(schip);
-        setUpShootingDroneTimer(drone);
+
     }
 
     @Override
@@ -225,7 +230,6 @@ public class GamePanel extends GPanel {
         Drone dummydr = null;
 
         //TODO: player can chose which drone he want
-        makeDrone(schip);
 
         requestFocus();
         setSlowerEnemiesTimer(schip);
@@ -296,15 +300,17 @@ public class GamePanel extends GPanel {
         }
         if (schip != null) {
             drawBullets(g, schip.getKogels(), schip);
-            drawBullets(g, drone.getKogels(), schip);
             drawShip(g, schip);
-            drawDrone(g, drone, schip);
             drawBuffs(g, schip, schipbarp1);
+        } else if (drone != null){
+            drawBullets(g, drone.getKogels(), schip);
+            drawDrone(g, drone, schip);
         }
         if (coop && schipp2 != null) {
             drawBullets(g, schipp2.getKogels(), schipp2);
-            drawBullets(g, dronep2.getKogels(), schipp2);
             drawShip(g, schipp2);
+        } else if (coop && dronep2 != null){
+            drawBullets(g, dronep2.getKogels(), schipp2);
             drawDrone(g, dronep2, schipp2);
         }
     }
@@ -453,7 +459,8 @@ public class GamePanel extends GPanel {
                             schip.addCombo();
                         }
 
-                        if (kogels == schip.getDrone().getKogels()) {
+
+                        if (drone != null && kogels == schip.getDrone().getKogels()) {
                             schip.getDrone().addCurrentXp(enemy.getExperience());
                             drone.checkLevel();
                             //currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, enemy.getHitter()), currentDroneXpBar.getHeight());
@@ -534,7 +541,6 @@ public class GamePanel extends GPanel {
                 schip.updateBuffs();
                 schip.beweegSchip();
                 updateKogels(schip.getKogels(), schip);
-                updateKogels(drone.getKogels(), schip);
                 if (schip.getInvulnerability().isActive()) {
 
                     invulnerabilityTimer.start();
@@ -544,16 +550,15 @@ public class GamePanel extends GPanel {
 
                     slowerEnemiesTimer.start();
                 }
-                combo.setText("x " + schip.getCombo());
-                score.setText("" + schip.getScore());
-                currentHealthBar.setSize((int) updateHealthBar(schip), currentHealthBar.getHeight());
-                currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, schip), currentSchipXpBar.getHeight());
-                currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, drone), currentDroneXpBar.getHeight());
 
                 combo.setText("x " + schip.getCombo());
                 score.setText("" + schip.getScore());
                 currentHealthBar.setSize((int) updateHealthBar(schip), currentHealthBar.getHeight());
                 currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, schip), currentSchipXpBar.getHeight());
+            }
+            if (drone != null){
+                updateKogels(drone.getKogels(), schip);
+                currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, drone), currentDroneXpBar.getHeight());
             }
         }
         if (coop && schipp2 != null) {
@@ -561,7 +566,6 @@ public class GamePanel extends GPanel {
             if (schipp2 != null) {
                 schipp2.updateBuffs();
                 updateKogels(schipp2.getKogels(), schipp2);
-                updateKogels(dronep2.getKogels(), schipp2);
                 schipp2.beweegSchip();
                 if (schipp2.getInvulnerability().isActive()) {
                     invulnerabilityTimer.start();
@@ -573,6 +577,11 @@ public class GamePanel extends GPanel {
                 combop2.setText("x " + schipp2.getCombo());
                 scorep2.setText("" + schipp2.getScore());
                 currentHealthBarp2.setSize((int) updateHealthBar(schipp2), currentHealthBarp2.getHeight());
+                currentSchipXpBarp2.setSize((int) updateSchipXpBar(xpBarWidthSchipp2, schipp2), currentSchipXpBarp2.getHeight());
+            }
+            if(dronep2 != null){
+                updateKogels(dronep2.getKogels(), schipp2);
+                currentDroneXpBarp2.setSize((int) updateDroneXpBar(xpBarWidthDronep2, dronep2), currentDroneXpBarp2.getHeight());
             }
         }
     }
@@ -637,7 +646,7 @@ public class GamePanel extends GPanel {
         invulnerabilityTimer = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!schip.isNull()) {
+                if (schip != null) {
                     schip.getInvulnerability().setActive(false);
                     invulnerabilityTimer.stop();
                 }
@@ -657,16 +666,14 @@ public class GamePanel extends GPanel {
     }
 
     private void setUpShootingDroneTimer(Drone drone) {
-        if (!schip.isNull()) {
-            shootingDroneTimer = new Timer(drone.getFireSpeed(), new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (!enemyOnField.isEmpty()) {
-                        drone.getKogels().add(new Kogel(drone.getCurrentLocation().getX(), drone.getCurrentLocation().getY(), closestEnemy(drone, enemyOnField), "resources/Media/kogel1.png"));
-                    }
+        shootingDroneTimer = new Timer(drone.getFireSpeed(), new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!enemyOnField.isEmpty()) {
+                    drone.getKogels().add(new Kogel(drone.getCurrentLocation().getX(), drone.getCurrentLocation().getY(), closestEnemy(drone, enemyOnField), "resources/Media/kogel1.png"));
                 }
-            });
-        }
+            }
+        });
     }
 
     public void spawnEnemies() {
