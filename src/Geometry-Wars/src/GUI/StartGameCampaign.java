@@ -56,7 +56,7 @@ public class StartGameCampaign extends GPanel {
                 case 4:
                 case 5:
                 case 6:
-                    drones[i] = window.getSpel().getUpgrades().get(j).getNaam();
+                    drones[i] = window.getSpel().getUpgrades().get(j-1).getNaam();
                     i++;
                     break;
             }

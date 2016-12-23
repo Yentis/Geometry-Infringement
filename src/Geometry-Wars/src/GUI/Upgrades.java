@@ -169,8 +169,6 @@ public class Upgrades extends GPanel {
                 Upgrade upgrade = window.getSpel().getUpgrades().get(3);
 
                 buyUpgrade(window, upgrade, message, upgradeDrone1);
-                upgradeDrone2.setVisible(false);
-                upgradeDrone3.setVisible(false);
             }
         });
 
@@ -180,8 +178,6 @@ public class Upgrades extends GPanel {
                 Upgrade upgrade = window.getSpel().getUpgrades().get(4);
 
                 buyUpgrade(window, upgrade, message, upgradeDrone2);
-                upgradeDrone1.setVisible(false);
-                upgradeDrone3.setVisible(false);
             }
         });
 
@@ -191,8 +187,6 @@ public class Upgrades extends GPanel {
                 Upgrade upgrade = window.getSpel().getUpgrades().get(5);
 
                 buyUpgrade(window, upgrade, message, upgradeDrone3);
-                upgradeDrone1.setVisible(false);
-                upgradeDrone2.setVisible(false);
             }
         });
 
