@@ -282,7 +282,7 @@ public class Schip extends Sprite {
     public void checkForUpgrade(int combo) {
         //TODO terugveranderen :p - Renzie dit is voor de upgrade arraylist check
         if (combo % 20 == 0) {
-            //Every 50 combo
+            //Every 20 combo
             invulnerability.setActive(true);
         } else if (combo % 50 == 0) {
             //Every 75 combo
