@@ -273,16 +273,7 @@ public class GamePanel extends GPanel {
             //set layouts
             showCoopUI();
             schipp2 = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
-            try {
-                Controllers controller2 = new Controllers(schipp2, 1);
-
-            } catch (IndexOutOfBoundsException e) {
-                try {
-                    Controllers controller2 = new Controllers(schipp2, 0);
-                } catch (IndexOutOfBoundsException ef) {
-
-                }
-            }
+            Controllers controller2 = new Controllers(schipp2, 1);
 
             dummydr = makeDrone(schipp2);
 
