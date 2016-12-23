@@ -235,8 +235,8 @@ public class Spel implements Cloneable{
         Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
 
-        int a = myStmt.executeUpdate("insert into speler (gebruikersnaam, wachtwoord, email, rank)" +
-                "values('" + gebruikersnaam +"', '" + wachtwoord + "', '" + email + "', 0)");
+        int a = myStmt.executeUpdate("insert into speler (gebruikersnaam, wachtwoord, email, rank, highscore)" +
+                "values('" + gebruikersnaam +"', '" + wachtwoord + "', '" + email + "', 'Bronze 1', 0)");
     }
 
     public String loginChecker(String gebruikersnaam, String wachtwoord) throws SQLException, NoSuchAlgorithmException, UnsupportedEncodingException {
