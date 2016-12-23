@@ -126,15 +126,15 @@ public class GamePanel extends GPanel {
         schipbarp1 = new GLabel("", 20, 100, 690, 100, 47, false, Color.black);
         dronebarp1 = new GLabel("", 20, 350, 690, 100, 47, false, Color.black);
 
-        schipbarp2 = new GLabel("", 20, 880, 695, 125, 35, true, Color.black);
+        schipbarp2 = new GLabel("", 20, 880, 695, 125, 35, false, Color.black);
 
-
+        //Schip 1
         currentSchipXpBar = new JProgressBar();
-        currentSchipXpBar.setBounds(100, 673, 0, 45);
+        currentSchipXpBar.setBounds(100, 695, 0, 35);
         currentSchipXpBar.setBackground(new Color(50, 50, 255));
         currentSchipXpBar.setOpaque(true);
         currentDroneXpBar = new JProgressBar();
-        currentDroneXpBar.setBounds(415, 673, 0, 45);
+        currentDroneXpBar.setBounds(415, 695, 0, 35);
         currentDroneXpBar.setBackground(new Color(50, 50, 255));
         currentDroneXpBar.setOpaque(true);
         currentHealthBar = new JProgressBar();
@@ -142,17 +142,28 @@ public class GamePanel extends GPanel {
         currentHealthBar.setBackground(new Color(0, 200, 0));
         currentHealthBar.setOpaque(true);
 
+        //Schip 2
+        currentHealthBarp2 = new JProgressBar();
+        currentHealthBarp2.setBounds(575, 27, 0, 40);
+        currentHealthBarp2.setBackground(new Color(0, 200, 0));
+        currentHealthBarp2.setOpaque(true);
+        currentDroneXpBarp2 = new JProgressBar();
+        currentDroneXpBarp2.setBounds(880, 695, 0, 35);
+        currentDroneXpBarp2.setBackground(new Color(50, 50, 255));
+        currentDroneXpBarp2.setOpaque(true);
+        currentSchipXpBarp2 = new JProgressBar();
+        currentSchipXpBarp2.setBounds(660, 695, 0, 35);
+        currentSchipXpBarp2.setBackground(new Color(50, 50, 255));
+        currentSchipXpBarp2.setOpaque(true);
+
         //score rechts uitlijnen
         score.setHorizontalAlignment(SwingConstants.RIGHT);
 
         //Add components to panel
 
         combop2 = new GLabel("", 24f, 920, 620, 100, 60, false, Color.white);
-        scorep2 = new GLabel("", 30f, 950, 65, 300, 60, false, Color.white);
-        currentHealthBarp2 = new JProgressBar();
-        currentHealthBarp2.setBounds(575, 27, 0, 40);
-        currentHealthBarp2.setBackground(new Color(0, 200, 0));
-        currentHealthBarp2.setOpaque(true);
+        scorep2 = new GLabel("", 30f, 700, 65, 300, 60, false, Color.white);
+
         scorep2.setHorizontalAlignment(SwingConstants.RIGHT);
 
         panel.add(combo);
@@ -167,6 +178,8 @@ public class GamePanel extends GPanel {
         panel.add(combop2);
         panel.add(scorep2);
         panel.add(currentHealthBarp2);
+        panel.add(currentDroneXpBarp2);
+        panel.add(currentSchipXpBarp2);
 
         panel.add(schipbarp1Pane);
         panel.add(dronebarp1Pane);
@@ -235,6 +248,7 @@ public class GamePanel extends GPanel {
         setInvulnerabilityTimer(schip);
 
         schip = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
+
         //Controllers controller = new Controllers(schip, 0);
 
         dummydr = makeDrone(schip);
@@ -462,11 +476,9 @@ public class GamePanel extends GPanel {
                         if (drone != null && kogels == schip.getDrone().getKogels()) {
                             schip.getDrone().addCurrentXp(enemy.getExperience());
                             drone.checkLevel();
-                            //currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, enemy.getHitter()), currentDroneXpBar.getHeight());
                         } else if (kogels == schip.getKogels()) {
                             schip.addCurrentXp(enemy.getExperience());
                             schip.checkLevel();
-                            //currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, enemy.getHitter()), currentSchipXpBar.getHeight());
                             schip.checkForUpgrade(schip.getCombo());
                             if (schip.getActiveDrone().isActive()) {
                                 shootingDroneTimer.start();
@@ -484,6 +496,7 @@ public class GamePanel extends GPanel {
             Kogel k = kogelIterator.next();
             if (k.isHit()) {
                 kogelIterator.remove();
+
             }
         }
     }
@@ -492,6 +505,8 @@ public class GamePanel extends GPanel {
         for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ){
             Enemy enemy = enemyIterator.next();
             if (drone.collisionDetect(enemy.getHitBox())){
+                System.out.println("hi");
+                drone.addCurrentXp(enemy.getExperience());
                 enemyIterator.remove();
             }
         }
@@ -584,6 +599,9 @@ public class GamePanel extends GPanel {
                 scorep2.setText("" + schipp2.getScore());
                 currentHealthBarp2.setSize((int) updateHealthBar(schipp2), currentHealthBarp2.getHeight());
                 currentSchipXpBarp2.setSize((int) updateSchipXpBar(xpBarWidthSchip, schipp2), currentSchipXpBarp2.getHeight());
+                currentDroneXpBarp2.setSize((int) updateDroneXpBar(xpBarWidthDrone, dronep2), currentDroneXpBarp2.getHeight());
+                schipbarp2.setText("lvl: " +  schipp2.getLevel());
+                //dronebarp2.setText("lvl: " +  schipp2.getDrone().getLevel());
             }
         }
     }
@@ -627,7 +645,7 @@ public class GamePanel extends GPanel {
 
 
     private double updateSchipXpBar(double xpBarWidthSchip, Schip schip) {
-        ratioSchipXP = 200 / schip.getMaxXp();
+        ratioSchipXP = 100 / schip.getMaxXp();
         xpBarWidthSchip = ratioSchipXP * schip.getCurrentXp();
         schipbarp1.setText(" lvl: " + schip.getLevel());
         return xpBarWidthSchip;
@@ -635,7 +653,7 @@ public class GamePanel extends GPanel {
     }
 
     private double updateDroneXpBar(double xpBarWidthDrone, Drone drone) {
-        ratioDroneXp = 200 / drone.getMaxXp();
+        ratioDroneXp = 100 / drone.getMaxXp();
         xpBarWidthDrone = ratioDroneXp * drone.getCurrentXp();
         dronebarp1.setText(" lvl: " + drone.getLevel());
         return xpBarWidthDrone;

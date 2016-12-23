@@ -119,6 +119,7 @@ public class Upgrades extends GPanel {
                     break;
                 case 3:
                     upgradeShip2.setVisible(false);
+                    break;
                 case 4:
                 case 5:
                 case 6:
