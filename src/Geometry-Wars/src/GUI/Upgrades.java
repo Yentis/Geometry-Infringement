@@ -104,6 +104,7 @@ public class Upgrades extends GPanel {
         if(upgradeList.contains(1)){
             upgradeFire1.setVisible(false);
         } else if (upgradeList.contains(2)){
+            upgradeShip1.setVisible(false);
         }
 
         //==================================================
@@ -126,7 +127,7 @@ public class Upgrades extends GPanel {
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 Upgrade upgrade = window.getSpel().getUpgrades().get(1);
 
-                buyUpgrade(window, upgrade, upgradeShip1);
+                buyUpgrade(window, upgrade, message, upgradeShip1);
             }
         });
 
@@ -135,7 +136,7 @@ public class Upgrades extends GPanel {
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 Upgrade upgrade = window.getSpel().getUpgrades().get(0);
 
-                buyUpgrade(window, upgrade, upgradeFire1);
+                buyUpgrade(window, upgrade, message, upgradeFire1);
             }
         });
 
@@ -185,19 +186,16 @@ public class Upgrades extends GPanel {
 
     }
 
-    private String buyUpgrade(GUI.Window window, Upgrade upgrade, JButton button){
-        String message = "";
+    private void buyUpgrade(GUI.Window window, Upgrade upgrade, JLabel message, JButton button){
         try {
             if(window.getSpel().buyUpgrade(upgrade.getKost(), (upgrade.getNr() + 1))){
                 button.setVisible(false);
-                message = "Upgrade purchased.";
+                message.setText("Upgrade purchased.");
             } else {
-                message = "Not enough nuggets.";
+                message.setText("Not enough nuggets.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return message;
     }
 }
