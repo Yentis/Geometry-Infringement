@@ -48,6 +48,10 @@ public class Upgrade {
         return nr;
     }
 
+    public String getNaam() {
+        return naam;
+    }
+
     // public boolean isActive() {
    //     return active;
    // }

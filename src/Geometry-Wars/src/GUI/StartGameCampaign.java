@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.MalformedURLException;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -21,13 +24,15 @@ public class StartGameCampaign extends GPanel {
     public StartGameCampaign() throws MalformedURLException, IOException, FontFormatException {
 
        
-        initComponents();
+        //do not init
 
 
     }
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
+        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+        List<Integer> upgradeList = new ArrayList<>();
         JButton Continue = new GButton("Continue", 24f, 150,230,300,80);
         JButton NewCampaign = new GButton("New Campaign", 24f, 200,350,350,80);
         JButton ClearCampaign = new GButton("Clear Campaign", 24f, 250,470,350,80);
@@ -35,9 +40,29 @@ public class StartGameCampaign extends GPanel {
 
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
         JLabel labelDrone = new GLabel("Chose drone: ", 18, 500,250,200,50,false, Color.white);
-        String[] drones = {"Attack Drone", "Defense Drone","Experience Drone"};
-        JComboBox<String> choseDrone = new JComboBox<String>(drones);
+        String[] drones = new String[3];
 
+        try {
+            upgradeList = window.getSpel().checkUpgrades();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        drones[0] = "";
+
+        int i = 1;
+        for (int j:upgradeList) {
+            switch (j){
+                case 4:
+                case 5:
+                case 6:
+                    drones[i] = window.getSpel().getUpgrades().get(j).getNaam();
+                    i++;
+                    break;
+            }
+        }
+
+        JComboBox<String> chooseDrone = new JComboBox<String>(drones);
 
         //props
         label.setOpaque(true);
@@ -48,13 +73,13 @@ public class StartGameCampaign extends GPanel {
         ClearCampaign.setBackground(new Color(255,255,255,200));
 
         Back.setBackground(new Color(255,255,255,200));
-        choseDrone.setFont(new GFont(18));
+        chooseDrone.setFont(new GFont(18));
         //Bounds
         label.setBounds(25,25,650,100);
-        choseDrone.setBounds(650,250,200,50);
+        chooseDrone.setBounds(650,250,200,50);
 
         this.add(labelDrone);
-        this.add(choseDrone);
+        this.add(chooseDrone);
         this.add(Continue);
         this.add(NewCampaign);
         this.add(ClearCampaign);
@@ -78,6 +103,17 @@ public class StartGameCampaign extends GPanel {
                 window.getInGame().getGameEnd().setVisible(false);
                 window.getInGame().getPause().setVisible(false);
                 window.getInGame().setCoop(false);
+            }
+        });
+        chooseDrone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+                if(chooseDrone.getSelectedItem() == null){
+                    window.getSpel().getSpeler().setActiveDrone("");
+                } else {
+                    window.getSpel().getSpeler().setActiveDrone(chooseDrone.getSelectedItem().toString());
+                }
+                System.out.println("Drone: " + window.getSpel().getSpeler().getActiveDrone());
             }
         });
     }

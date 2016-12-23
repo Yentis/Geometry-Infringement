@@ -92,6 +92,8 @@ public class GamePanel extends GPanel {
     public void resetGame() {
         schip = null;
         schipp2 = null;
+        drone = null;
+        dronep2 = null;
     }
 
     private void initGamePanel() {
@@ -222,11 +224,11 @@ public class GamePanel extends GPanel {
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         Drone dummydr = null;
 
-        if(schip.getUpgrades().contains(4)){
+        if(Objects.equals(window.getSpel().getSpeler().getActiveDrone(), "Defense Drone")){
             dummydr = window.getSpel().getDrones().get(0);
-        } else if (schip.getUpgrades().contains(5)){
+        } else if (Objects.equals(window.getSpel().getSpeler().getActiveDrone(), "Experience Drone")){
             dummydr = window.getSpel().getDrones().get(1);
-        } else if (schip.getUpgrades().contains(6)){
+        } else if (Objects.equals(window.getSpel().getSpeler().getActiveDrone(), "Attack Drone")){
             dummydr = window.getSpel().getDrones().get(2);
         }
 

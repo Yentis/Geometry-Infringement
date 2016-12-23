@@ -15,7 +15,7 @@ public class Speler {
     private int nuggets = 0;
     private int gnuggets = 0;
     private int highscore = 0;
-    private String standardDrone = "none";
+    private String activeDrone = "";
     //endregion
 
     //region Constructors
@@ -92,14 +92,15 @@ public class Speler {
         this.rank = rank;
     }
 
-    public String getStandardDrone() {
-        return standardDrone;
+    public String getActiveDrone() {
+        return activeDrone;
     }
 
-    public void setStandardDrone(String standardDrone) {
-        this.standardDrone = standardDrone;
+    public void setActiveDrone(String activeDrone) {
+        this.activeDrone = activeDrone;
     }
-//endregion
+
+    //endregion
 
     //region Behaviour
 
