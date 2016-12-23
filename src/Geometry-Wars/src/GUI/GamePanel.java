@@ -472,6 +472,16 @@ public class GamePanel extends GPanel {
         }
     }
 
+    private void collisionDrone(Drone drone){
+        for (Iterator<Enemy> enemyIterator = enemyOnField.iterator(); enemyIterator.hasNext(); ){
+            Enemy enemy = enemyIterator.next();
+            if (drone.collisionDetect(enemy.getHitBox())){
+                enemyIterator.remove();
+            }
+        }
+    }
+
+
     private void approachShip() {
         for (Enemy enemy : enemyOnField) {
             if (coop) {
@@ -554,9 +564,7 @@ public class GamePanel extends GPanel {
                 combop2.setText("x " + schipp2.getCombo());
                 scorep2.setText("" + schipp2.getScore());
                 currentHealthBarp2.setSize((int) updateHealthBar(schipp2), currentHealthBarp2.getHeight());
-
             }
-
         }
     }
 
