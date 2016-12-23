@@ -207,11 +207,11 @@ public class GamePanel extends GPanel {
         Drone dummydr = null;
 
         if(schip.getUpgrades().contains(4)){
-            dummydr = window.getSpel().getDrones().get(1);
+            dummydr = window.getSpel().getDrones().get(0);
         } else if (schip.getUpgrades().contains(5)){
-            dummydr = window.getSpel().getDrones().get(2);
+            dummydr = window.getSpel().getDrones().get(1);
         } else if (schip.getUpgrades().contains(6)){
-            dummydr = window.getSpel().getDrones().get(3);
+            dummydr = window.getSpel().getDrones().get(2);
         }
 
         return dummydr;
@@ -240,11 +240,10 @@ public class GamePanel extends GPanel {
 
         dummydr = makeDrone(schip);
 
-        if (drone != null){
+        if (dummydr != null){
             drone = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
+            schip.setDrone(drone);
         }
-
-        schip.setDrone(drone);
 
         if (schip.getUpgrades().contains(2)){
             schip.setSpeed(5);
@@ -266,7 +265,7 @@ public class GamePanel extends GPanel {
 
             dummydr = makeDrone(schipp2);
 
-            if (dronep2 != null){
+            if (dummydr != null){
                 dronep2 = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
                 schipp2.setDrone(dronep2);
             }
@@ -302,7 +301,8 @@ public class GamePanel extends GPanel {
             drawBullets(g, schip.getKogels(), schip);
             drawShip(g, schip);
             drawBuffs(g, schip, schipbarp1);
-        } else if (drone != null){
+        }
+        if (drone != null){
             drawBullets(g, drone.getKogels(), schip);
             drawDrone(g, drone, schip);
         }
@@ -539,6 +539,10 @@ public class GamePanel extends GPanel {
             approachShip();
             if (schip != null) {
                 schip.updateBuffs();
+                if (drone != null){
+                    updateKogels(drone.getKogels(), schip);
+                    currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, drone), currentDroneXpBar.getHeight());
+                }
                 schip.beweegSchip();
                 updateKogels(schip.getKogels(), schip);
                 if (schip.getInvulnerability().isActive()) {
@@ -556,16 +560,16 @@ public class GamePanel extends GPanel {
                 currentHealthBar.setSize((int) updateHealthBar(schip), currentHealthBar.getHeight());
                 currentSchipXpBar.setSize((int) updateSchipXpBar(xpBarWidthSchip, schip), currentSchipXpBar.getHeight());
             }
-            if (drone != null){
-                updateKogels(drone.getKogels(), schip);
-                currentDroneXpBar.setSize((int) updateDroneXpBar(xpBarWidthDrone, drone), currentDroneXpBar.getHeight());
-            }
         }
         if (coop && schipp2 != null) {
             checkDeadShip();
             if (schipp2 != null) {
                 schipp2.updateBuffs();
                 updateKogels(schipp2.getKogels(), schipp2);
+                if(dronep2 != null){
+                    updateKogels(dronep2.getKogels(), schipp2);
+                    currentDroneXpBarp2.setSize((int) updateDroneXpBar(xpBarWidthDronep2, dronep2), currentDroneXpBarp2.getHeight());
+                }
                 schipp2.beweegSchip();
                 if (schipp2.getInvulnerability().isActive()) {
                     invulnerabilityTimer.start();
@@ -578,10 +582,6 @@ public class GamePanel extends GPanel {
                 scorep2.setText("" + schipp2.getScore());
                 currentHealthBarp2.setSize((int) updateHealthBar(schipp2), currentHealthBarp2.getHeight());
                 currentSchipXpBarp2.setSize((int) updateSchipXpBar(xpBarWidthSchipp2, schipp2), currentSchipXpBarp2.getHeight());
-            }
-            if(dronep2 != null){
-                updateKogels(dronep2.getKogels(), schipp2);
-                currentDroneXpBarp2.setSize((int) updateDroneXpBar(xpBarWidthDronep2, dronep2), currentDroneXpBarp2.getHeight());
             }
         }
     }
