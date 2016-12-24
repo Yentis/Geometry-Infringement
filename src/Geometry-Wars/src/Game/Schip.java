@@ -268,10 +268,9 @@ public class Schip extends Sprite {
 
     public void addCombo() {
         combo += 1;
-        addScore(100, combo);
     }
 
-    private void addScore(int enemyscore, int combo) {
+    public void addScore(int enemyscore, int combo) {
         score = enemyscore * combo;
         score = adjustScore(score);
     }

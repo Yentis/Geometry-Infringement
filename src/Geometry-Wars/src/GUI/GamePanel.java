@@ -463,21 +463,22 @@ class GamePanel extends GPanel {
                         enemyIterator.remove();
                         if (schip.getCombo() < 999) {
                             schip.addCombo();
+                            schip.addScore(enemy.getScore(), schip.getCombo());
                         }
 
-                        if (drone != null && kogels == schip.getDrone().getKogels()) {
+                        if (schip.getDrone() != null && kogels == schip.getDrone().getKogels()) {
                             if (Objects.equals(drone.getNaam(), "Experience Drone")) {
                                 schip.addCurrentXp(enemy.getExperience());
                             } else {
                                 schip.getDrone().addCurrentXp(enemy.getExperience());
                             }
 
-                            drone.checkLevel();
+                            schip.getDrone().checkLevel();
                         } else if (kogels == schip.getKogels()) {
                             schip.addCurrentXp(enemy.getExperience());
                             schip.checkLevel();
                             schip.checkForUpgrade(schip.getCombo());
-                            if (schip.getActiveDrone().isActive()) {
+                            if (schip.getDrone() != null && schip.getActiveDrone().isActive()) {
                                 shootingDroneTimer.start();
                             }
                         }
@@ -772,7 +773,7 @@ class GamePanel extends GPanel {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            int delay = 150;
+            int delay = 50;
             ActionListener taskPerformer = e1 -> schip.mousePressed(mouseLocation);
 
             if (mousePressedTimer == null) {
