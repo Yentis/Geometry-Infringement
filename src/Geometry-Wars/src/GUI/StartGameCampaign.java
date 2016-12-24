@@ -1,15 +1,11 @@
 package GUI;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
-import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import GComponents.GButton;
 import GComponents.GFont;
 import GComponents.GLabel;
@@ -18,12 +14,14 @@ import GComponents.GPanel;
 /**
  * Created by Laurens Visser on 9/11/2016.
  */
-public class StartGameCampaign extends GPanel {
+class StartGameCampaign extends GPanel {
+    //region Instance Variables
+
     private StartGameCampaign panel = this;
 
-    public StartGameCampaign() throws IOException, FontFormatException {
-        //do not init
-    }
+    //endregion
+
+    //region Behaviour
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
@@ -85,34 +83,30 @@ public class StartGameCampaign extends GPanel {
         this.add(Back);
 
         //Action listeners
-        Back.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                panel.setVisible(false);
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                window.getStartGame().setVisible(true);
-            }
+        Back.addActionListener(evt -> {
+            panel.setVisible(false);
+            Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
+            window1.getStartGame().setVisible(true);
         });
-        Start.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                panel.setVisible(false);
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                window.getInGame().setVisible(true);
-                window.getInGame().getStartGame().setVisible(true);
-                window.getInGame().getGameEnd().setVisible(false);
-                window.getInGame().getPause().setVisible(false);
-                window.getInGame().setCoop(false);
-            }
+        Start.addActionListener(evt -> {
+            panel.setVisible(false);
+            Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
+            window1.getInGame().setVisible(true);
+            window1.getInGame().getStartGame().setVisible(true);
+            window1.getInGame().getGameEnd().setVisible(false);
+            window1.getInGame().getPause().setVisible(false);
+            window1.getInGame().setCoop(false);
         });
-        chooseDrone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                if(chooseDrone.getSelectedItem() == null){
-                    window.getSpel().getSpeler().setActiveDrone("");
-                } else {
-                    window.getSpel().getSpeler().setActiveDrone(chooseDrone.getSelectedItem().toString());
-                }
-                System.out.println("Drone: " + window.getSpel().getSpeler().getActiveDrone());
+        chooseDrone.addActionListener(evt -> {
+            Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
+            if(chooseDrone.getSelectedItem() == null){
+                window1.getSpel().getSpeler().setActiveDrone("");
+            } else {
+                window1.getSpel().getSpeler().setActiveDrone(chooseDrone.getSelectedItem().toString());
             }
+            System.out.println("Drone: " + window1.getSpel().getSpeler().getActiveDrone());
         });
     }
+
+    //endregion
 }

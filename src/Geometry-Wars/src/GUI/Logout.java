@@ -2,13 +2,9 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.FontFormatException;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.MalformedURLException;
-import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import GComponents.GButton;
 import GComponents.GFont;
 import GComponents.GLabel;
@@ -17,20 +13,26 @@ import GComponents.GPanel;
 /**
  * Created by Laurens Visser on 9/11/2016.
  */
-public class Logout extends GPanel {
+class Logout extends GPanel {
+    //region Instance Variables
+
     private Logout panel = this;
 
-    public Logout() throws MalformedURLException, IOException, FontFormatException {
+    //endregion
 
+    //region Constructors
 
+    Logout() throws IOException, FontFormatException {
         initComponents();
-
-
     }
+
+    //endregion
+
+    //region Behaviour
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
-
+        panel.removeAll();
 
         JLabel LoggedOut = new GLabel("You are now logged out.", 36f, 320, 370, 600, 62, false, Color.white);
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
@@ -48,22 +50,15 @@ public class Logout extends GPanel {
         this.add(Exit);
         this.add(Login);
 
-
         //Action listeners
+        Exit.addActionListener(evt -> System.exit(0));
 
-        Exit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                System.exit(0);
-            }
+        Login.addActionListener(evt -> {
+            panel.setVisible(false);
+            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+            window.getLogin().setVisible(true);
         });
-
-        Login.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                panel.setVisible(false);
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                window.getLogin().setVisible(true);
-            }
-        });
-
     }
+
+    //endregion
 }

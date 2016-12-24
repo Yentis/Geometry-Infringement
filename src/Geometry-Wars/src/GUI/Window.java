@@ -1,20 +1,17 @@
 package GUI;
 
 import Game.Spel;
-import com.mysql.jdbc.CommunicationsException;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Objects;
 
 /**
  * Created by Renzie on 7/11/2016.
  */
 public class Window extends JFrame {
+    //region Instance Variables
 
-    // Panels
     private MainMenu mainMenu;
     private StartGame startGame;
     private Profile profile;
@@ -27,18 +24,13 @@ public class Window extends JFrame {
     private Settings settings;
     private Highscores highscores;
     private static Spel spel = null;
-
-    //Game
-
-
-
     private Container cp = getContentPane();
 
-    // this
-    private Window frame = this;
+    //endregion
+
+    //region Constructors
 
     public Window(String title) throws IOException, FontFormatException {
-
         // Set Window size and stuff
         this.setTitle(title);
         this.setPreferredSize(new Dimension(1024, 768));
@@ -59,15 +51,65 @@ public class Window extends JFrame {
         this.setVisible(true);
 
         pack();
-
     }
 
-    public static void main(String args[]) throws IOException, FontFormatException, SQLException, InterruptedException {
-        new Window("Geometry Wars");
-    }
+    //endregion
+
+    //region Getters & Setters
 
     public Spel getSpel() {
         return spel;
+    }
+
+    StartGame getStartGame() {
+        return startGame;
+    }
+
+    MainMenu getMainMenu() {
+        return mainMenu;
+    }
+
+    StartGameCampaign getStartGameCampaign() {
+        return startGameCampaign;
+    }
+
+    Profile getProfile() {
+        return profile;
+    }
+
+    Logout getLogout() {
+        return logout;
+    }
+
+    Login getLogin() {
+        return login;
+    }
+
+    InGame getInGame() {return inGame;}
+
+    Register getRegister() {
+        return register;
+    }
+
+    Settings getSettings() {
+        return settings;
+    }
+
+    Highscores getHighScores() {
+        return highscores;
+    }
+
+    Upgrades getUpgrades() {
+        return upgrades;
+
+    }
+
+    //endregion
+
+    //region Behaviour
+
+    public static void main(String args[]) throws IOException, FontFormatException, SQLException, InterruptedException {
+        new Window("Geometry Wars");
     }
 
     // Set Background
@@ -81,12 +123,12 @@ public class Window extends JFrame {
         bg.setVisible(true);
     }
 
-
-
-    public void initPanels() throws IOException, FontFormatException {
+    private void initPanels() throws IOException, FontFormatException {
         // Make UI panels
         login = new Login();
         cp.add(login);
+
+        //Try to contact database
         try {
             spel = new Spel();
 
@@ -113,7 +155,6 @@ public class Window extends JFrame {
             cp.add(settings);
             cp.add(highscores);
 
-
             // Set all panels invisible except the starting panel
             mainMenu.setVisible(false);
             startGame.setVisible(false);
@@ -130,49 +171,5 @@ public class Window extends JFrame {
         }
     }
 
-
-    // Getters
-    public StartGame getStartGame() {
-        return startGame;
-    }
-
-    public MainMenu getMainMenu() {
-        return mainMenu;
-    }
-
-    public StartGameCampaign getStartGameCampaign() {
-        return startGameCampaign;
-    }
-
-    public Profile getProfile() {
-        return profile;
-    }
-
-    public Logout getLogout() {
-        return logout;
-    }
-
-    public Login getLogin() {
-        return login;
-    }
-
-    public InGame getInGame() {return inGame;}
-
-    public Register getRegister() {
-        return register;
-    }
-
-    public Settings getSettings() {
-        return settings;
-    }
-
-
-    public Highscores getHighScores() {
-        return highscores;
-    }
-
-    public Upgrades getUpgrades() {
-        return upgrades;
-
-    }
+    //endregion
 }

@@ -4,17 +4,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.sql.SQLException;
-import java.util.*;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.Timer;
 
 import GComponents.*;
 import Game.Enemy;
-import Game.Upgrade;
-
 
 /**
  * Created by Laurens Visser on 9/11/2016.

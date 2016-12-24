@@ -1,59 +1,42 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import GComponents.*;
-import Game.Spel;
-
 import java.awt.Color;
 import java.awt.FontFormatException;
-import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.MalformedURLException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Objects;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
  *
  * @author Renzie
  */
-public class Login extends GPanel{
+class Login extends GPanel{
+    //region Instance Variables
     
     private Login panel = this;
-    private String errormessage = "";
 
-    public Login() throws MalformedURLException, IOException, FontFormatException {
+    //endregion
 
+    //region Constructors
+
+    Login() throws IOException, FontFormatException {
         initComponents();
-      
     }
 
-    public void setMessage(String message) {
-        errormessage = message;
-    }
+    //endregion
 
-    public String getMessage() {
-        return errormessage;
-    }
+    //region Behaviour
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
+        panel.removeAll();
 
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
-        GLabel message = new GLabel(errormessage, 24f, 220,120,600,50, false, Color.white);
+        GLabel message = new GLabel("", 24f, 220,120,600,50, false, Color.white);
         GLabel lblusername = new GLabel("Username: ", 24f, 200,170,150,50, false, Color.white);
         GLabel lblpassword = new GLabel("Password: ", 24f, 200,240,150,50, false, Color.white);
         GInputField username = new GInputField(360,170,200,50);
@@ -79,70 +62,48 @@ public class Login extends GPanel{
         this.add(message);
 
         //Action Listeners
-        password.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginButton.doClick();
-            }
+        password.addActionListener(evt -> loginButton.doClick());
+
+        username.addActionListener(evt -> loginButton.doClick());
+
+        Exit.addActionListener(evt -> System.exit(0));
+
+        register.addActionListener(evt -> {
+            panel.setVisible(false);
+            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+            window.getRegister().setVisible(true);
         });
 
-        username.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginButton.doClick();
-            }
-        });
-
-        Exit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                System.exit(0);
-            }
-        });
-
-        register.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                panel.setVisible(false);
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                window.getRegister().setVisible(true);
-            }
-        });
-
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(Objects.equals(username.getText(), "")){
-                    message.setText("Please enter a username");
-                } else if (password.getPassword().length == 0){
-                    message.setText("Please enter a password");
-                } else {
-                    String result = null;
-                    try {
-                        result = checkAndCreate(username.getText(), password.getPassword());
-                    } catch (NoSuchAlgorithmException e1) {
-                        e1.printStackTrace();
-                    } catch (UnsupportedEncodingException e1) {
-                        e1.printStackTrace();
-                    } catch (SQLException e1) {
-                        e1.printStackTrace();
-                    }
-
-                    if(Objects.equals(result, "")){
-                        panel.setVisible(false);
-                        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                        window.getMainMenu().setVisible(true);
-                    } else if (result == null){
-                        message.setText("Database connection failed.");
-                    } else {
-                        message.setText(result + " is not correct.");
-                    }
+        loginButton.addActionListener(e -> {
+            if(Objects.equals(username.getText(), "")){
+                message.setText("Please enter a username");
+            } else if (password.getPassword().length == 0){
+                message.setText("Please enter a password");
+            } else {
+                String result = null;
+                try {
+                    result = checkAndCreate(username.getText(), password.getPassword());
+                } catch (NoSuchAlgorithmException | UnsupportedEncodingException | SQLException e1) {
+                    e1.printStackTrace();
                 }
-                message.setVisible(true);
-                errormessage = message.getText();
+
+                if(Objects.equals(result, "")){
+                    panel.setVisible(false);
+                    Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+                    window.getMainMenu().setVisible(true);
+                } else if (result == null){
+                    message.setText("Database connection failed.");
+                } else {
+                    message.setText(result + " is not correct.");
+                }
             }
+            message.setVisible(true);
         });
     }
 
     private String checkAndCreate(String gebruikersnaam, char[] password) throws NoSuchAlgorithmException, UnsupportedEncodingException, SQLException {
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-        String result = "";
+        String result;
 
         //hash
         MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -163,5 +124,5 @@ public class Login extends GPanel{
         return "";
     }
 
-
+    //endregion
 }

@@ -5,25 +5,31 @@ import java.awt.FontFormatException;
 import java.io.*;
 import java.sql.SQLException;
 import javax.swing.*;
-
 import GComponents.*;
 
 /**
  * Created by Laurens Visser on 9/11/2016.
  */
-public class StartGame extends GPanel {
+class StartGame extends GPanel {
+    //region Instance Variables
+
     private StartGame panel = this;
 
-    public StartGame() throws IOException, FontFormatException {
+    //endregion
+
+    //region Constructors
+
+    StartGame() throws IOException, FontFormatException {
         initComponents();
-        }
+    }
 
+    //endregion
 
+    //region Behaviour
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
-
-
+        panel.removeAll();
 
         JButton SoloGame = new GButton("Solo Game", 24f, 150,230,300,80);
         //JButton War = new GButton("War", 24f, 550,230,300,80);
@@ -45,13 +51,9 @@ public class StartGame extends GPanel {
         Back.setBackground(new Color(255,255,255,200));
         Highscores.setBackground(new Color(255,255,255,200));
 
-
-
-
         //Bounds
 
         label.setBounds(25,25,650,100);
-
 
         this.add(SoloGame);
         //this.add(War);
@@ -63,52 +65,47 @@ public class StartGame extends GPanel {
 
         //ActionListeners
 
-        SoloGame.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                panel.setVisible(false);
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                try {
-                    window.getSpel().initDankabank();
-                    window.getStartGameCampaign().initComponents();
-                } catch (IOException | FontFormatException | SQLException e) {
-                    e.printStackTrace();
-                }
-                window.getStartGameCampaign().setVisible(true);
+        SoloGame.addActionListener(evt -> {
+            panel.setVisible(false);
+            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+            try {
+                window.getSpel().initDankabank();
+                window.getStartGameCampaign().initComponents();
+            } catch (IOException | FontFormatException | SQLException e) {
+                e.printStackTrace();
             }
+            window.getStartGameCampaign().setVisible(true);
         });
 
-        Coop.addActionListener(new java.awt.event.ActionListener(){
-            public void actionPerformed(java.awt.event.ActionEvent evt){
-                panel.setVisible(false);
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                window.getInGame().setCoop(true);
-                window.getInGame().getGameEnd().setVisible(false);
-                window.getInGame().getStartGame().setVisible(true);
-                window.getInGame().setVisible(true);
-                window.getInGame().getPause().setVisible(false);
-            }
+        Coop.addActionListener(evt -> {
+            panel.setVisible(false);
+            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+            window.getInGame().setCoop(true);
+            window.getInGame().getGameEnd().setVisible(false);
+            window.getInGame().getStartGame().setVisible(true);
+            window.getInGame().setVisible(true);
+            window.getInGame().getPause().setVisible(false);
         });
 
-        Back.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                panel.setVisible(false);
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                window.getMainMenu().setVisible(true);
-            }
+        Back.addActionListener(evt -> {
+            panel.setVisible(false);
+            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+            window.getMainMenu().setVisible(true);
         });
 
-        Highscores.addActionListener(new java.awt.event.ActionListener(){
-            public void actionPerformed(java.awt.event.ActionEvent evt){
-                panel.setVisible(false);
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+        Highscores.addActionListener(evt -> {
+            panel.setVisible(false);
+            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
 
-                try {
-                    window.getSpel().initDankabank();
-                    window.getHighScores().initComponents();
-                } catch (IOException | FontFormatException | SQLException e) {
-                    e.printStackTrace();
-                }
-                window.getHighScores().setVisible(true);
+            try {
+                window.getSpel().initDankabank();
+                window.getHighScores().initComponents();
+            } catch (IOException | FontFormatException | SQLException e) {
+                e.printStackTrace();
             }
+            window.getHighScores().setVisible(true);
         });
-    }}
+    }
+
+    //endregion
+}

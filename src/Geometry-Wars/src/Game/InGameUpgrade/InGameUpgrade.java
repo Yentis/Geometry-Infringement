@@ -1,7 +1,5 @@
 package Game.InGameUpgrade;
 
-import Game.Schip;
-
 import javax.swing.*;
 import java.awt.*;
 

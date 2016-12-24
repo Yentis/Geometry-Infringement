@@ -1,46 +1,44 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import GComponents.*;
 import Game.Spel;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 
 /**
  *
  * @author Yentl
  */
-public class Register extends GPanel {
+class Register extends GPanel {
+    //region Instance Variables
+
     private Register panel = this;
 
-    public Register() throws MalformedURLException, IOException, FontFormatException {
+    //endregion
 
+    //region Constructors
+
+    Register() throws IOException, FontFormatException {
         initComponents();
-
     }
+
+    //endregion
+
+    //region Behaviour
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
+        panel.removeAll();
+
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
         GButton register = new GButton("Register", 24f, 220,500,170,50);
         GButton Back = new GButton("Back", 24f, 635,650, 170, 63);
@@ -77,59 +75,46 @@ public class Register extends GPanel {
         this.add(Back);
 
         //Action Listeners
-        register.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(Objects.equals(username.getText(), "")){
-                    registered.setText("Please enter a username");
-                } else if (password.getPassword().length == 0){
-                    registered.setText("Please enter a password");
-                } else if (passwordconfirm.getPassword().length == 0){
-                    registered.setText("Please confirm your password");
-                } else if (Objects.equals(email.getText(), "")){
-                    registered.setText("Please enter your email address");
-                } else if (!Arrays.equals(password.getPassword(), passwordconfirm.getPassword())){
-                    registered.setText("Your passwords do not match, please try again");
-                } else {
-                    String result = null;
-                    try {
-                        result = checkAndCreate(username.getText(), password.getPassword(), email.getText());
-                    } catch (NoSuchAlgorithmException e1) {
-                        e1.printStackTrace();
-                    } catch (UnsupportedEncodingException e1) {
-                        e1.printStackTrace();
-                    } catch (SQLException e1) {
-                        e1.printStackTrace();
-                    }
-
-                    if(Objects.equals(result, "")){
-                        registered.setText("Registration Successful");
-                    } else {
-                        registered.setText(result + " already exists.");
-                    }
+        register.addActionListener(e -> {
+            if(Objects.equals(username.getText(), "")){
+                registered.setText("Please enter a username");
+            } else if (password.getPassword().length == 0){
+                registered.setText("Please enter a password");
+            } else if (passwordconfirm.getPassword().length == 0){
+                registered.setText("Please confirm your password");
+            } else if (Objects.equals(email.getText(), "")){
+                registered.setText("Please enter your email address");
+            } else if (!Arrays.equals(password.getPassword(), passwordconfirm.getPassword())){
+                registered.setText("Your passwords do not match, please try again");
+            } else {
+                String result = null;
+                try {
+                    result = checkAndCreate(username.getText(), password.getPassword(), email.getText());
+                } catch (NoSuchAlgorithmException | UnsupportedEncodingException | SQLException e1) {
+                    e1.printStackTrace();
                 }
-                registered.setVisible(true);
+
+                if(Objects.equals(result, "")){
+                    registered.setText("Registration Successful");
+                } else {
+                    registered.setText(result + " already exists.");
+                }
             }
+            registered.setVisible(true);
         });
 
-        Exit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                System.exit(0);
-            }
-        });
+        Exit.addActionListener(evt -> System.exit(0));
 
-        Back.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                panel.setVisible(false);
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                window.getLogin().setVisible(true);
-            }
+        Back.addActionListener(evt -> {
+            panel.setVisible(false);
+            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+            window.getLogin().setVisible(true);
         });
     }
 
     private String checkAndCreate(String gebruikersnaam, char[] password, String email) throws NoSuchAlgorithmException, UnsupportedEncodingException, SQLException {
         Spel spel = new Spel();
-        String result = "";
+        String result;
 
         //hash
         MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -142,7 +127,6 @@ public class Register extends GPanel {
 
         result = spel.infoChecker(gebruikersnaam, email);
 
-
         if(Objects.equals(result, "")){
             spel.registerPlayer(gebruikersnaam, hashed, email);
         } else {
@@ -150,4 +134,6 @@ public class Register extends GPanel {
         }
         return "";
     }
+
+    //endregion
 }

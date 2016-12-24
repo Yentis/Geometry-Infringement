@@ -1,42 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import GComponents.*;
 import Game.Speler;
-
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 /**
  * @author Renzie
  */
-public class Profile extends GPanel {
+class Profile extends GPanel {
+    //region Instance Variables
 
     private Profile panel = this;
 
-    public Profile() throws MalformedURLException, IOException, FontFormatException {
-        //do not init
-    }
+    //endregion
+
+    //region Behaviour
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
@@ -66,12 +49,10 @@ public class Profile extends GPanel {
 
         //Add Action Listener
         //==================================================
-        Back.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                panel.setVisible(false);
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                window.getMainMenu().setVisible(true);
-            }
+        Back.addActionListener(evt -> {
+            panel.setVisible(false);
+            Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
+            window1.getMainMenu().setVisible(true);
         });
         //==================================================
         //Add Components
@@ -88,5 +69,6 @@ public class Profile extends GPanel {
         this.add(Background);
         //==================================================
     }
-}
 
+    //endregion
+}

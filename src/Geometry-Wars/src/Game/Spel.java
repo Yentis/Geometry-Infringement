@@ -1,5 +1,5 @@
 package Game;
-;
+
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;

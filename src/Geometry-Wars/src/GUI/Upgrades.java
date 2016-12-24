@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import java.awt.*;
@@ -11,27 +6,21 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 import javax.swing.*;
-
 import GComponents.*;
 import Game.Upgrade;
 import Game.Speler;
 
-
 /**
  * @author Renzie
  */
-public class Upgrades extends GPanel {
+class Upgrades extends GPanel {
+    //region Instance Variables
 
     private Upgrades panel = this;
 
-    public Upgrades() throws IOException, FontFormatException {
+    //endregion
 
-        //do not init
-
-        // resize components according to frame size
-        //resizeComponents(getWidth(), getHeight());
-
-    }
+    //region Behaviour
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
@@ -136,66 +125,52 @@ public class Upgrades extends GPanel {
         //Add Action Listener
         //==================================================
 
-        back.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                panel.setVisible(false);
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                window.getMainMenu().setVisible(true);
-            }
+        back.addActionListener(evt -> {
+            panel.setVisible(false);
+            Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
+            window1.getMainMenu().setVisible(true);
         });
 
-        upgradeShip1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                Upgrade upgrade = window.getSpel().getUpgrades().get(1);
+        upgradeShip1.addActionListener(evt -> {
+            Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
+            Upgrade upgrade = window1.getSpel().getUpgrades().get(1);
 
-                buyUpgrade(window, upgrade, message, upgradeShip1, nuggets);
-            }
+            buyUpgrade(window1, upgrade, message, upgradeShip1, nuggets);
         });
 
-        upgradeShip2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                Upgrade upgrade = window.getSpel().getUpgrades().get(2);
+        upgradeShip2.addActionListener(evt -> {
+            Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
+            Upgrade upgrade = window1.getSpel().getUpgrades().get(2);
 
-                buyUpgrade(window, upgrade, message, upgradeShip2, nuggets);
-            }
+            buyUpgrade(window1, upgrade, message, upgradeShip2, nuggets);
         });
 
-        upgradeDrone1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                Upgrade upgrade = window.getSpel().getUpgrades().get(3);
+        upgradeDrone1.addActionListener(evt -> {
+            Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
+            Upgrade upgrade = window1.getSpel().getUpgrades().get(3);
 
-                buyUpgrade(window, upgrade, message, upgradeDrone1, nuggets);
-            }
+            buyUpgrade(window1, upgrade, message, upgradeDrone1, nuggets);
         });
 
-        upgradeDrone2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                Upgrade upgrade = window.getSpel().getUpgrades().get(4);
+        upgradeDrone2.addActionListener(evt -> {
+            Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
+            Upgrade upgrade = window1.getSpel().getUpgrades().get(4);
 
-                buyUpgrade(window, upgrade, message, upgradeDrone2, nuggets);
-            }
+            buyUpgrade(window1, upgrade, message, upgradeDrone2, nuggets);
         });
 
-        upgradeDrone3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                Upgrade upgrade = window.getSpel().getUpgrades().get(5);
+        upgradeDrone3.addActionListener(evt -> {
+            Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
+            Upgrade upgrade = window1.getSpel().getUpgrades().get(5);
 
-                buyUpgrade(window, upgrade, message, upgradeDrone3, nuggets);
-            }
+            buyUpgrade(window1, upgrade, message, upgradeDrone3, nuggets);
         });
 
-        upgradeFire1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                Upgrade upgrade = window.getSpel().getUpgrades().get(0);
+        upgradeFire1.addActionListener(evt -> {
+            Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
+            Upgrade upgrade = window1.getSpel().getUpgrades().get(0);
 
-                buyUpgrade(window, upgrade, message, upgradeFire1, nuggets);
-            }
+            buyUpgrade(window1, upgrade, message, upgradeFire1, nuggets);
         });
         //Add Components
         //==================================================
@@ -251,4 +226,6 @@ public class Upgrades extends GPanel {
         }
         nuggets.setText(String.valueOf(window.getSpel().getSpeler().getNuggets()));
     }
+
+    //endregion
 }
