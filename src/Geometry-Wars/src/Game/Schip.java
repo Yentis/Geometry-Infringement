@@ -205,7 +205,6 @@ public class Schip extends Sprite {
         for (InGameUpgrade buff : buffs) {
             if (buff.isActive() && !activeBuffs.contains(buff)) {
                 activeBuffs.add(buff); //indien de buff active is en nog niet in de ActiveBuffs zit, stop je hem erin
-                System.out.println("amount of active buffs: " + activeBuffs.size());
             } else if (!buff.isActive() && activeBuffs.contains(buff)) {
                 activeBuffs.remove(buff); //indien de buff niet meer active is en in de ActiveBuffs zit, gooi je hem eruit
             }

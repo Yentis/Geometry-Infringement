@@ -104,7 +104,6 @@ class StartGameCampaign extends GPanel {
             } else {
                 window1.getSpel().getSpeler().setActiveDrone(chooseDrone.getSelectedItem().toString());
             }
-            System.out.println("Drone: " + window1.getSpel().getSpeler().getActiveDrone());
         });
     }
 

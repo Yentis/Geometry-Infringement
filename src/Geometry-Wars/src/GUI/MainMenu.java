@@ -100,7 +100,7 @@ class MainMenu extends GPanel {
             try {
                 Desktop.getDesktop().browse(java.net.URI.create(url));
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
         });
 

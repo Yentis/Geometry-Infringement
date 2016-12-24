@@ -18,7 +18,6 @@ public abstract class GPanel extends JPanel {
     }
     protected void resizeComponents(int width, int height){
         for (Component c : components){
-            System.out.println(c);
             c.setBounds( c.getX() * width / height, c.getY() * width / height, c.getWidth() * width / height, c.getHeight() * width / height);
         }
     }
