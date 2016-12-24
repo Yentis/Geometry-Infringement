@@ -227,7 +227,7 @@ public class Spel implements Cloneable{
         Statement myStmt = myConn.createStatement();
 
         int a = myStmt.executeUpdate("insert into speler (gebruikersnaam, wachtwoord, email, rank, highscore)" +
-                "values('" + gebruikersnaam +"', '" + wachtwoord + "', '" + email + "', 'Bronze 1', 0)");
+                "values('" + gebruikersnaam +"', '" + wachtwoord + "', '" + email + "', 'Unranked', 0)");
     }
 
     public String loginChecker(String gebruikersnaam, String wachtwoord) throws SQLException, NoSuchAlgorithmException, UnsupportedEncodingException {
@@ -289,16 +289,18 @@ public class Spel implements Cloneable{
         double silver = (amountofplayers / 10) * 7; //top 70%
         double bronze = (amountofplayers / 10) * 9; //top 90%
 
-        if (speler.getHighscore() >= scores.get((int)diamond)){
-            myStmt2.executeUpdate("UPDATE speler SET rank = 'Diamond 1' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+        if(speler.getHighscore() >= scores.get(0)){
+            myStmt2.executeUpdate("UPDATE speler SET rank = 'Master' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+        }else if (speler.getHighscore() >= scores.get((int)diamond)){
+            myStmt2.executeUpdate("UPDATE speler SET rank = 'Diamond' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
         } else if (speler.getHighscore() >= scores.get((int)platinum)){
-            myStmt2.executeUpdate("UPDATE speler SET rank = 'Platinum 1' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+            myStmt2.executeUpdate("UPDATE speler SET rank = 'Platinum' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
         } else if (speler.getHighscore() >= scores.get((int)gold)){
-            myStmt2.executeUpdate("UPDATE speler SET rank = 'Gold 1' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+            myStmt2.executeUpdate("UPDATE speler SET rank = 'Gold' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
         } else if (speler.getHighscore() >= scores.get((int)silver)){
-            myStmt2.executeUpdate("UPDATE speler SET rank = 'Silver 1' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+            myStmt2.executeUpdate("UPDATE speler SET rank = 'Silver' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
         } else if (speler.getHighscore() >= scores.get((int)bronze)){
-            myStmt2.executeUpdate("UPDATE speler SET rank = 'Bronze 1' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+            myStmt2.executeUpdate("UPDATE speler SET rank = 'Bronze' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
         } else {
             myStmt2.executeUpdate("UPDATE speler SET rank = 'Unranked' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
         }
