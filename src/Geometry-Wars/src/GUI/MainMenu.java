@@ -75,6 +75,7 @@ public class MainMenu extends GPanel {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 try {
+                    window.getSpel().logIn(window.getSpel().getSpeler().getGebruikersnaam());
                     window.getSpel().initDankabank();
                     window.getUpgrades().initComponents();
                 } catch (IOException | FontFormatException | SQLException e) {
@@ -110,6 +111,7 @@ public class MainMenu extends GPanel {
 
             }
         });*/
+
         Discord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -136,17 +138,15 @@ public class MainMenu extends GPanel {
                 panel.setVisible(false);
                 GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
                 try {
-                    window.getSpel().initDankabank();
+                    window.getSpel().logIn(window.getSpel().getSpeler().getGebruikersnaam());
                     window.getProfile().initComponents();
                 } catch (IOException | FontFormatException | SQLException e) {
                     e.printStackTrace();
                 }
                 window.getProfile().setVisible(true);
-
-
-                // }
             }
         });
+
         Quit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
 
@@ -166,12 +166,7 @@ public class MainMenu extends GPanel {
                 Discord.setVisible(false);
                 //FriendsBtn.setVisible(false);
                 JoinDiscord.setVisible(false);
-
-
             }
-
-
-
         });
 
         No.addActionListener(new java.awt.event.ActionListener() {

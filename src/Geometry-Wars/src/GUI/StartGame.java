@@ -74,7 +74,6 @@ public class StartGame extends GPanel {
                     e.printStackTrace();
                 }
                 window.getStartGameCampaign().setVisible(true);
-
             }
         });
 

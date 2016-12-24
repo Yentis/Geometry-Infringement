@@ -35,7 +35,6 @@ public class Spel implements Cloneable{
 
     //region Properties
 
-
     public List<Upgrade> getUpgrades() {
         return upgrades;
     }
@@ -186,12 +185,6 @@ public class Spel implements Cloneable{
             i++;
         }
         //endregion
-    }
-
-    public void increaseSchipSpeed(double multiplier){
-        for (Schip schip:schepen) {
-            schip.setSpeed(schip.getSpeed() * multiplier);
-        }
     }
 
     public void submitScore(int score) throws SQLException {

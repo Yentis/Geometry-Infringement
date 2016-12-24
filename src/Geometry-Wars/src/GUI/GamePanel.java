@@ -67,8 +67,6 @@ public class GamePanel extends GPanel {
 
     public GamePanel(List<Enemy> enemies) throws IOException, FontFormatException {
         this.enemies = enemies;
-        addKeyListener(new TAdapter());
-        addMouseListener(new MAdapter());
         setFocusable(true);
         requestFocus();
         setDoubleBuffered(true);
@@ -255,9 +253,15 @@ public class GamePanel extends GPanel {
 
         schip = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
 
-        if(!Objects.equals(window.getSpel().getCurrentControls(), "Keyboard + Mouse")){
+        if(Objects.equals(window.getSpel().getCurrentControls(), "Keyboard + Mouse")){
+            MouseAdapter adapter = new MAdapter();
+            addKeyListener(new TAdapter());
+            addMouseListener(adapter);
+            addMouseMotionListener(adapter);
+        } else {
             Controllers controller = new Controllers(schip, 0);
         }
+
 
         dummydr = makeDrone(schip);
 
@@ -802,15 +806,37 @@ public class GamePanel extends GPanel {
     }
 
     private class MAdapter extends MouseAdapter {
+        private Timer mousePressedTimer;
+        private Point mouseLocation;
+
+        @Override
+        public void mouseDragged(MouseEvent e){
+            mouseLocation = e.getPoint();
+        }
 
         @Override
         public void mousePressed(MouseEvent e) {
-            schip.mousePressed(e);
+            int delay = 150;
+            ActionListener taskPerformer = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    schip.mousePressed(mouseLocation);
+                }
+            };
+
+            if (mousePressedTimer == null) {
+                mousePressedTimer = new Timer(delay, taskPerformer);
+                mousePressedTimer.start();
+            }else {
+                mousePressedTimer.start();
+            }
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            schip.mouseReleased(e);
+            if (mousePressedTimer != null) {
+                mousePressedTimer.stop();
+            }
         }
     }
 

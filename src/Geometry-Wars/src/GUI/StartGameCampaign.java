@@ -21,16 +21,14 @@ import GComponents.GPanel;
 public class StartGameCampaign extends GPanel {
     private StartGameCampaign panel = this;
 
-    public StartGameCampaign() throws MalformedURLException, IOException, FontFormatException {
-
-       
+    public StartGameCampaign() throws IOException, FontFormatException {
         //do not init
-
-
     }
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
+        panel.removeAll();
+
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         List<Integer> upgradeList = new ArrayList<>();
         JButton Start = new GButton("Start", 24f, 150,230,300,80);
@@ -62,7 +60,7 @@ public class StartGameCampaign extends GPanel {
             }
         }
 
-        JComboBox<String> chooseDrone = new JComboBox<String>(drones);
+        JComboBox<String> chooseDrone = new JComboBox<>(drones);
 
         //props
         label.setOpaque(true);

@@ -3,8 +3,11 @@ package Game;
 
 import GUI.InGame;
 import Game.InGameUpgrade.*;
+import net.java.games.input.Mouse;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.*;
@@ -47,6 +50,7 @@ public class Schip extends Sprite {
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
     private Drone drone;
+    private Point mousePointer;
 
     //IngameUpgrades
     private LifeSteal lifesteal = new LifeSteal(1, "LifeSteal", "resources/Media/IngameUpgradeIcons/LifeSteal.png", this);
@@ -66,7 +70,6 @@ public class Schip extends Sprite {
     //private HashMap<String, Boolean> buffs = new HashMap<String, Boolean>();
 
     private String imageString;
-    private Timer mousePressedTimer;
 
 
     //endregion
@@ -192,6 +195,10 @@ public class Schip extends Sprite {
     //region Setters
 
 
+    public void setMousePointer(Point mousePointer) {
+        this.mousePointer = mousePointer;
+    }
+
     public void setDrone(Drone drone) {
         this.drone = drone;
     }
@@ -214,7 +221,6 @@ public class Schip extends Sprite {
     public ArrayList<Kogel> getKogels() {
         return kogels;
     }
-
 
     public double getCurrentAngle() {
         return currentAngle;
@@ -418,56 +424,36 @@ public class Schip extends Sprite {
         }
     }
 
-    public void mousePressed(MouseEvent e) {
-        fire(e.getPoint());
+    public void mousePressed(Point point) {
+        fire(point);
         if (randomBullets.isActive()) {
             randomFire();
         }
-    }
-
-    public void mouseReleased(MouseEvent e) {
-        /*if (mousePressedTimer != null) {
-            mousePressedTimer.stop();
-        }*/
     }
 
     private void addKogels(Kogel k) {
         kogels.add(k);
     }
 
-    public void fire(Point mousePointer) {
-        /*System.out.println(mousePointer);
-        int delay = 50;
-        ActionListener taskPerformer = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {*/
+    public void fire(Point point) {
+
         double kogelX = locationX;
         double kogelY = locationY;
 
-        addKogels(new Kogel(kogelX, kogelY, mousePointer, "resources/Media/kogel1.png"));
+        addKogels(new Kogel(kogelX, kogelY, point, "resources/Media/kogel1.png"));
 
-         if (upgrades.contains(1)){
-             double kogel2X = mousePointer.getX()+100;
-             double kogel2Y = mousePointer.getY();
-             double kogel3X = mousePointer.getX()-100;
-             double kogel3Y = mousePointer.getY();
+        if (upgrades.contains(1)) {
+            double kogel2X = mousePointer.getX() + 100;
+            double kogel2Y = mousePointer.getY();
+            double kogel3X = mousePointer.getX() - 100;
+            double kogel3Y = mousePointer.getY();
 
-             Point mousePointer2 = new Point((int)kogel2X,(int)kogel2Y);
-             Point mousePointer3 = new Point((int)kogel3X, (int) kogel3Y);
+            Point mousePointer2 = new Point((int) kogel2X, (int) kogel2Y);
+            Point mousePointer3 = new Point((int) kogel3X, (int) kogel3Y);
 
-             addKogels(new Kogel(kogelX, kogelY, mousePointer2, "resources/Media/kogel1.png"));
-             addKogels(new Kogel(kogelX, kogelY, mousePointer3, "resources/Media/kogel1.png"));
-
-         }
-           /* }
-        };
-
-        if (mousePressedTimer == null) { //PROBLEEM: hij stelt de eerst geschoten angle in en savet het
-            mousePressedTimer = new Timer(delay, taskPerformer);
-            mousePressedTimer.start();
-        }else {
-            mousePressedTimer.start();
-        }*/
+            addKogels(new Kogel(kogelX, kogelY, mousePointer2, "resources/Media/kogel1.png"));
+            addKogels(new Kogel(kogelX, kogelY, mousePointer3, "resources/Media/kogel1.png"));
+        }
     }
 
 
