@@ -25,9 +25,9 @@ public class Spel implements Cloneable{
     private List<Enemy> enemies = new ArrayList<>();
     private String currentDifficulty = "Normal";
     private String currentControls = "Keyboard + Mouse";
-    private String url = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7150029";
-    private String user = "sql7150029";
-    private String pass = "3Ngdr6LYhR";
+    private String url = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7150842";
+    private String user = "sql7150842";
+    private String pass = "kjdRgX2AKv";
     private Connection myConn = null;
 
     //endregion
