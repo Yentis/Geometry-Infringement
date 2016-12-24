@@ -258,8 +258,8 @@ class GamePanel extends GPanel {
         schip = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
 
         if(Objects.equals(window.getSpel().getCurrentControls(), "Keyboard + Mouse")){
-            MouseAdapter adapter = new MAdapter();
             addKeyListener(new TAdapter());
+            MouseAdapter adapter = new MAdapter();
             addMouseListener(adapter);
             addMouseMotionListener(adapter);
         } else {

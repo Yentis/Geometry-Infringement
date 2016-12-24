@@ -38,6 +38,7 @@ class InGame extends GPanel implements ActionListener {
     private ImageIcon PauseImage = new ImageIcon("resources\\Media\\pause-128.png");
     private JButton pauze = new JButton(PauseImage);
     private GLabel gameOver = new GLabel("Oopsy daisy! u dead fam", 25f, 325, 260, 375, 120, true, Color.white);
+    private GLabel nuggetAmount = new GLabel("",  24f, 345, 120, 500, 120, false, Color.white);
     private GPanel pause = new GPanel() {
         @Override
         public void initComponents() throws IOException, FontFormatException {
@@ -91,11 +92,14 @@ class InGame extends GPanel implements ActionListener {
             menuGameEnd.setForeground(Color.white);
             menuGameEnd.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
 
+            nuggetAmount.setText("You obtained: " + gamePanel.getScore() / 10000 + " nuggets!");
             gameOver.setHorizontalAlignment(SwingConstants.CENTER);
+            nuggetAmount.setHorizontalAlignment(SwingConstants.CENTER);
             gameOver.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
             gameOver.setBackground(Color.black);
             gameEnd.add(pane);
             gameEnd.add(gameOver);
+            gameEnd.add(nuggetAmount);
             gameEnd.add(restartGameEnd);
             gameEnd.add(menuGameEnd);
 
@@ -130,7 +134,7 @@ class InGame extends GPanel implements ActionListener {
     InGame(List<Enemy> enemies) throws IOException, FontFormatException {
         gamePanel = new GamePanel(enemies);
         pause.initComponents();
-        gameEnd.initComponents();
+        //do not init gameEnd
         initComponents();
 
         this.add(pause);
@@ -305,6 +309,13 @@ class InGame extends GPanel implements ActionListener {
     }
 
     private void initEndGamePanel() {
+        try {
+            gameEnd.initComponents();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        }
         gameEnd.setVisible(true);
         gamePanel.setFocusable(false);
     }
