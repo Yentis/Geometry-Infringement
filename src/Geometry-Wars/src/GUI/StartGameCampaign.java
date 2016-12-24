@@ -29,6 +29,7 @@ class StartGameCampaign extends GPanel {
 
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         List<Integer> upgradeList = new ArrayList<>();
+        List<Integer> droneList = new ArrayList<>();
         JButton Start = new GButton("Start", 24f, 150,230,300,80);
         //JButton NewCampaign = new GButton("New Campaign", 24f, 200,350,350,80);
         //JButton ClearCampaign = new GButton("Clear Campaign", 24f, 250,470,350,80);
@@ -36,7 +37,6 @@ class StartGameCampaign extends GPanel {
 
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
         JLabel labelDrone = new GLabel("Choose drone: ", 18, 500,250,200,50,false, Color.white);
-        String[] drones = new String[4];
 
         try {
             upgradeList = window.getSpel().checkUpgrades();
@@ -44,18 +44,24 @@ class StartGameCampaign extends GPanel {
             e.printStackTrace();
         }
 
-        drones[0] = "";
-
-        int i = 1;
         for (int j:upgradeList) {
             switch (j){
                 case 4:
                 case 5:
                 case 6:
-                    drones[i] = window.getSpel().getUpgrades().get(j-1).getNaam();
-                    i++;
+                    droneList.add(j);
                     break;
             }
+        }
+
+        String[] drones = new String[droneList.size() + 1];
+
+        drones[0] = "";
+
+        int i = 1;
+        for (int j:droneList) {
+            drones[i] = window.getSpel().getUpgrades().get(j-1).getNaam();
+            i++;
         }
 
         JComboBox<String> chooseDrone = new JComboBox<>(drones);

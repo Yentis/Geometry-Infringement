@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.FontFormatException;
 import java.io.*;
 import java.net.MalformedURLException;
+import java.sql.SQLException;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 

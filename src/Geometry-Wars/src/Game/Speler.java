@@ -10,7 +10,7 @@ public class Speler {
     private String gebruikersnaam;
     private int level = 1;
     private int experience = 0;
-    private String rank = "Bronze 1";
+    private String rank = "Unranked";
     private int nuggets = 0;
     private int gnuggets = 0;
     private int highscore = 0;

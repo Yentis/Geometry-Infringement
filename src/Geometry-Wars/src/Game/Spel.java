@@ -1,10 +1,15 @@
 package Game;
 
+import java.io.InputStream;
+import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
+import static java.lang.Math.abs;
 
 /**
  * Created by Yentl-PC on 8/11/2016.
@@ -259,6 +264,68 @@ public class Spel implements Cloneable{
             }
         }
         return "";
+    }
+
+    public void checkRank() throws SQLException {
+        Statement myStmt = myConn.createStatement();
+        Statement myStmt2 = myConn.createStatement();
+        List<Integer> scores = new ArrayList<>();
+        double amountofplayers = 0;
+
+        ResultSet ranking = myStmt.executeQuery("select * from speler ");
+
+        while(ranking.next()){
+            scores.add(ranking.getInt("highscore"));
+        }
+
+        Collections.sort(scores);
+        Collections.reverse(scores);
+
+        amountofplayers = scores.size();
+
+        double diamond = (amountofplayers / 10) * 1; //top 10%
+        double platinum = (amountofplayers / 10) * 3; //top 30%
+        double gold = (amountofplayers / 10) * 5; //top 50%
+        double silver = (amountofplayers / 10) * 7; //top 70%
+        double bronze = (amountofplayers / 10) * 9; //top 90%
+
+        if (speler.getHighscore() >= scores.get((int)diamond)){
+            myStmt2.executeUpdate("UPDATE speler SET rank = 'Diamond 1' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+        } else if (speler.getHighscore() >= scores.get((int)platinum)){
+            myStmt2.executeUpdate("UPDATE speler SET rank = 'Platinum 1' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+        } else if (speler.getHighscore() >= scores.get((int)gold)){
+            myStmt2.executeUpdate("UPDATE speler SET rank = 'Gold 1' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+        } else if (speler.getHighscore() >= scores.get((int)silver)){
+            myStmt2.executeUpdate("UPDATE speler SET rank = 'Silver 1' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+        } else if (speler.getHighscore() >= scores.get((int)bronze)){
+            myStmt2.executeUpdate("UPDATE speler SET rank = 'Bronze 1' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+        } else {
+            myStmt2.executeUpdate("UPDATE speler SET rank = 'Unranked' WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+        }
+
+        /*for (int i:scores)
+        {
+            if(scores.get((int)diamond) >= i){
+
+            }
+        }*/
+
+
+        /*while(ranking.next()){
+            if(ranking.getInt("highscore") >= average * 1.8){
+                //diamond
+            } else if (ranking.getInt("highscore") >= average * 1.4){
+                //platinum
+            } else if (ranking.getInt("highscore") >= average){
+                //gold
+            } else if (ranking.getInt("highscore") >= average * 0.6){
+                //silver
+            } else if (ranking.getInt("highscore") >= average * 0.2){
+                //bronze
+            } else {
+                //unranked
+            }
+        }*/
     }
 
     //endregion
