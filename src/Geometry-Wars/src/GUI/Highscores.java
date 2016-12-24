@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.MalformedURLException;
 import java.util.*;
 import java.util.List;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -22,19 +14,18 @@ import GComponents.GPanel;
 
 import GComponents.*;
 import Game.Speler;
-import com.sun.xml.internal.bind.annotation.OverrideAnnotationOf;
 
 /**
  * Created by Laurens Visser on 21/12/2016.
  */
-public class Highscores extends GPanel {
+class Highscores extends GPanel {
+    //region Instance Variables
+
     private Highscores panel = this;
 
-    public Highscores() throws IOException, FontFormatException {
+    //endregion
 
-        //do not init
-
-    }
+    //region Behaviour
 
     @Override
     public void paint(Graphics g) {
@@ -47,9 +38,9 @@ public class Highscores extends GPanel {
         g2.draw(verticalLine);
     }
 
-
     @Override
     public void initComponents() throws IOException, FontFormatException {
+        panel.removeAll();
         List<String> strings;
 
         JLabel label = new JLabel("HIGH SCORES", SwingConstants.CENTER);
@@ -57,8 +48,8 @@ public class Highscores extends GPanel {
         JLabel Score = new GLabel("Score", 24f, 655, 166, 180, 64, false, Color.white);
         JButton Back = new GButton("Back", 24f, 20, 675, 120, 45);
         JLabel backgroundpane = new GPane(220, 160, 650, 540);
-        DefaultListModel listModelPlayer = new DefaultListModel();
-        DefaultListModel listModelScore = new DefaultListModel();
+        DefaultListModel<String> listModelPlayer = new DefaultListModel<>();
+        DefaultListModel<String> listModelScore = new DefaultListModel<>();
 
         strings = processNames();
 
@@ -70,7 +61,7 @@ public class Highscores extends GPanel {
             i++;
         }
 
-        JList listPlayer = new JList(listModelPlayer);
+        JList<String> listPlayer = new JList<>(listModelPlayer);
 
         strings = processScores();
 
@@ -82,7 +73,7 @@ public class Highscores extends GPanel {
             i++;
         }
 
-        JList listScore = new JList(listModelScore);
+        JList<String> listScore = new JList<>(listModelScore);
 
         //properties
 
@@ -126,12 +117,10 @@ public class Highscores extends GPanel {
 
         //actionlisteners
 
-        Back.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                panel.setVisible(false);
-                GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                window.getStartGame().setVisible(true);
-            }
+        Back.addActionListener(evt -> {
+            panel.setVisible(false);
+            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+            window.getStartGame().setVisible(true);
         });
     }
 
@@ -165,4 +154,5 @@ public class Highscores extends GPanel {
         return strings;
     }
 
+    //endregion
 }

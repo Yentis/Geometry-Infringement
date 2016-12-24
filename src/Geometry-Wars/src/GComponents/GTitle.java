@@ -7,8 +7,8 @@ import java.io.IOException;
 /**
  * Created by Renzie on 10/11/2016.
  */
-public class GTitle extends JLabel {
 
+public class GTitle extends JLabel {
     public GTitle(int x , int y) throws IOException, FontFormatException {
         this.setText("Geometry Wars");
         this.setFont(new GFont(64));
@@ -17,5 +17,4 @@ public class GTitle extends JLabel {
         this.setBounds(x,y,650,100);
         this.setHorizontalAlignment(CENTER);
     }
-
 }

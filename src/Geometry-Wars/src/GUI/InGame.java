@@ -19,7 +19,9 @@ import Game.Upgrade;
 /**
  * Created by Laurens Visser on 9/11/2016.
  */
-public class InGame extends GPanel implements ActionListener {
+class InGame extends GPanel implements ActionListener {
+    //region Instance Variables
+
     private InGame panel = this;
     private boolean coop;
 
@@ -40,22 +42,17 @@ public class InGame extends GPanel implements ActionListener {
     private ImageIcon PauseImage = new ImageIcon("resources\\Media\\pause-128.png");
     private JButton pauze = new JButton(PauseImage);
     private GLabel gameOver = new GLabel("Oopsy daisy! u dead fam", 25f, 325, 260, 375, 120, true, Color.white);
-
-
-
-
     private GPanel pause = new GPanel() {
         @Override
         public void initComponents() throws IOException, FontFormatException {
+            pause.removeAll();
             Continue.setBackground(Color.black);
             Continue.setForeground(Color.white);
             Continue.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
 
-
             restartPauze.setBackground(Color.black);
             restartPauze.setForeground(Color.white);
             restartPauze.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
-
 
             menuPauze.setBackground(Color.black);
             menuPauze.setForeground(Color.white);
@@ -65,52 +62,34 @@ public class InGame extends GPanel implements ActionListener {
             controls.setForeground(Color.white);
             controls.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
 
-
             pause.add(Continue);
             pause.add(restartPauze);
             pause.add(menuPauze);
             pause.add(controls);
 
-            menuPauze.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    gamePanel.setGameFinished(true);
-                    gameEnd.setVisible(false);
-                    panel.setVisible(false);
+            menuPauze.addActionListener(evt -> {
+                gamePanel.setGameFinished(true);
+                gameEnd.setVisible(false);
+                panel.setVisible(false);
 
-                    GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                    window.getMainMenu().setVisible(true);
-                }
+                Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+                window.getMainMenu().setVisible(true);
             });
-
-          /*  menuGameEnd.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    panel.setVisible(false);
-                    gameEnd.setVisible(false);
-                    GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                    window.getMainMenu().setVisible(true);
-                }
-            });
-
-
-
-        }*/
         }
     };
     private GPanel gameEnd = new GPanel() {
         @Override
         public void initComponents() throws IOException, FontFormatException {
-
+            gameEnd.removeAll();
             JLabel pane = new JLabel();
             pane.setOpaque(true);
             pane.setBackground(new Color(255, 255, 255, 2));
             pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
             pane.setBounds(50, 125, 900, 500);
 
-
             restartGameEnd.setBackground(Color.black);
             restartGameEnd.setForeground(Color.white);
             restartGameEnd.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
-
 
             menuGameEnd.setBackground(Color.black);
             menuGameEnd.setForeground(Color.white);
@@ -124,20 +103,17 @@ public class InGame extends GPanel implements ActionListener {
             gameEnd.add(restartGameEnd);
             gameEnd.add(menuGameEnd);
 
-
-            menuGameEnd.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    panel.setVisible(false);
-                    GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-                    pause.setVisible(false);
-                    try {
-                        window.getSpel().submitScore(gamePanel.getScore());
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    window.getMainMenu().setVisible(true);
-
+            menuGameEnd.addActionListener(evt -> {
+                panel.setVisible(false);
+                Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+                pause.setVisible(false);
+                try {
+                    window.getSpel().submitScore(gamePanel.getScore());
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
+                window.getMainMenu().setVisible(true);
+
             });
         }
     };
@@ -151,7 +127,11 @@ public class InGame extends GPanel implements ActionListener {
     private GLabel dronebarp2Background;
     private GLabel schipbarp2BackGround;
 
-    public InGame(List<Enemy> enemies) throws IOException, FontFormatException {
+    //endregion
+
+    //region Constructors
+
+    InGame(List<Enemy> enemies) throws IOException, FontFormatException {
         gamePanel = new GamePanel(enemies);
         pause.initComponents();
         gameEnd.initComponents();
@@ -174,16 +154,35 @@ public class InGame extends GPanel implements ActionListener {
         addActionListeners();
 
         gamePanel.setVisible(false);
-
     }
 
-    public void setCoop(boolean coop) {
+    //endregion
+
+    //region Getters & Setters
+
+    void setCoop(boolean coop) {
         this.coop = coop;
     }
 
+    GButton getStartGame() {
+        return startGame;
+    }
+
+    GPanel getGameEnd() {
+        return gameEnd;
+    }
+
+    GPanel getPause() {
+        return pause;
+    }
+
+    //endregion
+
+    //region Behaviour
+
     @Override
     public void initComponents() throws IOException, FontFormatException {
-
+        panel.removeAll();
         JLabel pane = new JLabel();
 
         healthp2Background = new GLabel("Health:", 24, 595, 18, 169, 62, false, Color.black);
@@ -194,21 +193,19 @@ public class InGame extends GPanel implements ActionListener {
         dronebarp2Background = new GLabel("", 20, 880, 695, 125, 35, true, Color.black);
         schipbarp2BackGround = new GLabel("", 20, 660, 695, 125, 35, true, Color.black);
 
-        //single player
+        //region Single player
+
         GLabel healthp1Background = new GLabel("Health:", 24, 40, 18, 169, 62, false, Color.black);
         GLabel scorep1Background = new GLabel("Score:", 24, 25, 65, 169, 62, false, Color.cyan);
         GLabel healthbarp1Background = new GLabel("", 24, 15, 23, 410, 47, true, Color.black);
-        //GLabel dronebarp1Background = new GLabel("", 24, 380, 672, 70, 47, true, Color.black);
-        //GLabel schipbarp1BackGround = new GLabel("", 24, 140, 672, 100, 47, true, Color.black);
         healthbarp1Background.setBackground(new Color(255, 255, 255, 95));
-       // dronebarp1Background.setBackground(new Color(255, 255, 255, 95));
-       // schipbarp1BackGround.setBackground(new Color(255, 255, 255, 95));
         this.add(healthbarp1Background);
         this.add(scorep1Background);
         this.add(healthp1Background);
 
-        //coop only
+        //endregion
 
+        //region Coop
 
         healthbarp2Background.setBackground(new Color(255, 255, 255, 95));
         dronebarp2Background.setBackground(new Color(255, 255, 255, 95));
@@ -222,18 +219,11 @@ public class InGame extends GPanel implements ActionListener {
         this.add(schipLvlp2Background);
         this.add(droneLvlp2Background);
 
-
+        //endregion
 
         pane.setOpaque(true);
         pane.setBackground(new Color(255, 255, 255, 2));
         pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
-
-        /*healthbarp1.setBackground(new Color(255, 255, 255, 95));
-        healthbarp2.setBackground(new Color(255, 255, 255, 95));
-        dronebarp1.setBackground(new Color(255, 255, 255, 95));
-        dronebarp2.setBackground(new Color(255, 255, 255, 95));
-        schipbarp1.setBackground(new Color(255, 255, 255, 95));
-        schipbarp2.setBackground(new Color(255, 255, 255, 95));*/
 
         pauze.setOpaque(true);
         pauze.setBackground(new Color(155, 255, 204, 200));
@@ -243,49 +233,21 @@ public class InGame extends GPanel implements ActionListener {
         pauze.setBounds(482, 23, 60, 58);
         pane.setBounds(50, 125, 900, 500);
 
-
         //==================================================
 
         //Add Components
         //==================================================
 
-        // coop components
-       /* this.add(healthbarp2);
-        this.add(schipbarp2);
-        this.add(dronebarp2);
-        this.add(scorep2);
-        this.add(healthp2);
-        this.add(schipLvlp2);
-        this.add(droneLvlp2);*/
-
-
-
         this.add(pane);
-        //this.add(healthbarp1);
-
-       // this.add(dronebarp1);
         this.add(pauze);
-
-
-       // this.add(scorep1);
-       // this.add(healthp1);
-
         this.add(startGame);
 
-
-        pauze.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //panel.setVisible(false);
-                pauseGameLoop();
-
-                //pause.setVisible(true);
-                //pane.setVisible(true);
-            }
+        pauze.addActionListener(evt -> {
+            pauseGameLoop();
         });
-
     }
 
-    public void showCoopUI(){
+    private void showCoopUI(){
         healthp2Background.setVisible(true);
         scorep2Background.setVisible(true);
         schipLvlp2Background.setVisible(true);
@@ -295,7 +257,7 @@ public class InGame extends GPanel implements ActionListener {
         schipbarp2BackGround.setVisible(true);
     }
 
-    public void hideCoopUI(){
+    private void hideCoopUI(){
         healthp2Background.setVisible(false);
         scorep2Background.setVisible(false);
         schipLvlp2Background.setVisible(false);
@@ -305,20 +267,7 @@ public class InGame extends GPanel implements ActionListener {
         schipbarp2BackGround.setVisible(false);
     }
 
-
-    public GButton getStartGame() {
-        return startGame;
-    }
-
-    public GPanel getGameEnd() {
-        return gameEnd;
-    }
-
-    public GPanel getPause() {
-        return pause;
-    }
-
-    public void initGamePanel() throws SQLException {
+    private void initGamePanel() throws SQLException {
         setupGameTimer();
         gamePanel.setVisible(true);
         gamePanel.setCoop(coop);
@@ -330,50 +279,39 @@ public class InGame extends GPanel implements ActionListener {
         gamePanel.startGame();
     }
 
-
-    public void addActionListeners() { //TODO
+    private void addActionListeners() {
         menuPauze.addActionListener(panel);
         startGame.addActionListener(panel);
         Continue.addActionListener(panel);
         restartPauze.addActionListener(panel);
     }
 
-    public void checkGameFinished() {
+    private void checkGameFinished() {
         if (gamePanel.getGameFinished()) {
             pauze.setVisible(false);
             initEndGamePanel();
             gameTimer.stop();
-            System.out.println("game over");
             gamePanel.resetGame();
         }
     }
 
-    public void setupGameTimer() {
-        gameTimer = new Timer(10, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                checkGameFinished();
-                gamePanel.revalidate();
-                drawGame();
-                try {
-                    updateGame();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } catch (UnsupportedAudioFileException e1) {
-                    e1.printStackTrace();
-                }
+    private void setupGameTimer() {
+        gameTimer = new Timer(10, e -> {
+            checkGameFinished();
+            gamePanel.revalidate();
+            drawGame();
+            try {
+                updateGame();
+            } catch (IOException | UnsupportedAudioFileException e1) {
+                e1.printStackTrace();
             }
         });
     }
 
-
-    public void initEndGamePanel() {
+    private void initEndGamePanel() {
         gameEnd.setVisible(true);
-
         gamePanel.setFocusable(false);
-
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -392,10 +330,8 @@ public class InGame extends GPanel implements ActionListener {
             runGameLoop();
         } else if (source == Continue) {
             resumeGameLoop();
-
         }
     }
-
 
     private void pauseGameLoop() {
         gameTimer.stop();
@@ -405,7 +341,7 @@ public class InGame extends GPanel implements ActionListener {
         initPausePanel();
     }
 
-    public void initPausePanel() {
+    private void initPausePanel() {
         pause.setVisible(true);
     }
 
@@ -429,4 +365,5 @@ public class InGame extends GPanel implements ActionListener {
         gamePanel.repaint();
     }
 
+    //endregion
 }
