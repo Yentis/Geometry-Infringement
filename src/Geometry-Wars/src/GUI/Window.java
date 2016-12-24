@@ -26,7 +26,7 @@ public class Window extends JFrame {
     private Upgrades upgrades;
     private Settings settings;
     private Highscores highscores;
-    private static Spel spel = new Spel();
+    private static Spel spel = null;
 
     //Game
 
@@ -88,7 +88,7 @@ public class Window extends JFrame {
         login = new Login();
         cp.add(login);
         try {
-            spel.initDankabank();
+            spel = new Spel();
 
             mainMenu = new MainMenu();
             startGame = new StartGame();

@@ -1,54 +1,41 @@
 package Game;
 
-
-import GUI.InGame;
 import Game.InGameUpgrade.*;
-import net.java.games.input.Mouse;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.util.*;
 import java.util.List;
-import javax.swing.*;
-import javax.swing.Timer;
-
-import static java.lang.Math.abs;
 
 /**
  * Created by Yentl-PC on 8/11/2016.
  */
 public class Schip extends Sprite {
-
     //region Instance Variables
 
     private int nr;
     private int hp = 100;
     private int maxhp = 100;
     private int kracht = 25;
-    private double speed;
-    private double dx;
-    private double dy;
     private int score = 0;
     private int newscore = 0;
     private int combo = 0;
     private int level = 0;
     private int currentXp = 0;
-    private double maxXp = 1000;
-
     private int keyLeft;
     private int keyRight;
     private int keyUp;
     private int keyDown;
-    private ArrayList<Kogel> kogels = new ArrayList<Kogel>();
+    private double speed;
+    private double dx;
+    private double dy;
+    private double maxXp = 1000;
     private double locationX;
     private double locationY;
     private double currentAngle;
+    private String imageString;
+    private ArrayList<Kogel> kogels = new ArrayList<>();
+    private List<Integer> menuUpgrades = new ArrayList<>();
     private Movement move;
-    private int SCREEN_WIDTH = 1024;
-    private int SCREEN_HEIGHT = 768;
     private Drone drone;
     private Point mousePointer;
 
@@ -58,19 +45,8 @@ public class Schip extends Sprite {
     private RandomBullets randomBullets = new RandomBullets(3, "RandomBullets", "resources/Media/IngameUpgradeIcons/RandomBullets.png", this);
     private SlowEnemies slowEnemies = new SlowEnemies(4, "RandomBullets", "resources/Media/IngameUpgradeIcons/SlowEnemies.png", this);
     private ActiveDrone activeDrone = new ActiveDrone(5, "ActiveDrone", "resources/Media/IngameUpgradeIcons/ActiveDrone.png", this);
-
-    //MenuUpgrades
-    private List<Integer> upgrades = new ArrayList<>();
-
-    //check voor activebuffs, en total aantal buffs in de game
-    private ArrayList<InGameUpgrade> buffs = new ArrayList<InGameUpgrade>();
-    private ArrayList<InGameUpgrade> activeBuffs = new ArrayList<InGameUpgrade>();
-
-
-    //private HashMap<String, Boolean> buffs = new HashMap<String, Boolean>();
-
-    private String imageString;
-
+    private ArrayList<InGameUpgrade> buffs = new ArrayList<>();
+    private ArrayList<InGameUpgrade> activeBuffs = new ArrayList<>();
 
     //endregion
 
@@ -84,7 +60,7 @@ public class Schip extends Sprite {
         locationX = currentLocation.getX();
         locationY = currentLocation.getY();
         currentAngle = 0;
-        this.upgrades = upgrades;
+        menuUpgrades = upgrades;
         this.nr = nr;
         this.hp = hp;
         this.kracht = kracht;
@@ -95,35 +71,39 @@ public class Schip extends Sprite {
         this.speed = speed;
         move = new Movement(this, keyLeft, keyRight, keyUp, keyDown);
         addBuffs();
-        //updateBuffs();
     }
+
     //endregion
 
-    private void addBuffs() {
-        buffs.add(lifesteal);
-        buffs.add(invulnerability);
-        buffs.add(randomBullets);
-        buffs.add(slowEnemies);
-        buffs.add(activeDrone);
+    //region Getters & Setters
+
+    public List<Integer> getUpgrades() {
+        return menuUpgrades;
+    }
+
+    public LifeSteal getLifesteal() {
+        return lifesteal;
+    }
+
+    public double getMaxXp() {
+        return maxXp;
+    }
+
+    public Invulnerability getInvulnerability() {
+        return invulnerability;
+    }
+
+    public SlowEnemies getSlowEnemies() {
+        return slowEnemies;
+    }
+
+    public ActiveDrone getActiveDrone() {
+        return activeDrone;
     }
 
     public ArrayList<InGameUpgrade> getActiveBuffs() {
         return activeBuffs;
     }
-
-    public void updateBuffs() {
-        for (InGameUpgrade buff : buffs) {
-            if (buff.isActive() && !activeBuffs.contains(buff)) {
-                activeBuffs.add(buff); //indien de buff active is en nog niet in de ActiveBuffs zit, stop je hem erin
-                System.out.println("amount of active buffs: " + activeBuffs.size());
-            } else if (!buff.isActive() && activeBuffs.contains(buff)) {
-                activeBuffs.remove(buff); //indien de buff niet meer active is en in de ActiveBuffs zit, gooi je hem eruit
-            }
-        }
-    }
-
-    //region Getters
-
 
     public Drone getDrone() {
         return drone;
@@ -157,10 +137,6 @@ public class Schip extends Sprite {
         return nr;
     }
 
-    public Movement getMove() {
-        return move;
-    }
-
     public int getCombo() {
         return combo;
     }
@@ -189,33 +165,16 @@ public class Schip extends Sprite {
         return currentXp;
     }
 
-
-    //endregion
-
-    //region Setters
-
-
-    public void setMousePointer(Point mousePointer) {
-        this.mousePointer = mousePointer;
+    private void setMaxXp(int level) {
+        this.maxXp = Math.pow(2, level) * 1000;
     }
 
     public void setDrone(Drone drone) {
         this.drone = drone;
     }
 
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
     public void setSpeed(double speed) {
         this.speed = speed;
-    }
-
-    public void setControls(int keyLeft, int keyRight, int keyUp, int keyDown) {
-        this.keyLeft = keyLeft;
-        this.keyRight = keyRight;
-        this.keyUp = keyUp;
-        this.keyDown = keyDown;
     }
 
     public ArrayList<Kogel> getKogels() {
@@ -226,30 +185,34 @@ public class Schip extends Sprite {
         return currentAngle;
     }
 
-    public void setCurrentAngle(double currentAngle) {
+    void setCurrentAngle(double currentAngle) {
         this.currentAngle = currentAngle;
     }
-    //endregion
-
-    //region ComboProperties
-    public Invulnerability getInvulnerability() {
-        return invulnerability;
-    }
-
-    public SlowEnemies getSlowEnemies() {
-        return slowEnemies;
-    }
-
-    public ActiveDrone getActiveDrone() {
-        return activeDrone;
-    }
 
     //endregion
 
-    //region levelProperties
+    //region Behaviour
 
+    private void addBuffs() {
+        buffs.add(lifesteal);
+        buffs.add(invulnerability);
+        buffs.add(randomBullets);
+        buffs.add(slowEnemies);
+        buffs.add(activeDrone);
+    }
 
-    public void addLevel() {
+    public void updateBuffs() {
+        for (InGameUpgrade buff : buffs) {
+            if (buff.isActive() && !activeBuffs.contains(buff)) {
+                activeBuffs.add(buff); //indien de buff active is en nog niet in de ActiveBuffs zit, stop je hem erin
+                System.out.println("amount of active buffs: " + activeBuffs.size());
+            } else if (!buff.isActive() && activeBuffs.contains(buff)) {
+                activeBuffs.remove(buff); //indien de buff niet meer active is en in de ActiveBuffs zit, gooi je hem eruit
+            }
+        }
+    }
+
+    private void addLevel() {
         this.level += 1;
     }
 
@@ -257,19 +220,9 @@ public class Schip extends Sprite {
         this.currentXp += xp;
     }
 
-    public void resetCurrentXp() {
+    private void resetCurrentXp() {
         this.currentXp = 0;
     }
-
-    public double getMaxXp() {
-        return maxXp;
-    }
-
-    public void setMaxXp(int level) {
-        this.maxXp = Math.pow(2, level) * 1000;
-    }
-
-
 
     public void checkLevel() {
         if (getCurrentXp() >= getMaxXp()) {
@@ -280,10 +233,6 @@ public class Schip extends Sprite {
             addKracht(25);
         }
     }
-    //lifesteal 100, invul 50, slow 75, drone 150, randombullets 250    //endregion
-
-    //wanneer je combo verliest, zet alle upgrades af
-    //debuff : als je < 50% hp hebt, vertraag je
 
     public void checkForUpgrade(int combo) {
         //TODO terugveranderen :p - Renzie dit is voor de upgrade arraylist check
@@ -291,43 +240,30 @@ public class Schip extends Sprite {
             //Every 20 combo
             invulnerability.setActive(true);
         } else if (combo % 50 == 0) {
-            //Every 75 combo
+            //Every 50 combo
             slowEnemies.setActive(true);
         }
         switch (combo) {
             case 1:
                 //when combo resets
-               for (InGameUpgrade buff : buffs){
-                   buff.setActive(false);
-               }
+                for (InGameUpgrade buff : buffs){
+                    buff.setActive(false);
+                }
                 break;
             case 20:
-                 lifesteal.setActive(true);
+                lifesteal.setActive(true);
                 break;
             case 30:
-
                 activeDrone.setActive(true);
                 break;
             case 50:
-             randomBullets.setActive(true);
+                randomBullets.setActive(true);
                 break;
-
-
         }
-        //updateBuffs();
     }
 
-    public LifeSteal getLifesteal() {
-        return lifesteal;
-    }
-
-    public void setCombo(int combo) {
-        this.combo = combo;
-    }
-
-    //region Behaviour
     public void resetCombo() {
-        setCombo(0);
+        combo = 0;
     }
 
     public void addCombo() {
@@ -335,25 +271,17 @@ public class Schip extends Sprite {
         addScore(100, combo);
     }
 
-
-    public void addScore(int enemyscore, int combo) {
+    private void addScore(int enemyscore, int combo) {
         score = enemyscore * combo;
         score = adjustScore(score);
     }
 
-    public int adjustScore(int score) {
-
+    private int adjustScore(int score) {
         newscore += score;
-        System.out.println("score: " + newscore);
-        System.out.println("combo: " + combo);
         return newscore;
     }
 
-    public void setKracht(int kracht) {
-        this.kracht = kracht;
-    }
-
-    public void addKracht(int amount) {
+    private void addKracht(int amount) {
         this.kracht += amount;
     }
 
@@ -366,8 +294,6 @@ public class Schip extends Sprite {
     }
 
     public void beweegSchip() {
-
-
         locationX = limitToBorders(locationX, 75, 875);
         locationY = limitToBorders(locationY, 125, 525);
 
@@ -383,11 +309,11 @@ public class Schip extends Sprite {
         return currLocation;
     }
 
-    public void controllerPressed(int key) {
+    void controllerPressed(int key) {
         move.controllerPressed(key);
     }
 
-    public void controllerReleased(int key) {
+    void controllerReleased(int key) {
         move.controllerReleased(key);
     }
 
@@ -399,24 +325,23 @@ public class Schip extends Sprite {
         move.keyReleased(e);
     }
 
-    public void moveUp(double speed) {
+    void moveUp(double speed) {
         dy = -speed;
     }
 
-    public void moveDown(double speed) {
+    void moveDown(double speed) {
         dy = speed;
     }
 
-    public void moveLeft(double speed) {
+    void moveLeft(double speed) {
         dx = -speed;
     }
 
-    public void moveRight(double speed) {
+    void moveRight(double speed) {
         dx = speed;
     }
 
-
-    public void controllerAim(double x, double y) {
+    void controllerAim(double x, double y) {
         Point point = new Point((int) x, (int) y);
         fire(point);
         if (randomBullets.isActive()) {
@@ -435,14 +360,14 @@ public class Schip extends Sprite {
         kogels.add(k);
     }
 
-    public void fire(Point point) {
+    private void fire(Point point) {
 
         double kogelX = locationX;
         double kogelY = locationY;
 
         addKogels(new Kogel(kogelX, kogelY, point, "resources/Media/kogel1.png"));
 
-        if (upgrades.contains(1)) {
+        if (menuUpgrades.contains(1)) {
             double kogel2X = mousePointer.getX() + 100;
             double kogel2Y = mousePointer.getY();
             double kogel3X = mousePointer.getX() - 100;
@@ -456,29 +381,21 @@ public class Schip extends Sprite {
         }
     }
 
-
-    public int randomX() {
+    private int randomX() {
         Random randomGenerator = new Random();
+        int SCREEN_WIDTH = 1024;
 
-        int randGetal = randomGenerator.nextInt(SCREEN_WIDTH);
-
-
-        return randGetal;
-
+        return randomGenerator.nextInt(SCREEN_WIDTH);
     }
 
-    public int randomY() {
-
+    private int randomY() {
         Random randomGenerator = new Random();
+        int SCREEN_HEIGHT = 768;
 
-        int randGetal = randomGenerator.nextInt(SCREEN_HEIGHT);
-
-        return randGetal;
-
+        return randomGenerator.nextInt(SCREEN_HEIGHT);
     }
 
-    public void randomFire() {
-
+    private void randomFire() {
         double kogelX = locationX;
         double kogelY = locationY;
         int kogelX2 = randomX();
@@ -486,20 +403,10 @@ public class Schip extends Sprite {
         Point mousePointer2 = new Point(kogelX2, kogelY2);
 
         addKogels(new Kogel(kogelX, kogelY, mousePointer2, "resources/Media/kogel1.png"));
-        System.out.println(kogelX2 + " " + kogelY2);
-    }
-
-
-    public void setImage(String image) {
-
-    }
-
-    public List<Integer> getUpgrades() {
-        return upgrades;
     }
 
     // Dit zorgt ervoor dat de angle binnen 360 blijft.
-    public double normalizeAngle(double angle) {
+    double normalizeAngle(double angle) {
         if (angle < 0 || 360 < angle) {
             angle = (angle + 360) % 360;
             return angle;
@@ -507,5 +414,6 @@ public class Schip extends Sprite {
             return angle;
         }
     }
+
     //endregion
 }

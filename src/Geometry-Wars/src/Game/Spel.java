@@ -1,13 +1,6 @@
 package Game;
-
-import com.mysql.jdbc.CommunicationsException;
-
-import javax.swing.*;
-import java.awt.*;
+;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.*;
-import java.lang.reflect.Array;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -30,10 +23,20 @@ public class Spel implements Cloneable{
     private String url = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7150029";
     private String user = "sql7150029";
     private String pass = "3Ngdr6LYhR";
+    private Connection myConn = null;
 
     //endregion
 
-    //region Properties
+    //region Constructors
+
+    public Spel() throws SQLException {
+        readDatabase();
+        initDankabank();
+    }
+
+    //endregion
+
+    //region Getters & Setters
 
     public List<Upgrade> getUpgrades() {
         return upgrades;
@@ -83,10 +86,13 @@ public class Spel implements Cloneable{
 
     //region Behaviour
 
+    private void readDatabase() throws SQLException {
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        myConn = DriverManager.getConnection(url, user, pass);
+    }
+
     public List<Integer> checkUpgrades() throws SQLException {
         List<Integer> upgradelist = new ArrayList<>();
-        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
 
         ResultSet upgrades = myStmt.executeQuery("select * from spelerupgrades where pid = (select nr from speler where nr = " + (speler.getNr() + 1) + ")");
@@ -101,15 +107,13 @@ public class Spel implements Cloneable{
     }
 
     public boolean buyUpgrade(int cost, int uid) throws SQLException {
-        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
         Statement myStmt2 = myConn.createStatement();
         Statement myStmt3 = myConn.createStatement();
 
         ResultSet upgrades = myStmt.executeQuery("select nuggets from speler where gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
 
-        while(upgrades.next()){
+        if(upgrades.next()){
             if(upgrades.getInt("nuggets") >= cost){
                 int a = myStmt2.executeUpdate("UPDATE speler SET nuggets = nuggets - " + cost + " WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
                 int b = myStmt3.executeUpdate("INSERT INTO spelerupgrades (pid, uid) VALUES (" + (speler.getNr() + 1) + ", " + uid + ")");
@@ -123,8 +127,6 @@ public class Spel implements Cloneable{
     }
 
     public void initDankabank() throws SQLException {
-        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
 
         spelers = new ArrayList<>();
@@ -138,7 +140,7 @@ public class Spel implements Cloneable{
 
         int i = 0;
         while (speler.next()){
-            spelers.add(i, new Speler(speler.getInt("nr") - 1, speler.getString("gebruikersnaam"), speler.getString("wachtwoord"), speler.getString("email"), speler.getInt("level"), speler.getInt("experience"), speler.getString("rank"), speler.getInt("nuggets"), speler.getInt("golden nuggets"), speler.getInt("highscore")));
+            spelers.add(i, new Speler(speler.getInt("nr") - 1, speler.getString("gebruikersnaam"), speler.getInt("level"), speler.getInt("experience"), speler.getString("rank"), speler.getInt("nuggets"), speler.getInt("golden nuggets"), speler.getInt("highscore")));
             i++;
         }
         //endregion
@@ -158,10 +160,7 @@ public class Spel implements Cloneable{
 
         i = 0;
         while (drone.next()){
-
-
             drones.add(i, new Drone(drone.getInt("nr") - 1, drone.getString("naam"), drone.getString("beschrijving"), drone.getInt("kracht"), drone.getString("uiterlijk"), drone.getInt("type")));
-
             i++;
         }
         //endregion
@@ -171,7 +170,7 @@ public class Spel implements Cloneable{
 
         i = 0;
         while (upgrade.next()){
-            upgrades.add(i, new Upgrade(upgrade.getInt("nr") - 1, upgrade.getString("naam"), upgrade.getString("beschrijving"), upgrade.getString("foto"), upgrade.getInt("kost")));
+            upgrades.add(i, new Upgrade(upgrade.getInt("nr") - 1, upgrade.getString("naam"), upgrade.getString("foto"), upgrade.getInt("kost")));
             i++;
         }
         //endregion
@@ -189,8 +188,6 @@ public class Spel implements Cloneable{
 
     public void submitScore(int score) throws SQLException {
         int nuggets = score / 10000;
-        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
         Statement myStmt2 = myConn.createStatement();
 
@@ -206,8 +203,6 @@ public class Spel implements Cloneable{
     }
 
     public void logIn(String gebruikersnaam) throws SQLException {
-        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
 
         ResultSet myRs = myStmt.executeQuery("select * from speler where gebruikersnaam = '" + gebruikersnaam + "'");
@@ -215,7 +210,7 @@ public class Spel implements Cloneable{
         speler = null;
 
         while(myRs.next()){
-            speler = new Speler(myRs.getInt("nr") - 1, myRs.getString("gebruikersnaam"), myRs.getString("wachtwoord"), myRs.getString("email"), myRs.getInt("level"), myRs.getInt("experience"), myRs.getString("rank"), myRs.getInt("nuggets"), myRs.getInt("golden nuggets"), myRs.getInt("highscore"));
+            speler = new Speler(myRs.getInt("nr") - 1, myRs.getString("gebruikersnaam"), myRs.getInt("level"), myRs.getInt("experience"), myRs.getString("rank"), myRs.getInt("nuggets"), myRs.getInt("golden nuggets"), myRs.getInt("highscore"));
         }
     }
 
@@ -224,8 +219,6 @@ public class Spel implements Cloneable{
     }
 
     public void registerPlayer(String gebruikersnaam, String wachtwoord, String email) throws SQLException, NoSuchAlgorithmException, UnsupportedEncodingException {
-        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
 
         int a = myStmt.executeUpdate("insert into speler (gebruikersnaam, wachtwoord, email, rank, highscore)" +
@@ -233,8 +226,6 @@ public class Spel implements Cloneable{
     }
 
     public String loginChecker(String gebruikersnaam, String wachtwoord) throws SQLException, NoSuchAlgorithmException, UnsupportedEncodingException {
-        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
 
         ResultSet myRs = myStmt.executeQuery("select count(*) from speler where gebruikersnaam = '" + gebruikersnaam + "' AND wachtwoord = '" + wachtwoord + "'");
@@ -248,8 +239,6 @@ public class Spel implements Cloneable{
     }
 
     public String infoChecker(String gebruikersnaam, String email) throws SQLException {
-        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        Connection myConn = DriverManager.getConnection(url, user, pass);
         Statement myStmt = myConn.createStatement();
 
         //Gebruikersnaam
@@ -257,7 +246,7 @@ public class Spel implements Cloneable{
 
         while(myRs.next()){
             if(myRs.getInt("count(*)") > 0){
-                return "Gebruikersnaam";
+                return "Username";
             }
         }
 

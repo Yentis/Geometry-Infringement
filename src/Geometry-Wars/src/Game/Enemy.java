@@ -1,9 +1,7 @@
 package Game;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -33,7 +31,6 @@ public class Enemy extends Sprite {
 
     //region Constructors
 
-
     public Enemy(int nr, String naam, String beschrijving, int hp, int kracht, String image, int experience, int score, int speed) {
         super(image);
         imageString = image;
@@ -60,18 +57,9 @@ public class Enemy extends Sprite {
         isHit = false;
     }
 
-    public void loseHP(int amount) {
+    //endregion
 
-        this.hp -= amount;
-    }
-
-    public void setHpBar(Rectangle2D hpBar) {
-        this.hpBar = hpBar;
-    }
-
-    public void setMaxHpBar(Rectangle2D maxHpBar) {
-        this.maxHpBar = maxHpBar;
-    }
+    //region Getters & Setters
 
     public String getNaam() {
         return naam;
@@ -105,41 +93,6 @@ public class Enemy extends Sprite {
         return speed;
     }
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public void setKracht(int kracht) {
-        this.kracht = kracht;
-    }
-    public double randomX() {
-        Random randomGenerator = new Random();
-
-        int randGetal = randomGenerator.nextInt(SCREEN_WIDTH);
-
-
-       /* while (randGetal > 100 && randGetal < (SCREEN_WIDTH - 100)) {
-            randGetal = randomGenerator.nextInt(SCREEN_WIDTH);
-        }*/
-
-        return randGetal;
-
-    }
-
-    public double randomY() {
-
-        Random randomGenerator = new Random();
-
-        int randGetal = randomGenerator.nextInt(SCREEN_HEIGHT);
-        return randGetal;
-
-    }
-
-
     public Image getImage() {
         return image;
     }
@@ -152,23 +105,53 @@ public class Enemy extends Sprite {
         return score;
     }
 
+    public String getImageString() {
+        return imageString;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void setKracht(int kracht) {
+        this.kracht = kracht;
+    }
+
+    //endregion
+
+    //region Behaviour
+
+    public void loseHP(int amount) {
+        this.hp -= amount;
+    }
+
+    private double randomX() {
+        Random randomGenerator = new Random();
+
+        return randomGenerator.nextInt(SCREEN_WIDTH);
+    }
+
+    private double randomY() {
+        Random randomGenerator = new Random();
+
+        return randomGenerator.nextInt(SCREEN_HEIGHT);
+    }
+
     public void move(double velocityX, double velocityY) {
         locationX += velocityX;
         locationY += velocityY;
 
         currentLocation.setLocation(locationX, locationY);
-
-    }
-
-    public String getImageString() {
-        return imageString;
     }
 
     public void drawHPBar(Graphics2D g2d) {
-
-        if (this.hpBar == null || this.maxHpBar == null) {
-            this.setHpBar(new Rectangle2D.Double(this.getCurrentLocation().getX(), this.getCurrentLocation().getY() - 50,  hpBarWidthRatio() * 0.75, 8));
-            this.setMaxHpBar(new Rectangle2D.Double(getCurrentLocation().getX(), getCurrentLocation().getY() - 50, getWidth()* 0.75, 8));
+        if (hpBar == null || maxHpBar == null) {
+            hpBar = (new Rectangle2D.Double(this.getCurrentLocation().getX(), this.getCurrentLocation().getY() - 50,  hpBarWidthRatio() * 0.75, 8));
+            maxHpBar = (new Rectangle2D.Double(getCurrentLocation().getX(), getCurrentLocation().getY() - 50, getWidth()* 0.75, 8));
         } else {
             if (hp != 0) {
                 hpBar.setRect(getCurrentLocation().getX(), getCurrentLocation().getY() - 50,  hpBarWidthRatio()* 0.75, 8);
@@ -184,12 +167,10 @@ public class Enemy extends Sprite {
         g2d.draw(hpBar);
     }
 
-    public double hpBarWidthRatio() {
-
+    private double hpBarWidthRatio() {
         double ratio = width / maxHp;
-        double healthBarWidth = ratio * hp;
 
-        return healthBarWidth;
+        return ratio * hp;
     }
 
     //endregion

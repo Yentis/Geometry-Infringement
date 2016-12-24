@@ -9,17 +9,13 @@ import javax.sound.sampled.LineEvent.*;
  * Created by Yentl-PC on 23/12/2016.
  */
 public class Sound implements Runnable{
+    //region Instance Variables
+
     private String location;
 
-    public void run() {
-        try {
-            playSound();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        }
-    }
+    //endregion
+
+    //region Constructors
 
     public Sound(String location){
         this.location = location;
@@ -27,26 +23,23 @@ public class Sound implements Runnable{
         (new Thread(this)).start();
     }
 
-    class AudioListener implements LineListener {
-        private boolean done = false;
-        @Override public synchronized void update(LineEvent event) {
-            Type eventType = event.getType();
-            if (eventType == Type.STOP || eventType == Type.CLOSE) {
-                done = true;
-                notifyAll();
-            }
-        }
-        public synchronized void waitUntilDone() throws InterruptedException {
-            while (!done) { wait(); }
+    //endregion
+
+    //region Behaviour
+
+    public void run() {
+        try {
+            playSound();
+        } catch (IOException | UnsupportedAudioFileException e) {
+            e.printStackTrace();
         }
     }
 
-    public void playSound() throws IOException, UnsupportedAudioFileException {
+    private void playSound() throws IOException, UnsupportedAudioFileException {
         File clipFile = new File(location);
         AudioListener listener = new AudioListener();
-        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(clipFile);
 
-        try {
+        try (AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(clipFile)) {
             Clip clip = AudioSystem.getClip();
             clip.addLineListener(listener);
             clip.open(audioInputStream);
@@ -58,12 +51,28 @@ public class Sound implements Runnable{
             } finally {
                 clip.close();
             }
-        } catch (LineUnavailableException e) {
+        } catch (LineUnavailableException | IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            audioInputStream.close();
         }
     }
+
+    //endregion
+
+    //region Classes
+
+    private class AudioListener implements LineListener {
+        private boolean done = false;
+        @Override public synchronized void update(LineEvent event) {
+            Type eventType = event.getType();
+            if (eventType == Type.STOP || eventType == Type.CLOSE) {
+                done = true;
+                notifyAll();
+            }
+        }
+        synchronized void waitUntilDone() throws InterruptedException {
+            while (!done) { wait(); }
+        }
+    }
+
+    //endregion
 }

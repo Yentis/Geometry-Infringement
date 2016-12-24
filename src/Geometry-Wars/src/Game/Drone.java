@@ -15,106 +15,52 @@ public class Drone extends Sprite{
     private String beschrijving;
     private int type;
     private int kracht = 2;
-    private String uiterlijk;
     private int level = 0;
     private int currentXp = 0;
     private double maxXp = 1000;
     private double currentAngle;
-    private int fireSpeed = 500; // om de 0,5 seconden
-    private ArrayList<Kogel> kogels = new ArrayList<Kogel>();
+    private int fireSpeed = 500; // default om de 500ms
+    private ArrayList<Kogel> kogels = new ArrayList<>();
     private String imageString;
 
     //endregion
 
     //region Constructors
 
-
-
     public Drone(int nr, String naam, String beschrijving, int kracht, String uiterlijk, int type){
-
         super(uiterlijk);
         imageString = uiterlijk;
         x = 600;
         y = 300;
         currentLocation = new Point();
         currentLocation.setLocation(x, y);
+        currentAngle = 0;
+
         this.nr = nr;
         this.naam = naam;
         this.beschrijving = beschrijving;
-
-
         this.type= type;
         this.kracht = kracht;
-
-        this.uiterlijk = uiterlijk;
-        currentAngle = 0;
     }
 
-    public Drone(){
-        super("");
-        this.nr = 0;
-        this.naam = "Placeholder";
-        this.beschrijving = "Placeholder";
-        this.uiterlijk = "Vierkant";
-    }
+    //endregion
+
+    //region Getters & Setters
 
     public int getLevel() {
         return level;
-    }
-
-    public void addLevel() {
-        this.level += 1;
     }
 
     public int getCurrentXp() {
         return currentXp;
     }
 
-    public void addCurrentXp(int xp) {
-        this.currentXp += xp;
+    public ArrayList<Kogel> getKogels() {
+        return kogels;
     }
-
-    public void resetCurrentXp() { this.currentXp = 0;}
 
     public double getMaxXp() {
         return maxXp;
-    }
-
-    public void setMaxXp(int level) {
-        this.maxXp = Math.pow(2,level) * 1000;
-    }
-
-    public void checkLevel(){
-        if(getCurrentXp() >= getMaxXp()){
-            addLevel();
-            setMaxXp(getLevel());
-            checkLevel();
-            resetCurrentXp();
-        }
-
-        /*switch (getLevel()){
-            case 1:
-                setKracht(75);
-                break;
-            case 2:
-                setKracht(100);
-                break;
-            case 3:
-                setKracht(150);
-                break;
-            case 4:
-                setKracht(200);
-                break;
-            case 5:
-                setKracht(250);
-                break;
-        }*/
-    }
-    // end region
-
-    //region new region
-    public ArrayList<Kogel> getKogels() {
-        return kogels;
     }
 
     public String getImageString() {
@@ -153,10 +99,38 @@ public class Drone extends Sprite{
         this.currentAngle = currentAngle;
     }
 
+    //endregion
+
+    //region Behaviour
+
+    private void addLevel() {
+        this.level += 1;
+    }
+
+    public void addCurrentXp(int xp) {
+        this.currentXp += xp;
+    }
+
+    private void resetCurrentXp() { this.currentXp = 0;}
+
+    public void checkLevel(){
+        if(getCurrentXp() >= getMaxXp()){
+            addLevel();
+            setMaxXp(getLevel());
+            checkLevel();
+            resetCurrentXp();
+        }
+    }
+
     public void drawAccordingToShip(Graphics2D g2d, Schip schip){
         g2d.translate(schip.getCurrentLocation().getX(), schip.getCurrentLocation().getY());
         g2d.rotate(Math.toRadians(this.getCurrentAngle()) , schip.getWidth() / 2, schip.getHeight()  / 2);
         g2d.translate(-schip.getCurrentLocation().getX(), -schip.getCurrentLocation().getY() );
     }
+
+    private void setMaxXp(int level) {
+        this.maxXp = Math.pow(2,level) * 1000;
+    }
+
     //endregion
 }

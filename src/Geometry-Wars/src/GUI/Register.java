@@ -105,7 +105,7 @@ public class Register extends GPanel {
                     if(Objects.equals(result, "")){
                         registered.setText("Registration Successful");
                     } else {
-                        registered.setText(result + " bestaat al.");
+                        registered.setText(result + " already exists.");
                     }
                 }
                 registered.setVisible(true);

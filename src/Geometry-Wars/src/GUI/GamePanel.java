@@ -361,7 +361,7 @@ public class GamePanel extends GPanel {
         g2d.transform(t);
 
         drone.setCurrentAngle(drone.getCurrentAngle() + 1);
-        drone.drawHitBox(g2d);
+        drone.drawHitBox();
         drone.setCurrentLocation(schip.getCurrentLocation().getX() + 75, schip.getCurrentLocation().getY() + 75);
 
         g2d.drawImage(drone.getImage(), drone.getCurrentLocation().x, drone.getCurrentLocation().y, this);
