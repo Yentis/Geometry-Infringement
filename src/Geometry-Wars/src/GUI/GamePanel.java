@@ -30,6 +30,7 @@ class GamePanel extends GPanel {
     //region Instance Variables
 
     private int enemyCounter;
+    private double enemyPower = 1;
     private double healthBarWidth;
     private boolean coop;
     private boolean gameFinished;
@@ -699,47 +700,48 @@ class GamePanel extends GPanel {
         });
     }
 
-    private void spawnEnemies() {
-        Enemy testenemy = enemies.get(0);
-        new ImageIcon(testenemy.getImage());
+    private void makeEnemy(Enemy enemy){
+        enemyOnField.add(new Enemy(enemy.getNr(), enemy.getNaam(), enemy.getBeschrijving(), (int)(enemy.getHP() * enemyPower), (int)(enemy.getKracht() * enemyPower), enemy.getImageString(), (int)(enemy.getExperience() * enemyPower), (int)(enemy.getScore() * enemyPower), enemy.getSpeed()));
+    }
 
-        spawnTimer = new Timer(7000, e -> {
+
+    private void spawnEnemies() {
+        spawnTimer = new Timer(5000, e -> {
             if (enemyOnField.isEmpty()) {
-                if (enemyCounter % 20 == 0) {
-                    Enemy boss1 = enemies.get(6);
-                    enemyOnField.add(new Enemy(boss1.getNr(), boss1.getNaam(), boss1.getBeschrijving(), boss1.getHP(), boss1.getKracht(), boss1.getImageString(), boss1.getExperience(), boss1.getScore(), boss1.getSpeed()));
-                    enemyCounter++;
-                } else {
-                    for (int i = 0; i < enemyCounter; i++) {
-                        enemyOnField.add(new Enemy(testenemy.getNr(), testenemy.getNaam(), testenemy.getBeschrijving(), testenemy.getHP(), testenemy.getKracht(), testenemy.getImageString(), testenemy.getExperience(), testenemy.getScore(), testenemy.getSpeed()));
-                    }
-                    enemyCounter++;
-                    if (enemyCounter % 5 == 0) {
-                        Enemy enemy2 = enemies.get(1);
-                        enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
-                    }
-                    if (enemyCounter % 2 == 0) {
-                        Enemy enemy2 = enemies.get(2);
-                        enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
-                    }
-                    if (enemyCounter % 7 == 0) {
-                        Enemy enemy2 = enemies.get(3);
-                        enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
-                    }
-                    if (enemyCounter % 9 == 0) {
-                        Enemy enemy2 = enemies.get(4);
-                        enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
-                    }
-                    if (enemyCounter % 11 == 0) {
-                        Enemy enemy2 = enemies.get(5);
-                        enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
-                    }
-                    if (enemyCounter % 13 == 0) {
-                        Enemy enemy2 = enemies.get(6);
-                        enemyOnField.add(new Enemy(enemy2.getNr(), enemy2.getNaam(), enemy2.getBeschrijving(), enemy2.getHP(), enemy2.getKracht(), enemy2.getImageString(), enemy2.getExperience(), enemy2.getScore(), enemy2.getSpeed()));
-                    }
-                    enemyCounter++;
+                Enemy enemy = null;
+
+                enemy = enemies.get(0);
+                for (int i = 0; i < enemyCounter; i++) {
+                    makeEnemy(enemy);
                 }
+                if (enemyCounter % 5 == 0) {
+                    enemy = enemies.get(1);
+                    makeEnemy(enemy);
+                }
+                if (enemyCounter % 2 == 0) {
+                    enemy = enemies.get(2);
+                    makeEnemy(enemy);
+                }
+                if (enemyCounter % 7 == 0) {
+                    enemy = enemies.get(3);
+                    makeEnemy(enemy);
+                }
+                if (enemyCounter % 9 == 0) {
+                    enemy = enemies.get(4);
+                    makeEnemy(enemy);
+                }
+                if (enemyCounter % 11 == 0) {
+                    enemy = enemies.get(5);
+                    makeEnemy(enemy);
+                }
+                if (enemyCounter == 21) {
+                    enemy = enemies.get(6);
+                    makeEnemy(enemy);
+                    enemyCounter = 1;
+                    enemyPower += 0.2;
+                }
+                System.out.println(enemyCounter);
+                enemyCounter+=2;
             }
 
             if(schip != null && schip.getUpgrades().contains(2)){
