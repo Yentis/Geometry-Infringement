@@ -718,7 +718,7 @@ class GamePanel extends GPanel {
                     enemy = enemies.get(1);
                     makeEnemy(enemy);
                 }
-                if (enemyCounter % 2 == 0) {
+                if (enemyCounter % 3 == 0) {
                     enemy = enemies.get(2);
                     makeEnemy(enemy);
                 }
@@ -740,7 +740,6 @@ class GamePanel extends GPanel {
                     enemyCounter = 1;
                     enemyPower += 0.2;
                 }
-                System.out.println(enemyCounter);
                 enemyCounter+=2;
             }
 
