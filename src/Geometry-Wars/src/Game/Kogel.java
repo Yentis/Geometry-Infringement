@@ -1,17 +1,19 @@
 package Game;
 
-import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Created by Yentl-PC on 10/11/2016.
  */
 public class Kogel extends Sprite {
-    private final int SCREEN_WIDTH = 1024;
+    //region Instance Variables
+
     private double kogelSnelheid = 10;
     private Point startingPoint;
 
+    //endregion
+
+    //region Constructors
 
     public Kogel(double x, double y, Point target, String image) {
         super(x, y, target, image);
@@ -20,13 +22,9 @@ public class Kogel extends Sprite {
         isHit = false;
     }
 
-    public boolean isOutOfBorder(double currlocation, double minBorder, double maxborder ){
-        if (currlocation < minBorder ){
-            return true;
-        } else if (currlocation > maxborder){
-            return true;
-        } return false;
-    }
+    //endregion
+
+    //region Getters & Setters
 
     public Point getStartingPoint() {
         return startingPoint;
@@ -36,4 +34,17 @@ public class Kogel extends Sprite {
         return kogelSnelheid;
     }
 
+    //endregion
+
+    //region Behaviour
+
+    public boolean isOutOfBorder(double currlocation, double minBorder, double maxborder ){
+        if (currlocation < minBorder ){
+            return true;
+        } else if (currlocation > maxborder){
+            return true;
+        } return false;
+    }
+
+    //endregion
 }

@@ -8,33 +8,23 @@ public class Upgrade {
 
     private int nr;
     private String naam;
-    private String beschrijving;
     private String foto = "";
     private int kost = 100;
-    //private boolean active;
 
     //endregion
 
     //region Constructors
 
-    public Upgrade(int nr, String naam, String beschrijving, String foto, int kost){
+    Upgrade(int nr, String naam, String foto, int kost){
         this.nr = nr;
         this.naam = naam;
-        this.beschrijving = beschrijving;
         this.foto = foto;
         this.kost = kost;
-        //active = false;
-    }
-
-    public Upgrade(){
-        this.nr = 0;
-        this.naam = "Placeholder";
-        this.beschrijving = "Placeholder";
     }
 
     //endregion
 
-    //region Getters
+    //region Getters & Setters
 
     public String getFoto() {
         return foto;
@@ -52,13 +42,5 @@ public class Upgrade {
         return naam;
     }
 
-    // public boolean isActive() {
-   //     return active;
-   // }
-
     //endregion
-
-
-
-
 }

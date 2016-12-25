@@ -1,24 +1,13 @@
 package GComponents;
 
-import GUI.*;
-import GUI.Window;
-import jdk.nashorn.internal.ir.annotations.Ignore;
-
 import javax.swing.*;
-import javax.swing.tree.ExpandVetoException;
 import java.awt.*;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
-
 
 /**
  * Created by Renzie on 10/11/2016.
  */
 public abstract class GPanel extends JPanel {
-
     private Component[] components = this.getComponents();
 
     public GPanel() {
@@ -29,12 +18,11 @@ public abstract class GPanel extends JPanel {
     }
     protected void resizeComponents(int width, int height){
         for (Component c : components){
-            System.out.println(c);
             c.setBounds( c.getX() * width / height, c.getY() * width / height, c.getWidth() * width / height, c.getHeight() * width / height);
         }
     }
 
-    public void setAllComponentsVisible(){
+    protected void setAllComponentsVisible(){
         for (Component component : components){
             component.setVisible(true);
         }

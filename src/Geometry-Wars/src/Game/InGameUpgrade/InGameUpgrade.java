@@ -1,7 +1,5 @@
 package Game.InGameUpgrade;
 
-import Game.Schip;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,11 +9,9 @@ import java.awt.*;
 public class InGameUpgrade {
     private int nr;
     private String naam;
-    private String beschrijving;
     private String foto = "";
     private boolean active;
     private Image image;
-
 
     public InGameUpgrade(int nr, String naam, String foto) {
         this.nr = nr;
@@ -31,12 +27,9 @@ public class InGameUpgrade {
     }
 
     //region getters
+
     public int getNr() {
         return nr;
-    }
-
-    public String getNaam() {
-        return naam;
     }
 
     public Image getImage() {
@@ -46,8 +39,6 @@ public class InGameUpgrade {
     public boolean isActive() {
         return active;
     }
-
-
 
     //endregion
 

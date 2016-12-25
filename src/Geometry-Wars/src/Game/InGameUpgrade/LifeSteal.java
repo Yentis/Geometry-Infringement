@@ -2,9 +2,6 @@ package Game.InGameUpgrade;
 
 import Game.Schip;
 
-import javax.swing.*;
-import java.awt.*;
-
 /**
  * Created by Renzie on 21/12/2016.
  */

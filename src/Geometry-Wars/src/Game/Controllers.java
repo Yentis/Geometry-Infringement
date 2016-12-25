@@ -2,12 +2,8 @@ package Game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import net.java.games.input.Component;
 import net.java.games.input.Component.Identifier;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
@@ -18,14 +14,16 @@ import javax.swing.*;
  * Created by Yentl-PC on 21/12/2016.
  */
 public class Controllers implements Runnable {
+    //region Instance Variables
+
     private ArrayList<Controller> foundControllers;
     private Schip schip;
     private Timer mousePressedTimer;
     private int index;
 
-    public void run() {
-        startShowingControllerData(index);
-    }
+    //endregion
+
+    //region Constructors
 
     public Controllers(Schip schip, int index) {
         this.schip = schip;
@@ -36,19 +34,24 @@ public class Controllers implements Runnable {
         (new Thread(this)).start();
     }
 
+    //endregion
+
+    //region Behaviour
+
+    public void run() {
+        startShowingControllerData(index);
+    }
+
     private void searchForControllers() {
         Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
 
-        for(int i = 0; i < controllers.length; i++){
-            Controller controller = controllers[i];
-
+        for (Controller controller : controllers) {
             if (
                     controller.getType() == Controller.Type.STICK ||
-                            controller.getType() == Controller.Type.GAMEPAD ||
-                            controller.getType() == Controller.Type.WHEEL ||
-                            controller.getType() == Controller.Type.FINGERSTICK
-                    )
-            {
+                    controller.getType() == Controller.Type.GAMEPAD ||
+                    controller.getType() == Controller.Type.WHEEL ||
+                    controller.getType() == Controller.Type.FINGERSTICK
+                ) {
                 // Add new controller to the list of all controllers.
                 foundControllers.add(controller);
             }
@@ -65,8 +68,6 @@ public class Controllers implements Runnable {
             }
 
             Controller controller = foundControllers.get(index);
-
-
 
             if( !controller.poll() ){
                 break;
@@ -92,8 +93,6 @@ public class Controllers implements Runnable {
             }else{
                 mousePressedTimer.start();
             }
-
-
 
             int xAxis = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.X).getPollData());
             int yAxis = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.Y).getPollData());
@@ -131,8 +130,10 @@ public class Controllers implements Runnable {
         }
     }
 
-    public int getAxisValueInPercentage(float axisValue)
+    private int getAxisValueInPercentage(float axisValue)
     {
         return (int)(((2 - (1 - axisValue)) * 100) / 2);
     }
+
+    //endregion
 }

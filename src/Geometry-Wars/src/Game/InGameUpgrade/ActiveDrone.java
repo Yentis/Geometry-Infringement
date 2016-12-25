@@ -10,8 +10,6 @@ public class ActiveDrone extends InGameUpgrade{
 
     public ActiveDrone(int nr, String naam, String foto, Schip schip) {
         super(nr, naam, foto);
-        this.schip = schip;
-
     }
 
     @Override

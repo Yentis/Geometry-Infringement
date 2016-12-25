@@ -1,10 +1,7 @@
 package Game.InGameUpgrade;
 
-
 import Game.Enemy;
 import Game.Schip;
-
-import java.util.ArrayList;
 
 /**
  * Created by Renzie on 21/12/2016.
