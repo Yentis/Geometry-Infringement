@@ -322,7 +322,7 @@ class GamePanel extends GPanel {
         if (schip != null) {
             drawBullets(g, schip.getKogels(), schip);
             drawShip(g, schip);
-            drawBuffs(g, schip, schipbarp1);
+            drawBuffs(g, schip, 10);
         }
         if (drone != null && schip != null) {
             drawBullets(g, drone.getKogels(), schip);
@@ -331,7 +331,7 @@ class GamePanel extends GPanel {
         if (coop && schipp2 != null) {
             drawBullets(g, schipp2.getKogels(), schipp2);
             drawShip(g, schipp2);
-            drawBuffs(g, schipp2, schipbarp2);
+            drawBuffs(g, schipp2, 955);
         }
         if (coop && dronep2 != null && schipp2 != null) {
             drawBullets(g, dronep2.getKogels(), schipp2);
@@ -341,11 +341,11 @@ class GamePanel extends GPanel {
 
     //region Draw
 
-    private void drawBuffs(Graphics g, Schip schip, GLabel xpbar) {
+    private void drawBuffs(Graphics g, Schip schip, int xCoordinaat) {
         Graphics2D g2d = (Graphics2D) g;
         if (schip.getActiveBuffs().size() > 0) {
             for (int i = 0; i < schip.getActiveBuffs().size(); i++) {
-                g2d.drawImage(schip.getActiveBuffs().get(i).getImage(), xpbar.getX() + xpbar.getWidth() - 35 * (i + 1), 630, 30, 30, null);
+                g2d.drawImage(schip.getActiveBuffs().get(i).getImage(), xCoordinaat, 120 + 35 * i, 40, 40, null);
             }
         }
     }

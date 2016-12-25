@@ -61,7 +61,7 @@ public class Enemy extends Sprite {
     //endregion
 
     //region Getters & Setters
-    
+
     public String getNaam() {
         return naam;
     }
