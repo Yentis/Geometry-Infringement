@@ -47,6 +47,11 @@ public class Sprite {
         isHit = false;
     }
 
+    Sprite(Point currentLocation){
+        this.currentLocation = currentLocation;
+        //currentLocation.setLocation(currentLocation);
+    }
+
     //endregion
 
     //region Getters & Setters

@@ -27,6 +27,7 @@ public class Enemy extends Sprite {
     private int maxHp;
     private String imageString;
 
+
     //endregion
 
     //region Constructors
@@ -60,7 +61,7 @@ public class Enemy extends Sprite {
     //endregion
 
     //region Getters & Setters
-
+    
     public String getNaam() {
         return naam;
     }

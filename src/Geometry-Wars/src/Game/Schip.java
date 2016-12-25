@@ -376,6 +376,7 @@ public class Schip extends Sprite {
             e.printStackTrace();
         }
 
+
         double kogelX = locationX;
         double kogelY = locationY;
 
