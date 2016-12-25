@@ -271,6 +271,7 @@ public class Schip extends Sprite {
 
     public void resetCombo() {
         combo = 0;
+        upgradecombo = 0;
     }
 
     public void addCombo() {
