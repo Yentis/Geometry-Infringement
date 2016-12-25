@@ -8,6 +8,7 @@ import Game.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.sql.SQLException;
@@ -149,13 +150,13 @@ class GamePanel extends GPanel {
         currentDroneXpBar.setOpaque(true);
         currentHealthBar = new JProgressBar();
         currentHealthBar.setBounds(20, 27, 0, 40);
-        currentHealthBar.setBackground(new Color(0, 200, 0));
+        currentHealthBar.setBackground(Color.green);
         currentHealthBar.setOpaque(true);
 
         //Schip 2
         currentHealthBarp2 = new JProgressBar();
         currentHealthBarp2.setBounds(575, 27, 0, 40);
-        currentHealthBarp2.setBackground(new Color(0, 200, 0));
+        currentHealthBarp2.setBackground(Color.green);
         currentHealthBarp2.setOpaque(true);
         currentDroneXpBarp2 = new JProgressBar();
         currentDroneXpBarp2.setBounds(880, 695, 0, 35);
@@ -413,6 +414,11 @@ class GamePanel extends GPanel {
             if (schip.collisionDetect(enemy.getHitBox())) {
                 schip.setHit(true);
                 if (!schip.getInvulnerability().isActive()) {
+                    try {
+                        new Sound("playerhit");
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     schip.loseHP(enemy.getKracht());
                     schip.resetCombo();
                 }
@@ -460,10 +466,14 @@ class GamePanel extends GPanel {
                     enemy.loseHP(schip.getKracht());
                     enemy.setHit(false);
                     if (enemy.getHP() <= 0) {
-                        enemyIterator.remove();
-                        if (schip.getCombo() < 999) {
-                            schip.addCombo();
+                        try {
+                            new Sound("enemydeath");
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
                         }
+                        enemyIterator.remove();
+
+                        schip.addCombo();
                         schip.addScore(enemy.getScore(), schip.getCombo());
 
                         if (schip.getDrone() != null && kogels == schip.getDrone().getKogels()) {
@@ -477,7 +487,7 @@ class GamePanel extends GPanel {
                         } else if (kogels == schip.getKogels()) {
                             schip.addCurrentXp(enemy.getExperience());
                             schip.checkLevel();
-                            schip.checkForUpgrade(schip.getCombo());
+                            schip.checkForUpgrade();
                             if (schip.getDrone() != null && schip.getActiveDrone().isActive()) {
                                 shootingDroneTimer.start();
                             }
@@ -554,6 +564,7 @@ class GamePanel extends GPanel {
                 schip.beweegSchip();
                 updateKogels(schip.getKogels(), schip);
                 if (schip.getInvulnerability().isActive()) {
+                    currentHealthBar.setBackground(Color.cyan);
                     invulnerabilityTimer.start();
                 }
                 if (schip.getSlowEnemies().isActive()) {
@@ -620,17 +631,17 @@ class GamePanel extends GPanel {
     private void checkGameFinished() throws IOException, UnsupportedAudioFileException {
         if (coop) {
             if((schip == null || schipp2 == null) && !soundExecuted){
-                Sound sound = new Sound("resources/Sound/playerdeath.wav");
+                new Sound("playerdeath");
                 soundExecuted = true;
             }
 
             if (schip == null && schipp2 == null) {
-                Sound sound = new Sound("resources/Sound/playerdeath.wav");
+                new Sound("playerdeath");
                 gameFinished = true;
             }
         } else {
             if (schip.getHp() <= 0) {
-                Sound sound = new Sound("resources/Sound/playerdeath.wav");
+                new Sound("playerdeath");
                 gameFinished = true;
             }
         }
@@ -661,6 +672,12 @@ class GamePanel extends GPanel {
         invulnerabilityTimer = new Timer(5000, e -> {
             if (schip != null) {
                 schip.getInvulnerability().setActive(false);
+                try {
+                    new Sound("shieldinactive");
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+                currentHealthBar.setBackground(Color.green);
                 invulnerabilityTimer.stop();
             }
         });

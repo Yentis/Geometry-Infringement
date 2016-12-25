@@ -3,6 +3,7 @@ package Game;
 import Game.InGameUpgrade.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class Schip extends Sprite {
     private int keyRight;
     private int keyUp;
     private int keyDown;
+    private int upgradecombo = 0;
     private double speed;
     private double dx;
     private double dy;
@@ -37,7 +39,6 @@ public class Schip extends Sprite {
     private List<Integer> menuUpgrades = new ArrayList<>();
     private Movement move;
     private Drone drone;
-    private Point mousePointer;
 
     //IngameUpgrades
     private LifeSteal lifesteal = new LifeSteal(1, "LifeSteal", "resources/Media/IngameUpgradeIcons/LifeSteal.png", this);
@@ -233,16 +234,23 @@ public class Schip extends Sprite {
         }
     }
 
-    public void checkForUpgrade(int combo) {
+    public void checkForUpgrade() {
         //TODO terugveranderen :p - Renzie dit is voor de upgrade arraylist check
-        if (combo % 20 == 0) {
+        if (upgradecombo % 20 == 0) {
             //Every 20 combo
+            if(!invulnerability.isActive()){
+                try {
+                    new Sound("shieldactive");
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
             invulnerability.setActive(true);
-        } else if (combo % 50 == 0) {
+        } else if (upgradecombo % 50 == 0) {
             //Every 50 combo
             slowEnemies.setActive(true);
         }
-        switch (combo) {
+        switch (upgradecombo) {
             case 1:
                 //when combo resets
                 for (InGameUpgrade buff : buffs){
@@ -266,7 +274,10 @@ public class Schip extends Sprite {
     }
 
     public void addCombo() {
-        combo += 1;
+        if (combo < 999) {
+            combo ++;
+        }
+        upgradecombo ++;
     }
 
     public void addScore(int enemyscore, int combo) {
@@ -359,6 +370,11 @@ public class Schip extends Sprite {
     }
 
     private void fire(Point point) {
+        try {
+            new Sound("shoot");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         double kogelX = locationX;
         double kogelY = locationY;
@@ -366,13 +382,8 @@ public class Schip extends Sprite {
         addKogels(new Kogel(kogelX, kogelY, point, "resources/Media/kogel1.png"));
 
         if (menuUpgrades.contains(1)) {
-            double kogel2X = mousePointer.getX() + 100;
-            double kogel2Y = mousePointer.getY();
-            double kogel3X = mousePointer.getX() - 100;
-            double kogel3Y = mousePointer.getY();
-
-            Point mousePointer2 = new Point((int) kogel2X, (int) kogel2Y);
-            Point mousePointer3 = new Point((int) kogel3X, (int) kogel3Y);
+            Point mousePointer2 = new Point((int)point.getX(), (int)point.getY() + 50);
+            Point mousePointer3 = new Point((int)point.getX(), (int)point.getY() - 50);
 
             addKogels(new Kogel(kogelX, kogelY, mousePointer2, "resources/Media/kogel1.png"));
             addKogels(new Kogel(kogelX, kogelY, mousePointer3, "resources/Media/kogel1.png"));

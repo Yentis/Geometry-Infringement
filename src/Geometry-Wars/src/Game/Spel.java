@@ -1,15 +1,9 @@
 package Game;
 
-import java.io.InputStream;
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.*;
-
-import static java.lang.Math.abs;
 
 /**
  * Created by Yentl-PC on 8/11/2016.
@@ -217,6 +211,8 @@ public class Spel implements Cloneable{
         while(myRs.next()){
             speler = new Speler(myRs.getInt("nr") - 1, myRs.getString("gebruikersnaam"), myRs.getInt("level"), myRs.getInt("experience"), myRs.getString("rank"), myRs.getInt("nuggets"), myRs.getInt("golden nuggets"), myRs.getInt("highscore"));
         }
+
+        checkRank();
     }
 
     public void logOut(){
@@ -270,7 +266,7 @@ public class Spel implements Cloneable{
         Statement myStmt = myConn.createStatement();
         Statement myStmt2 = myConn.createStatement();
         List<Integer> scores = new ArrayList<>();
-        double amountofplayers = 0;
+        double amountofplayers;
 
         ResultSet ranking = myStmt.executeQuery("select * from speler ");
 

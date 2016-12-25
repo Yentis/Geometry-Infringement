@@ -127,6 +127,11 @@ public class Sprite {
         /* verschil x / vierkantswortel van ( verschilx^2 + verschilY^2) om de lengte naar 1 stuk te brengen
         *  dit bepaalt de snelheid van de bullet en kan versneld worden door gewoon de kogelsnelheid te veranderen.*/
         length = Math.sqrt(Math.pow(verschilX, 2) + Math.pow(verschilY, 2));
+
+        if(length == 0) {
+            length = 1;
+        }
+
         velocityX = ((verschilX) / length) * speed;
         velocityY = ((verschilY) / length) * speed;
 

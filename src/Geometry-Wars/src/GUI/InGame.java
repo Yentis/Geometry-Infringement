@@ -38,7 +38,7 @@ class InGame extends GPanel implements ActionListener {
     private ImageIcon PauseImage = new ImageIcon("resources\\Media\\pause-128.png");
     private JButton pauze = new JButton(PauseImage);
     private GLabel gameOver = new GLabel("Oopsy daisy! u dead fam", 25f, 325, 260, 375, 120, true, Color.white);
-    private GLabel nuggetAmount = new GLabel("",  24f, 345, 120, 500, 120, false, Color.white);
+    private GLabel nuggetAmount = new GLabel("",  24f, 300, 120, 500, 120, false, Color.white);
     private GPanel pause = new GPanel() {
         @Override
         public void initComponents() throws IOException, FontFormatException {
