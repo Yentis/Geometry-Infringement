@@ -122,6 +122,14 @@ class GamePanel extends GPanel {
         }
         setSlowerEnemiesTimer(schip);
         setInvulnerabilityTimer(schip);
+
+        if(dronep2 != null && schipp2 != null){
+            setUpShootingDroneTimer(dronep2);
+        }
+        if (coop){
+            setSlowerEnemiesTimer(schipp2);
+            setInvulnerabilityTimer(schipp2);
+        }
     }
 
     @Override
@@ -628,6 +636,7 @@ class GamePanel extends GPanel {
                 }
                 schipp2.beweegSchip();
                 if (schipp2.getInvulnerability().isActive()) {
+                    currentHealthBarp2.setBackground(Color.cyan);
                     invulnerabilityTimer.start();
                 }
                 if (schipp2.getSlowEnemies().isActive()) {
@@ -713,7 +722,11 @@ class GamePanel extends GPanel {
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
                 }
-                currentHealthBar.setBackground(Color.green);
+                if(coop && schip == schipp2){
+                    currentHealthBarp2.setBackground(Color.green);
+                } else {
+                    currentHealthBar.setBackground(Color.green);
+                }
                 invulnerabilityTimer.stop();
             }
         });
