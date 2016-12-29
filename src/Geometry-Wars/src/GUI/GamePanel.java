@@ -32,7 +32,6 @@ class GamePanel extends GPanel {
 
     private int enemyCounter;
     private double enemyPower = 1;
-    private double healthBarWidth;
     private boolean coop;
     private boolean gameFinished;
     private boolean soundExecuted;
@@ -156,7 +155,7 @@ class GamePanel extends GPanel {
         currentSchipXpBar.setBackground(new Color(50, 50, 255));
         currentSchipXpBar.setOpaque(true);
         currentDroneXpBar = new JProgressBar();
-        currentDroneXpBar.setBounds(415, 695, 0, 35);
+        currentDroneXpBar.setBounds(350, 695, 0, 35);
         currentDroneXpBar.setBackground(new Color(50, 50, 255));
         currentDroneXpBar.setOpaque(true);
         currentHealthBar = new JProgressBar();
@@ -234,6 +233,8 @@ class GamePanel extends GPanel {
             scorep2.setText("");
             combop2.setText("x");
             currentHealthBarp2.setSize(0, currentHealthBarp2.getHeight());
+            currentSchipXpBarp2.setSize(0, currentSchipXpBarp2.getHeight());
+            currentDroneXpBarp2.setSize(0, currentDroneXpBarp2.getHeight());
         }
     }
 
@@ -300,6 +301,10 @@ class GamePanel extends GPanel {
             if (dummydr != null) {
                 dronep2 = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
                 schipp2.setDrone(dronep2);
+            }
+
+            if (schipp2.getUpgrades().contains(2)) {
+                schipp2.setSpeed(5);
             }
 
             setSlowerEnemiesTimer(schipp2);
@@ -421,15 +426,14 @@ class GamePanel extends GPanel {
         }
     }
 
+    //@Renzie, gets laggy
     private void drawAnimations(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
         for (KillAnimation killAnimation : killAnimations){
             //System.out.println(killAnimation.getCurrentLocation());
             try{
                 g2d.setFont(new GFont(20f));
-            } catch (IOException e){
-                e.printStackTrace();
-            } catch (FontFormatException e){
+            } catch (IOException | FontFormatException e){
                 e.printStackTrace();
             }
             g2d.setColor(Color.cyan);
@@ -509,7 +513,7 @@ class GamePanel extends GPanel {
 
 
                         if (schip.getDrone() != null && kogels == schip.getDrone().getKogels()) {
-                            if (Objects.equals(drone.getNaam(), "Experience Drone")) {
+                            if (Objects.equals(schip.getDrone().getNaam(), "Experience Drone")) {
                                 schip.addCurrentXp(enemy.getExperience());
                             } else {
                                 schip.getDrone().addCurrentXp(enemy.getExperience());
@@ -564,21 +568,14 @@ class GamePanel extends GPanel {
     private void approachShip() {
         for (Enemy enemy : enemyOnField) {
             if (coop) {
-                if (schip != null || schipp2 != null) {
-                    if (schip != null) {
-                        schip.getSlowEnemies().doFunction(enemy);
-                    }
-                    if (schipp2 != null) {
-                        schipp2.getSlowEnemies().doFunction(enemy);
-                    }
+                if(schip != null && schipp2 != null) {
+                    schip.getSlowEnemies().doFunction(enemy);
+                    schipp2.getSlowEnemies().doFunction(enemy);
                     enemy.updateLocation(closestShip(enemy).getCurrentLocation(), enemy.getCurrentLocation(), enemy.getSpeed());
+                } else if (schip == null){
+                    enemy.updateLocation(schipp2.getCurrentLocation(), enemy.getCurrentLocation(), enemy.getSpeed());
                 } else {
-                    if (schip != null) {
-                        enemy.updateLocation(schip.getCurrentLocation(), enemy.getCurrentLocation(), enemy.getSpeed());
-                    }
-                    if (schipp2 != null) {
-                        enemy.updateLocation(schipp2.getCurrentLocation(), enemy.getCurrentLocation(), enemy.getSpeed());
-                    }
+                    enemy.updateLocation(schip.getCurrentLocation(), enemy.getCurrentLocation(), enemy.getSpeed());
                 }
             } else {
                 schip.getSlowEnemies().doFunction(enemy);
@@ -598,12 +595,14 @@ class GamePanel extends GPanel {
             approachShip();
             if (schip != null) {
                 schip.updateBuffs();
-                if (drone != null && (Objects.equals(drone.getNaam(), "Attack Drone") || Objects.equals(drone.getNaam(), "Experience Drone"))) {
+                if(drone != null && (Objects.equals(drone.getNaam(), "Attack Drone") || Objects.equals(drone.getNaam(), "Experience Drone"))){
                     updateKogels(drone.getKogels(), schip);
+                }
+                if (drone != null && (Objects.equals(drone.getNaam(), "Attack Drone") || Objects.equals(drone.getNaam(), "Defense Drone"))){
                     currentDroneXpBar.setSize((int) updateDroneXpBar(drone), currentDroneXpBar.getHeight());
-                } else if (drone != null && Objects.equals(drone.getNaam(), "Defense Drone")) {
+                }
+                if (drone != null && Objects.equals(drone.getNaam(), "Defense Drone")) {
                     collisionDrone(drone);
-                    currentDroneXpBar.setSize((int) updateDroneXpBar(drone), currentDroneXpBar.getHeight());
                 }
                 schip.beweegSchip();
                 updateKogels(schip.getKogels(), schip);
@@ -621,20 +620,20 @@ class GamePanel extends GPanel {
                 currentSchipXpBar.setSize((int) updateSchipXpBar(schip), currentSchipXpBar.getHeight());
                 schipbarp1.setText(" lvl: " + schip.getLevel());
             }
-        }
-        if (coop && schipp2 != null) {
-            checkDeadShip();
-            if (schipp2 != null) {
-                schipp2.updateBuffs();
-                updateKogels(schipp2.getKogels(), schipp2);
-                if (dronep2 != null) {
-                    updateKogels(dronep2.getKogels(), schipp2);
 
-                    currentDroneXpBarp2.setSize((int) updateDroneXpBar(dronep2), currentDroneXpBarp2.getHeight());
-                    dronebarp2.setText("lvl: " + schipp2.getDrone().getLevel());
+            if (coop && schipp2 != null) {
+                schipp2.updateBuffs();
+                if(dronep2 != null && (Objects.equals(dronep2.getNaam(), "Attack Drone") || Objects.equals(dronep2.getNaam(), "Experience Drone"))){
+                    updateKogels(dronep2.getKogels(), schipp2);
+                }
+                if (dronep2 != null && (Objects.equals(dronep2.getNaam(), "Attack Drone") || Objects.equals(dronep2.getNaam(), "Defense Drone"))){
                     currentDroneXpBarp2.setSize((int) updateDroneXpBar(dronep2), currentDroneXpBarp2.getHeight());
                 }
+                if (dronep2 != null && Objects.equals(dronep2.getNaam(), "Defense Drone")) {
+                    collisionDrone(dronep2);
+                }
                 schipp2.beweegSchip();
+                updateKogels(schipp2.getKogels(), schipp2);
                 if (schipp2.getInvulnerability().isActive()) {
                     currentHealthBarp2.setBackground(Color.cyan);
                     invulnerabilityTimer.start();
@@ -642,6 +641,7 @@ class GamePanel extends GPanel {
                 if (schipp2.getSlowEnemies().isActive()) {
                     slowerEnemiesTimer.start();
                 }
+
                 combop2.setText("x " + schipp2.getCombo());
                 scorep2.setText("" + schipp2.getScore());
                 currentHealthBarp2.setSize((int) updateHealthBar(schipp2), currentHealthBarp2.getHeight());
@@ -666,6 +666,8 @@ class GamePanel extends GPanel {
     }
 
     private double updateHealthBar(Schip schip) {
+        double healthBarWidth = 0;
+
         if (schip.getHp() >= 0) {
             double ratioHP = 432 / schip.getMaxhp();
             healthBarWidth = ratioHP * schip.getHp();
@@ -707,7 +709,11 @@ class GamePanel extends GPanel {
 
         double ratioDroneXp = 100 / drone.getMaxXp();
         xpBarWidthDrone = ratioDroneXp * drone.getCurrentXp();
-        dronebarp1.setText(" lvl: " + drone.getLevel());
+        if(drone == schip.getDrone()){
+            dronebarp1.setText(" lvl: " + drone.getLevel());
+        } else if (drone == schipp2.getDrone()){
+            dronebarp2.setText(" lvl: " + drone.getLevel());
+        }
         return xpBarWidthDrone;
     }
 

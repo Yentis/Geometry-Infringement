@@ -10,6 +10,7 @@ import GComponents.GButton;
 import GComponents.GFont;
 import GComponents.GLabel;
 import GComponents.GPanel;
+import Game.Sound;
 
 /**
  * Created by Laurens Visser on 9/11/2016.

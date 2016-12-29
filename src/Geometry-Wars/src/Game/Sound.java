@@ -80,6 +80,9 @@ public class Sound {
             case "shieldinactive":
                 playSfx(new FileInputStream("resources/Sound/shieldinactive.wav"));
                 break;
+            case "song":
+                playSfx(new FileInputStream("resources/Sound/song.wav"));
+                break;
         }
     }
 }
