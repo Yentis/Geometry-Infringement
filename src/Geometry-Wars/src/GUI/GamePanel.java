@@ -35,6 +35,7 @@ class GamePanel extends GPanel {
     private boolean coop;
     private boolean gameFinished;
     private boolean soundExecuted;
+    private Point mouseLocation;
     private Schip schip;
     private Schip schipp2;
     private Drone drone;
@@ -43,6 +44,7 @@ class GamePanel extends GPanel {
     private Timer invulnerabilityTimer;
     private Timer slowerEnemiesTimer;
     private Timer shootingDroneTimer;
+    private Timer mousePressedTimer;
     private GLabel combo;
     private GLabel combop2;
     private GLabel score;
@@ -68,6 +70,7 @@ class GamePanel extends GPanel {
 
     GamePanel(List<Enemy> enemies) throws IOException, FontFormatException {
         this.enemies = enemies;
+        mouseLocation = new Point(0,0);
         setFocusable(true);
         requestFocus();
         setDoubleBuffered(true);
@@ -121,7 +124,7 @@ class GamePanel extends GPanel {
         }
         setSlowerEnemiesTimer(schip);
         setInvulnerabilityTimer(schip);
-
+        setUpMousePressedTimer(150);
         if(dronep2 != null && schipp2 != null){
             setUpShootingDroneTimer(dronep2);
         }
@@ -129,6 +132,7 @@ class GamePanel extends GPanel {
             setSlowerEnemiesTimer(schipp2);
             setInvulnerabilityTimer(schipp2);
         }
+
     }
 
     @Override
@@ -754,10 +758,18 @@ class GamePanel extends GPanel {
         });
     }
 
+    private void setUpMousePressedTimer(int delay){
+        ActionListener taskPerformer = e1 -> schip.mousePressed(mouseLocation);
+        if (mousePressedTimer == null) {
+            mousePressedTimer = new Timer(delay, taskPerformer);
+            mousePressedTimer.start();
+        }
+
+    }
+
     private void makeEnemy(Enemy enemy) {
         enemyOnField.add(new Enemy(enemy.getNr(), enemy.getNaam(), enemy.getBeschrijving(), (int) (enemy.getHP() * enemyPower), (int) (enemy.getKracht() * enemyPower), enemy.getImageString(), (int) (enemy.getExperience() * enemyPower), (int) (enemy.getScore() * enemyPower), enemy.getSpeed()));
     }
-
 
     private void spawnEnemies() {
         spawnTimer = new Timer(5000, e -> {
@@ -833,8 +845,7 @@ class GamePanel extends GPanel {
     }
 
     private class MAdapter extends MouseAdapter {
-        private Timer mousePressedTimer;
-        private Point mouseLocation;
+
 
         @Override
         public void mouseDragged(MouseEvent e) {
@@ -843,15 +854,8 @@ class GamePanel extends GPanel {
 
         @Override
         public void mousePressed(MouseEvent e) {
-
-            int delay = 150;
-            ActionListener taskPerformer = e1 -> schip.mousePressed(mouseLocation);
-            if (mousePressedTimer == null) {
-                mousePressedTimer = new Timer(delay, taskPerformer);
+            mouseLocation = e.getPoint();
                 mousePressedTimer.start();
-            } else {
-                mousePressedTimer.start();
-            }
         }
 
         @Override

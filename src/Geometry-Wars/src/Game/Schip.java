@@ -235,7 +235,7 @@ public class Schip extends Sprite {
     }
 
     public void checkForUpgrade() {
-        if (upgradecombo % 2 == 0) {
+        if (upgradecombo % 20 == 0) {
             //Every 20 combo
             if(!invulnerability.isActive()){
                 try {
