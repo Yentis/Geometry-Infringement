@@ -139,8 +139,10 @@ public class Spel implements Cloneable{
 
         int i = 0;
         while (speler.next()){
-            spelers.add(i, new Speler(speler.getInt("nr") - 1, speler.getString("gebruikersnaam"), speler.getInt("level"), speler.getInt("experience"), speler.getString("rank"), speler.getInt("nuggets"), speler.getInt("golden nuggets"), speler.getInt("highscore")));
-            i++;
+            if(speler.getInt("banned") != 1){
+                spelers.add(i, new Speler(speler.getInt("nr") - 1, speler.getString("gebruikersnaam"), speler.getInt("level"), speler.getInt("experience"), speler.getString("rank"), speler.getInt("nuggets"), speler.getInt("golden nuggets"), speler.getInt("highscore")));
+                i++;
+            }
         }
         //endregion
 
@@ -201,7 +203,7 @@ public class Spel implements Cloneable{
         }
     }
 
-    public void logIn(String gebruikersnaam) throws SQLException {
+    public boolean logIn(String gebruikersnaam) throws SQLException {
         Statement myStmt = myConn.createStatement();
 
         ResultSet myRs = myStmt.executeQuery("select * from speler where gebruikersnaam = '" + gebruikersnaam + "'");
@@ -209,10 +211,14 @@ public class Spel implements Cloneable{
         speler = null;
 
         while(myRs.next()){
+            if(myRs.getInt("banned") == 1){
+                return false;
+            }
             speler = new Speler(myRs.getInt("nr") - 1, myRs.getString("gebruikersnaam"), myRs.getInt("level"), myRs.getInt("experience"), myRs.getString("rank"), myRs.getInt("nuggets"), myRs.getInt("golden nuggets"), myRs.getInt("highscore"));
         }
 
         checkRank();
+        return true;
     }
 
     public void logOut(){
@@ -271,7 +277,9 @@ public class Spel implements Cloneable{
         ResultSet ranking = myStmt.executeQuery("select * from speler ");
 
         while(ranking.next()){
-            scores.add(ranking.getInt("highscore"));
+            if(ranking.getInt("banned") != 1){
+                scores.add(ranking.getInt("highscore"));
+            }
         }
 
         Collections.sort(scores);

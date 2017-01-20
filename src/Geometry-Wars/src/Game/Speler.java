@@ -20,7 +20,7 @@ public class Speler {
 
     //region Constructors
 
-    public Speler(int nr, String gebruikersnaam, int level, int experience, String rank, int nuggets, int gnuggets, int highscore){
+    Speler(int nr, String gebruikersnaam, int level, int experience, String rank, int nuggets, int gnuggets, int highscore){
         this.nr = nr;
         this.gebruikersnaam = gebruikersnaam;
         this.level = level;

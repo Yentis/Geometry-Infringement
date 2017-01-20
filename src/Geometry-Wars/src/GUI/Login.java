@@ -93,6 +93,8 @@ class Login extends GPanel{
                     window.getMainMenu().setVisible(true);
                 } else if (result == null){
                     message.setText("Database connection failed.");
+                } else if (Objects.equals(result, "banned")){
+                    message.setText("Your account is banned.");
                 } else {
                     message.setText(result + " is not correct.");
                 }
@@ -117,7 +119,9 @@ class Login extends GPanel{
         result = window.getSpel().loginChecker(gebruikersnaam, hashed);
 
         if(Objects.equals(result, "")){
-            window.getSpel().logIn(gebruikersnaam);
+            if(!window.getSpel().logIn(gebruikersnaam)){
+                return "banned";
+            }
         } else {
             return result;
         }
