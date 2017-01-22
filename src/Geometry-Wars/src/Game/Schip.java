@@ -377,11 +377,10 @@ public class Schip extends Sprite {
         }
 
 
-        double kogelX = locationX;
-        double kogelY = locationY;
+        double kogelX = locationX + getWidth() / 2;
+        double kogelY = locationY + getHeight() / 2;
 
         addKogels(new Kogel(kogelX, kogelY, point, "resources/Media/kogel1.png"));
-        System.out.println(point);
 
         if (menuUpgrades.contains(1)) {
             Point mousePointer2 = new Point((int)point.getX(), (int)point.getY() + 50);

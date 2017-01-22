@@ -393,7 +393,6 @@ class GamePanel extends GPanel {
     private void drawBullets(Graphics g, ArrayList<Kogel> kogels, Schip schip) {
         Graphics2D g2d = (Graphics2D) g;
         if (!kogels.isEmpty()) {
-            //System.out.println("niet empty");
             for (Iterator<Kogel> kogelIterator = kogels.iterator(); kogelIterator.hasNext(); ) {
                 Kogel k = kogelIterator.next();
                 if (k.isOutOfBorder(k.getCurrentLocation().getX(), 60, 925) || k.isOutOfBorder(k.getCurrentLocation().getY(), 125, 600)) {
@@ -753,18 +752,19 @@ class GamePanel extends GPanel {
     private void setUpShootingDroneTimer(Drone drone) {
         shootingDroneTimer = new Timer(drone.getFireSpeed(), e -> {
             if (!enemyOnField.isEmpty()) {
-                drone.getKogels().add(new Kogel(drone.getCurrentLocation().getX(), drone.getCurrentLocation().getY(), closestEnemy(drone, enemyOnField), "resources/Media/kogel1.png"));
+                drone.getKogels().add(new Kogel(drone.getCurrentLocation().getX() + drone.getWidth() / 2, drone.getCurrentLocation().getY() + drone.getHeight() / 2, closestEnemy(drone, enemyOnField), "resources/Media/kogel1.png"));
             }
         });
     }
 
     private void setUpMousePressedTimer(int delay){
-        ActionListener taskPerformer = e1 -> schip.mousePressed(mouseLocation);
-        if (mousePressedTimer == null) {
-            mousePressedTimer = new Timer(delay, taskPerformer);
-            mousePressedTimer.start();
+        if (schip != null){
+            ActionListener taskPerformer = e1 -> schip.mousePressed(mouseLocation);
+            if (mousePressedTimer == null) {
+                mousePressedTimer = new Timer(delay, taskPerformer);
+                mousePressedTimer.start();
+            }
         }
-
     }
 
     private void makeEnemy(Enemy enemy) {
