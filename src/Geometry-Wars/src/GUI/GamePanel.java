@@ -62,7 +62,7 @@ class GamePanel extends GPanel {
     private JProgressBar currentDroneXpBarp2;
     private List<Enemy> enemies = new ArrayList<>();
     private ArrayList<Enemy> enemyOnField = new ArrayList<>();
-    private ArrayList<KillAnimation> killAnimations = new ArrayList<>();
+    private ArrayList<CollisionEffect> collisionEffects = new ArrayList<>();
 
     //endregion
 
@@ -334,7 +334,7 @@ class GamePanel extends GPanel {
         super.paintComponent(g);
         if (!gameFinished) {
             drawEnemy(g);
-            drawAnimations(g);
+            drawCollisionEffects(g);
         }
         if (schip != null) {
             drawBullets(g, schip.getKogels(), schip);
@@ -431,17 +431,16 @@ class GamePanel extends GPanel {
     }
 
     //@Renzie, gets laggy
-    private void drawAnimations(Graphics g){
+    private void drawCollisionEffects(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
-        for (KillAnimation killAnimation : killAnimations){
-            //System.out.println(killAnimation.getCurrentLocation());
+        for (CollisionEffect collisionEffect : collisionEffects){
             try{
                 g2d.setFont(new GFont(20f));
             } catch (IOException | FontFormatException e){
                 e.printStackTrace();
             }
-            g2d.setColor(Color.cyan);
-            g2d.drawString(killAnimation.getText(), killAnimation.getCurrentLocation().x,killAnimation.getCurrentLocation().y);
+            g2d.setColor(collisionEffect.getColor());
+            g2d.drawString(collisionEffect.getText(), collisionEffect.getCurrentLocation().x, collisionEffect.getCurrentLocation().y);
         }
     }
 
@@ -459,6 +458,7 @@ class GamePanel extends GPanel {
                         e.printStackTrace();
                     }
                     schip.loseHP(enemy.getKracht());
+                    collisionEffects.add(CollisionEffect.takeDamage(enemy));
                     schip.resetCombo();
                 }
                 enemyIterator.remove();
@@ -510,7 +510,7 @@ class GamePanel extends GPanel {
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
-                        killAnimations.add(new KillAnimation("+" + enemy.getExperience() + " XP", enemy.getCurrentLocation()));
+                        collisionEffects.add(CollisionEffect.XPGain(enemy));
                         enemyIterator.remove();
                         schip.addCombo();
                         schip.addScore(enemy.getScore(), schip.getCombo());
@@ -540,12 +540,12 @@ class GamePanel extends GPanel {
     }
 
     private void updateAnimations(){
-        for (Iterator<KillAnimation> killAnimationIterator = killAnimations.iterator(); killAnimationIterator.hasNext() ; ){
-            KillAnimation killAnimation = killAnimationIterator.next();
-            if (System.currentTimeMillis() > killAnimation.getDisappearTime()){
+        for (Iterator<CollisionEffect> killAnimationIterator = collisionEffects.iterator(); killAnimationIterator.hasNext() ; ){
+            CollisionEffect collisionEffect = killAnimationIterator.next();
+            if (System.currentTimeMillis() > collisionEffect.getDisappearTime()){
                 killAnimationIterator.remove();
             } else {
-                killAnimation.setCurrentLocation(killAnimation.getCurrentLocation().getX(), killAnimation.getCurrentLocation().getY() - 2);
+                collisionEffect.setCurrentLocation(collisionEffect.getCurrentLocation().getX(), collisionEffect.getCurrentLocation().getY() - collisionEffect.getSpeed());
             }
         }
     }
