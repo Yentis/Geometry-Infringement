@@ -45,13 +45,8 @@ public class Sound {
                 bufferedStream.close();
                 audioInputStream.close();
 
-            } catch (IOException e) {
+            } catch (IOException | UnsupportedAudioFileException e) {
                 e.printStackTrace();
-            } catch (UnsupportedAudioFileException e) {
-                e.printStackTrace();
-            } catch (LineUnavailableException e) {
-                e.printStackTrace();
-                System.exit(1);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(1);
@@ -80,8 +75,8 @@ public class Sound {
             case "shieldinactive":
                 playSfx(new FileInputStream("resources/Sound/shieldinactive.wav"));
                 break;
-            case "song":
-                playSfx(new FileInputStream("resources/Sound/song.wav"));
+            case "mainmenu":
+                playSfx(new FileInputStream("resources/Sound/mainmenu.wav"));
                 break;
         }
     }

@@ -1,6 +1,6 @@
 package GUI;
 
-import Game.Spel;
+import Game.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -110,6 +110,7 @@ public class Window extends JFrame {
 
     public static void main(String args[]) throws IOException, FontFormatException, SQLException, InterruptedException {
         new Window("Geometry Wars");
+        new Sound("mainmenu");
     }
 
     // Set Background
