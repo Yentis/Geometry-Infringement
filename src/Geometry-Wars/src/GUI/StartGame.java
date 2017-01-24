@@ -6,6 +6,7 @@ import java.io.*;
 import java.sql.SQLException;
 import javax.swing.*;
 import GComponents.*;
+import Game.Sound;
 
 /**
  * Created by Laurens Visser on 9/11/2016.
@@ -66,6 +67,7 @@ class StartGame extends GPanel {
         //ActionListeners
 
         SoloGame.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window = (Window) SwingUtilities.getRoot(panel.getParent());
             try {
@@ -78,6 +80,7 @@ class StartGame extends GPanel {
         });
 
         Coop.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window = (Window) SwingUtilities.getRoot(panel.getParent());
             window.getInGame().setCoop(true);
@@ -88,12 +91,14 @@ class StartGame extends GPanel {
         });
 
         Back.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window = (Window) SwingUtilities.getRoot(panel.getParent());
             window.getMainMenu().setVisible(true);
         });
 
         Highscores.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window = (Window) SwingUtilities.getRoot(panel.getParent());
 

@@ -13,6 +13,7 @@ import GComponents.GFont;
 import GComponents.GPanel;
 
 import GComponents.*;
+import Game.Sound;
 import Game.Speler;
 
 /**
@@ -118,6 +119,7 @@ class Highscores extends GPanel {
         //actionlisteners
 
         Back.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window = (Window) SwingUtilities.getRoot(panel.getParent());
             window.getStartGame().setVisible(true);

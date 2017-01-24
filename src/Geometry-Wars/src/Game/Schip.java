@@ -238,11 +238,7 @@ public class Schip extends Sprite {
         if (upgradecombo % 20 == 0) {
             //Every 20 combo
             if(!invulnerability.isActive()){
-                try {
-                    new Sound("shieldactive");
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                new Sound("shieldactive");
             }
             invulnerability.setActive(true);
         } else if (upgradecombo % 50 == 0) {
@@ -370,12 +366,7 @@ public class Schip extends Sprite {
     }
 
     private void fire(Point point) {
-        try {
-            new Sound("shoot");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
+        new Sound("shoot");
 
         double kogelX = locationX + getWidth() / 2;
         double kogelY = locationY + getHeight() / 2;

@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.List;
 import javax.swing.*;
 import GComponents.*;
+import Game.Sound;
 import Game.Upgrade;
 import Game.Speler;
 
@@ -126,12 +127,14 @@ class Upgrades extends GPanel {
         //==================================================
 
         back.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
             window1.getMainMenu().setVisible(true);
         });
 
         upgradeShip1.addActionListener(evt -> {
+            new Sound("click");
             Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
             Upgrade upgrade = window1.getSpel().getUpgrades().get(1);
 
@@ -139,6 +142,7 @@ class Upgrades extends GPanel {
         });
 
         upgradeShip2.addActionListener(evt -> {
+            new Sound("click");
             Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
             Upgrade upgrade = window1.getSpel().getUpgrades().get(2);
 
@@ -146,6 +150,7 @@ class Upgrades extends GPanel {
         });
 
         upgradeDrone1.addActionListener(evt -> {
+            new Sound("click");
             Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
             Upgrade upgrade = window1.getSpel().getUpgrades().get(3);
 
@@ -153,6 +158,7 @@ class Upgrades extends GPanel {
         });
 
         upgradeDrone2.addActionListener(evt -> {
+            new Sound("click");
             Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
             Upgrade upgrade = window1.getSpel().getUpgrades().get(4);
 
@@ -160,6 +166,7 @@ class Upgrades extends GPanel {
         });
 
         upgradeDrone3.addActionListener(evt -> {
+            new Sound("click");
             Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
             Upgrade upgrade = window1.getSpel().getUpgrades().get(5);
 
@@ -167,6 +174,7 @@ class Upgrades extends GPanel {
         });
 
         upgradeFire1.addActionListener(evt -> {
+            new Sound("click");
             Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
             Upgrade upgrade = window1.getSpel().getUpgrades().get(0);
 

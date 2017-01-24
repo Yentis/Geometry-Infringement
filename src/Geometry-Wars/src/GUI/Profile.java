@@ -1,6 +1,7 @@
 package GUI;
 
 import GComponents.*;
+import Game.Sound;
 import Game.Speler;
 import java.awt.Color;
 import java.awt.FontFormatException;
@@ -51,6 +52,7 @@ class Profile extends GPanel {
         //Add Action Listener
         //==================================================
         Back.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
             window1.getMainMenu().setVisible(true);

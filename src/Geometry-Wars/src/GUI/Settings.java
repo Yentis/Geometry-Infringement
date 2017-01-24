@@ -2,6 +2,8 @@ package GUI;
 
 import GComponents.*;
 import Game.Enemy;
+import Game.Sound;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -107,6 +109,7 @@ class Settings extends GPanel {
 
         //Action Listeners
         set.addActionListener(evt -> {
+            new Sound("click");
             Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
             List<Enemy> enemies = new ArrayList<>();
             String currentDifficulty = window1.getSpel().getCurrentDifficulty();
@@ -170,6 +173,7 @@ class Settings extends GPanel {
         });
 
         Back.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
             window1.getMainMenu().setVisible(true);

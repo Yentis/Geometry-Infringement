@@ -91,11 +91,13 @@ class StartGameCampaign extends GPanel {
 
         //Action listeners
         Back.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
             window1.getStartGame().setVisible(true);
         });
         Start.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
             window1.getInGame().setVisible(true);
@@ -105,6 +107,7 @@ class StartGameCampaign extends GPanel {
             window1.getInGame().setCoop(false);
         });
         chooseDrone.addActionListener(evt -> {
+            new Sound("click");
             Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
             if(chooseDrone.getSelectedItem() == null){
                 window1.getSpel().getSpeler().setActiveDrone("");

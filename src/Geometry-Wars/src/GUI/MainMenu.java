@@ -6,6 +6,7 @@ import java.io.*;
 import java.sql.SQLException;
 import javax.swing.*;
 import GComponents.*;
+import Game.Sound;
 
 /**
  * @author Renzie
@@ -59,12 +60,14 @@ class MainMenu extends GPanel {
         //==================================================
 
         StartGame.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window = (Window) SwingUtilities.getRoot(panel.getParent());
             window.getStartGame().setVisible(true);
         });
 
         Upgrades.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window = (Window) SwingUtilities.getRoot(panel.getParent());
             try {
@@ -78,6 +81,7 @@ class MainMenu extends GPanel {
         });
 
         Settings.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window = (Window) SwingUtilities.getRoot(panel.getParent());
             try {
@@ -89,6 +93,7 @@ class MainMenu extends GPanel {
         });
 
         FriendsBtn.addActionListener(evt -> {
+            new Sound("click");
             if (!Friends.isShowing()) {
                 Friends.setVisible(true);
             } else {
@@ -97,6 +102,7 @@ class MainMenu extends GPanel {
         });
 
         Discord.addActionListener(evt -> {
+            new Sound("click");
             try {
                 Desktop.getDesktop().browse(java.net.URI.create(url));
             } catch (IOException e) {
@@ -105,6 +111,7 @@ class MainMenu extends GPanel {
         });
 
         LogOut.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window = (Window) SwingUtilities.getRoot(panel.getParent());
             window.getSpel().logOut();
@@ -112,6 +119,7 @@ class MainMenu extends GPanel {
         });
 
         Profile.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window = (Window) SwingUtilities.getRoot(panel.getParent());
             try {
@@ -124,6 +132,7 @@ class MainMenu extends GPanel {
         });
 
         Quit.addActionListener(evt -> {
+            new Sound("click");
             pauzepane.setVisible(true);
             Yes.setVisible(true);
             No.setVisible(true);
@@ -142,6 +151,7 @@ class MainMenu extends GPanel {
         });
 
         No.addActionListener(evt -> {
+            new Sound("click");
             pauzepane.setVisible(false);
             Yes.setVisible(false);
             No.setVisible(false);
@@ -159,7 +169,10 @@ class MainMenu extends GPanel {
             JoinDiscord.setVisible(true);
         });
 
-        Yes.addActionListener(evt -> System.exit(0));
+        Yes.addActionListener(evt -> {
+            new Sound("click");
+            System.exit(0);
+        });
 
         //==================================================
 

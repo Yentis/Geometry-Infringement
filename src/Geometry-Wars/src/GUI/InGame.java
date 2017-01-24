@@ -11,6 +11,7 @@ import javax.swing.Timer;
 
 import GComponents.*;
 import Game.Enemy;
+import Game.Sound;
 
 /**
  * Created by Laurens Visser on 9/11/2016.
@@ -65,6 +66,7 @@ class InGame extends GPanel implements ActionListener {
             pause.add(controls);
 
             menuPauze.addActionListener(evt -> {
+                new Sound("click");
                 gamePanel.setGameFinished(true);
                 gameEnd.setVisible(false);
                 panel.setVisible(false);
@@ -104,6 +106,7 @@ class InGame extends GPanel implements ActionListener {
             gameEnd.add(menuGameEnd);
 
             menuGameEnd.addActionListener(evt -> {
+                new Sound("click");
                 panel.setVisible(false);
                 Window window = (Window) SwingUtilities.getRoot(panel.getParent());
                 pause.setVisible(false);
@@ -245,6 +248,7 @@ class InGame extends GPanel implements ActionListener {
         this.add(startGame);
 
         pauze.addActionListener(evt -> {
+            new Sound("click");
             pauseGameLoop();
         });
     }

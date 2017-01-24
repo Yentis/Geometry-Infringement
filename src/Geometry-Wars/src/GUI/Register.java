@@ -1,6 +1,7 @@
 package GUI;
 
 import GComponents.*;
+import Game.Sound;
 import Game.Spel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -76,6 +77,7 @@ class Register extends GPanel {
 
         //Action Listeners
         register.addActionListener(e -> {
+            new Sound("click");
             if(Objects.equals(username.getText(), "")){
                 registered.setText("Please enter a username");
             } else if (password.getPassword().length == 0){
@@ -103,9 +105,13 @@ class Register extends GPanel {
             registered.setVisible(true);
         });
 
-        Exit.addActionListener(evt -> System.exit(0));
+        Exit.addActionListener(evt -> {
+            new Sound("click");
+            System.exit(0);
+        });
 
         Back.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window = (Window) SwingUtilities.getRoot(panel.getParent());
             window.getLogin().setVisible(true);

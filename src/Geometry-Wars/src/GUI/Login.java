@@ -1,6 +1,8 @@
 package GUI;
 
 import GComponents.*;
+import Game.Sound;
+
 import java.awt.Color;
 import java.awt.FontFormatException;
 import java.io.*;
@@ -66,15 +68,20 @@ class Login extends GPanel{
 
         username.addActionListener(evt -> loginButton.doClick());
 
-        Exit.addActionListener(evt -> System.exit(0));
+        Exit.addActionListener(evt -> {
+            new Sound("click");
+            System.exit(0);
+        });
 
         register.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window = (Window) SwingUtilities.getRoot(panel.getParent());
             window.getRegister().setVisible(true);
         });
 
         loginButton.addActionListener(e -> {
+            new Sound("click");
             if(Objects.equals(username.getText(), "")){
                 message.setText("Please enter a username");
             } else if (password.getPassword().length == 0){

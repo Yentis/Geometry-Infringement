@@ -451,11 +451,7 @@ class GamePanel extends GPanel {
             if (schip.collisionDetect(enemy.getHitBox())) {
                 schip.setHit(true);
                 if (!schip.getInvulnerability().isActive()) {
-                    try {
-                        new Sound("playerhit");
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                    new Sound("playerhit");
                     schip.loseHP(enemy.getKracht());
                     collisionEffects.add(CollisionEffect.takeDamage(enemy));
                     schip.resetCombo();
@@ -504,11 +500,7 @@ class GamePanel extends GPanel {
                     enemy.loseHP(schip.getKracht());
                     enemy.setHit(false);
                     if (enemy.getHP() <= 0) {
-                        try {
-                            new Sound("enemydeath");
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
+                        new Sound("enemydeath");
                         collisionEffects.add(CollisionEffect.XPGain(enemy));
                         enemyIterator.remove();
                         schip.addCombo();
@@ -726,11 +718,7 @@ class GamePanel extends GPanel {
         invulnerabilityTimer = new Timer(5000, e -> {
             if (schip != null) {
                 schip.getInvulnerability().setActive(false);
-                try {
-                    new Sound("shieldinactive");
-                } catch (FileNotFoundException e1) {
-                    e1.printStackTrace();
-                }
+                new Sound("shieldinactive");
                 if(coop && schip == schipp2){
                     currentHealthBarp2.setBackground(Color.green);
                 } else {
@@ -752,7 +740,7 @@ class GamePanel extends GPanel {
     private void setUpShootingDroneTimer(Drone drone) {
         shootingDroneTimer = new Timer(drone.getFireSpeed(), e -> {
             if (!enemyOnField.isEmpty()) {
-                drone.getKogels().add(new Kogel(drone.getCurrentLocation().getX() + drone.getWidth() / 2, drone.getCurrentLocation().getY() + drone.getHeight() / 2, closestEnemy(drone, enemyOnField), "resources/Media/kogel1.png"));
+                drone.getKogels().add(new Kogel(drone.getCurrentLocation().getX() + drone.getWidth() / 2, drone.getCurrentLocation().getY() + drone.getHeight() / 2, closestEnemy(drone, enemyOnField), "resources/Media/kogel2.png"));
             }
         });
     }

@@ -9,6 +9,7 @@ import GComponents.GButton;
 import GComponents.GFont;
 import GComponents.GLabel;
 import GComponents.GPanel;
+import Game.Sound;
 
 /**
  * Created by Laurens Visser on 9/11/2016.
@@ -51,9 +52,13 @@ class Logout extends GPanel {
         this.add(Login);
 
         //Action listeners
-        Exit.addActionListener(evt -> System.exit(0));
+        Exit.addActionListener(evt -> {
+            new Sound("click");
+            System.exit(0);
+        });
 
         Login.addActionListener(evt -> {
+            new Sound("click");
             panel.setVisible(false);
             Window window = (Window) SwingUtilities.getRoot(panel.getParent());
             window.getLogin().setVisible(true);
