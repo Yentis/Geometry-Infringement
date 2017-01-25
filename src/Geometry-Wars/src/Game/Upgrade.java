@@ -9,22 +9,28 @@ public class Upgrade {
     private int nr;
     private String naam;
     private String foto = "";
+    private String beschrijving;
     private int kost = 100;
 
     //endregion
 
     //region Constructors
 
-    Upgrade(int nr, String naam, String foto, int kost){
+    Upgrade(int nr, String naam, String foto, String beschrijving, int kost){
         this.nr = nr;
         this.naam = naam;
         this.foto = foto;
+        this.beschrijving = beschrijving;
         this.kost = kost;
     }
 
     //endregion
 
     //region Getters & Setters
+
+    public String getBeschrijving() {
+        return beschrijving;
+    }
 
     public String getFoto() {
         return foto;
