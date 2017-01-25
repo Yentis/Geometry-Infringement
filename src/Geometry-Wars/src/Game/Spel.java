@@ -217,7 +217,7 @@ public class Spel implements Cloneable{
             speler = new Speler(myRs.getInt("nr") - 1, myRs.getString("gebruikersnaam"), myRs.getInt("level"), myRs.getInt("experience"), myRs.getString("rank"), myRs.getInt("nuggets"), myRs.getInt("golden nuggets"), myRs.getInt("highscore"));
         }
 
-        checkRank();
+        checkRank(speler);
         return true;
     }
 
@@ -268,7 +268,7 @@ public class Spel implements Cloneable{
         return "";
     }
 
-    public void checkRank() throws SQLException {
+    public void checkRank(Speler speler) throws SQLException {
         Statement myStmt = myConn.createStatement();
         Statement myStmt2 = myConn.createStatement();
         List<Integer> scores = new ArrayList<>();

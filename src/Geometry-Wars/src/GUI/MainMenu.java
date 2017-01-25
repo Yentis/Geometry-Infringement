@@ -124,6 +124,7 @@ class MainMenu extends GPanel {
             Window window = (Window) SwingUtilities.getRoot(panel.getParent());
             try {
                 window.getSpel().logIn(window.getSpel().getSpeler().getGebruikersnaam());
+                window.getProfile().setSpeler(window.getSpel().getSpeler());
                 window.getProfile().initComponents();
             } catch (IOException | FontFormatException | SQLException e) {
                 e.printStackTrace();

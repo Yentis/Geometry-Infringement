@@ -18,6 +18,15 @@ class Profile extends GPanel {
     //region Instance Variables
 
     private Profile panel = this;
+    private Speler speler;
+
+    //endregion
+
+    //region Getters & Setters
+
+    public void setSpeler(Speler speler) {
+        this.speler = speler;
+    }
 
     //endregion
 
@@ -26,9 +35,6 @@ class Profile extends GPanel {
     @Override
     public void initComponents() throws IOException, FontFormatException {
         panel.removeAll();
-
-        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-        Speler speler = window.getSpel().getSpeler();
 
         //Make components
         //==================================================

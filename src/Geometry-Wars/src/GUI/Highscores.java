@@ -3,6 +3,7 @@ package GUI;
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.io.*;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 import javax.swing.*;
@@ -42,7 +43,8 @@ class Highscores extends GPanel {
     @Override
     public void initComponents() throws IOException, FontFormatException {
         panel.removeAll();
-        List<String> strings;
+        List<String> strings = new ArrayList<>();
+        List<Speler> spelers;
 
         JLabel label = new JLabel("HIGH SCORES", SwingConstants.CENTER);
         JLabel Player = new GLabel("Player", 24f, 330, 166, 180, 64, false, Color.white);
@@ -52,9 +54,15 @@ class Highscores extends GPanel {
         DefaultListModel<String> listModelPlayer = new DefaultListModel<>();
         DefaultListModel<String> listModelScore = new DefaultListModel<>();
 
-        strings = processNames();
+        spelers = processNames();
 
         int i = 0;
+        for (Speler speler:spelers) {
+            strings.add(i, (i+1) + " - " + speler.getGebruikersnaam());
+            i++;
+        }
+
+        i = 0;
         for (String string:strings) {
             if(i<10){
                 listModelPlayer.addElement(string);
@@ -124,21 +132,27 @@ class Highscores extends GPanel {
             Window window = (Window) SwingUtilities.getRoot(panel.getParent());
             window.getStartGame().setVisible(true);
         });
+
+        listPlayer.addListSelectionListener(evt -> {
+            new Sound("click");
+            panel.setVisible(false);
+            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+            Speler speler = spelers.get(listPlayer.getSelectedIndex());
+            try {
+                window.getSpel().checkRank(speler);
+                window.getProfile().setSpeler(speler);
+                window.getProfile().initComponents();
+            } catch (IOException | FontFormatException | SQLException e) {
+                e.printStackTrace();
+            }
+            window.getProfile().setVisible(true);
+        });
     }
 
-    private List<String> processNames(){
-        List<String> strings = new ArrayList<>();
+    private List<Speler> processNames(){
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-        List<Speler> spelers;
-        spelers = window.getSpel().getSpelers();
 
-        int i = 0;
-        for (Speler speler:spelers) {
-            strings.add(i, (i+1) + " - " + speler.getGebruikersnaam());
-            i++;
-        }
-
-        return strings;
+        return window.getSpel().getSpelers();
     }
 
     private List<String> processScores(){

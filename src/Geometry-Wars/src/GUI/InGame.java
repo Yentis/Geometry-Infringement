@@ -113,7 +113,7 @@ class InGame extends GPanel implements ActionListener {
                 try {
                     window.getSpel().submitScore(gamePanel.getScore());
                     window.getSpel().logIn(window.getSpel().getSpeler().getGebruikersnaam());
-                    window.getSpel().checkRank();
+                    window.getSpel().checkRank(window.getSpel().getSpeler());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
