@@ -449,6 +449,7 @@ class GamePanel extends GPanel {
                 schip.setHit(true);
                 if (!schip.getInvulnerability().isActive()) {
                     new Sound("playerhit");
+                    new Thread(new HitFlash(schip)).start();
                     schip.loseHP(enemy.getKracht());
                     try {
                         effects.add(Effect.takeDamage(enemy));
