@@ -39,6 +39,7 @@ public class Schip extends Sprite {
     private List<Integer> menuUpgrades = new ArrayList<>();
     private Movement move;
     private Drone drone;
+    private boolean leveled = false;
 
     //IngameUpgrades
     private LifeSteal lifesteal = new LifeSteal(1, "LifeSteal", "resources/Media/IngameUpgradeIcons/LifeSteal.png", this);
@@ -77,6 +78,15 @@ public class Schip extends Sprite {
     //endregion
 
     //region Getters & Setters
+
+
+    public boolean isLeveled() {
+        return leveled;
+    }
+
+    public void setLeveled(boolean leveled) {
+        this.leveled = leveled;
+    }
 
     public List<Integer> getUpgrades() {
         return menuUpgrades;
@@ -231,6 +241,7 @@ public class Schip extends Sprite {
             checkLevel();
             resetCurrentXp();
             addKracht(25);
+            leveled = true;
         }
     }
 

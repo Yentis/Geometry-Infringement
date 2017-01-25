@@ -524,6 +524,9 @@ class GamePanel extends GPanel {
                         } else if (kogels == schip.getKogels()) {
                             schip.addCurrentXp(enemy.getExperience());
                             schip.checkLevel();
+                            if (schip.isLeveled()){
+                                effects.add(Effect.levelUp(schip));
+                            }
                             schip.checkForUpgrade();
                             if (schip.getDrone() != null && schip.getActiveDrone().isActive()) {
                                 shootingDroneTimer.start();

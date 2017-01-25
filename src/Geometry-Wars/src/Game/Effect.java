@@ -35,6 +35,14 @@ public class Effect extends Sprite{
         return new Effect("-" + enemy.getKracht() + "HP", enemy.getCurrentLocation(), 2000, 1, Color.red, new GFont(20f));
     }
 
+    public static Effect levelUp(Schip schip){
+        try {
+            return new Effect("LEVEL UP! + \nDMG +25", schip.getCurrentLocation(),3000, 0, Color.cyan, new GFont(20f));
+        } catch (FontFormatException | IOException e){
+            throw new RuntimeException(e);
+        }
+    }
+
     public static Effect roundIndicator(int roundCounter) throws IOException, FontFormatException {
         String message;
 
