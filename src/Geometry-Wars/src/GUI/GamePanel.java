@@ -771,23 +771,23 @@ class GamePanel extends GPanel {
                 for (int i = 0; i < enemyCounter; i++) {
                     makeEnemy(enemy);
                 }
-                if (enemyCounter % 5 == 0) {
+                if (enemyCounter % 3 == 0) {
                     enemy = enemies.get(1);
                     makeEnemy(enemy);
                 }
-                if (enemyCounter % 3 == 0) {
+                if (enemyCounter % 2 == 0) {
                     enemy = enemies.get(2);
                     makeEnemy(enemy);
                 }
-                if (enemyCounter % 7 == 0) {
+                if (enemyCounter % 4 == 0) {
                     enemy = enemies.get(3);
                     makeEnemy(enemy);
                 }
-                if (enemyCounter % 9 == 0) {
+                if (enemyCounter % 5 == 0) {
                     enemy = enemies.get(4);
                     makeEnemy(enemy);
                 }
-                if (enemyCounter % 11 == 0) {
+                if (enemyCounter % 6 == 0) {
                     enemy = enemies.get(5);
                     makeEnemy(enemy);
                 }
