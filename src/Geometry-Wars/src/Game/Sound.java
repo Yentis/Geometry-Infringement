@@ -1,7 +1,5 @@
 package Game;
 
-import jdk.internal.util.xml.impl.Input;
-
 import javax.sound.sampled.*;
 import java.io.*;
 
@@ -9,17 +7,14 @@ import java.io.*;
  * Created by Yentl on 25-Dec-16.
  */
 public class Sound {
+    private Clip clip;
+
     private class AudioListener implements LineListener {
-        private boolean done = false;
         @Override public synchronized void update(LineEvent event) {
             LineEvent.Type eventType = event.getType();
             if (eventType == LineEvent.Type.STOP || eventType == LineEvent.Type.CLOSE) {
-                done = true;
                 notifyAll();
             }
-        }
-        public synchronized void waitUntilDone() throws InterruptedException {
-            while (!done) { wait(); }
         }
     }
 
@@ -37,10 +32,6 @@ public class Sound {
 
                 sourceLine = (SourceDataLine) AudioSystem.getLine(info);
                 sourceLine.open(audioFormat);
-
-                if (sourceLine == null) {
-                    return;
-                }
 
                 sourceLine.start();
                 int nBytesRead = 0;
@@ -77,20 +68,33 @@ public class Sound {
 
         try{
             inputStream = AudioSystem.getAudioInputStream(bufferedIn);
-            Clip clip = AudioSystem.getClip();
+            clip = AudioSystem.getClip();
             clip.addLineListener(listener);
             clip.open(inputStream);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
-            Thread.sleep(10000);
-        } catch (InterruptedException | LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+        } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
         } finally {
             try {
+                assert inputStream != null;
                 inputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void stopMusic(){
+        clip.stop();
+        clip.close();
+    }
+
+    public void pauseMusic(){
+        clip.stop();
+    }
+
+    public void playMusic(){
+        clip.start();
     }
 
     public Sound(String soundEffect) {

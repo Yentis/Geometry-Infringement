@@ -93,18 +93,16 @@ class StartGameCampaign extends GPanel {
         Back.addActionListener(evt -> {
             new Sound("click");
             panel.setVisible(false);
-            Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
-            window1.getStartGame().setVisible(true);
+            window.getStartGame().setVisible(true);
         });
         Start.addActionListener(evt -> {
             new Sound("click");
             panel.setVisible(false);
-            Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
-            window1.getInGame().setVisible(true);
-            window1.getInGame().getStartGame().setVisible(true);
-            window1.getInGame().getGameEnd().setVisible(false);
-            window1.getInGame().getPause().setVisible(false);
-            window1.getInGame().setCoop(false);
+            window.getInGame().setVisible(true);
+            window.getInGame().getStartGame().setVisible(true);
+            window.getInGame().getGameEnd().setVisible(false);
+            window.getInGame().getPause().setVisible(false);
+            window.getInGame().setCoop(false);
         });
         chooseDrone.addActionListener(evt -> {
             new Sound("click");

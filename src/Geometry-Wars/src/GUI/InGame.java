@@ -21,6 +21,7 @@ class InGame extends GPanel implements ActionListener {
 
     private InGame panel = this;
     private boolean coop;
+    private Sound backgroundMusic;
 
     //GamePanel
     private GamePanel gamePanel;
@@ -68,6 +69,7 @@ class InGame extends GPanel implements ActionListener {
             menuPauze.addActionListener(evt -> {
                 new Sound("click");
                 gamePanel.setGameFinished(true);
+                backgroundMusic.stopMusic();
                 gameEnd.setVisible(false);
                 panel.setVisible(false);
 
@@ -283,6 +285,7 @@ class InGame extends GPanel implements ActionListener {
             hideCoopUI();
         }
         gamePanel.startGame();
+        backgroundMusic = new Sound("mainmenu");
     }
 
     private void addActionListeners() {
@@ -294,6 +297,7 @@ class InGame extends GPanel implements ActionListener {
 
     private void checkGameFinished() {
         if (gamePanel.getGameFinished()) {
+            backgroundMusic.stopMusic();
             pauze.setVisible(false);
             initEndGamePanel();
             gameTimer.stop();
@@ -317,9 +321,7 @@ class InGame extends GPanel implements ActionListener {
     private void initEndGamePanel() {
         try {
             gameEnd.initComponents();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (FontFormatException e) {
+        } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
         gameEnd.setVisible(true);
@@ -348,6 +350,7 @@ class InGame extends GPanel implements ActionListener {
 
     private void pauseGameLoop() {
         gameTimer.stop();
+        backgroundMusic.pauseMusic();
         gamePanel.pauseGame();
         gamePanel.setFocusable(false);
         gameTimer.stop();
@@ -365,6 +368,7 @@ class InGame extends GPanel implements ActionListener {
     private void resumeGameLoop() {
         pause.setVisible(false);
         gamePanel.resumeGame();
+        backgroundMusic.playMusic();
         gamePanel.setFocusable(true);
         gamePanel.requestFocus(); // anders werkt de keybinds niet meer
         gameTimer.start();

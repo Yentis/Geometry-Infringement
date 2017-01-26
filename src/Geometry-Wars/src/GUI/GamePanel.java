@@ -694,6 +694,7 @@ class GamePanel extends GPanel {
             if (schip.getHp() <= 0) {
                 new Sound("playerdeath");
                 gameFinished = true;
+
             }
         }
     }
