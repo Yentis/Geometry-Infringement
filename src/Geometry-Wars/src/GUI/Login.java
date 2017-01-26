@@ -41,10 +41,10 @@ class Login extends GPanel{
         GLabel message = new GLabel("", 24f, 220,120,600,50, false, Color.white);
         GLabel lblusername = new GLabel("Username: ", 24f, 200,170,150,50, false, Color.white);
         GLabel lblpassword = new GLabel("Password: ", 24f, 200,240,150,50, false, Color.white);
-        GInputField username = new GInputField(360,170,200,50);
-        GPasswordField password = new GPasswordField(360,240,200,50);
         GButton register = new GButton("Register", 24f, 200,300,170,50);
         JButton loginButton = new GButton("Login", 24f, 390,300,170,50);
+        JTextField username = new GInputFieldEnter(360,170,200,50, loginButton);
+        JPasswordField password = new GPasswordFieldEnter(360,240,200,50, loginButton);
         JButton Exit = new GButton("Quit", 24f, 820, 650, 170, 63);
 
         label.setOpaque(true);
@@ -64,10 +64,6 @@ class Login extends GPanel{
         this.add(message);
 
         //Action Listeners
-        password.addActionListener(evt -> loginButton.doClick());
-
-        username.addActionListener(evt -> loginButton.doClick());
-
         Exit.addActionListener(evt -> {
             new Sound("click");
             System.exit(0);

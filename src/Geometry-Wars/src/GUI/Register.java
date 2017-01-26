@@ -43,27 +43,26 @@ class Register extends GPanel {
         JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
         GButton register = new GButton("Register", 24f, 220,500,170,50);
         GButton Back = new GButton("Back", 24f, 635,650, 170, 63);
-        GLabel registered = new GLabel("Registration Successful", 24f, 220,120,350,50, false, Color.white);
-        GInputField username = new GInputField(480,190,200,50);
+        JLabel message = new GLabel("", 24f, 220,125,350,50, false, Color.white);
+        JTextField username = new GInputFieldEnter(480,190,200,50, register);
         GLabel lblusername = new GLabel("Username", 24f, 220,190,150,50, false, Color.white);
-        GPasswordField password = new GPasswordField(480, 260, 200, 50);
+        JPasswordField password = new GPasswordFieldEnter(480, 260, 200, 50, register);
         GLabel lblpassword = new GLabel("Password", 24f, 220, 260, 150, 50, false, Color.white);
-        GPasswordField passwordconfirm = new GPasswordField(480,330,200,50);
+        JPasswordField passwordconfirm = new GPasswordFieldEnter(480,330,200,50, register);
         GLabel lblpasswordconfirm = new GLabel("Repeat Password", 24f, 220, 330, 300, 50, false, Color.white);
-        GInputField email = new GInputField(480,400,200,50);
+        JTextField email = new GInputFieldEnter(480,400,200,50, register);
         GLabel lblemail = new GLabel("E-mail", 24f, 220, 400, 150, 50, false, Color.white);
         JButton Exit = new GButton("Quit", 24f, 820, 650, 170, 63);
 
         label.setOpaque(true);
         label.setFont(new GFont(65));
         label.setBackground(new Color(255,255,255,95));
-        registered.setVisible(false);
 
         label.setBounds(25,25,650,100);
 
         this.add(label);
         this.add(register);
-        this.add(registered);
+        this.add(message);
         this.add(username);
         this.add(lblusername);
         this.add(password);
@@ -77,17 +76,19 @@ class Register extends GPanel {
 
         //Action Listeners
         register.addActionListener(e -> {
+            GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+
             new Sound("click");
             if(Objects.equals(username.getText(), "")){
-                registered.setText("Please enter a username");
+                message.setText("Please enter a username");
             } else if (password.getPassword().length == 0){
-                registered.setText("Please enter a password");
+                message.setText("Please enter a password");
             } else if (passwordconfirm.getPassword().length == 0){
-                registered.setText("Please confirm your password");
+                message.setText("Please confirm your password");
             } else if (Objects.equals(email.getText(), "")){
-                registered.setText("Please enter your email address");
+                message.setText("Please enter your email address");
             } else if (!Arrays.equals(password.getPassword(), passwordconfirm.getPassword())){
-                registered.setText("Your passwords do not match, please try again");
+                message.setText("Your passwords do not match, please try again");
             } else {
                 String result = null;
                 try {
@@ -97,12 +98,17 @@ class Register extends GPanel {
                 }
 
                 if(Objects.equals(result, "")){
-                    registered.setText("Registration Successful");
+                    try {
+                        window.getSpel().logIn(username.getText());
+                        panel.setVisible(false);
+                        window.getMainMenu().setVisible(true);
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
                 } else {
-                    registered.setText(result + " already exists.");
+                    message.setText(result + " already exists.");
                 }
             }
-            registered.setVisible(true);
         });
 
         Exit.addActionListener(evt -> {
