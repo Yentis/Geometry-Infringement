@@ -103,13 +103,6 @@ class GamePanel extends GPanel {
 
     //region Behaviour
 
-    void resetGame() {
-        schip = null;
-        schipp2 = null;
-        drone = null;
-        dronep2 = null;
-    }
-
     private void initGamePanel() {
         try {
             initComponents();
@@ -244,7 +237,8 @@ class GamePanel extends GPanel {
 
     private Drone makeDrone() {
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-        Drone dummydr = null;
+        System.out.println(window.getSpel().getSpeler().getActiveDrone());
+        Drone dummydr;
 
         if (Objects.equals(window.getSpel().getSpeler().getActiveDrone(), "Defense Drone")) {
             dummydr = window.getSpel().getDrones().get(0);
@@ -252,6 +246,8 @@ class GamePanel extends GPanel {
             dummydr = window.getSpel().getDrones().get(1);
         } else if (Objects.equals(window.getSpel().getSpeler().getActiveDrone(), "Attack Drone")) {
             dummydr = window.getSpel().getDrones().get(2);
+        } else {
+            dummydr = null;
         }
         return dummydr;
     }
@@ -266,14 +262,13 @@ class GamePanel extends GPanel {
         gameFinished = false;
         spawnTimer.start();
 
-        Schip dummy = window.getSpel().getSchepen().get(0);
-        Drone dummydr;
-
         requestFocus();
+
+        schip = window.getSpel().getSchepen().get(0);
+        schip.setMenuUpgrades(upgrades);
+
         setSlowerEnemiesTimer(schip);
         setInvulnerabilityTimer(schip);
-
-        schip = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
 
         if (Objects.equals(window.getSpel().getCurrentControls(), "Keyboard + Mouse")) {
             addKeyListener(new TAdapter());
@@ -284,10 +279,10 @@ class GamePanel extends GPanel {
             new Controllers(schip, 0);
         }
 
-        dummydr = makeDrone();
+        drone = makeDrone();
+        System.out.println(drone);
 
-        if (dummydr != null) {
-            drone = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
+        if (drone != null) {
             schip.setDrone(drone);
         }
 
@@ -298,13 +293,11 @@ class GamePanel extends GPanel {
         if (coop) {
             //set layouts
             showCoopUI();
-            schipp2 = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
+            schipp2 = schip;
             new Controllers(schipp2, 1);
 
-            dummydr = makeDrone();
-
-            if (dummydr != null) {
-                dronep2 = new Drone(dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
+            if (drone != null) {
+                dronep2 = drone;
                 schipp2.setDrone(dronep2);
             }
 

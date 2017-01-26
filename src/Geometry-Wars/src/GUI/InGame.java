@@ -20,8 +20,8 @@ class InGame extends GPanel implements ActionListener {
     //region Instance Variables
 
     private InGame panel = this;
-    private boolean coop;
     private Sound backgroundMusic;
+    private boolean coop;
 
     //GamePanel
     private GamePanel gamePanel;
@@ -301,7 +301,6 @@ class InGame extends GPanel implements ActionListener {
             pauze.setVisible(false);
             initEndGamePanel();
             gameTimer.stop();
-            gamePanel.resetGame();
         }
     }
 

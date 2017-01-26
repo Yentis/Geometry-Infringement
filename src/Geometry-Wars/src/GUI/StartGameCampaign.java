@@ -57,7 +57,8 @@ class StartGameCampaign extends GPanel {
 
         String[] drones = new String[droneList.size() + 1];
 
-        drones[0] = "";
+        drones[0] = "No drone";
+        window.getSpel().getSpeler().setActiveDrone("No drone");
 
         int i = 1;
         for (int j:droneList) {
@@ -106,11 +107,10 @@ class StartGameCampaign extends GPanel {
         });
         chooseDrone.addActionListener(evt -> {
             new Sound("click");
-            Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
-            if(chooseDrone.getSelectedItem() == null){
-                window1.getSpel().getSpeler().setActiveDrone("");
+            if(chooseDrone.getSelectedItem() == "No drone"){
+                window.getSpel().getSpeler().setActiveDrone("No drone");
             } else {
-                window1.getSpel().getSpeler().setActiveDrone(chooseDrone.getSelectedItem().toString());
+                window.getSpel().getSpeler().setActiveDrone(chooseDrone.getSelectedItem().toString());
             }
         });
     }

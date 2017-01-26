@@ -176,6 +176,10 @@ public class Schip extends Sprite {
         return currentXp;
     }
 
+    public void setMenuUpgrades(List<Integer> menuUpgrades) {
+        this.menuUpgrades = menuUpgrades;
+    }
+
     private void setMaxXp(int level) {
         this.maxXp = Math.pow(2, level) * 1000;
     }
