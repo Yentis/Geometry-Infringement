@@ -78,11 +78,11 @@ class StartGame extends GPanel {
             new Sound("click");
             panel.setVisible(false);
             Window window = (Window) SwingUtilities.getRoot(panel.getParent());
-            window.getInGame().setCoop(true);
-            window.getInGame().getGameEnd().setVisible(false);
-            window.getInGame().getStartGame().setVisible(true);
             window.getInGame().setVisible(true);
+            window.getInGame().getStartGame().setVisible(true);
+            window.getInGame().getGameEnd().setVisible(false);
             window.getInGame().getPause().setVisible(false);
+            window.getInGame().setCoop(true);
         });
 
         Back.addActionListener(evt -> {
