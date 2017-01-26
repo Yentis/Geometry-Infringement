@@ -21,23 +21,22 @@ class InGame extends GPanel implements ActionListener {
 
     private InGame panel = this;
     private Sound backgroundMusic;
-    private List<Enemy> enemies;
     private boolean coop;
 
     //GamePanel
     private GamePanel gamePanel;
 
-    private GButton startGame = new GButton("Click to Start", 35f, 280, 250, 400, 200);
+    private GButtonPause startGame = new GButtonPause("Click to Start", 35f, 280, 250, 400, 200);
     private Timer gameTimer;
 
     //PausePanel
-    private GButton Continue = new GButton("Continue", 24f, 185, 250, 275, 120);
-    private GButton controls = new GButton("Controls", 24f, 530, 250, 275, 120);
-    private GButton restartPauze = new GButton("Restart", 24f, 185, 405, 275, 120);
-    private GButton menuPauze = new GButton("Main Menu", 24f, 530, 405, 275, 120);
+    private GButtonPause Continue = new GButtonPause("Continue", 24f, 185, 250, 275, 120);
+    private GButtonPause controls = new GButtonPause("Controls", 24f, 530, 250, 275, 120);
+    private GButtonPause restartPauze = new GButtonPause("Restart", 24f, 185, 405, 275, 120);
+    private GButtonPause menuPauze = new GButtonPause("Main Menu", 24f, 530, 405, 275, 120);
 
-    private GButton restartGameEnd = new GButton("Restart", 24f, 150, 420, 275, 120);
-    private GButton menuGameEnd = new GButton("Main Menu", 24f, 550, 420, 275, 120);
+    private GButtonPause restartGameEnd = new GButtonPause("Restart", 24f, 150, 420, 275, 120);
+    private GButtonPause menuGameEnd = new GButtonPause("Main Menu", 24f, 550, 420, 275, 120);
     private ImageIcon PauseImage = new ImageIcon("resources\\Media\\pause-128.png");
     private JButton pauze = new JButton(PauseImage);
     private GLabel gameOver = new GLabel("Oopsy daisy! u dead fam", 25f, 325, 260, 375, 120, true, Color.white);
@@ -83,10 +82,11 @@ class InGame extends GPanel implements ActionListener {
         @Override
         public void initComponents() throws IOException, FontFormatException {
             gameEnd.removeAll();
-            JLabel pane = new GLabel(50, 125, 900, 500, true);
-
-            pane.setBackground(new Color(255, 255, 255, 0));
+            JLabel pane = new JLabel();
+            pane.setOpaque(true);
+            pane.setBackground(new Color(255, 255, 255, 2));
             pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
+            pane.setBounds(50, 125, 900, 500);
 
             restartGameEnd.setBackground(Color.black);
             restartGameEnd.setForeground(Color.white);
@@ -111,7 +111,6 @@ class InGame extends GPanel implements ActionListener {
                 new Sound("click");
                 panel.setVisible(false);
                 Window window = (Window) SwingUtilities.getRoot(panel.getParent());
-                pause.setVisible(false);
                 try {
                     window.getSpel().submitScore(gamePanel.getScore());
                     window.getSpel().logIn(window.getSpel().getSpeler().getGebruikersnaam());
@@ -120,7 +119,6 @@ class InGame extends GPanel implements ActionListener {
                     e.printStackTrace();
                 }
                 window.getMainMenu().setVisible(true);
-
             });
         }
     };
@@ -171,7 +169,7 @@ class InGame extends GPanel implements ActionListener {
         this.coop = coop;
     }
 
-    GButton getStartGame() {
+    GButtonPause getStartGame() {
         return startGame;
     }
 
@@ -190,7 +188,7 @@ class InGame extends GPanel implements ActionListener {
     @Override
     public void initComponents() throws IOException, FontFormatException {
         panel.removeAll();
-        JLabel pane = new GLabel(50, 125, 900, 500, true);
+        JLabel pane = new JLabel();
 
         healthp2Background = new GLabel("Health:", 24, 595, 18, 169, 62, false, Color.black);
         scorep2Background = new GLabel("Score:", 24, 580, 65, 169, 62, false, Color.cyan);
@@ -228,7 +226,8 @@ class InGame extends GPanel implements ActionListener {
 
         //endregion
 
-        pane.setBackground(new Color(255, 255, 255, 0));
+        pane.setOpaque(true);
+        pane.setBackground(new Color(255, 255, 255, 2));
         pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
 
         pauze.setOpaque(true);
@@ -237,6 +236,7 @@ class InGame extends GPanel implements ActionListener {
 
         //BOUNDS
         pauze.setBounds(482, 23, 60, 58);
+        pane.setBounds(50, 125, 900, 500);
 
         //==================================================
 
@@ -251,10 +251,6 @@ class InGame extends GPanel implements ActionListener {
             new Sound("click");
             pauseGameLoop();
         });
-    }
-
-    public void start() throws IOException, FontFormatException {
-        gamePanel = new GamePanel(enemies);
     }
 
     private void showCoopUI(){

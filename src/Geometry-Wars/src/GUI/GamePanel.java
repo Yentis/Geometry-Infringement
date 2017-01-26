@@ -255,9 +255,11 @@ class GamePanel extends GPanel {
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         List<Integer> upgrades;
         upgrades = window.getSpel().checkUpgrades();
-        enemyOnField.clear(); //lol
+        enemyOnField.clear();
+        effects.clear();
         enemyCounter = 3;
         roundCounter = 1;
+        enemyPower = 1;
         gameFinished = false;
         spawnTimer.start();
 
@@ -757,7 +759,7 @@ class GamePanel extends GPanel {
     }
 
     private void makeEnemy(Enemy enemy) {
-        enemyOnField.add(new Enemy(enemy.getNr(), enemy.getNaam(), enemy.getBeschrijving(), (int) (enemy.getHP() * enemyPower), (int) (enemy.getKracht() * enemyPower), enemy.getImageString(), (int) (enemy.getExperience() * enemyPower), (int) (enemy.getScore() * enemyPower), enemy.getSpeed()));
+        enemyOnField.add(new Enemy(enemy.getNr(), enemy.getNaam(), enemy.getBeschrijving(), (int)(enemy.getHP() * (1 + Math.pow((enemyPower - 1), 2) * 0.0025)), (int)(enemy.getKracht() * (1 + Math.pow((enemyPower - 1), 1.65) * 0.015)), enemy.getImageString(), (int)(enemy.getExperience() * (1 + Math.pow((enemyPower - 1), 2) * 0.015)), enemy.getExperience() * 10, enemy.getSpeed()));
     }
 
     private void spawnEnemies() {
@@ -793,9 +795,9 @@ class GamePanel extends GPanel {
                     enemy = enemies.get(6);
                     makeEnemy(enemy);
                     enemyCounter = 3;
-                    enemyPower += 0.2;
                 }
-                enemyCounter += 2;
+                enemyCounter += 1;
+                enemyPower += 1;
                 try {
                     effects.add(Effect.roundIndicator(roundCounter));
                 } catch (IOException | FontFormatException e1) {

@@ -19,13 +19,4 @@ public class GLabel extends JLabel {
             this.setBackground(new Color(255,255,255,95));
         }
     }
-
-    public GLabel(int x, int y, int width, int height, boolean background){
-        this.setBounds(x,y,width,height);
-        if (background){
-            this.setOpaque(true);
-            this.setHorizontalAlignment(SwingConstants.CENTER);
-            this.setBackground(new Color(255,255,255,95));
-        }
-    }
 }
