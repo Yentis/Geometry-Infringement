@@ -110,7 +110,7 @@ public class Window extends JFrame {
 
     public static void main(String args[]) throws IOException, FontFormatException, SQLException, InterruptedException {
         new Window("Geometry Wars");
-        //new Sound("mainmenu");
+        new Thread(new Sound("mainmenuloop")).start();
     }
 
     // Set Background

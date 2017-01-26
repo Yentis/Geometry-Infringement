@@ -235,6 +235,7 @@ public class Schip extends Sprite {
     }
 
     public void checkLevel() {
+        leveled = false;
         if (getCurrentXp() >= getMaxXp()) {
             addLevel();
             setMaxXp(getLevel());
@@ -408,8 +409,8 @@ public class Schip extends Sprite {
     }
 
     private void randomFire() {
-        double kogelX = locationX;
-        double kogelY = locationY;
+        double kogelX = locationX + getWidth() / 2;
+        double kogelY = locationY + getHeight() / 2;
         int kogelX2 = randomX();
         int kogelY2 = randomY();
         Point mousePointer2 = new Point(kogelX2, kogelY2);

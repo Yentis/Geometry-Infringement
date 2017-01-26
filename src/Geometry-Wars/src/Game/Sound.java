@@ -6,7 +6,7 @@ import java.io.*;
 /**
  * Created by Yentl on 25-Dec-16.
  */
-public class Sound {
+public class Sound implements Runnable {
     private void playSfx(final InputStream fileStream) {
         ActivityManager.getInstance().submit(() -> {
             try {
@@ -76,7 +76,10 @@ public class Sound {
                     playSfx(new FileInputStream("resources/Sound/shieldinactive.wav"));
                     break;
                 case "mainmenu":
-                    playSfx(new FileInputStream("resources/Sound/mainmenu.wav"));
+                        playSfx(new FileInputStream("resources/Sound/mainmenu.wav"));
+                    break;
+                case "mainmenuloop":
+                    run();
                     break;
                 case "click":
                     playSfx(new FileInputStream("resources/Sound/click.wav"));
@@ -84,6 +87,18 @@ public class Sound {
             }
         } catch (FileNotFoundException e){
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void run() {
+        while(true){
+            try {
+                playSfx(new FileInputStream("resources/Sound/mainmenu.wav"));
+                Thread.sleep(252000);
+            } catch (InterruptedException | FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

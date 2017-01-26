@@ -523,7 +523,6 @@ class GamePanel extends GPanel {
                             schip.getDrone().checkLevel();
                         } else if (kogels == schip.getKogels()) {
                             schip.addCurrentXp(enemy.getExperience());
-                            schip.addCurrentXp(1000);
                             schip.checkLevel();
                             if (schip.isLeveled()){
                                 effects.add(Effect.levelUp(schip));
@@ -798,7 +797,7 @@ class GamePanel extends GPanel {
                     enemy = enemies.get(5);
                     makeEnemy(enemy);
                 }
-                if (enemyCounter == 21) {
+                if (roundCounter % 10 == 0) {
                     enemy = enemies.get(6);
                     makeEnemy(enemy);
                     enemyCounter = 3;
