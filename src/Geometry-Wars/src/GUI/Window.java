@@ -1,5 +1,6 @@
 package GUI;
 
+import GComponents.GLabel;
 import Game.*;
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +38,7 @@ public class Window extends JFrame {
         this.setMaximumSize(new Dimension(1024, 768));
         this.setMinimumSize(new Dimension(1024, 768));
         this.setLayout(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
 

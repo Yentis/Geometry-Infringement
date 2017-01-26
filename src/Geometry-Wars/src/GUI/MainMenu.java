@@ -44,20 +44,14 @@ class MainMenu extends GPanel {
         JButton LogOut = new GButton("Logout", 24f, 635,650, 170, 63);
         JButton Quit = new GButton("Quit", 24f, 820, 650, 170, 63);
         JButton Discord = new JButton(new ImageIcon(((new ImageIcon("resources\\Media\\Discord.jpg")).getImage()).getScaledInstance(65, 65, java.awt.Image.SCALE_SMOOTH)));
-        JLabel Title = new JLabel("Geometry Wars", SwingConstants.CENTER);
-        JLabel JoinDiscord = new JLabel("Join Server!");
+        JLabel Title = new GLabel("Geometry Wars", 65f, 25, 25, 650, 100, true, Color.darkGray);
         JList Friends = new JList();
         GLabel confirmationlabel = new GLabel("Are you sure you want to quit?", 30, 320,285,550,60, false, Color.cyan);
         JButton Yes = new GButton("Yes", 24f, 455, 380, 100, 47);
         JButton No = new GButton("No", 24f, 595, 380, 100, 47);
-        JLabel pauzepane = new JLabel();
+        JLabel pauzepane = new GLabel("", 24f, 280, 265, 630, 245, true, Color.darkGray);
 
-
-        //==================================================
-
-
-        //Add Action Listener
-        //==================================================
+        //region Action Listeners
 
         StartGame.addActionListener(evt -> {
             new Sound("click");
@@ -149,7 +143,6 @@ class MainMenu extends GPanel {
             LogOut.setVisible(false);
             Discord.setVisible(false);
             FriendsBtn.setVisible(false);
-            JoinDiscord.setVisible(false);
         });
 
         No.addActionListener(evt -> {
@@ -168,7 +161,6 @@ class MainMenu extends GPanel {
             LogOut.setVisible(true);
             Discord.setVisible(true);
             FriendsBtn.setVisible(true);
-            JoinDiscord.setVisible(true);
         });
 
         Yes.addActionListener(evt -> {
@@ -176,22 +168,17 @@ class MainMenu extends GPanel {
             System.exit(0);
         });
 
+        //endregion
+
         //==================================================
 
         //Set Properties
         //==================================================
 
-        Title.setFont(new GFont(65));
-        Title.setOpaque(true);
-        Title.setBackground(new Color(255, 255, 255, 95));
-        JoinDiscord.setFont(new GFont(24));
-        JoinDiscord.setForeground(Color.white);
-
         Friends.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         Friends.setVisible(false);
         Friends.setBackground(new Color(255, 255, 255, 95));
 
-        pauzepane.setOpaque(true);
         pauzepane.setBackground(new Color(255,255,255,50));
         pauzepane.setBorder(BorderFactory.createMatteBorder(
                 2, 2, 2, 2, Color.cyan));
@@ -201,11 +188,8 @@ class MainMenu extends GPanel {
         //Set Bounds
         //==================================================
 
-        Title.setBounds(25,25,650,100);
-        JoinDiscord.setBounds(102, 1000, 180, 35);
         Friends.setBounds(820, 129, 170, 300);
         Discord.setBounds(35, 650, 65, 65);
-        pauzepane.setBounds(280,265,630,245);
 
         pauzepane.setVisible(false);
         Yes.setVisible(false);
@@ -227,7 +211,6 @@ class MainMenu extends GPanel {
         panel.add(LogOut);
         panel.add(Discord);
         panel.add(FriendsBtn);
-        panel.add(JoinDiscord);
 
         panel.add(pauzepane);
         panel.add(Quit);

@@ -21,6 +21,7 @@ class InGame extends GPanel implements ActionListener {
 
     private InGame panel = this;
     private Sound backgroundMusic;
+    private List<Enemy> enemies;
     private boolean coop;
 
     //GamePanel
@@ -82,11 +83,10 @@ class InGame extends GPanel implements ActionListener {
         @Override
         public void initComponents() throws IOException, FontFormatException {
             gameEnd.removeAll();
-            JLabel pane = new JLabel();
-            pane.setOpaque(true);
-            pane.setBackground(new Color(255, 255, 255, 2));
+            JLabel pane = new GLabel(50, 125, 900, 500, true);
+
+            pane.setBackground(new Color(255, 255, 255, 0));
             pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
-            pane.setBounds(50, 125, 900, 500);
 
             restartGameEnd.setBackground(Color.black);
             restartGameEnd.setForeground(Color.white);
@@ -190,7 +190,7 @@ class InGame extends GPanel implements ActionListener {
     @Override
     public void initComponents() throws IOException, FontFormatException {
         panel.removeAll();
-        JLabel pane = new JLabel();
+        JLabel pane = new GLabel(50, 125, 900, 500, true);
 
         healthp2Background = new GLabel("Health:", 24, 595, 18, 169, 62, false, Color.black);
         scorep2Background = new GLabel("Score:", 24, 580, 65, 169, 62, false, Color.cyan);
@@ -228,8 +228,7 @@ class InGame extends GPanel implements ActionListener {
 
         //endregion
 
-        pane.setOpaque(true);
-        pane.setBackground(new Color(255, 255, 255, 2));
+        pane.setBackground(new Color(255, 255, 255, 0));
         pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
 
         pauze.setOpaque(true);
@@ -238,7 +237,6 @@ class InGame extends GPanel implements ActionListener {
 
         //BOUNDS
         pauze.setBounds(482, 23, 60, 58);
-        pane.setBounds(50, 125, 900, 500);
 
         //==================================================
 
@@ -253,6 +251,10 @@ class InGame extends GPanel implements ActionListener {
             new Sound("click");
             pauseGameLoop();
         });
+    }
+
+    public void start() throws IOException, FontFormatException {
+        gamePanel = new GamePanel(enemies);
     }
 
     private void showCoopUI(){

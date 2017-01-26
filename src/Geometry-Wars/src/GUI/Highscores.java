@@ -50,7 +50,7 @@ class Highscores extends GPanel {
         List<String> strings = new ArrayList<>();
         List<Speler> spelers;
 
-        JLabel label = new JLabel("HIGH SCORES", SwingConstants.CENTER);
+        JLabel label = new GLabel("HIGHSCORES", 65f, 220, 25, 650, 100, true, Color.white);
         JLabel Player = new GLabel("Player", 24f, 330, 166, 180, 64, false, Color.white);
         JLabel Score = new GLabel("Score", 24f, 655, 166, 180, 64, false, Color.white);
         JButton Back = new GButton("Back", 24f, 20, 675, 120, 45);
@@ -90,11 +90,8 @@ class Highscores extends GPanel {
 
         //properties
 
-        label.setOpaque(true);
-        label.setFont(new GFont(65));
         label.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.green));
         label.setBackground(Color.black);
-        label.setForeground(Color.white);
 
         listPlayer.setLayoutOrientation(JList.VERTICAL);
         listPlayer.setFont(new GFont(24));
@@ -114,7 +111,6 @@ class Highscores extends GPanel {
 
 
         //bounds
-        label.setBounds(220,25,650,100);
 
         listPlayer.setBounds(221,230,318,469);
         listScore.setBounds(551,230,318,469);

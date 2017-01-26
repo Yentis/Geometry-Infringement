@@ -36,7 +36,7 @@ class StartGameCampaign extends GPanel {
         //JButton ClearCampaign = new GButton("Clear Campaign", 24f, 250,470,350,80);
         JButton Back = new GButton("Back", 24f, 820, 650, 170, 63);
 
-        JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
+        JLabel label = new GLabel("Geometry Wars", 65f, 25, 25, 650, 100, true, Color.darkGray);
         JLabel labelDrone = new GLabel("Choose drone: ", 18, 500,250,200,50,false, Color.white);
 
         try {
@@ -69,9 +69,6 @@ class StartGameCampaign extends GPanel {
         chooseDrone.setSelectedItem(window.getSpel().getSpeler().getActiveDrone());
 
         //props
-        label.setOpaque(true);
-        label.setFont(new GFont(65));
-        label.setBackground(new Color(255,255,255,95));
         Start.setBackground(new Color(255,255,255,200));
         //NewCampaign.setBackground(new Color(255,255,255,200));
         //ClearCampaign.setBackground(new Color(255,255,255,200));
@@ -79,7 +76,6 @@ class StartGameCampaign extends GPanel {
         Back.setBackground(new Color(255,255,255,200));
         chooseDrone.setFont(new GFont(18));
         //Bounds
-        label.setBounds(25,25,650,100);
         chooseDrone.setBounds(650,250,200,50);
 
         this.add(labelDrone);

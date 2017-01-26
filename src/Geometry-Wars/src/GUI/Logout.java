@@ -36,15 +36,9 @@ class Logout extends GPanel {
         panel.removeAll();
 
         JLabel LoggedOut = new GLabel("You are now logged out.", 36f, 320, 370, 600, 62, false, Color.white);
-        JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
+        JLabel label = new GLabel("Geometry Wars", 65f, 25, 25, 650, 100, true, Color.darkGray);
         JButton Exit = new GButton("Quit", 24f, 820, 650, 170, 63);
         JButton Login = new GButton("Login", 24f, 635,650, 170, 63);
-
-        label.setOpaque(true);
-        label.setFont(new GFont(65));
-        label.setBackground(new Color(255,255,255,95));
-
-        label.setBounds(25,25,650,100);
 
         this.add(LoggedOut);
         this.add(label);

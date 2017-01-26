@@ -39,12 +39,9 @@ class StartGame extends GPanel {
         JButton Back = new GButton("Back", 24f, 820, 650, 170, 63);
         JButton Highscores = new GButton("High Scores", 24f, 550,230,300,80);
 
-        JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
+        JLabel label = new GLabel("Geometry Wars", 65f, 25, 25, 650, 100, true, Color.darkGray);
 
         //props
-        label.setOpaque(true);
-        label.setFont(new GFont(65));
-        label.setBackground(new Color(255,255,255,95));
         //War.setBackground(new Color(255,255,255,200));
         SoloGame.setBackground(new Color(255,255,255,200));
         //Campaign.setBackground(new Color(255,255,255,200));
@@ -53,8 +50,6 @@ class StartGame extends GPanel {
         Highscores.setBackground(new Color(255,255,255,200));
 
         //Bounds
-
-        label.setBounds(25,25,650,100);
 
         this.add(SoloGame);
         //this.add(War);

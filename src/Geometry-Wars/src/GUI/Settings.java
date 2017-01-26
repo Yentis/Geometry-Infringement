@@ -41,7 +41,7 @@ class Settings extends GPanel {
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
         String[] difficulties = {"Hard", "Normal", "Easy"};
         String[] inputs = {"Keyboard + Mouse", "Controller"};
-        JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
+        JLabel label = new GLabel("Geometry Wars", 65f, 25, 25, 650, 100, true, Color.darkGray);
         GLabel message = new GLabel("", 24f, 240,120,600,50, false, Color.white);
         GLabel lbldifficulty = new GLabel("Difficulty: ", 24f, 220,170,150,50, false, Color.white);
         JComboBox<String> difficulty = new JComboBox<>(difficulties);
@@ -66,9 +66,6 @@ class Settings extends GPanel {
         GLabel moveLeft2 = new GLabel("Q", 24f, 420,520,600,50, false, Color.white);
         GLabel moveRight2 = new GLabel("D", 24f, 420,550,600,50, false, Color.white);
 
-        label.setOpaque(true);
-        label.setFont(new GFont(65));
-        label.setBackground(new Color(255,255,255,95));
         difficulty.setFont(new GFont(18));
         difficulty.setSelectedItem(window.getSpel().getCurrentDifficulty());
         message.setVisible(false);
@@ -76,7 +73,6 @@ class Settings extends GPanel {
         backgroundpane.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
         backgroundpane.setBackground(new Color(0,0,0,150));
 
-        label.setBounds(25,25,650,100);
         difficulty.setBounds(420,170,250,50);
         input.setBounds(420,230,250,50);
         input.setFont(new GFont(18));

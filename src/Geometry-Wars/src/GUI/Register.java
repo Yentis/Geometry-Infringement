@@ -40,25 +40,19 @@ class Register extends GPanel {
     public void initComponents() throws IOException, FontFormatException {
         panel.removeAll();
 
-        JLabel label = new JLabel("Geometry Wars", SwingConstants.CENTER);
-        GButton register = new GButton("Register", 24f, 220,500,170,50);
-        GButton Back = new GButton("Back", 24f, 635,650, 170, 63);
+        JLabel label = new GLabel("Geometry Wars", 65f, 25, 25, 650, 100, true, Color.darkGray);
+        JButton register = new GButton("Register", 24f, 220,500,170,50);
+        JButton Back = new GButton("Back", 24f, 635,650, 170, 63);
         JLabel message = new GLabel("", 24f, 220,125,350,50, false, Color.white);
-        JTextField username = new GInputFieldEnter(480,190,200,50, register);
-        GLabel lblusername = new GLabel("Username", 24f, 220,190,150,50, false, Color.white);
-        JPasswordField password = new GPasswordFieldEnter(480, 260, 200, 50, register);
-        GLabel lblpassword = new GLabel("Password", 24f, 220, 260, 150, 50, false, Color.white);
-        JPasswordField passwordconfirm = new GPasswordFieldEnter(480,330,200,50, register);
-        GLabel lblpasswordconfirm = new GLabel("Repeat Password", 24f, 220, 330, 300, 50, false, Color.white);
-        JTextField email = new GInputFieldEnter(480,400,200,50, register);
-        GLabel lblemail = new GLabel("E-mail", 24f, 220, 400, 150, 50, false, Color.white);
+        JTextField username = new GInputField(480,190,200,50, register);
+        JLabel lblusername = new GLabel("Username", 24f, 220,190,150,50, false, Color.white);
+        JPasswordField password = new GPasswordField(480, 260, 200, 50, register);
+        JLabel lblpassword = new GLabel("Password", 24f, 220, 260, 150, 50, false, Color.white);
+        JPasswordField passwordconfirm = new GPasswordField(480,330,200,50, register);
+        JLabel lblpasswordconfirm = new GLabel("Repeat Password", 24f, 220, 330, 300, 50, false, Color.white);
+        JTextField email = new GInputField(480,400,200,50, register);
+        JLabel lblemail = new GLabel("E-mail", 24f, 220, 400, 150, 50, false, Color.white);
         JButton Exit = new GButton("Quit", 24f, 820, 650, 170, 63);
-
-        label.setOpaque(true);
-        label.setFont(new GFont(65));
-        label.setBackground(new Color(255,255,255,95));
-
-        label.setBounds(25,25,650,100);
 
         this.add(label);
         this.add(register);
