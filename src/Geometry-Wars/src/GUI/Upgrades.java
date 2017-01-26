@@ -164,6 +164,7 @@ class Upgrades extends GPanel {
         });
 
         upgradeFire1Info.addActionListener(evt -> {
+            new Sound("click");
             Upgrade upgrade = window.getSpel().getUpgrades().get(0);
 
             message.setText(upgrade.getBeschrijving());
@@ -177,6 +178,7 @@ class Upgrades extends GPanel {
         });
 
         upgradeShip1Info.addActionListener(evt -> {
+            new Sound("click");
             Upgrade upgrade = window.getSpel().getUpgrades().get(1);
 
             message.setText(upgrade.getBeschrijving());
@@ -190,6 +192,7 @@ class Upgrades extends GPanel {
         });
 
         upgradeShip2Info.addActionListener(evt -> {
+            new Sound("click");
             Upgrade upgrade = window.getSpel().getUpgrades().get(2);
 
             message.setText(upgrade.getBeschrijving());
@@ -203,6 +206,7 @@ class Upgrades extends GPanel {
         });
 
         upgradeDrone1Info.addActionListener(evt -> {
+            new Sound("click");
             Upgrade upgrade = window.getSpel().getUpgrades().get(3);
 
             message.setText(upgrade.getBeschrijving());
@@ -216,6 +220,7 @@ class Upgrades extends GPanel {
         });
 
         upgradeDrone2Info.addActionListener(evt -> {
+            new Sound("click");
             Upgrade upgrade = window.getSpel().getUpgrades().get(4);
 
             message.setText(upgrade.getBeschrijving());
@@ -229,6 +234,7 @@ class Upgrades extends GPanel {
         });
 
         upgradeDrone3Info.addActionListener(evt -> {
+            new Sound("click");
             Upgrade upgrade = window.getSpel().getUpgrades().get(5);
 
             message.setText(upgrade.getBeschrijving());
