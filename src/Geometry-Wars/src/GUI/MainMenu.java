@@ -125,6 +125,7 @@ class MainMenu extends GPanel {
             try {
                 window.getSpel().logIn(window.getSpel().getSpeler().getGebruikersnaam());
                 window.getProfile().setSpeler(window.getSpel().getSpeler());
+                window.getProfile().setFromHighscore(false);
                 window.getProfile().initComponents();
             } catch (IOException | FontFormatException | SQLException e) {
                 e.printStackTrace();

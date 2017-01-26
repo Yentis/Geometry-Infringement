@@ -52,7 +52,7 @@ class Register extends GPanel {
         GLabel lblpasswordconfirm = new GLabel("Repeat Password", 24f, 220, 330, 300, 50, false, Color.white);
         GInputField email = new GInputField(480,400,200,50);
         GLabel lblemail = new GLabel("E-mail", 24f, 220, 400, 150, 50, false, Color.white);
-        JButton Exit = new GButton("Exit", 24f, 820, 650, 170, 63);
+        JButton Exit = new GButton("Quit", 24f, 820, 650, 170, 63);
 
         label.setOpaque(true);
         label.setFont(new GFont(65));

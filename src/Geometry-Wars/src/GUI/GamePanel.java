@@ -237,7 +237,6 @@ class GamePanel extends GPanel {
 
     private Drone makeDrone() {
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
-        System.out.println(window.getSpel().getSpeler().getActiveDrone());
         Drone dummydr;
 
         if (Objects.equals(window.getSpel().getSpeler().getActiveDrone(), "Defense Drone")) {
@@ -280,7 +279,6 @@ class GamePanel extends GPanel {
         }
 
         drone = makeDrone();
-        System.out.println(drone);
 
         if (drone != null) {
             schip.setDrone(drone);

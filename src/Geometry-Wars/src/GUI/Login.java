@@ -45,7 +45,7 @@ class Login extends GPanel{
         GPasswordField password = new GPasswordField(360,240,200,50);
         GButton register = new GButton("Register", 24f, 200,300,170,50);
         JButton loginButton = new GButton("Login", 24f, 390,300,170,50);
-        JButton Exit = new GButton("Exit", 24f, 820, 650, 170, 63);
+        JButton Exit = new GButton("Quit", 24f, 820, 650, 170, 63);
 
         label.setOpaque(true);
         label.setFont(new GFont(65));

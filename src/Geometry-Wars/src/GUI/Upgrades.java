@@ -1,6 +1,9 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.*;
@@ -55,52 +58,34 @@ class Upgrades extends GPanel {
         JLabel upgrades = new GLabel("Upgrades", 36f, 400,22,218,74, false, Color.black);
         JLabel nuggets = new GLabel("" + speler.getNuggets(), 18f, 200,60,150,35, false, Color.white);
         JLabel message = new GLabel("", 24f, 365, 82, 330, 74, false, Color.white);
-        JButton upgradeShip1Info = new GButton("", 16f, 179,193,16,21);
+        JLabel upgradeShip1Info = new GLabel("?", 16f, 163,193,16,21, false, Color.black);
         JButton upgradeShip1 = new GButton("", 16f,75,214,104,123);
-        JLabel upgradeShip1Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(1).getKost()), 16f, 85,143,104,123, false, Color.black);
-        JButton upgradeShip2Info = new GButton("", 16f, 315,193,16,21);
+        JLabel upgradeShip1Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(1).getKost()), 16f, 75,143,104,123, false, Color.black);
+        JLabel upgradeShip2Info = new GLabel("?", 16f, 299,193,16,21, false, Color.black);
         JButton upgradeShip2 = new GButton("", 16f,211,214,104,123);
-        JLabel upgradeShip2Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(2).getKost()), 16f, 226,143,104,123, false, Color.black);
+        JLabel upgradeShip2Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(2).getKost()), 16f, 211,143,104,123, false, Color.black);
         //JButton upgradeShip3 = new GButton("",16f,75,368,104,123);
+        JLabel upgradeDrone1Info = new GLabel("?", 16f, 480,193,16,21, false, Color.black);
         JButton upgradeDrone1 = new GButton("", 16f, 392,214,104,123);
-        JButton upgradeDrone1Info = new GButton("", 16f, 496,193,16,21);
-        JLabel upgradeDrone1Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(3).getKost()), 16f, 407,143,104,123, false, Color.black);
+        JLabel upgradeDrone1Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(3).getKost()), 16f, 392,143,104,123, false, Color.black);
+        JLabel upgradeDrone2Info = new GLabel("?", 16f, 616,193,16,21, false, Color.black);
         JButton upgradeDrone2 = new GButton("",16f, 528,214,104,123);
-        JButton upgradeDrone2Info = new GButton("", 16f, 632,193,16,21);
-        JLabel upgradeDrone2Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(4).getKost()), 16f, 543,143,104,123, false, Color.black);
+        JLabel upgradeDrone2Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(4).getKost()), 16f, 528,143,104,123, false, Color.black);
+        JLabel upgradeDrone3Info = new GLabel("?", 16f, 480,346,16,21, false, Color.black);
         JButton upgradeDrone3 = new GButton("",16f, 392,368,104,123);
-        JButton upgradeDrone3Info = new GButton("", 16f, 496,346,16,21);
-        JLabel upgradeDrone3Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(5).getKost()), 16f, 407,293,104,123, false, Color.black);
+        JLabel upgradeDrone3Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(5).getKost()), 16f, 392,293,104,123, false, Color.black);
+        JLabel upgradeFire1Info = new GLabel("?", 16f, 792,193,16,21, false, Color.black);
         JButton upgradeFire1 = new GButton("", 16f, 704,218,104,123);
-        JButton upgradeFire1Info = new GButton("", 16f, 808,193,16,21);
-        JLabel upgradeFire1Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(0).getKost()), 16f, 715,143,104,123, false, Color.black);
+        JLabel upgradeFire1Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(0).getKost()), 16f, 704,143,104,123, false, Color.black);
         //JButton upgradeFire2 = new GButton("", 16f, 841,218,104,123);
         //JButton upgradeFire3 = new GButton("", 16f, 704,368,104,123);
 
+        upgradeFire1.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(0).getFoto()));
         upgradeShip1.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(1).getFoto()));
-        upgradeShip1Info.setIcon(new ImageIcon("resources\\Media\\info.png"));
-        upgradeShip1Info.setOpaque(false);
-        upgradeShip1Info.setBorderPainted(false);
-        upgradeShip2Info.setIcon(new ImageIcon("resources\\Media\\info.png"));
-        upgradeShip2Info.setOpaque(false);
-        upgradeShip2Info.setBorderPainted(false);
-        upgradeDrone1Info.setIcon(new ImageIcon("resources\\Media\\info.png"));
-        upgradeDrone1Info.setOpaque(false);
-        upgradeDrone1Info.setBorderPainted(false);
-        upgradeDrone2Info.setIcon(new ImageIcon("resources\\Media\\info.png"));
-        upgradeDrone2Info.setOpaque(false);
-        upgradeDrone2Info.setBorderPainted(false);
-        upgradeDrone3Info.setIcon(new ImageIcon("resources\\Media\\info.png"));
-        upgradeDrone3Info.setOpaque(false);
-        upgradeDrone3Info.setBorderPainted(false);
-        upgradeFire1Info.setIcon(new ImageIcon("resources\\Media\\info.png"));
-        upgradeFire1Info.setOpaque(false);
-        upgradeFire1Info.setBorderPainted(false);
         upgradeShip2.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(2).getFoto()));
         upgradeDrone1.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(3).getFoto()));
         upgradeDrone2.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(4).getFoto()));
         upgradeDrone3.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(5).getFoto()));
-        upgradeFire1.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(0).getFoto()));
 
         for (int i:upgradeList) {
             switch (i){
@@ -163,11 +148,32 @@ class Upgrades extends GPanel {
             buyUpgrade(window, upgrade, message, upgradeFire1, nuggets);
         });
 
-        upgradeFire1Info.addActionListener(evt -> {
-            new Sound("click");
-            Upgrade upgrade = window.getSpel().getUpgrades().get(0);
+        upgradeFire1Info.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
 
-            message.setText(upgrade.getBeschrijving());
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                Upgrade upgrade = window.getSpel().getUpgrades().get(0);
+                message.setText(upgrade.getBeschrijving());
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                message.setText("");
+            }
         });
 
         upgradeShip1.addActionListener(evt -> {
@@ -177,11 +183,32 @@ class Upgrades extends GPanel {
             buyUpgrade(window, upgrade, message, upgradeShip1, nuggets);
         });
 
-        upgradeShip1Info.addActionListener(evt -> {
-            new Sound("click");
-            Upgrade upgrade = window.getSpel().getUpgrades().get(1);
+        upgradeShip1Info.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
 
-            message.setText(upgrade.getBeschrijving());
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                Upgrade upgrade = window.getSpel().getUpgrades().get(1);
+                message.setText(upgrade.getBeschrijving());
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                message.setText("");
+            }
         });
 
         upgradeShip2.addActionListener(evt -> {
@@ -191,11 +218,32 @@ class Upgrades extends GPanel {
             buyUpgrade(window, upgrade, message, upgradeShip2, nuggets);
         });
 
-        upgradeShip2Info.addActionListener(evt -> {
-            new Sound("click");
-            Upgrade upgrade = window.getSpel().getUpgrades().get(2);
+        upgradeShip2Info.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
 
-            message.setText(upgrade.getBeschrijving());
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                Upgrade upgrade = window.getSpel().getUpgrades().get(2);
+                message.setText(upgrade.getBeschrijving());
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                message.setText("");
+            }
         });
 
         upgradeDrone1.addActionListener(evt -> {
@@ -205,11 +253,32 @@ class Upgrades extends GPanel {
             buyUpgrade(window, upgrade, message, upgradeDrone1, nuggets);
         });
 
-        upgradeDrone1Info.addActionListener(evt -> {
-            new Sound("click");
-            Upgrade upgrade = window.getSpel().getUpgrades().get(3);
+        upgradeDrone1Info.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
 
-            message.setText(upgrade.getBeschrijving());
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                Upgrade upgrade = window.getSpel().getUpgrades().get(3);
+                message.setText(upgrade.getBeschrijving());
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                message.setText("");
+            }
         });
 
         upgradeDrone2.addActionListener(evt -> {
@@ -219,11 +288,32 @@ class Upgrades extends GPanel {
             buyUpgrade(window, upgrade, message, upgradeDrone2, nuggets);
         });
 
-        upgradeDrone2Info.addActionListener(evt -> {
-            new Sound("click");
-            Upgrade upgrade = window.getSpel().getUpgrades().get(4);
+        upgradeDrone2Info.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
 
-            message.setText(upgrade.getBeschrijving());
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                Upgrade upgrade = window.getSpel().getUpgrades().get(4);
+                message.setText(upgrade.getBeschrijving());
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                message.setText("");
+            }
         });
 
         upgradeDrone3.addActionListener(evt -> {
@@ -233,11 +323,32 @@ class Upgrades extends GPanel {
             buyUpgrade(window, upgrade, message, upgradeDrone3, nuggets);
         });
 
-        upgradeDrone3Info.addActionListener(evt -> {
-            new Sound("click");
-            Upgrade upgrade = window.getSpel().getUpgrades().get(5);
+        upgradeDrone3Info.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
 
-            message.setText(upgrade.getBeschrijving());
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                Upgrade upgrade = window.getSpel().getUpgrades().get(5);
+                message.setText(upgrade.getBeschrijving());
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                message.setText("");
+            }
         });
         //Add Components
         //==================================================

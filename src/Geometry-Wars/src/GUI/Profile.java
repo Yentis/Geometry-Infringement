@@ -19,10 +19,15 @@ class Profile extends GPanel {
 
     private Profile panel = this;
     private Speler speler;
+    private boolean fromHighscore = false;
 
     //endregion
 
     //region Getters & Setters
+
+    public void setFromHighscore(boolean fromHighscore) {
+        this.fromHighscore = fromHighscore;
+    }
 
     public void setSpeler(Speler speler) {
         this.speler = speler;
@@ -60,8 +65,13 @@ class Profile extends GPanel {
         Back.addActionListener(evt -> {
             new Sound("click");
             panel.setVisible(false);
-            Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
-            window1.getMainMenu().setVisible(true);
+            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+
+            if(fromHighscore){
+                window.getHighScores().setVisible(true);
+            } else {
+                window.getMainMenu().setVisible(true);
+            }
         });
         //==================================================
         //Add Components

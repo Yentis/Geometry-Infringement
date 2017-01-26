@@ -58,7 +58,6 @@ class StartGameCampaign extends GPanel {
         String[] drones = new String[droneList.size() + 1];
 
         drones[0] = "No drone";
-        window.getSpel().getSpeler().setActiveDrone("No drone");
 
         int i = 1;
         for (int j:droneList) {
@@ -67,6 +66,7 @@ class StartGameCampaign extends GPanel {
         }
 
         JComboBox<String> chooseDrone = new JComboBox<>(drones);
+        chooseDrone.setSelectedItem(window.getSpel().getSpeler().getActiveDrone());
 
         //props
         label.setOpaque(true);

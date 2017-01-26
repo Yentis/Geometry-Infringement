@@ -1,6 +1,9 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
 import java.io.*;
 import java.sql.SQLException;
@@ -23,6 +26,7 @@ import Game.Speler;
 class Highscores extends GPanel {
     //region Instance Variables
 
+    private JList<String> listPlayer;
     private Highscores panel = this;
 
     //endregion
@@ -70,7 +74,7 @@ class Highscores extends GPanel {
             i++;
         }
 
-        JList<String> listPlayer = new JList<>(listModelPlayer);
+        listPlayer = new JList<>(listModelPlayer);
 
         strings = processScores();
 
@@ -133,19 +137,54 @@ class Highscores extends GPanel {
             window.getStartGame().setVisible(true);
         });
 
-        listPlayer.addListSelectionListener(evt -> {
-            new Sound("click");
-            panel.setVisible(false);
-            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
-            Speler speler = spelers.get(listPlayer.getSelectedIndex());
-            try {
-                window.getSpel().checkRank(speler);
-                window.getProfile().setSpeler(speler);
-                window.getProfile().initComponents();
-            } catch (IOException | FontFormatException | SQLException e) {
-                e.printStackTrace();
+        listPlayer.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                new Sound("click");
+                panel.setVisible(false);
+                Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+                Speler speler = spelers.get(listPlayer.getSelectedIndex());
+                try {
+                    window.getSpel().checkRank(speler);
+                    window.getProfile().setSpeler(speler);
+                    window.getProfile().setFromHighscore(true);
+                    window.getProfile().initComponents();
+                } catch (IOException | FontFormatException | SQLException ef) {
+                    ef.printStackTrace();
+                }
+                window.getProfile().setVisible(true);
             }
-            window.getProfile().setVisible(true);
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                listPlayer.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                listMenuMouseEntered();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                listPlayer.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                listPlayer.clearSelection();
+            }
+        });
+    }
+
+    private void listMenuMouseEntered() {
+        listPlayer.addMouseMotionListener(new MouseAdapter() {
+            public void mouseMoved(MouseEvent me) {
+                Point p = new Point(me.getX(),me.getY());
+                listPlayer.setSelectedIndex(listPlayer.locationToIndex(p));
+            }
         });
     }
 

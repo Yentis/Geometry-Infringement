@@ -14,7 +14,7 @@ public class Speler {
     private int nuggets = 0;
     private int gnuggets = 0;
     private int highscore = 0;
-    private String activeDrone = "";
+    private String activeDrone = "No drone";
 
     //endregion
 
