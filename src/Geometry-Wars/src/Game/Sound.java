@@ -1,12 +1,28 @@
 package Game;
 
+import jdk.internal.util.xml.impl.Input;
+
 import javax.sound.sampled.*;
 import java.io.*;
 
 /**
  * Created by Yentl on 25-Dec-16.
  */
-public class Sound implements Runnable {
+public class Sound {
+    private class AudioListener implements LineListener {
+        private boolean done = false;
+        @Override public synchronized void update(LineEvent event) {
+            LineEvent.Type eventType = event.getType();
+            if (eventType == LineEvent.Type.STOP || eventType == LineEvent.Type.CLOSE) {
+                done = true;
+                notifyAll();
+            }
+        }
+        public synchronized void waitUntilDone() throws InterruptedException {
+            while (!done) { wait(); }
+        }
+    }
+
     private void playSfx(final InputStream fileStream) {
         ActivityManager.getInstance().submit(() -> {
             try {
@@ -54,6 +70,29 @@ public class Sound implements Runnable {
         });
     }
 
+    private void playBgm(final InputStream fileStream){
+        InputStream bufferedIn = new BufferedInputStream(fileStream);
+        AudioListener listener = new AudioListener();
+        AudioInputStream inputStream = null;
+
+        try{
+            inputStream = AudioSystem.getAudioInputStream(bufferedIn);
+            Clip clip = AudioSystem.getClip();
+            clip.addLineListener(listener);
+            clip.open(inputStream);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            Thread.sleep(10000);
+        } catch (InterruptedException | LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public Sound(String soundEffect) {
         try{
             switch (soundEffect) {
@@ -76,10 +115,7 @@ public class Sound implements Runnable {
                     playSfx(new FileInputStream("resources/Sound/shieldinactive.wav"));
                     break;
                 case "mainmenu":
-                        playSfx(new FileInputStream("resources/Sound/mainmenu.wav"));
-                    break;
-                case "mainmenuloop":
-                    run();
+                    playBgm(new FileInputStream("resources/Sound/mainmenu.wav"));
                     break;
                 case "click":
                     playSfx(new FileInputStream("resources/Sound/click.wav"));
@@ -87,18 +123,6 @@ public class Sound implements Runnable {
             }
         } catch (FileNotFoundException e){
             e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void run() {
-        while(true){
-            try {
-                playSfx(new FileInputStream("resources/Sound/mainmenu.wav"));
-                Thread.sleep(252000);
-            } catch (InterruptedException | FileNotFoundException e) {
-                e.printStackTrace();
-            }
         }
     }
 }
