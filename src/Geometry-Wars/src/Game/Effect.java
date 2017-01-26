@@ -37,7 +37,7 @@ public class Effect extends Sprite{
 
     public static Effect levelUp(Schip schip){
         try {
-            return new Effect("LEVEL UP! + \nDMG +25", schip.getCurrentLocation(),3000, 0, Color.cyan, new GFont(20f));
+            return new Effect("LEVEL UP! + \nDMG +25", schip.getCurrentLocation(),2000, 0, Color.green, new GFont(20f));
         } catch (FontFormatException | IOException e){
             throw new RuntimeException(e);
         }
