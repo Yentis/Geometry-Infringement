@@ -31,12 +31,9 @@ class InGame extends GPanel implements ActionListener {
 
     //PausePanel
     private GButtonPause Continue = new GButtonPause("Continue", 24f, 185, 250, 275, 120);
-    private GButtonPause controls = new GButtonPause("Controls", 24f, 530, 250, 275, 120);
-    private GButtonPause restartPauze = new GButtonPause("Restart", 24f, 185, 405, 275, 120);
-    private GButtonPause menuPauze = new GButtonPause("Main Menu", 24f, 530, 405, 275, 120);
+    private GButtonPause menuPauze = new GButtonPause("Main Menu", 24f, 530, 250, 275, 120);
 
-    private GButtonPause restartGameEnd = new GButtonPause("Restart", 24f, 150, 420, 275, 120);
-    private GButtonPause menuGameEnd = new GButtonPause("Main Menu", 24f, 550, 420, 275, 120);
+    private GButtonPause menuGameEnd = new GButtonPause("Main Menu", 24f, 365, 420, 275, 120);
     private ImageIcon PauseImage = new ImageIcon("resources\\Media\\pause-128.png");
     private JButton pauze = new JButton(PauseImage);
     private GLabel gameOver = new GLabel("Oopsy daisy! u dead fam", 25f, 325, 260, 375, 120, true, Color.white);
@@ -49,22 +46,12 @@ class InGame extends GPanel implements ActionListener {
             Continue.setForeground(Color.white);
             Continue.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
 
-            restartPauze.setBackground(Color.black);
-            restartPauze.setForeground(Color.white);
-            restartPauze.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
-
             menuPauze.setBackground(Color.black);
             menuPauze.setForeground(Color.white);
             menuPauze.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
 
-            controls.setBackground(Color.black);
-            controls.setForeground(Color.white);
-            controls.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
-
             pause.add(Continue);
-            pause.add(restartPauze);
             pause.add(menuPauze);
-            pause.add(controls);
 
             menuPauze.addActionListener(evt -> {
                 new Sound("click");
@@ -88,10 +75,6 @@ class InGame extends GPanel implements ActionListener {
             pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
             pane.setBounds(50, 125, 900, 500);
 
-            restartGameEnd.setBackground(Color.black);
-            restartGameEnd.setForeground(Color.white);
-            restartGameEnd.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
-
             menuGameEnd.setBackground(Color.black);
             menuGameEnd.setForeground(Color.white);
             menuGameEnd.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
@@ -104,7 +87,6 @@ class InGame extends GPanel implements ActionListener {
             gameEnd.add(pane);
             gameEnd.add(gameOver);
             gameEnd.add(nuggetAmount);
-            gameEnd.add(restartGameEnd);
             gameEnd.add(menuGameEnd);
 
             menuGameEnd.addActionListener(evt -> {
@@ -290,7 +272,6 @@ class InGame extends GPanel implements ActionListener {
         menuPauze.addActionListener(panel);
         startGame.addActionListener(panel);
         Continue.addActionListener(panel);
-        restartPauze.addActionListener(panel);
     }
 
     private void checkGameFinished() {

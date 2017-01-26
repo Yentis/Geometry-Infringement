@@ -796,8 +796,8 @@ class GamePanel extends GPanel {
                     makeEnemy(enemy);
                     enemyCounter = 3;
                 }
-                enemyCounter += 1;
-                enemyPower += 1;
+                enemyCounter ++;
+                enemyPower ++;
                 try {
                     effects.add(Effect.roundIndicator(roundCounter));
                 } catch (IOException | FontFormatException e1) {
