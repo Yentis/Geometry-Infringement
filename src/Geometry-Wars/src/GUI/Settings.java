@@ -106,19 +106,20 @@ class Settings extends GPanel {
         //Action Listeners
         set.addActionListener(evt -> {
             new Sound("click");
-            Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
             List<Enemy> enemies = new ArrayList<>();
-            String currentDifficulty = window1.getSpel().getCurrentDifficulty();
-            String currentControls = window1.getSpel().getCurrentControls();
+            String currentDifficulty = window.getSpel().getCurrentDifficulty();
+            String currentControls = window.getSpel().getCurrentControls();
             String selectedDifficulty = difficulty.getSelectedItem().toString();
             String selectedControls = input.getSelectedItem().toString();
 
             if(Objects.equals(currentDifficulty, selectedDifficulty)){
                 message.setText("Difficulty set.");
             } else {
-                window1.getSpel().setCurrentDifficulty(selectedDifficulty);
+                //TODO fix this shit
+                window.getSpel().setCurrentDifficulty(selectedDifficulty);
 
-                for (Enemy enemy: window1.getSpel().getEnemies())
+
+                for (Enemy enemy: window.getSpel().getEnemies())
                 {
                     switch(selectedDifficulty){
                         case "Hard":
@@ -147,22 +148,26 @@ class Settings extends GPanel {
                             if(Objects.equals(currentDifficulty, "Hard")){
                                 enemy.setHp(enemy.getHP()/4);
                                 enemy.setKracht(enemy.getKracht()/4);
-                                enemy.setSpeed(enemy.getSpeed()/4);
+                                if(enemy.getKracht() / 4 >= 1){
+                                    enemy.setSpeed(enemy.getKracht() / 4);
+                                }
                             } else if (Objects.equals(currentDifficulty, "Normal")) {
                                 enemy.setHp(enemy.getHP()/2);
                                 enemy.setKracht(enemy.getKracht()/2);
-                                enemy.setSpeed(enemy.getSpeed()/2);
+                                if(enemy.getKracht() / 2 >= 1){
+                                    enemy.setSpeed(enemy.getKracht() / 2);
+                                }
                             }
                             break;
                     }
                     enemies.add(enemy);
                 }
-                window1.getSpel().setEnemies(enemies);
+                window.getSpel().setEnemies(enemies);
                 message.setText("Difficulty set.");
             }
 
             if (!Objects.equals(selectedControls, currentControls)){
-                window1.getSpel().setCurrentControls(selectedControls);
+                window.getSpel().setCurrentControls(selectedControls);
                 message.setText("Input set.");
             }
             message.setVisible(true);
