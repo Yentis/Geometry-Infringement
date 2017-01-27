@@ -335,7 +335,7 @@ class GamePanel extends GPanel {
             drawShip(g, schip);
             drawBuffs(g, schip, 10);
         }
-        if (schip.getDrone() != null && schip != null) {
+        if (schip != null && schip.getDrone() != null) {
             drawBullets(g, schip.getDrone().getKogels(), schip);
             drawDrone(g, schip.getDrone(), schip);
         }
