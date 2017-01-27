@@ -111,12 +111,12 @@ class GamePanel extends GPanel {
     }
 
     private void initTimers() {
-        if (schip.getDrone() != null && schip != null) {
+        if (schip != null && schip.getDrone() != null ) {
             setUpShootingDroneTimer(schip.getDrone());
         }
         setSlowerEnemiesTimer(schip);
         setInvulnerabilityTimer(schip);
-        if (coop && schipp2.getDrone() != null && schipp2 != null){
+        if (coop && schipp2 != null && schipp2.getDrone() != null){
             setUpShootingDroneTimer(schipp2.getDrone());
             setSlowerEnemiesTimer(schipp2);
             setInvulnerabilityTimer(schipp2);
