@@ -1,6 +1,5 @@
 package GUI;
 
-import GComponents.GFont;
 import GComponents.GLabel;
 import GComponents.GPane;
 import GComponents.GPanel;
@@ -118,9 +117,9 @@ class GamePanel extends GPanel {
         setSlowerEnemiesTimer(schip);
         setInvulnerabilityTimer(schip);
         if (coop && schipp2.getDrone() != null && schipp2 != null){
+            setUpShootingDroneTimer(schipp2.getDrone());
             setSlowerEnemiesTimer(schipp2);
             setInvulnerabilityTimer(schipp2);
-            setUpShootingDroneTimer(schipp2.getDrone());
         }
     }
 
@@ -265,7 +264,6 @@ class GamePanel extends GPanel {
         Drone dummydr;
 
         schip = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
-        schip.setMenuUpgrades(upgrades);
 
         setSlowerEnemiesTimer(schip);
         setInvulnerabilityTimer(schip);
@@ -295,6 +293,10 @@ class GamePanel extends GPanel {
             //set layouts
             showCoopUI();
             schipp2 = new Schip(dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
+
+            setSlowerEnemiesTimer(schipp2);
+            setInvulnerabilityTimer(schipp2);
+
             new Controllers(schipp2, 1);
 
             if (dummydr != null) {
@@ -305,9 +307,6 @@ class GamePanel extends GPanel {
             if (schipp2.getUpgrades().contains(2)) {
                 schipp2.setSpeed(5);
             }
-
-            setSlowerEnemiesTimer(schipp2);
-            setInvulnerabilityTimer(schipp2);
         } else {
             hideCoopUI();
         }
@@ -688,7 +687,6 @@ class GamePanel extends GPanel {
             if (schip.getHp() <= 0) {
                 new Sound("playerdeath");
                 gameFinished = true;
-
             }
         }
     }
@@ -810,7 +808,7 @@ class GamePanel extends GPanel {
             if (schip != null && schip.getUpgrades().contains(2)) {
                 healthRegen(schip);
             }
-            if (schipp2 != null && coop && schipp2.getUpgrades().contains(2)) {
+            if (coop && schipp2 != null && schipp2.getUpgrades().contains(2)) {
                 healthRegen(schipp2);
             }
         });
