@@ -78,16 +78,13 @@ public class Controllers implements Runnable {
             final int[] ryAxis = {getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData())};
 
             if (mousePressedTimer == null){
-                mousePressedTimer = new Timer(150, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if(controller.getComponent(Identifier.Button._5).getPollData() != 0.0f){
+                mousePressedTimer = new Timer(150, e -> {
+                    if(controller.getComponent(Identifier.Button._5).getPollData() != 0.0f){
 
-                            rxAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData());
-                            ryAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData());
+                        rxAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData());
+                        ryAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData());
 
-                            schip.controllerAim(rxAxis[0] * 10.24, ryAxis[0] * 7.68);
-                        }
+                        schip.controllerAim(rxAxis[0] * 10.24, ryAxis[0] * 7.68);
                     }
                 });
             }else{

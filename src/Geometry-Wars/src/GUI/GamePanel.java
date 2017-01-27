@@ -112,20 +112,16 @@ class GamePanel extends GPanel {
     }
 
     private void initTimers() {
-        if (drone != null && schip != null) {
-            setUpShootingDroneTimer(drone);
+        if (schip.getDrone() != null && schip != null) {
+            setUpShootingDroneTimer(schip.getDrone());
         }
         setSlowerEnemiesTimer(schip);
         setInvulnerabilityTimer(schip);
-        setUpMousePressedTimer(150);
-        if(dronep2 != null && schipp2 != null){
-            setUpShootingDroneTimer(dronep2);
-        }
-        if (coop){
+        if (coop && schipp2.getDrone() != null && schipp2 != null){
             setSlowerEnemiesTimer(schipp2);
             setInvulnerabilityTimer(schipp2);
+            setUpShootingDroneTimer(schipp2.getDrone());
         }
-
     }
 
     @Override
@@ -279,6 +275,7 @@ class GamePanel extends GPanel {
             MouseAdapter adapter = new MAdapter();
             addMouseListener(adapter);
             addMouseMotionListener(adapter);
+            setUpMousePressedTimer(150);
         } else {
             new Controllers(schip, 0);
         }
@@ -339,18 +336,18 @@ class GamePanel extends GPanel {
             drawShip(g, schip);
             drawBuffs(g, schip, 10);
         }
-        if (drone != null && schip != null) {
-            drawBullets(g, drone.getKogels(), schip);
-            drawDrone(g, drone, schip);
+        if (schip.getDrone() != null && schip != null) {
+            drawBullets(g, schip.getDrone().getKogels(), schip);
+            drawDrone(g, schip.getDrone(), schip);
         }
         if (coop && schipp2 != null) {
             drawBullets(g, schipp2.getKogels(), schipp2);
             drawShip(g, schipp2);
             drawBuffs(g, schipp2, 955);
         }
-        if (coop && dronep2 != null && schipp2 != null) {
-            drawBullets(g, dronep2.getKogels(), schipp2);
-            drawDrone(g, dronep2, schipp2);
+        if (coop && schipp2.getDrone() != null && schipp2 != null) {
+            drawBullets(g, schipp2.getDrone().getKogels(), schipp2);
+            drawDrone(g, schipp2.getDrone(), schipp2);
         }
     }
 
@@ -596,14 +593,14 @@ class GamePanel extends GPanel {
             approachShip();
             if (schip != null) {
                 schip.updateBuffs();
-                if(drone != null && (Objects.equals(drone.getNaam(), "Attack Drone") || Objects.equals(drone.getNaam(), "Experience Drone"))){
-                    updateKogels(drone.getKogels(), schip);
+                if(schip.getDrone() != null && (Objects.equals(schip.getDrone().getNaam(), "Attack Drone") || Objects.equals(schip.getDrone().getNaam(), "Experience Drone"))){
+                    updateKogels(schip.getDrone().getKogels(), schip);
                 }
-                if (drone != null && (Objects.equals(drone.getNaam(), "Attack Drone") || Objects.equals(drone.getNaam(), "Defense Drone"))){
-                    currentDroneXpBar.setSize((int) updateDroneXpBar(drone), currentDroneXpBar.getHeight());
+                if (schip.getDrone() != null && (Objects.equals(schip.getDrone().getNaam(), "Attack Drone") || Objects.equals(schip.getDrone().getNaam(), "Defense Drone"))){
+                    currentDroneXpBar.setSize((int) updateDroneXpBar(schip.getDrone()), currentDroneXpBar.getHeight());
                 }
-                if (drone != null && Objects.equals(drone.getNaam(), "Defense Drone")) {
-                    collisionDrone(drone);
+                if (schip.getDrone() != null && Objects.equals(schip.getDrone().getNaam(), "Defense Drone")) {
+                    collisionDrone(schip.getDrone());
                 }
                 schip.beweegSchip();
                 updateKogels(schip.getKogels(), schip);
@@ -624,14 +621,14 @@ class GamePanel extends GPanel {
 
             if (coop && schipp2 != null) {
                 schipp2.updateBuffs();
-                if(dronep2 != null && (Objects.equals(dronep2.getNaam(), "Attack Drone") || Objects.equals(dronep2.getNaam(), "Experience Drone"))){
-                    updateKogels(dronep2.getKogels(), schipp2);
+                if(schipp2.getDrone() != null && (Objects.equals(schipp2.getDrone().getNaam(), "Attack Drone") || Objects.equals(schipp2.getDrone().getNaam(), "Experience Drone"))){
+                    updateKogels(schipp2.getDrone().getKogels(), schipp2);
                 }
-                if (dronep2 != null && (Objects.equals(dronep2.getNaam(), "Attack Drone") || Objects.equals(dronep2.getNaam(), "Defense Drone"))){
-                    currentDroneXpBarp2.setSize((int) updateDroneXpBar(dronep2), currentDroneXpBarp2.getHeight());
+                if (schipp2.getDrone() != null && (Objects.equals(schipp2.getDrone().getNaam(), "Attack Drone") || Objects.equals(schipp2.getDrone().getNaam(), "Defense Drone"))){
+                    currentDroneXpBarp2.setSize((int) updateDroneXpBar(schipp2.getDrone()), currentDroneXpBarp2.getHeight());
                 }
-                if (dronep2 != null && Objects.equals(dronep2.getNaam(), "Defense Drone")) {
-                    collisionDrone(dronep2);
+                if (schipp2.getDrone() != null && Objects.equals(schipp2.getDrone().getNaam(), "Defense Drone")) {
+                    collisionDrone(schipp2.getDrone());
                 }
                 schipp2.beweegSchip();
                 updateKogels(schipp2.getKogels(), schipp2);
