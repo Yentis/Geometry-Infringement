@@ -48,7 +48,7 @@ public class Enemy extends Sprite {
         maxHp = hp;
         easy = new double[]{this.hp / 2, this.kracht / 2, this.speed / 2, this.score / 2};
         normal = new double[]{this.hp, this.kracht, this.speed, this.score};
-        hard = new double[]{this.hp * 2, this.kracht * 2, this.speed * 2, this.score * 2};
+        hard = new double[]{this.hp * 1.5, this.kracht * 1.5, this.speed * 1.25, this.score * 2};
 
         locationX = randomX();
         locationY = randomY();
