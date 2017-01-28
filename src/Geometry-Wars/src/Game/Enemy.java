@@ -19,20 +19,22 @@ public class Enemy extends Sprite {
     private double locationY;
     private int experience;
     private int score;
-    private int speed;
+    private double speed;
     private int SCREEN_WIDTH = 1024;
     private int SCREEN_HEIGHT = 768;
     private Rectangle2D hpBar;
     private Rectangle2D maxHpBar;
     private int maxHp;
     private String imageString;
-
+    private double[] hard;
+    private double[] normal;
+    private double[] easy;
 
     //endregion
 
     //region Constructors
 
-    public Enemy(int nr, String naam, String beschrijving, int hp, int kracht, String image, int experience, int score, int speed) {
+    public Enemy(int nr, String naam, String beschrijving, int hp, int kracht, String image, int experience, int score, double speed) {
         super(image);
         imageString = image;
         this.nr = nr;
@@ -44,6 +46,9 @@ public class Enemy extends Sprite {
         this.experience = experience;
         this.score = score;
         maxHp = hp;
+        easy = new double[]{this.hp / 2, this.kracht / 2, this.speed / 2};
+        normal = new double[]{this.hp, this.kracht, this.speed};
+        hard = new double[]{this.hp * 2, this.kracht * 2, this.speed * 2};
 
         locationX = randomX();
         locationY = randomY();
@@ -90,7 +95,7 @@ public class Enemy extends Sprite {
         return hp;
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
@@ -110,7 +115,27 @@ public class Enemy extends Sprite {
         return imageString;
     }
 
-    public void setSpeed(int speed) {
+    public void setDifficulty(String difficulty){
+        double[] selecteddiff = new double[3];
+
+        switch (difficulty){
+            case "Easy":
+                selecteddiff = easy;
+                break;
+            case "Normal":
+                selecteddiff = normal;
+                break;
+            case "Hard":
+                selecteddiff = hard;
+                break;
+        }
+
+        this.hp = (int)(selecteddiff[0]);
+        this.kracht = (int)(selecteddiff[1]);
+        this.speed = selecteddiff[2];
+    }
+
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 

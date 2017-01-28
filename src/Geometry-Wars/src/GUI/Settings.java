@@ -118,48 +118,9 @@ class Settings extends GPanel {
                 //TODO fix this shit
                 window.getSpel().setCurrentDifficulty(selectedDifficulty);
 
-
                 for (Enemy enemy: window.getSpel().getEnemies())
                 {
-                    switch(selectedDifficulty){
-                        case "Hard":
-                            if(Objects.equals(currentDifficulty, "Normal")){
-                                enemy.setHp(enemy.getHP()*2);
-                                enemy.setKracht(enemy.getKracht()*2);
-                                enemy.setSpeed(enemy.getSpeed()*2);
-                            } else if (Objects.equals(currentDifficulty, "Easy")) {
-                                enemy.setHp(enemy.getHP()*4);
-                                enemy.setKracht(enemy.getKracht()*4);
-                                enemy.setSpeed(enemy.getSpeed()*4);
-                            }
-                            break;
-                        case "Normal":
-                            if(Objects.equals(currentDifficulty, "Hard")){
-                                enemy.setHp(enemy.getHP()/2);
-                                enemy.setKracht(enemy.getKracht()/2);
-                                enemy.setSpeed(enemy.getSpeed()/2);
-                            } else if (Objects.equals(currentDifficulty, "Easy")) {
-                                enemy.setHp(enemy.getHP()*2);
-                                enemy.setKracht(enemy.getKracht()*2);
-                                enemy.setSpeed(enemy.getSpeed()*2);
-                            }
-                            break;
-                        case "Easy":
-                            if(Objects.equals(currentDifficulty, "Hard")){
-                                enemy.setHp(enemy.getHP()/4);
-                                enemy.setKracht(enemy.getKracht()/4);
-                                if(enemy.getKracht() / 4 >= 1){
-                                    enemy.setSpeed(enemy.getKracht() / 4);
-                                }
-                            } else if (Objects.equals(currentDifficulty, "Normal")) {
-                                enemy.setHp(enemy.getHP()/2);
-                                enemy.setKracht(enemy.getKracht()/2);
-                                if(enemy.getKracht() / 2 >= 1){
-                                    enemy.setSpeed(enemy.getKracht() / 2);
-                                }
-                            }
-                            break;
-                    }
+                    enemy.setDifficulty(selectedDifficulty);
                     enemies.add(enemy);
                 }
                 window.getSpel().setEnemies(enemies);
@@ -176,8 +137,7 @@ class Settings extends GPanel {
         Back.addActionListener(evt -> {
             new Sound("click");
             panel.setVisible(false);
-            Window window1 = (Window) SwingUtilities.getRoot(panel.getParent());
-            window1.getMainMenu().setVisible(true);
+            window.getMainMenu().setVisible(true);
         });
     }
 

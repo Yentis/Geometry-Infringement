@@ -138,7 +138,7 @@ public class Window extends JFrame {
             profile = new Profile();
             startGameCampaign = new StartGameCampaign();
             logout = new Logout();
-            inGame = new InGame(spel.getEnemies());
+            inGame = new InGame();
             upgrades = new Upgrades();
             register = new Register();
             settings = new Settings();

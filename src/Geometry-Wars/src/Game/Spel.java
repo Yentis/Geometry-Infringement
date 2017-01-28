@@ -19,9 +19,6 @@ public class Spel implements Cloneable{
     private List<Enemy> enemies = new ArrayList<>();
     private String currentDifficulty = "Normal";
     private String currentControls = "Keyboard + Mouse";
-    private String url = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7150842";
-    private String user = "sql7150842";
-    private String pass = "kjdRgX2AKv";
     private Connection myConn = null;
 
     //endregion
@@ -31,6 +28,7 @@ public class Spel implements Cloneable{
     public Spel() throws SQLException {
         readDatabase();
         initDankabank();
+        initEnemies();
     }
 
     //endregion
@@ -87,6 +85,9 @@ public class Spel implements Cloneable{
 
     private void readDatabase() throws SQLException {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        String url = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7150842";
+        String user = "sql7150842";
+        String pass = "kjdRgX2AKv";
         myConn = DriverManager.getConnection(url, user, pass);
     }
 
@@ -114,8 +115,8 @@ public class Spel implements Cloneable{
 
         if(upgrades.next()){
             if(upgrades.getInt("nuggets") >= cost){
-                int a = myStmt2.executeUpdate("UPDATE speler SET nuggets = nuggets - " + cost + " WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
-                int b = myStmt3.executeUpdate("INSERT INTO spelerupgrades (pid, uid) VALUES (" + (speler.getNr() + 1) + ", " + uid + ")");
+                myStmt2.executeUpdate("UPDATE speler SET nuggets = nuggets - " + cost + " WHERE gebruikersnaam = '" + speler.getGebruikersnaam() + "'");
+                myStmt3.executeUpdate("INSERT INTO spelerupgrades (pid, uid) VALUES (" + (speler.getNr() + 1) + ", " + uid + ")");
                 return true;
             } else {
                 return false;
@@ -132,7 +133,6 @@ public class Spel implements Cloneable{
         schepen = new ArrayList<>();
         drones = new ArrayList<>();
         upgrades = new ArrayList<>();
-        enemies = new ArrayList<>();
 
         //region Spelers
         ResultSet speler = myStmt.executeQuery("select * from speler order by highscore desc");
@@ -175,16 +175,17 @@ public class Spel implements Cloneable{
             i++;
         }
         //endregion
+    }
 
-        //region Enemies
+    private void initEnemies() throws SQLException {
+        Statement myStmt = myConn.createStatement();
         ResultSet enemy = myStmt.executeQuery("select * from vijand");
 
-        i = 0;
+        int i = 0;
         while (enemy.next()){
             enemies.add(i, new Enemy(enemy.getInt("nr") - 1, enemy.getString("naam"), enemy.getString("beschrijving"), enemy.getInt("hp"), enemy.getInt("kracht"), enemy.getString("uiterlijk"), enemy.getInt("experience"), enemy.getInt("score"), enemy.getInt("snelheid")));
             i++;
         }
-        //endregion
     }
 
     public void submitScore(int score) throws SQLException {

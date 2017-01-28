@@ -118,8 +118,8 @@ class InGame extends GPanel implements ActionListener {
 
     //region Constructors
 
-    InGame(List<Enemy> enemies) throws IOException, FontFormatException {
-        gamePanel = new GamePanel(enemies);
+    InGame() throws IOException, FontFormatException {
+        gamePanel = new GamePanel();
         pause.initComponents();
         //do not init gameEnd
         initComponents();
@@ -139,7 +139,6 @@ class InGame extends GPanel implements ActionListener {
         //this.add(startGame);
 
         addActionListeners();
-
         gamePanel.setVisible(false);
     }
 

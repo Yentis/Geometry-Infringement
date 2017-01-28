@@ -67,8 +67,7 @@ class GamePanel extends GPanel {
 
     //region Constructors
 
-    GamePanel(List<Enemy> enemies) throws IOException, FontFormatException {
-        this.enemies = enemies;
+    GamePanel() throws IOException, FontFormatException {
         mouseLocation = new Point(0,0);
         setFocusable(true);
         requestFocus();
@@ -248,6 +247,7 @@ class GamePanel extends GPanel {
 
     void startGame() throws SQLException {
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+        enemies = window.getSpel().getEnemies();
         List<Integer> upgrades;
         upgrades = window.getSpel().checkUpgrades();
         enemyOnField.clear();
