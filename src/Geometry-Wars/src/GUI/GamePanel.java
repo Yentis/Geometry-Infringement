@@ -758,7 +758,7 @@ class GamePanel extends GPanel {
     }
 
     private void makeEnemy(Enemy enemy) {
-        enemyOnField.add(new Enemy(enemy.getNr(), enemy.getNaam(), enemy.getBeschrijving(), (int)(enemy.getHP() * (1 + Math.pow((enemyPower - 1), 2) * 0.0025)), (int)(enemy.getKracht() * (1 + Math.pow((enemyPower - 1), 1.65) * 0.015)), enemy.getImageString(), (int)(enemy.getExperience() * (1 + Math.pow((enemyPower - 1), 2) * 0.015)), enemy.getExperience() * 10, enemy.getSpeed()));
+        enemyOnField.add(new Enemy(enemy.getNr(), enemy.getNaam(), enemy.getBeschrijving(), (int)(enemy.getHP() * (1 + Math.pow((enemyPower - 1), 2) * 0.0025)), (int)(enemy.getKracht() * (1 + Math.pow((enemyPower - 1), 1.65) * 0.015)), enemy.getImageString(), (int)(enemy.getExperience() * (1 + Math.pow((enemyPower - 1), 2) * 0.015)), (int)(enemy.getScore() * (1 + Math.pow((enemyPower - 1), 2) * 0.015)), enemy.getSpeed()));
     }
 
     private void spawnEnemies() {

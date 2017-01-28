@@ -46,9 +46,9 @@ public class Enemy extends Sprite {
         this.experience = experience;
         this.score = score;
         maxHp = hp;
-        easy = new double[]{this.hp / 2, this.kracht / 2, this.speed / 2};
-        normal = new double[]{this.hp, this.kracht, this.speed};
-        hard = new double[]{this.hp * 2, this.kracht * 2, this.speed * 2};
+        easy = new double[]{this.hp / 2, this.kracht / 2, this.speed / 2, this.score / 2};
+        normal = new double[]{this.hp, this.kracht, this.speed, this.score};
+        hard = new double[]{this.hp * 2, this.kracht * 2, this.speed * 2, this.score * 2};
 
         locationX = randomX();
         locationY = randomY();
@@ -133,6 +133,7 @@ public class Enemy extends Sprite {
         this.hp = (int)(selecteddiff[0]);
         this.kracht = (int)(selecteddiff[1]);
         this.speed = selecteddiff[2];
+        this.score = (int)(selecteddiff[3]);
     }
 
     public void setSpeed(double speed) {
