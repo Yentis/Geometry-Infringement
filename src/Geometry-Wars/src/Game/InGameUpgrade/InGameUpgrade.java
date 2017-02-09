@@ -1,7 +1,10 @@
 package Game.InGameUpgrade;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by Renzie on 21/12/2016.
@@ -16,10 +19,14 @@ public class InGameUpgrade {
     public InGameUpgrade(int nr, String naam, String foto) {
         this.nr = nr;
         this.naam = naam;
-        this.foto = foto;
         active = false;
-        ImageIcon ii = new ImageIcon(foto);
-        this.image = ii.getImage();
+        try {
+            this.foto = foto;
+            ImageIcon ii = new ImageIcon(ImageIO.read(getClass().getResourceAsStream(foto)));
+            this.image = ii.getImage();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public InGameUpgrade(){

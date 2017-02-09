@@ -50,7 +50,7 @@ class Register extends JPanel {
         JLabel lblemail = new GLabel("E-mail: ", false, Color.white);
         JButton Exit = new GButton("Quit");
 
-        lblTitle.setFont(new GFont(65f));
+        lblTitle.setFont(new GFont(65));
         registerin.setOpaque(false);
         layout.setHgap(10);
         layout.setVgap(10);

@@ -3,13 +3,14 @@ package GComponents;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by Renzie on 9/11/2016.
  */
 public class GFont extends Font{
-    public GFont(float size) throws IOException, FontFormatException {
-        super(Font.createFont(Font.TRUETYPE_FONT, new File("resources/Font/Audiowide-Regular.ttf")).deriveFont(size));
+    public GFont(int size) throws IOException, FontFormatException {
+        super(new Font("Audiowide", Font.TRUETYPE_FONT, size));
         GraphicsEnvironment.getLocalGraphicsEnvironment();
     }
 }

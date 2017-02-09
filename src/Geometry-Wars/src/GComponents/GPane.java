@@ -9,13 +9,7 @@ import java.awt.*;
  */
 
 public class GPane extends JLabel{
-    public GPane(int x, int y, int width, int height){
-        this.setBounds(x,y,width, height);
-        this.setOpaque(true);
-        this.setBackground(new Color(255,255,255,95));
-    }
-
-    public GPane(){
+        public GPane(){
         this.setOpaque(true);
         this.setBackground(new Color(255,255,255,95));
     }

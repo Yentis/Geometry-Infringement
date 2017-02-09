@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.List;
+import javax.imageio.ImageIO;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.Timer;
@@ -33,7 +34,7 @@ class InGame extends JPanel implements ActionListener {
     private GButtonPause menuPauze = new GButtonPause("Main Menu");
 
     private GButtonPause menuGameEnd = new GButtonPause("Main Menu");
-    private ImageIcon PauseImage = new ImageIcon(((new ImageIcon("resources\\Media\\pause-128.png")).getImage()).getScaledInstance(60, 58, java.awt.Image.SCALE_SMOOTH));
+    private ImageIcon PauseImage = new ImageIcon(((new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/Media/pause-128.png")))).getImage()).getScaledInstance(60, 58, java.awt.Image.SCALE_SMOOTH));
     private JButton pauze = new JButton(PauseImage);
     private GLabel gameOver = new GLabel("Oopsy daisy! u dead fam", true, Color.white);
     private GLabel nuggetAmount = new GLabel("", false, Color.white);
@@ -96,11 +97,11 @@ class InGame extends JPanel implements ActionListener {
         gameOver.setBackground(Color.black);
         pane.setBackground(new Color(255, 255, 255, 2));
         pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
-        startGame.setFont(new GFont(35f));
-        shipLvlp1Background.setFont(new GFont(20f));
-        droneLvlp1Background.setFont(new GFont(20f));
-        shipLvlp2Background.setFont(new GFont(20f));
-        droneLvlp2Background.setFont(new GFont(20f));
+        startGame.setFont(new GFont(35));
+        shipLvlp1Background.setFont(new GFont(20));
+        droneLvlp1Background.setFont(new GFont(20));
+        shipLvlp2Background.setFont(new GFont(20));
+        droneLvlp2Background.setFont(new GFont(20));
         middlePanel.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
         middlePanel.setOpaque(false);
         pause.setOpaque(false);

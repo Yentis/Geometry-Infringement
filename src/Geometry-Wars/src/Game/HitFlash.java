@@ -1,6 +1,9 @@
 package Game;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by Yentl on 25-Jan-17.
@@ -10,15 +13,18 @@ public class HitFlash implements Runnable {
 
     @Override
     public void run() {
-        ImageIcon ii = new ImageIcon("resources/Media/schip1-hit.png");
-        schip.setImage(ii.getImage());
+        InputStream image = getClass().getResourceAsStream("/Media/schip1.png");
+        InputStream imagehit = getClass().getResourceAsStream("/Media/schip1-hit.png");
+
         try {
+            ImageIcon ii = new ImageIcon(ImageIO.read(imagehit));
+            schip.setImage(ii.getImage());
             Thread.sleep(100);
-        } catch (InterruptedException e) {
+            ii = new ImageIcon(ImageIO.read(image));
+            schip.setImage(ii.getImage());
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        ii = new ImageIcon("resources/Media/schip1.png");
-        schip.setImage(ii.getImage());
     }
 
     public HitFlash(Schip schip){

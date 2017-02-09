@@ -1,6 +1,7 @@
 package Game;
 
 import java.awt.*;
+import java.io.InputStream;
 
 /**
  * Created by Yentl-PC on 10/11/2016.

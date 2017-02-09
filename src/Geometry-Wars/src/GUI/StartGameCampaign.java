@@ -9,7 +9,6 @@ import javax.swing.*;
 import GComponents.GButton;
 import GComponents.GFont;
 import GComponents.GLabel;
-import GComponents.GPanel;
 import Game.Sound;
 
 /**
@@ -59,9 +58,9 @@ class StartGameCampaign extends JPanel {
         }
 
         JComboBox<String> chooseDrone = new JComboBox<>(drones);
-        lblTitle.setFont(new GFont(65f));
-        labelDrone.setFont(new GFont(18f));
-        chooseDrone.setFont(new GFont(18f));
+        lblTitle.setFont(new GFont(65));
+        labelDrone.setFont(new GFont(18));
+        chooseDrone.setFont(new GFont(18));
         chooseDrone.setSelectedItem(window.getSpel().getSpeler().getActiveDrone());
         middlePanel.setOpaque(false);
         GridBagConstraints c = new GridBagConstraints();

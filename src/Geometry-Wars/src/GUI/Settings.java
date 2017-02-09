@@ -64,7 +64,7 @@ class Settings extends JPanel {
         GLabel moveRight2 = new GLabel("D", false, Color.white);
 
         resolution.setFont(new GFont(18));
-        lblTitle.setFont(new GFont(65f));
+        lblTitle.setFont(new GFont(65));
         difficulty.setFont(new GFont(18));
         difficulty.setSelectedItem(window.getSpel().getCurrentDifficulty());
         input.setFont(new GFont(18));

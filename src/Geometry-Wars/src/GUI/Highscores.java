@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.geom.Line2D;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.*;
@@ -14,7 +13,6 @@ import javax.swing.border.EmptyBorder;
 
 import GComponents.GButton;
 import GComponents.GFont;
-import GComponents.GPanel;
 
 import GComponents.*;
 import Game.Sound;
@@ -83,7 +81,7 @@ class Highscores extends JPanel {
 
         //properties
 
-        lblTitle.setFont(new GFont(65f));
+        lblTitle.setFont(new GFont(65));
         playerPanel.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 0, Color.cyan));
         scorePanel.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.cyan));
         playerList.setBorder(BorderFactory.createMatteBorder(0, 2, 2, 0, Color.cyan));

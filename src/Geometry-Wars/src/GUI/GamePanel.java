@@ -2,8 +2,6 @@ package GUI;
 
 import GComponents.GFont;
 import GComponents.GLabel;
-import GComponents.GPane;
-import GComponents.GPanel;
 import Game.*;
 
 import java.awt.*;
@@ -26,7 +24,7 @@ import javax.swing.Timer;
  * Created by Yentl-PC on 9/11/2016.
  */
 
-class GamePanel extends GPanel {
+class GamePanel extends JPanel {
     //region Instance Variables
 
     private int enemyCounter;
@@ -124,7 +122,6 @@ class GamePanel extends GPanel {
         }
     }
 
-    @Override
     public void initComponents() throws IOException, FontFormatException {
         removeAll();
         setLayout(new GridBagLayout());
@@ -147,27 +144,27 @@ class GamePanel extends GPanel {
         currentDroneXpBar = new JProgressBar();
         currentHealthBar = new JProgressBar();
 
-        shipbarp1.setFont(new GFont(20f));
-        shipbarp2.setFont(new GFont(20f));
-        dronebarp1.setFont(new GFont(20f));
-        dronebarp2.setFont(new GFont(20f));
+        shipbarp1.setFont(new GFont(20));
+        shipbarp2.setFont(new GFont(20));
+        dronebarp1.setFont(new GFont(20));
+        dronebarp2.setFont(new GFont(20));
         currentHealthBar.setStringPainted(true);
-        currentHealthBar.setFont(new GFont(24f));
+        currentHealthBar.setFont(new GFont(24));
         currentHealthBar.setForeground(Color.green);
         currentHealthBarp2.setStringPainted(true);
-        currentHealthBarp2.setFont(new GFont(24f));
+        currentHealthBarp2.setFont(new GFont(24));
         currentHealthBarp2.setForeground(Color.green);
         currentDroneXpBar.setStringPainted(true);
-        currentDroneXpBar.setFont(new GFont(15f));
+        currentDroneXpBar.setFont(new GFont(15));
         currentDroneXpBar.setForeground(new Color(50, 50, 255));
         currentDroneXpBarp2.setStringPainted(true);
-        currentDroneXpBarp2.setFont(new GFont(15f));
+        currentDroneXpBarp2.setFont(new GFont(15));
         currentDroneXpBarp2.setForeground(new Color(50, 50, 255));
         currentShipXpBar.setStringPainted(true);
-        currentShipXpBar.setFont(new GFont(15f));
+        currentShipXpBar.setFont(new GFont(15));
         currentShipXpBar.setForeground(new Color(50, 50, 255));
         currentShipXpBarp2.setStringPainted(true);
-        currentShipXpBarp2.setFont(new GFont(15f));
+        currentShipXpBarp2.setFont(new GFont(15));
         currentShipXpBarp2.setForeground(new Color(50, 50, 255));
 
         JPanel middlePanel = new JPanel(new GridBagLayout());
@@ -250,8 +247,6 @@ class GamePanel extends GPanel {
         c.insets = new Insets(0, 0, 20, 20);
         currentDroneXpBarp2.setPreferredSize(new Dimension(120, (int)(currentDroneXpBarp2.getPreferredSize().getHeight())));
         add(currentDroneXpBarp2, c);
-
-        setAllComponentsVisible();
     }
 
     private void showCoopUI() {
@@ -785,7 +780,7 @@ class GamePanel extends GPanel {
 
         shootingDroneTimer = new Timer(drone.getFireSpeed(), e -> {
             if (!enemyOnField.isEmpty()) {
-                drone.getKogels().add(new Kogel(window.getSpel(), drone.getCurrentLocation().getX() + drone.getWidth() / 2, drone.getCurrentLocation().getY() + drone.getHeight() / 2, closestEnemy(drone, enemyOnField), "resources/Media/kogel2.png"));
+                drone.getKogels().add(new Kogel(window.getSpel(), drone.getCurrentLocation().getX() + drone.getWidth() / 2, drone.getCurrentLocation().getY() + drone.getHeight() / 2, closestEnemy(drone, enemyOnField), "/Media/kogel2.png"));
             }
         });
     }

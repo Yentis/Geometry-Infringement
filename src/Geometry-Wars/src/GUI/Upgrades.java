@@ -75,24 +75,24 @@ class Upgrades extends JPanel {
         JButton upgradeDrone3 = new GButton("");
         JLabel upgradeDrone3Price = new GLabel("" + window.getSpel().getUpgrades().get(5).getKost(), false, Color.black);
 
-        upgradeDrone3Price.setFont(new GFont(16f));
-        upgradeDrone3Info.setFont(new GFont(16f));
-        upgradeDrone2Price.setFont(new GFont(16f));
-        upgradeDrone2Info.setFont(new GFont(16f));
-        upgradeDrone1Price.setFont(new GFont(16f));
-        upgradeDrone1Info.setFont(new GFont(16f));
-        upgradeShip2Price.setFont(new GFont(16f));
-        upgradeFire1Price.setFont(new GFont(16f));
-        upgradeShip1Info.setFont(new GFont(16f));
-        upgradeShip1Price.setFont(new GFont(16f));
-        upgradeShip2Info.setFont(new GFont(16f));
-        lblTitle.setFont(new GFont(36f));
-        lblNuggets.setFont(new GFont(18f));
-        spaceShip.setFont(new GFont(16f));
-        drone.setFont(new GFont(16f));
-        fire.setFont(new GFont(16f));
-        nuggets.setFont(new GFont(18f));
-        upgradeFire1Info.setFont(new GFont(16f));
+        upgradeDrone3Price.setFont(new GFont(16));
+        upgradeDrone3Info.setFont(new GFont(16));
+        upgradeDrone2Price.setFont(new GFont(16));
+        upgradeDrone2Info.setFont(new GFont(16));
+        upgradeDrone1Price.setFont(new GFont(16));
+        upgradeDrone1Info.setFont(new GFont(16));
+        upgradeShip2Price.setFont(new GFont(16));
+        upgradeFire1Price.setFont(new GFont(16));
+        upgradeShip1Info.setFont(new GFont(16));
+        upgradeShip1Price.setFont(new GFont(16));
+        upgradeShip2Info.setFont(new GFont(16));
+        lblTitle.setFont(new GFont(36));
+        lblNuggets.setFont(new GFont(18));
+        spaceShip.setFont(new GFont(16));
+        drone.setFont(new GFont(16));
+        fire.setFont(new GFont(16));
+        nuggets.setFont(new GFont(18));
+        upgradeFire1Info.setFont(new GFont(16));
         upgradeComponents.add(upgradeFire1);
         upgradeComponents.add(upgradeShip1);
         upgradeComponents.add(upgradeShip2);
@@ -102,7 +102,7 @@ class Upgrades extends JPanel {
 
         int j = 0;
         for (JButton b:upgradeComponents) {
-            b.setFont(new GFont(16f));
+            b.setFont(new GFont(16));
             b.setIcon(new ImageIcon(new ImageIcon(window.getSpel().getUpgrades().get(j).getFoto()).getImage()));
             b.setPreferredSize(new Dimension(104, 123));
             j++;

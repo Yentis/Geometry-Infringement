@@ -27,16 +27,16 @@ public class Effect extends Sprite{
     }
 
     public static Effect XPGain(Spel spel, Enemy enemy) throws IOException, FontFormatException {
-        return new Effect(spel, "+" + enemy.getExperience() + "XP",enemy.getCurrentLocation(), 2000, 1, Color.cyan, new GFont(20f));
+        return new Effect(spel, "+" + enemy.getExperience() + "XP",enemy.getCurrentLocation(), 2000, 1, Color.cyan, new GFont(20));
     }
 
     public static Effect takeDamage(Spel spel, Enemy enemy) throws IOException, FontFormatException {
-        return new Effect(spel, "-" + enemy.getKracht() + "HP", enemy.getCurrentLocation(), 2000, 1, Color.red, new GFont(20f));
+        return new Effect(spel, "-" + enemy.getKracht() + "HP", enemy.getCurrentLocation(), 2000, 1, Color.red, new GFont(20));
     }
 
     public static Effect levelUp(Spel spel, Schip schip){
         try {
-            return new Effect(spel, "LEVEL UP! + \nDMG +25", schip.getCurrentLocation(),2000, 0, Color.green, new GFont(20f));
+            return new Effect(spel, "LEVEL UP! + \nDMG +25", schip.getCurrentLocation(),2000, 0, Color.green, new GFont(20));
         } catch (FontFormatException | IOException e){
             throw new RuntimeException(e);
         }
@@ -44,7 +44,7 @@ public class Effect extends Sprite{
 
     public static Effect roundIndicator(Graphics g, Spel spel, int roundCounter) throws IOException, FontFormatException {
         String message;
-        Font font = new GFont(40f);
+        Font font = new GFont(40);
 
         if(roundCounter % 10 == 0){
             message = "Boss Round";
@@ -53,7 +53,7 @@ public class Effect extends Sprite{
         }
         int width = g.getFontMetrics(font).stringWidth(message);
 
-        return new Effect (spel, message, new Point((spel.getScreenSize().width / 2) - (width / 2), spel.getScreenSize().height / 4), 2000, 0, Color.yellow, new GFont(40f));
+        return new Effect (spel, message, new Point((spel.getScreenSize().width / 2) - (width / 2), spel.getScreenSize().height / 4), 2000, 0, Color.yellow, new GFont(40));
     }
 
     public GFont getFont() {
@@ -103,7 +103,7 @@ public class Effect extends Sprite{
     public class XPGain extends Effect {
 
         public XPGain(Spel spel, Enemy enemy) throws IOException, FontFormatException {
-            super(spel, "+" + enemy.getExperience() + "XP",enemy.getCurrentLocation(), 2000, 1, Color.cyan, new GFont(20f));
+            super(spel, "+" + enemy.getExperience() + "XP",enemy.getCurrentLocation(), 2000, 1, Color.cyan, new GFont(20));
         }
     }
 }

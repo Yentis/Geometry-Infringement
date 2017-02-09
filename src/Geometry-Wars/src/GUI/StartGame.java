@@ -33,7 +33,7 @@ class StartGame extends JPanel {
         JButton Highscores = new GButton("High Scores");
         JLabel lblTitle = new GLabel("Geometry Wars", true, Color.black);
 
-        lblTitle.setFont(new GFont(65f));
+        lblTitle.setFont(new GFont(65));
         middlePanel.setOpaque(false);
         GridBagConstraints c = new GridBagConstraints();
 

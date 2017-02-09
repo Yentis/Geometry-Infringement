@@ -29,13 +29,13 @@ class Logout extends JPanel {
 
         GridLayout layout = new GridLayout(1, 1);
         JPanel logout = new JPanel(layout);
-        JLabel LoggedOut = new GLabel("You are now logged out.", 320, 370, 600, 62, false, Color.white);
-        JLabel lblTitle = new GLabel("Geometry Wars", 25, 25, 650, 100, true, Color.black);
-        JButton Exit = new GButton("Quit", 820, 650, 170, 63);
-        JButton Login = new GButton("Login", 635,650, 170, 63);
+        JLabel LoggedOut = new GLabel("You are now logged out.", false, Color.white);
+        JLabel lblTitle = new GLabel("Geometry Wars", true, Color.black);
+        JButton Exit = new GButton("Quit");
+        JButton Login = new GButton("Login");
 
-        LoggedOut.setFont(new GFont(36f));
-        lblTitle.setFont(new GFont(65f));
+        LoggedOut.setFont(new GFont(36));
+        lblTitle.setFont(new GFont(65));
         logout.setOpaque(false);
         GridBagConstraints c = new GridBagConstraints();
 

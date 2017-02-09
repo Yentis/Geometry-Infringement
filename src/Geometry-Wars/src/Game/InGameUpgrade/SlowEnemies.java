@@ -3,6 +3,8 @@ package Game.InGameUpgrade;
 import Game.Enemy;
 import Game.Schip;
 
+import java.io.InputStream;
+
 /**
  * Created by Renzie on 21/12/2016.
  */

@@ -98,35 +98,21 @@ public class Sound {
     }
 
     public Sound(String soundEffect) {
-        try{
-            switch (soundEffect) {
-                case "enemydeath":
-                    playSfx(new FileInputStream("resources/Sound/enemydeath.wav"));
-                    break;
-                case "playerdeath":
-                    playSfx(new FileInputStream("resources/Sound/playerdeath.wav"));
-                    break;
-                case "playerhit":
-                    playSfx(new FileInputStream("resources/Sound/playerhit.wav"));
-                    break;
-                case "shoot":
-                    playSfx(new FileInputStream("resources/Sound/shoot.wav"));
-                    break;
-                case "shieldactive":
-                    playSfx(new FileInputStream("resources/Sound/shieldactive.wav"));
-                    break;
-                case "shieldinactive":
-                    playSfx(new FileInputStream("resources/Sound/shieldinactive.wav"));
-                    break;
-                case "mainmenu":
-                    playBgm(new FileInputStream("resources/Sound/mainmenu.wav"));
-                    break;
-                case "click":
-                    playSfx(new FileInputStream("resources/Sound/click.wav"));
-                    break;
-            }
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
+        InputStream sound = getClass().getResourceAsStream("/Sound/" + soundEffect + ".wav");
+
+        switch (soundEffect) {
+            case "enemydeath":
+            case "playerdeath":
+            case "playerhit":
+            case "shoot":
+            case "shieldactive":
+            case "click":
+            case "shieldinactive":
+                playSfx(sound);
+                break;
+            case "mainmenu":
+                playBgm(sound);
+                break;
         }
     }
 }

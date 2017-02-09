@@ -14,7 +14,7 @@ import javax.swing.border.EmptyBorder;
 /**
  * @author Renzie
  */
-class Profile extends GPanel {
+class Profile extends JPanel {
     //region Instance Variables
 
     private Speler speler;
@@ -36,7 +36,6 @@ class Profile extends GPanel {
 
     //region Behaviour
 
-    @Override
     public void initComponents() throws IOException, FontFormatException {
         removeAll();
         setLayout(new GridBagLayout());
@@ -57,7 +56,7 @@ class Profile extends GPanel {
         JLabel Rank = new GLabel(speler.getRank(), false, Color.WHITE);
         JLabel RankPicture = new GIcon("Badges\\" + speler.getRank() + ".png", 130, 130, false);
 
-        lblTitle.setFont(new GFont(65f));
+        lblTitle.setFont(new GFont(65));
         ProfileInfo.setFont(new GFont(22));
         ProfileInfo.setForeground(Color.BLACK);
         ProfileInfo.setText("<html>Level: " + speler.getLevel() + "<br>Experience: " + speler.getExperience() + "<br>Rank: " + speler.getRank() + "<br>Nuggets: " + speler.getNuggets() + "<br>Golden Nuggets: " + speler.getGnuggets() + "<br>Highscore: " + speler.getHighscore() + "<html>");

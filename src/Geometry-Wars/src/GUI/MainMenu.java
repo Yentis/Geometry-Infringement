@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.sql.SQLException;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import GComponents.*;
 import Game.Sound;
@@ -43,10 +44,10 @@ class MainMenu extends JPanel {
         JButton Settings = new GButton("Settings");
         JButton LogOut = new GButton("Logout");
         JButton Exit = new GButton("Quit");
-        JButton Discord = new JButton(new ImageIcon(((new ImageIcon("resources\\Media\\Discord.jpg")).getImage()).getScaledInstance(65, 65, java.awt.Image.SCALE_SMOOTH)));
+        JButton Discord = new JButton(new ImageIcon(((ImageIO.read(getClass().getResourceAsStream("/Media/Discord.jpg")))).getScaledInstance(65, 65, java.awt.Image.SCALE_SMOOTH)));
         JLabel lblTitle = new GLabel("Geometry Wars", true, Color.black);
 
-        lblTitle.setFont(new GFont(65f));
+        lblTitle.setFont(new GFont(65));
         mainmenu.setOpaque(false);
         layout.setVgap(50);
         GridBagConstraints c = new GridBagConstraints();

@@ -45,7 +45,7 @@ class Login extends JPanel{
         JPasswordField password = new GPasswordField(loginButton, 10);
         JButton Exit = new GButton("Quit");
         login.setOpaque(false);
-        lblTitle.setFont(new GFont(65f));
+        lblTitle.setFont(new GFont(65));
         layout.setHgap(10);
         layout.setVgap(10);
         GridBagConstraints c = new GridBagConstraints();

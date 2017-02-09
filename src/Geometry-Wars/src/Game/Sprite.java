@@ -1,9 +1,14 @@
 package Game;
 
+import org.omg.CORBA.IMP_LIMIT;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
 
 /**
@@ -34,10 +39,15 @@ public class Sprite {
         this.target = target;
         SCREEN_WIDTH = spel.getScreenSize().width;
         SCREEN_HEIGHT = spel.getScreenSize().height;
-        ImageIcon ii = new ImageIcon(image);
-        width = ii.getIconWidth();
-        height = ii.getIconHeight();
-        this.image = ii.getImage();
+        try {
+
+            ImageIcon ii = new ImageIcon(ImageIO.read(getClass().getResourceAsStream(image)));
+            width = ii.getIconWidth();
+            height = ii.getIconHeight();
+            this.image = ii.getImage();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         currentLocation = new Point();
         currentLocation.setLocation(x, y);
         isHit = false;
@@ -46,10 +56,14 @@ public class Sprite {
     Sprite(Spel spel, String image) {
         SCREEN_WIDTH = spel.getScreenSize().width;
         SCREEN_HEIGHT = spel.getScreenSize().height;
-        ImageIcon ii = new ImageIcon(image);
-        width = ii.getIconWidth();
-        height = ii.getIconHeight();
-        this.image = ii.getImage();
+        try {
+            ImageIcon ii = new ImageIcon(ImageIO.read(getClass().getResourceAsStream(image)));
+            width = ii.getIconWidth();
+            height = ii.getIconHeight();
+            this.image = ii.getImage();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         isHit = false;
     }
 

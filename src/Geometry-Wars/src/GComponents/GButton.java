@@ -9,17 +9,10 @@ import java.io.IOException;
  * Created by Renzie on 10/11/2016.
  */
 public class GButton extends JButton{
-    public GButton( String text,int x, int y,  int width, int height) throws IOException, FontFormatException {
-        setText(text);
-        setFont(new GFont(24f));
-        setBackground(new Color(255, 255, 255 ,200));
-        setBounds(x ,y ,width ,height );
-    }
-
     public GButton( String text) throws IOException, FontFormatException {
         setBorder(new EmptyBorder(15, 20, 15, 20));
         setText(text);
-        setFont(new GFont(24f));
+        setFont(new GFont(24));
         setBackground(new Color(255, 255, 255 ,200));
     }
 

@@ -44,11 +44,11 @@ public class Schip extends Sprite {
     private boolean leveled = false;
 
     //IngameUpgrades
-    private LifeSteal lifesteal = new LifeSteal(1, "LifeSteal", "resources/Media/IngameUpgradeIcons/LifeSteal.png", this);
-    private Invulnerability invulnerability = new Invulnerability(2, "Invulnerability", "resources/Media/IngameUpgradeIcons/Invulnerability.png", this);
-    private RandomBullets randomBullets = new RandomBullets(3, "RandomBullets", "resources/Media/IngameUpgradeIcons/RandomBullets.png", this);
-    private SlowEnemies slowEnemies = new SlowEnemies(4, "RandomBullets", "resources/Media/IngameUpgradeIcons/SlowEnemies.png", this);
-    private ActiveDrone activeDrone = new ActiveDrone(5, "ActiveDrone", "resources/Media/IngameUpgradeIcons/ActiveDrone.png", this);
+    private LifeSteal lifesteal = new LifeSteal(1, "LifeSteal", "/Media/IngameUpgradeIcons/LifeSteal.png", this);
+    private Invulnerability invulnerability = new Invulnerability(2, "Invulnerability", "/Media/IngameUpgradeIcons/Invulnerability.png", this);
+    private RandomBullets randomBullets = new RandomBullets(3, "RandomBullets", "/Media/IngameUpgradeIcons/RandomBullets.png", this);
+    private SlowEnemies slowEnemies = new SlowEnemies(4, "RandomBullets", "/Media/IngameUpgradeIcons/SlowEnemies.png", this);
+    private ActiveDrone activeDrone = new ActiveDrone(5, "ActiveDrone", "/Media/IngameUpgradeIcons/ActiveDrone.png", this);
     private ArrayList<InGameUpgrade> buffs = new ArrayList<>();
     private ArrayList<InGameUpgrade> activeBuffs = new ArrayList<>();
 
@@ -390,14 +390,14 @@ public class Schip extends Sprite {
         double kogelX = locationX + getWidth() / 2;
         double kogelY = locationY + getHeight() / 2;
 
-        addKogels(new Kogel(spel, kogelX, kogelY, point, "resources/Media/kogel1.png"));
+        addKogels(new Kogel(spel, kogelX, kogelY, point, "/Media/kogel1.png"));
 
         if (menuUpgrades.contains(1)) {
             Point mousePointer2 = new Point((int)point.getX(), (int)point.getY() + 50);
             Point mousePointer3 = new Point((int)point.getX(), (int)point.getY() - 50);
 
-            addKogels(new Kogel(spel, kogelX, kogelY, mousePointer2, "resources/Media/kogel1.png"));
-            addKogels(new Kogel(spel, kogelX, kogelY, mousePointer3, "resources/Media/kogel1.png"));
+            addKogels(new Kogel(spel, kogelX, kogelY, mousePointer2, "/Media/kogel1.png"));
+            addKogels(new Kogel(spel, kogelX, kogelY, mousePointer3, "/Media/kogel1.png"));
         }
     }
 
@@ -408,7 +408,7 @@ public class Schip extends Sprite {
         int kogelY2 = random(getSCREEN_HEIGHT());
         Point mousePointer2 = new Point(kogelX2, kogelY2);
 
-        addKogels(new Kogel(spel, kogelX, kogelY, mousePointer2, "resources/Media/kogel1.png"));
+        addKogels(new Kogel(spel, kogelX, kogelY, mousePointer2, "/Media/kogel1.png"));
     }
 
     // Dit zorgt ervoor dat de angle binnen 360 blijft.

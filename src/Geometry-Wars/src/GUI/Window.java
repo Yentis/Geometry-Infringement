@@ -49,7 +49,10 @@ public class Window extends JFrame {
 
             try {
                 BackgroundPane background1 = new BackgroundPane();
-                background1.setBackground(ImageIO.read(new File("resources\\Media\\Background.png")));
+                background1.setBackground(ImageIO.read(getClass().getResourceAsStream("/Media/Background.png")));
+
+                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/Font/Audiowide-Regular.ttf")));
 
                 setTitle(title);
                 cards = new JPanel(cl);
