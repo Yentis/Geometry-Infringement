@@ -174,7 +174,7 @@ class Highscores extends JPanel {
         c.insets = new Insets(0, 0, 20, 20);
         c.anchor = GridBagConstraints.LAST_LINE_END;
         add(Exit, c);
-        c.insets = new Insets(0, 0, 20, 130);
+        c.insets = new Insets(0, 0, 20, 140);
         add(Back, c);
 
         //actionlisteners

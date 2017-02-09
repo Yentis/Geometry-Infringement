@@ -9,10 +9,14 @@ import Game.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Random;
 
 /**
  * Created by Renzie on 7/11/2016.
@@ -34,6 +38,7 @@ public class Window extends JFrame {
     private JPanel cards;
     private static Spel spel = null;
     private CardLayout cl = new CardLayout();
+    private BackgroundPane background = new BackgroundPane();
 
     //endregion
 
@@ -48,8 +53,8 @@ public class Window extends JFrame {
             }
 
             try {
-                BackgroundPane background1 = new BackgroundPane();
-                background1.setBackground(ImageIO.read(getClass().getResourceAsStream("/Media/Background.png")));
+                background.setBackground(ImageIO.read(getClass().getResourceAsStream("/Media/Background.png")));
+                background.setImgSize(Toolkit.getDefaultToolkit().getScreenSize());
 
                 GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
                 ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/Font/Audiowide-Regular.ttf")));
@@ -60,7 +65,7 @@ public class Window extends JFrame {
                 setExtendedState(JFrame.MAXIMIZED_BOTH);
                 setUndecorated(true);
                 setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-                setContentPane(background1);
+                setContentPane(background);
                 setLayout(new BorderLayout());
 
                 // Set the panels
@@ -93,10 +98,6 @@ public class Window extends JFrame {
         return spel;
     }
 
-    StartGame getStartGame() {
-        return startGame;
-    }
-
     MainMenu getMainMenu() {
         return mainMenu;
     }
@@ -109,19 +110,7 @@ public class Window extends JFrame {
         return profile;
     }
 
-    Logout getLogout() {
-        return logout;
-    }
-
-    Login getLogin() {
-        return login;
-    }
-
     InGame getInGame() {return inGame;}
-
-    Register getRegister() {
-        return register;
-    }
 
     Settings getSettings() {
         return settings;
@@ -134,6 +123,10 @@ public class Window extends JFrame {
     Upgrades getUpgrades() {
         return upgrades;
 
+    }
+
+    public void setBackgroundPane(Dimension size) {
+        background.setImgSize(size);
     }
 
     //endregion
@@ -183,193 +176,37 @@ public class Window extends JFrame {
     private class BackgroundPane extends JPanel {
         private BufferedImage img;
         private BufferedImage scaled;
+        private int w;
+        private int h;
+
+        public void setBackground(BufferedImage value) {
+            if (value != img) {
+                this.img = value;
+                w = img.getWidth();
+                h = img.getHeight();
+                repaint();
+            }
+        }
+
+        void setImgSize(Dimension size){
+            scaled = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+            AffineTransform at = AffineTransform.getScaleInstance(size.getWidth() / w, size.getHeight() / h);
+            AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+            scaled = scaleOp.filter(img, scaled);
+        }
 
         @Override
         public Dimension getPreferredSize() {
             return img == null ? super.getPreferredSize() : Toolkit.getDefaultToolkit().getScreenSize();
         }
 
-        public void setBackground(BufferedImage value) {
-            if (value != img) {
-                this.img = value;
-                repaint();
-            }
-        }
-
-        @Override
-        public void invalidate() {
-            super.invalidate();
-            scaled = getScaledInstanceToFill(img, getSize());
-        }
-
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             if (scaled != null) {
-                int x = (getWidth() - scaled.getWidth()) / 2;
-                int y = (getHeight() - scaled.getHeight()) / 2;
-                g.drawImage(scaled, x, y, this);
+                g.drawImage(scaled, 0, 0, this);
             }
         }
-
-    }
-
-    private static BufferedImage getScaledInstanceToFill(BufferedImage img, Dimension size) {
-
-        double scaleFactor = getScaleFactorToFill(img, size);
-
-        return getScaledInstance(img, scaleFactor);
-
-    }
-
-    private static double getScaleFactorToFill(BufferedImage img, Dimension size) {
-        double dScale = 1;
-
-        if (img != null) {
-            int imageWidth = img.getWidth();
-            int imageHeight = img.getHeight();
-
-            double dScaleWidth = getScaleFactor(imageWidth, size.width);
-            double dScaleHeight = getScaleFactor(imageHeight, size.height);
-
-            dScale = Math.max(dScaleHeight, dScaleWidth);
-        }
-
-        return dScale;
-    }
-
-    private static double getScaleFactor(int iMasterSize, int iTargetSize) {
-        double dScale = (double) iTargetSize / (double) iMasterSize;
-
-        return dScale;
-    }
-
-    private static BufferedImage getScaledInstance(BufferedImage img, double dScaleFactor) {
-        return getScaledInstance(img, dScaleFactor, RenderingHints.VALUE_INTERPOLATION_BILINEAR, true);
-    }
-
-    protected static BufferedImage getScaledInstance(BufferedImage img, double dScaleFactor, Object hint, boolean bHighQuality) {
-        BufferedImage imgScale = img;
-
-        int iImageWidth = (int) Math.round(img.getWidth() * dScaleFactor);
-        int iImageHeight = (int) Math.round(img.getHeight() * dScaleFactor);
-
-        if (dScaleFactor <= 1.0d) {
-
-            imgScale = getScaledDownInstance(img, iImageWidth, iImageHeight, hint, bHighQuality);
-
-        } else {
-
-            imgScale = getScaledUpInstance(img, iImageWidth, iImageHeight, hint, bHighQuality);
-
-        }
-
-        return imgScale;
-    }
-
-    protected static BufferedImage getScaledDownInstance(BufferedImage img,
-                                                         int targetWidth,
-                                                         int targetHeight,
-                                                         Object hint,
-                                                         boolean higherQuality) {
-
-        int type = (img.getTransparency() == Transparency.OPAQUE)
-                ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
-
-        BufferedImage ret = (BufferedImage) img;
-        if (targetHeight > 0 || targetWidth > 0) {
-            int w, h;
-            if (higherQuality) {
-                // Use multi-step technique: start with original size, then
-                // scale down in multiple passes with drawImage()
-                // until the target size is reached
-                w = img.getWidth();
-                h = img.getHeight();
-            } else {
-                // Use one-step technique: scale directly from original
-                // size to target size with a single drawImage() call
-                w = targetWidth;
-                h = targetHeight;
-            }
-
-            do {
-                if (higherQuality && w > targetWidth) {
-                    w /= 2;
-                    if (w < targetWidth) {
-                        w = targetWidth;
-                    }
-                }
-
-                if (higherQuality && h > targetHeight) {
-                    h /= 2;
-                    if (h < targetHeight) {
-                        h = targetHeight;
-                    }
-                }
-
-                BufferedImage tmp = new BufferedImage(Math.max(w, 1), Math.max(h, 1), type);
-                Graphics2D g2 = tmp.createGraphics();
-                g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, hint);
-                g2.drawImage(ret, 0, 0, w, h, null);
-                g2.dispose();
-
-                ret = tmp;
-            } while (w != targetWidth || h != targetHeight);
-        } else {
-            ret = new BufferedImage(1, 1, type);
-        }
-        return ret;
-    }
-
-    protected static BufferedImage getScaledUpInstance(BufferedImage img,
-                                                       int targetWidth,
-                                                       int targetHeight,
-                                                       Object hint,
-                                                       boolean higherQuality) {
-
-        int type = BufferedImage.TYPE_INT_ARGB;
-
-        BufferedImage ret = (BufferedImage) img;
-        int w, h;
-        if (higherQuality) {
-            // Use multi-step technique: start with original size, then
-            // scale down in multiple passes with drawImage()
-            // until the target size is reached
-            w = img.getWidth();
-            h = img.getHeight();
-        } else {
-            // Use one-step technique: scale directly from original
-            // size to target size with a single drawImage() call
-            w = targetWidth;
-            h = targetHeight;
-        }
-
-        do {
-            if (higherQuality && w < targetWidth) {
-                w *= 2;
-                if (w > targetWidth) {
-                    w = targetWidth;
-                }
-            }
-
-            if (higherQuality && h < targetHeight) {
-                h *= 2;
-                if (h > targetHeight) {
-                    h = targetHeight;
-                }
-            }
-
-            BufferedImage tmp = new BufferedImage(w, h, type);
-            Graphics2D g2 = tmp.createGraphics();
-            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, hint);
-            g2.drawImage(ret, 0, 0, w, h, null);
-            g2.dispose();
-
-            ret = tmp;
-            tmp = null;
-
-        } while (w != targetWidth || h != targetHeight);
-        return ret;
     }
 
     //endregion

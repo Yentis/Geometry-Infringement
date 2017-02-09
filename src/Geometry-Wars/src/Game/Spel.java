@@ -21,6 +21,7 @@ public class Spel implements Cloneable{
     private List<Enemy> enemies = new ArrayList<>();
     private String currentDifficulty = "Normal";
     private String currentControls = "Keyboard + Mouse";
+    private boolean windowed = false;
     private Dimension screenSize;
     private Connection myConn = null;
 
@@ -38,6 +39,10 @@ public class Spel implements Cloneable{
     //endregion
 
     //region Getters & Setters
+
+    public boolean isWindowed() {
+        return windowed;
+    }
 
     public Dimension getScreenSize() {
         return screenSize;
@@ -89,6 +94,10 @@ public class Spel implements Cloneable{
 
     public void setCurrentDifficulty(String currentDifficulty) {
         this.currentDifficulty = currentDifficulty;
+    }
+
+    public void setWindowed(boolean windowed) {
+        this.windowed = windowed;
     }
 
     //endregion

@@ -52,9 +52,9 @@ class Profile extends JPanel {
         JLabel Profile = new GPane();
         JLabel ProfileInfo = new GPane();
         JLabel Username = new GLabel(speler.getGebruikersnaam(), true, Color.BLACK);
-        JLabel ProfilePicture = new GIcon("ProfilePictures\\" + speler.getGebruikersnaam() + ".png", 180, 170, false);
+        JLabel ProfilePicture = new GIcon("ProfilePictures/" + speler.getGebruikersnaam() + ".png", 180, 170, false);
         JLabel Rank = new GLabel(speler.getRank(), false, Color.WHITE);
-        JLabel RankPicture = new GIcon("Badges\\" + speler.getRank() + ".png", 130, 130, false);
+        JLabel RankPicture = new GIcon("Badges/" + speler.getRank() + ".png", 130, 130, false);
 
         lblTitle.setFont(new GFont(65));
         ProfileInfo.setFont(new GFont(22));

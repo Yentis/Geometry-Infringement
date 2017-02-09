@@ -5,6 +5,7 @@ import Game.Enemy;
 import Game.Sound;
 
 import javax.swing.*;
+import javax.tools.Tool;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.geom.Line2D;
@@ -67,6 +68,9 @@ class Settings extends JPanel {
         lblTitle.setFont(new GFont(65));
         difficulty.setFont(new GFont(18));
         difficulty.setSelectedItem(window.getSpel().getCurrentDifficulty());
+        Dimension res = window.getSpel().getScreenSize();
+        resolution.setSelectedItem((int)(res.getWidth()) + "x" + (int)(res.getHeight()));
+        windowed.setSelected(window.getSpel().isWindowed());
         input.setFont(new GFont(18));
         middlePanel.setOpaque(false);
         controlPanel.setOpaque(false);
@@ -230,9 +234,9 @@ class Settings extends JPanel {
         c.insets = new Insets(0, 0, 20, 20);
         c.anchor = GridBagConstraints.LAST_LINE_END;
         add(Exit, c);
-        c.insets = new Insets(0, 0, 20, 130);
+        c.insets = new Insets(0, 0, 20, 140);
         add(Back, c);
-        c.insets = new Insets(0, 0, 20, 250);
+        c.insets = new Insets(0, 0, 20, 270);
         add(set, c);
 
         //Action Listeners
@@ -268,6 +272,7 @@ class Settings extends JPanel {
 
             if (currentResolution != chosenResolution){
                 window.setSize(chosenResolution);
+                window.setBackgroundPane(chosenResolution);
                 window.getSpel().setScreenSize(chosenResolution);
                 message.setText("Settings changed.");
             }
@@ -281,11 +286,17 @@ class Settings extends JPanel {
         windowed.addItemListener(evt -> {
             new Sound("click");
             if(evt.getStateChange() == ItemEvent.SELECTED){
+                window.getSpel().setWindowed(true);
                 window.setExtendedState(JFrame.NORMAL);
                 window.dispose();
                 window.setUndecorated(false);
                 window.setVisible(true);
             } else {
+                Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+                window.getSpel().setWindowed(false);
+                window.getSpel().setScreenSize(size);
+                window.setBackgroundPane(size);
+                resolution.setSelectedItem((int)(size.getWidth()) + "x" + (int)(size.getHeight()));
                 window.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 window.dispose();
                 window.setUndecorated(true);

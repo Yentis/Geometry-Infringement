@@ -7,6 +7,7 @@ import java.io.*;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -103,7 +104,7 @@ class Upgrades extends JPanel {
         int j = 0;
         for (JButton b:upgradeComponents) {
             b.setFont(new GFont(16));
-            b.setIcon(new ImageIcon(new ImageIcon(window.getSpel().getUpgrades().get(j).getFoto()).getImage()));
+            b.setIcon(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(window.getSpel().getUpgrades().get(j).getFoto()))));
             b.setPreferredSize(new Dimension(104, 123));
             j++;
         }

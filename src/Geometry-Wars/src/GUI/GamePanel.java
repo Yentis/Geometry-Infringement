@@ -703,7 +703,7 @@ class GamePanel extends JPanel {
         double healthBarWidth = 0;
 
         if (schip.getHp() >= 0) {
-            double ratioHP = 432 / schip.getMaxhp();
+            double ratioHP = 100 / schip.getMaxhp();
             healthBarWidth = ratioHP * schip.getHp();
         }
         return healthBarWidth;
