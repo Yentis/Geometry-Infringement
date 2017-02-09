@@ -6,102 +6,234 @@ import Game.Sound;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
 import java.awt.geom.Line2D;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.*;
 import java.util.List;
 
+import static java.lang.Integer.parseInt;
+
 /**
  * Created by Yentl-PC on 20/12/2016.
  */
-class Settings extends GPanel {
-    //region Instance Variables
-
-    private Settings panel = this;
-
-    //endregion
+class Settings extends JPanel {
+    private Dimension resolution;
 
     //region Behaviour
 
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);  // fixes the immediate problem.
-        Graphics2D g2 = (Graphics2D) g;
-        Line2D horitzontalLine = new Line2D.Float(220, 310, 820,310);
-
-        g2.setColor(Color.white);
-        g2.draw(horitzontalLine);
-    }
-
-    @Override
     public void initComponents() throws IOException, FontFormatException {
-        panel.removeAll();
+        removeAll();
+        setLayout(new GridBagLayout());
+        setOpaque(false);
 
-        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(getParent());
         String[] difficulties = {"Hard", "Normal", "Easy"};
         String[] inputs = {"Keyboard + Mouse", "Controller"};
-        JLabel label = new GLabel("Geometry Wars", 65f, 25, 25, 650, 100, true, Color.darkGray);
-        GLabel message = new GLabel("", 24f, 240,120,600,50, false, Color.white);
-        GLabel lbldifficulty = new GLabel("Difficulty: ", 24f, 220,170,150,50, false, Color.white);
+        String[] resolutions = {"1024x768", "1280x720", "1366x768", "1440x900", "1600x900", "1680x1050", "1920x1080", "1920x1200", "2560x1440", "4096x2160"};
+        JPanel middlePanel = new JPanel(new GridBagLayout());
+        JPanel controlPanel = new JPanel(new GridBagLayout());
+        JLabel lblTitle = new GLabel("Geometry Wars", true, Color.black);
+        GLabel message = new GLabel(" ", false, Color.white);
+        GLabel lbldifficulty = new GLabel("Difficulty: ", false, Color.white);
         JComboBox<String> difficulty = new JComboBox<>(difficulties);
-        GLabel lblInput = new GLabel("Input: ", 24f,220,230, 150,50, false, Color.white );
+        GLabel lblInput = new GLabel("Input: ", false, Color.white );
+        GLabel lblWindowed = new GLabel("Windowed: ", false, Color.white);
+        JCheckBox windowed = new JCheckBox();
+        GLabel lblResolution = new GLabel("Resolution: ", false, Color.white);
+        JComboBox<String> resolution = new JComboBox<>(resolutions);
         JComboBox<String> input = new JComboBox<>(inputs);
-        GButton set = new GButton("Set", 24f, 720,170,100,50);
-        GButton Back = new GButton("Back", 24f, 820,650, 170, 63);
-        JLabel backgroundpane = new GPane(220, 300, 600, 300);
-        GLabel controlLabel = new GLabel("Controls", 24f, 450,315,600,50, false, Color.white);
-        GLabel aim = new GLabel("Aim", 24f, 230,350,600,50, false, Color.white);
-        GLabel shoot = new GLabel("Shoot", 24f, 230,380,600,50, false, Color.white);
-        GLabel move = new GLabel("Move", 24f, 230,410,600,50, false, Color.white);
-        GLabel moveUp = new GLabel("Move up", 24f, 230,460,600,50, false, Color.white);
-        GLabel moveDown = new GLabel("Move down", 24f, 230,490,600,50, false, Color.white);
-        GLabel moveLeft = new GLabel("Move left", 24f, 230,520,600,50, false, Color.white);
-        GLabel moveRight = new GLabel("Move right", 24f, 230,550,600,50, false, Color.white);
-        GLabel aim2 = new GLabel("Mouse | Right joystick", 24f, 420,350,600,50, false, Color.white);
-        GLabel shoot2 = new GLabel("Mouse Click | R1", 24f, 420,380,600,50, false, Color.white);
-        GLabel move2 = new GLabel("Left joystick", 24f, 420,410,600,50, false, Color.white);
-        GLabel moveUp2 = new GLabel("Z", 24f, 420,460,600,50, false, Color.white);
-        GLabel moveDown2 = new GLabel("S", 24f, 420,490,600,50, false, Color.white);
-        GLabel moveLeft2 = new GLabel("Q", 24f, 420,520,600,50, false, Color.white);
-        GLabel moveRight2 = new GLabel("D", 24f, 420,550,600,50, false, Color.white);
+        GButton set = new GButton("Apply");
+        GButton Back = new GButton("Back");
+        JButton Exit = new GButton("Quit");
+        GLabel controlLabel = new GLabel("Controls", false, Color.white);
+        GLabel aim = new GLabel("Aim", false, Color.white);
+        GLabel shoot = new GLabel("Shoot", false, Color.white);
+        GLabel move = new GLabel("Move", false, Color.white);
+        GLabel moveUp = new GLabel("Move up", false, Color.white);
+        GLabel moveDown = new GLabel("Move down", false, Color.white);
+        GLabel moveLeft = new GLabel("Move left", false, Color.white);
+        GLabel moveRight = new GLabel("Move right", false, Color.white);
+        GLabel aim2 = new GLabel("Mouse | Right joystick", false, Color.white);
+        GLabel shoot2 = new GLabel("Mouse Click | R1", false, Color.white);
+        GLabel move2 = new GLabel("Left joystick", false, Color.white);
+        GLabel moveUp2 = new GLabel("Z", false, Color.white);
+        GLabel moveDown2 = new GLabel("S", false, Color.white);
+        GLabel moveLeft2 = new GLabel("Q", false, Color.white);
+        GLabel moveRight2 = new GLabel("D", false, Color.white);
 
+        resolution.setFont(new GFont(18));
+        lblTitle.setFont(new GFont(65f));
         difficulty.setFont(new GFont(18));
         difficulty.setSelectedItem(window.getSpel().getCurrentDifficulty());
-        message.setVisible(false);
-
-        backgroundpane.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
-        backgroundpane.setBackground(new Color(0,0,0,150));
-
-        difficulty.setBounds(420,170,250,50);
-        input.setBounds(420,230,250,50);
         input.setFont(new GFont(18));
+        middlePanel.setOpaque(false);
+        controlPanel.setOpaque(false);
+        GridBagConstraints c = new GridBagConstraints();
 
-        this.add(label);
-        this.add(lbldifficulty);
-        this.add(lblInput);
-        this.add(message);
-        this.add(difficulty);
-        this.add(input);
-        this.add(set);
-        this.add(Back);
-        this.add(message);
-        this.add(controlLabel);
-        this.add(aim);
-        this.add(shoot);
-        this.add(move);
-        this.add(moveUp);
-        this.add(moveDown);
-        this.add(moveLeft);
-        this.add(moveRight);
-        this.add(aim2);
-        this.add(shoot2);
-        this.add(move2);
-        this.add(moveUp2);
-        this.add(moveDown2);
-        this.add(moveLeft2);
-        this.add(moveRight2);
-        this.add(backgroundpane);
+        c.gridx = 0;
+        c.gridy = 0;
+        c.ipadx = 40;
+        c.ipady = 20;
+        c.weightx = 1;
+        c.weighty = 0.1;
+        c.gridwidth = 4;
+        c.insets = new Insets(20, 20, 0, 0);
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(lblTitle, c);
+
+        c.gridx = 1;
+        c.gridy = 0;
+        c.ipadx = 0;
+        c.ipady = 0;
+        c.gridwidth = 1;
+        c.insets = new Insets(0, 0, 40, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        middlePanel.add(message, c);
+
+        c.gridx = 0;
+        c.gridy = 1;
+        c.insets = new Insets(0, 0, 0, 40);
+        c.anchor = GridBagConstraints.LINE_START;
+        middlePanel.add(lbldifficulty, c);
+
+        c.gridx = 1;
+        c.insets = new Insets(0, 0, 0, 40);
+        c.anchor = GridBagConstraints.CENTER;
+        difficulty.setPreferredSize(input.getPreferredSize());
+        middlePanel.add(difficulty, c);
+
+        c.gridx = 0;
+        c.gridy = 2;
+        c.gridheight = 1;
+        c.insets = new Insets(15, 0, 0, 40);
+        c.anchor = GridBagConstraints.LINE_START;
+        middlePanel.add(lblInput, c);
+
+        c.gridx = 1;
+        c.anchor = GridBagConstraints.CENTER;
+        middlePanel.add(input, c);
+
+        c.gridx = 0;
+        c.gridy = 3;
+        c.anchor = GridBagConstraints.LINE_START;
+        middlePanel.add(lblWindowed, c);
+
+        c.gridx = 1;
+        c.anchor = GridBagConstraints.CENTER;
+        middlePanel.add(windowed, c);
+
+        c.gridx = 0;
+        c.gridy = 4;
+        c.anchor = GridBagConstraints.LINE_START;
+        middlePanel.add(lblResolution, c);
+
+        c.gridx = 1;
+        c.anchor = GridBagConstraints.CENTER;
+        middlePanel.add(resolution, c);
+
+        c.gridy = 5;
+        c.gridwidth = 1;
+        c.insets = new Insets(40, 0, 20, 0);
+        c.anchor = GridBagConstraints.PAGE_START;
+        middlePanel.add(controlLabel, c);
+
+        c.gridx = 0;
+        c.gridy = 6;
+        c.insets = new Insets(0, 0, 0, 40);
+        c.anchor = GridBagConstraints.LINE_START;
+        middlePanel.add(aim, c);
+
+        c.gridx = 1;
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        middlePanel.add(aim2, c);
+
+        c.gridx = 0;
+        c.gridy = 7;
+        c.insets = new Insets(0, 0, 0, 40);
+        c.anchor = GridBagConstraints.LINE_START;
+        middlePanel.add(shoot, c);
+
+        c.gridx = 1;
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        middlePanel.add(shoot2, c);
+
+        c.gridx = 0;
+        c.gridy = 8;
+        c.insets = new Insets(0, 0, 0, 40);
+        c.anchor = GridBagConstraints.LINE_START;
+        middlePanel.add(move, c);
+
+        c.gridx = 1;
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        middlePanel.add(move2, c);
+
+        c.gridx = 0;
+        c.gridy = 9;
+        c.insets = new Insets(20, 0, 0, 40);
+        c.anchor = GridBagConstraints.LINE_START;
+        middlePanel.add(moveUp, c);
+
+        c.gridx = 1;
+        c.insets = new Insets(20, 0, 0, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        middlePanel.add(moveUp2, c);
+
+        c.gridx = 0;
+        c.gridy = 10;
+        c.insets = new Insets(0, 0, 0, 40);
+        c.anchor = GridBagConstraints.LINE_START;
+        middlePanel.add(moveDown, c);
+
+        c.gridx = 1;
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        middlePanel.add(moveDown2, c);
+
+        c.gridx = 0;
+        c.gridy = 11;
+        c.insets = new Insets(0, 0, 0, 40);
+        c.anchor = GridBagConstraints.LINE_START;
+        middlePanel.add(moveLeft, c);
+
+        c.gridx = 1;
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        middlePanel.add(moveLeft2, c);
+
+        c.gridx = 0;
+        c.gridy = 12;
+        c.insets = new Insets(0, 0, 0, 40);
+        c.anchor = GridBagConstraints.LINE_START;
+        middlePanel.add(moveRight, c);
+
+        c.gridx = 1;
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        middlePanel.add(moveRight2, c);
+
+        c.gridx = 1;
+        c.gridy = 1;
+        c.gridwidth = 3;
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        add(middlePanel, c);
+
+        c.gridx = 2;
+        c.gridy = 2;
+        c.weighty = 0.2;
+        c.gridwidth = 2;
+        c.insets = new Insets(0, 0, 20, 20);
+        c.anchor = GridBagConstraints.LAST_LINE_END;
+        add(Exit, c);
+        c.insets = new Insets(0, 0, 20, 130);
+        add(Back, c);
+        c.insets = new Insets(0, 0, 20, 250);
+        add(set, c);
 
         //Action Listeners
         set.addActionListener(evt -> {
@@ -109,13 +241,15 @@ class Settings extends GPanel {
             List<Enemy> enemies = new ArrayList<>();
             String currentDifficulty = window.getSpel().getCurrentDifficulty();
             String currentControls = window.getSpel().getCurrentControls();
+            Dimension currentResolution = window.getSpel().getScreenSize();
             String selectedDifficulty = difficulty.getSelectedItem().toString();
             String selectedControls = input.getSelectedItem().toString();
+            String selectedResolution = resolution.getSelectedItem().toString();
+            int width = parseInt(selectedResolution.substring(0, selectedResolution.indexOf("x")));
+            int height = parseInt(selectedResolution.substring(selectedResolution.indexOf("x") + 1));
+            Dimension chosenResolution = new Dimension(width, height);
 
-            if(Objects.equals(currentDifficulty, selectedDifficulty)){
-                message.setText("Difficulty set.");
-            } else {
-                //TODO fix this shit
+            if(!Objects.equals(currentDifficulty, selectedDifficulty)){
                 window.getSpel().setCurrentDifficulty(selectedDifficulty);
 
                 for (Enemy enemy: window.getSpel().getEnemies())
@@ -124,20 +258,39 @@ class Settings extends GPanel {
                     enemies.add(enemy);
                 }
                 window.getSpel().setEnemies(enemies);
-                message.setText("Difficulty set.");
+                message.setText("Settings changed.");
             }
 
             if (!Objects.equals(selectedControls, currentControls)){
                 window.getSpel().setCurrentControls(selectedControls);
-                message.setText("Input set.");
+                message.setText("Settings changed.");
             }
-            message.setVisible(true);
+
+            if (currentResolution != chosenResolution){
+                window.setSize(chosenResolution);
+                window.getSpel().setScreenSize(chosenResolution);
+                message.setText("Settings changed.");
+            }
         });
 
         Back.addActionListener(evt -> {
             new Sound("click");
-            panel.setVisible(false);
-            window.getMainMenu().setVisible(true);
+            window.getCl().show(window.getCards(), "mainmenupanel");
+        });
+
+        windowed.addItemListener(evt -> {
+            new Sound("click");
+            if(evt.getStateChange() == ItemEvent.SELECTED){
+                window.setExtendedState(JFrame.NORMAL);
+                window.dispose();
+                window.setUndecorated(false);
+                window.setVisible(true);
+            } else {
+                window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                window.dispose();
+                window.setUndecorated(true);
+                window.setVisible(true);
+            }
         });
     }
 

@@ -7,21 +7,20 @@ import java.io.IOException;
 /**
  * Created by Renzie on 10/11/2016.
  */
-
 public class GPasswordField extends JPasswordField {
-    public GPasswordField(int x, int y, int width, int height, JButton button) throws IOException, FontFormatException {
-        this.setFont(new GFont(24));
-        this.setBackground(new Color(255, 255,255,200));
-        this.setBounds(x,y,width,height);
+    public GPasswordField(JButton button, int columns) throws IOException, FontFormatException {
+        setColumns(columns);
+        setFont(getFont().deriveFont(24f));
+        setBackground(new Color(255,255,255,200));
 
-        this.addActionListener(evt -> button.doClick());
+        addActionListener(evt -> button.doClick());
     }
 
     @Override
     public void paintComponent(Graphics g){
         g.setColor( new Color(255, 255, 255 ,200) );
         g.fillRect(0, 0, getWidth(), getHeight());
-        this.setOpaque(false);
+        setOpaque(false);
         super.paintComponent(g);
     }
 }

@@ -1,6 +1,7 @@
 package GComponents;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.IOException;
 
@@ -8,18 +9,25 @@ import java.io.IOException;
  * Created by Renzie on 10/11/2016.
  */
 public class GButton extends JButton{
-    public GButton( String text,float fontsize,int x, int y,  int width, int height) throws IOException, FontFormatException {
-        this.setText(text);
-        this.setFont(new GFont(fontsize));
-        this.setBackground(new Color(255, 255, 255 ,200));
-        this.setBounds(x ,y ,width ,height );
+    public GButton( String text,int x, int y,  int width, int height) throws IOException, FontFormatException {
+        setText(text);
+        setFont(new GFont(24f));
+        setBackground(new Color(255, 255, 255 ,200));
+        setBounds(x ,y ,width ,height );
+    }
+
+    public GButton( String text) throws IOException, FontFormatException {
+        setBorder(new EmptyBorder(15, 20, 15, 20));
+        setText(text);
+        setFont(new GFont(24f));
+        setBackground(new Color(255, 255, 255 ,200));
     }
 
     @Override
     public void paintComponent(Graphics g){
         g.setColor( new Color(255, 255, 255 ,200) );
         g.fillRect(0, 0, getWidth(), getHeight());
-        this.setOpaque(false);
+        setOpaque(false);
         super.paintComponent(g);
     }
 }

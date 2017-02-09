@@ -26,8 +26,8 @@ public class Drone extends Sprite{
 
     //region Constructors
 
-    public Drone(int nr, String naam, String beschrijving, int kracht, String uiterlijk, int type){
-        super(uiterlijk);
+    public Drone(Spel spel, int nr, String naam, String beschrijving, int kracht, String uiterlijk, int type){
+        super(spel, uiterlijk);
         imageString = uiterlijk;
         x = 600;
         y = 300;

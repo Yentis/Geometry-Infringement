@@ -12,7 +12,6 @@ public abstract class GPanel extends JPanel {
 
     public GPanel() {
         this.setLayout(null);
-        this.setSize(1024, 768);
         this.setOpaque(false);
 
     }

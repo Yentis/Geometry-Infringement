@@ -11,11 +11,10 @@ import Game.Sound;
 /**
  * @author Renzie
  */
-class MainMenu extends GPanel {
+class MainMenu extends JPanel {
     //region Instance Variables
 
     private String url = "https://discordapp.com/";
-    private MainMenu panel = this;
 
     //endregion
 
@@ -28,42 +27,81 @@ class MainMenu extends GPanel {
     //endregion
 
     //region Behaviour
-
-    @Override
     public void initComponents() throws IOException, FontFormatException {
-        panel.removeAll();
+        removeAll();
+        setLayout(new GridBagLayout());
+        setOpaque(false);
 
         //Make components
         //==================================================
 
-        JButton StartGame = new GButton("Play", 24f, 120,200,260,70);
-        JButton Upgrades = new GButton("Upgrades", 24f, 190,320,260,70);
-        JButton Profile = new GButton("Profile", 24f, 237,440,260,70);
-        JButton Settings = new GButton("Settings", 24f, 235,560,260,70);
-        JButton FriendsBtn = new GButton("Friends", 24f, 820, 25, 170,63);
-        JButton LogOut = new GButton("Logout", 24f, 635,650, 170, 63);
-        JButton Quit = new GButton("Quit", 24f, 820, 650, 170, 63);
+        GridLayout layout = new GridLayout(0, 1);
+        JPanel mainmenu = new JPanel(layout);
+        JButton StartGame = new GButton("Play");
+        JButton Upgrades = new GButton("Upgrades");
+        JButton Profile = new GButton("Profile");
+        JButton Settings = new GButton("Settings");
+        JButton LogOut = new GButton("Logout");
+        JButton Exit = new GButton("Quit");
         JButton Discord = new JButton(new ImageIcon(((new ImageIcon("resources\\Media\\Discord.jpg")).getImage()).getScaledInstance(65, 65, java.awt.Image.SCALE_SMOOTH)));
-        JLabel Title = new GLabel("Geometry Wars", 65f, 25, 25, 650, 100, true, Color.darkGray);
-        JList Friends = new JList();
-        GLabel confirmationlabel = new GLabel("Are you sure you want to quit?", 30, 320,285,550,60, false, Color.cyan);
-        JButton Yes = new GButton("Yes", 24f, 455, 380, 100, 47);
-        JButton No = new GButton("No", 24f, 595, 380, 100, 47);
-        JLabel pauzepane = new GLabel("", 24f, 280, 265, 630, 245, true, Color.darkGray);
+        JLabel lblTitle = new GLabel("Geometry Wars", true, Color.black);
+
+        lblTitle.setFont(new GFont(65f));
+        mainmenu.setOpaque(false);
+        layout.setVgap(50);
+        GridBagConstraints c = new GridBagConstraints();
+
+        c.gridx = 0;
+        c.gridy = 0;
+        c.ipadx = 40;
+        c.ipady = 20;
+        c.weightx = 1;
+        c.weighty = 0.1;
+        c.gridwidth = 4;
+        c.insets = new Insets(20, 20, 0, 0);
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(lblTitle, c);
+
+        c.gridx = 1;
+        c.gridy = 1;
+        c.ipadx = 0;
+        c.ipady = 0;
+        c.gridwidth = 3;
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        mainmenu.add(StartGame);
+        mainmenu.add(Upgrades);
+        mainmenu.add(Profile);
+        mainmenu.add(Settings);
+        add(mainmenu, c);
+
+        c.gridx = 0;
+        c.gridy = 2;
+        c.weighty = 0.2;
+        c.gridwidth = 2;
+        c.insets = new Insets(0, 20, 20, 0);
+        c.anchor = GridBagConstraints.LAST_LINE_START;
+        Discord.setPreferredSize(new Dimension(Discord.getIcon().getIconWidth(), Discord.getIcon().getIconHeight()));
+        add(Discord, c);
+
+        c.gridx = 2;
+        c.insets = new Insets(0, 0, 20, 140);
+        c.anchor = GridBagConstraints.LAST_LINE_END;
+        add(LogOut, c);
+        c.insets = new Insets(0, 0, 20, 20);
+        add(Exit, c);
 
         //region Action Listeners
 
         StartGame.addActionListener(evt -> {
             new Sound("click");
-            panel.setVisible(false);
-            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
-            window.getStartGame().setVisible(true);
+            Window window = (Window) SwingUtilities.getRoot(getParent());
+            window.getCl().show(window.getCards(), "startgamepanel");
         });
 
         Upgrades.addActionListener(evt -> {
             new Sound("click");
-            panel.setVisible(false);
-            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+            Window window = (Window) SwingUtilities.getRoot(getParent());
             try {
                 window.getSpel().logIn(window.getSpel().getSpeler().getGebruikersnaam());
                 window.getSpel().initDankabank();
@@ -71,28 +109,18 @@ class MainMenu extends GPanel {
             } catch (IOException | FontFormatException | SQLException e) {
                 e.printStackTrace();
             }
-            window.getUpgrades().setVisible(true);
+            window.getCl().show(window.getCards(), "upgradespanel");
         });
 
         Settings.addActionListener(evt -> {
             new Sound("click");
-            panel.setVisible(false);
-            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+            Window window = (Window) SwingUtilities.getRoot(getParent());
             try {
                 window.getSettings().initComponents();
             } catch (IOException | FontFormatException e) {
                 e.printStackTrace();
             }
-            window.getSettings().setVisible(true);
-        });
-
-        FriendsBtn.addActionListener(evt -> {
-            new Sound("click");
-            if (!Friends.isShowing()) {
-                Friends.setVisible(true);
-            } else {
-                Friends.setVisible(false);
-            }
+            window.getCl().show(window.getCards(), "settingspanel");
         });
 
         Discord.addActionListener(evt -> {
@@ -106,16 +134,14 @@ class MainMenu extends GPanel {
 
         LogOut.addActionListener(evt -> {
             new Sound("click");
-            panel.setVisible(false);
-            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+            Window window = (Window) SwingUtilities.getRoot(getParent());
             window.getSpel().logOut();
-            window.getLogout().setVisible(true);
+            window.getCl().show(window.getCards(), "logoutpanel");
         });
 
         Profile.addActionListener(evt -> {
             new Sound("click");
-            panel.setVisible(false);
-            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+            Window window = (Window) SwingUtilities.getRoot(getParent());
             try {
                 window.getSpel().logIn(window.getSpel().getSpeler().getGebruikersnaam());
                 window.getProfile().setSpeler(window.getSpel().getSpeler());
@@ -124,99 +150,15 @@ class MainMenu extends GPanel {
             } catch (IOException | FontFormatException | SQLException e) {
                 e.printStackTrace();
             }
-            window.getProfile().setVisible(true);
+            window.getCl().show(window.getCards(), "profilepanel");
         });
 
-        Quit.addActionListener(evt -> {
-            new Sound("click");
-            pauzepane.setVisible(true);
-            Yes.setVisible(true);
-            No.setVisible(true);
-            confirmationlabel.setVisible(true);
-            StartGame.setVisible(false);
-            Profile.setVisible(false);
-            Upgrades.setVisible(false);
-            Settings.setVisible(false);
-
-            Friends.setVisible(false);
-            Quit.setVisible(false);
-            LogOut.setVisible(false);
-            Discord.setVisible(false);
-            FriendsBtn.setVisible(false);
-        });
-
-        No.addActionListener(evt -> {
-            new Sound("click");
-            pauzepane.setVisible(false);
-            Yes.setVisible(false);
-            No.setVisible(false);
-            confirmationlabel.setVisible(false);
-            StartGame.setVisible(true);
-            Profile.setVisible(true);
-            Upgrades.setVisible(true);
-            Settings.setVisible(true);
-
-            Friends.setVisible(true);
-            Quit.setVisible(true);
-            LogOut.setVisible(true);
-            Discord.setVisible(true);
-            FriendsBtn.setVisible(true);
-        });
-
-        Yes.addActionListener(evt -> {
+        Exit.addActionListener(evt -> {
             new Sound("click");
             System.exit(0);
         });
 
         //endregion
-
-        //==================================================
-
-        //Set Properties
-        //==================================================
-
-        Friends.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        Friends.setVisible(false);
-        Friends.setBackground(new Color(255, 255, 255, 95));
-
-        pauzepane.setBackground(new Color(255,255,255,50));
-        pauzepane.setBorder(BorderFactory.createMatteBorder(
-                2, 2, 2, 2, Color.cyan));
-
-        //==================================================
-
-        //Set Bounds
-        //==================================================
-
-        Friends.setBounds(820, 129, 170, 300);
-        Discord.setBounds(35, 650, 65, 65);
-
-        pauzepane.setVisible(false);
-        Yes.setVisible(false);
-        No.setVisible(false);
-        confirmationlabel.setVisible(false);
-
-        //==================================================
-
-        //Add Components
-        //==================================================
-
-        panel.add(StartGame);
-        panel.add(Profile);
-        panel.add(Upgrades);
-        panel.add(Settings);
-        panel.add(Title);
-        panel.add(Friends);
-        panel.add(Quit);
-        panel.add(LogOut);
-        panel.add(Discord);
-        panel.add(FriendsBtn);
-
-        panel.add(pauzepane);
-        panel.add(Quit);
-        panel.add(confirmationlabel);
-        panel.add(Yes);
-        panel.add(No);
     }
 
     //endregion

@@ -23,38 +23,31 @@ import Game.Speler;
 /**
  * Created by Laurens Visser on 21/12/2016.
  */
-class Highscores extends GPanel {
+class Highscores extends JPanel {
     //region Instance Variables
 
     private JList<String> listPlayer;
-    private Highscores panel = this;
 
     //endregion
 
     //region Behaviour
-
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);  // fixes the immediate problem.
-        Graphics2D g2 = (Graphics2D) g;
-        Line2D horitzontalLine = new Line2D.Float(220, 230, 869,230);
-        Line2D verticalLine= new Line2D.Float(545, 160, 545,699);
-        g2.setColor(Color.cyan);
-        g2.draw(horitzontalLine);
-        g2.draw(verticalLine);
-    }
-
-    @Override
     public void initComponents() throws IOException, FontFormatException {
-        panel.removeAll();
-        List<String> strings = new ArrayList<>();
-        List<Speler> spelers;
+        removeAll();
+        setLayout(new GridBagLayout());
+        setOpaque(false);
+        java.util.List<String> strings = new ArrayList<>();
+        java.util.List<Speler> spelers;
 
-        JLabel label = new GLabel("HIGHSCORES", 65f, 220, 25, 650, 100, true, Color.white);
-        JLabel Player = new GLabel("Player", 24f, 330, 166, 180, 64, false, Color.white);
-        JLabel Score = new GLabel("Score", 24f, 655, 166, 180, 64, false, Color.white);
-        JButton Back = new GButton("Back", 24f, 20, 675, 120, 45);
-        JLabel backgroundpane = new GPane(220, 160, 650, 540);
+        JPanel middlePanel = new JPanel(new GridBagLayout());
+        JPanel playerPanel = new JPanel(new GridBagLayout());
+        JPanel playerList = new JPanel(new GridBagLayout());
+        JPanel scorePanel = new JPanel(new GridBagLayout());
+        JPanel scoreList = new JPanel(new GridBagLayout());
+        JLabel lblTitle = new GLabel("HIGHSCORES", true, Color.white);
+        JLabel Player = new GLabel("Player", false, Color.white);
+        JLabel Score = new GLabel("Score", false, Color.white);
+        JButton Back = new GButton("Back");
+        JButton Exit = new GButton("Quit");
         DefaultListModel<String> listModelPlayer = new DefaultListModel<>();
         DefaultListModel<String> listModelScore = new DefaultListModel<>();
 
@@ -90,8 +83,18 @@ class Highscores extends GPanel {
 
         //properties
 
-        label.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.green));
-        label.setBackground(Color.black);
+        lblTitle.setFont(new GFont(65f));
+        playerPanel.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 0, Color.cyan));
+        scorePanel.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.cyan));
+        playerList.setBorder(BorderFactory.createMatteBorder(0, 2, 2, 0, Color.cyan));
+        scoreList.setBorder(BorderFactory.createMatteBorder(0, 2, 2, 2, Color.cyan));
+        lblTitle.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.green));
+        lblTitle.setBackground(Color.black);
+        middlePanel.setBackground(Color.black);
+        playerPanel.setBackground(Color.black);
+        scorePanel.setBackground(Color.black);
+        playerList.setBackground(Color.black);
+        scoreList.setBackground(Color.black);
 
         listPlayer.setLayoutOrientation(JList.VERTICAL);
         listPlayer.setFont(new GFont(24));
@@ -104,41 +107,97 @@ class Highscores extends GPanel {
         listScore.setBackground(Color.black);
         listScore.setForeground(Color.white);
         listScore.setBorder(new EmptyBorder(20, 20, 0, 0));
+        GridBagConstraints c = new GridBagConstraints();
 
-        Back.setBackground(new Color(255,255,255,200));
-        backgroundpane.setBackground(Color.BLACK);
-        backgroundpane.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.cyan));
+        c.gridx = 0;
+        c.gridy = 0;
+        c.ipadx = 40;
+        c.ipady = 20;
+        c.weightx = 1;
+        c.weighty = 0.1;
+        c.gridwidth = 4;
+        c.insets = new Insets(20, 0, 0, 0);
+        c.anchor = GridBagConstraints.PAGE_START;
+        add(lblTitle, c);
 
+        c.ipadx = 0;
+        c.ipady = 0;
+        c.gridwidth = 1;
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        Player.setBorder(new EmptyBorder(10, 70, 10, 70));
+        playerPanel.add(Player, c);
 
-        //bounds
+        c.gridx = 0;
+        c.gridy = 0;
+        c.ipadx = 20;
+        middlePanel.add(playerPanel, c);
 
-        listPlayer.setBounds(221,230,318,469);
-        listScore.setBounds(551,230,318,469);
+        c.ipadx = 0;
+        c.insets = new Insets(0, 0, 0, 0);
+        Score.setBorder(new EmptyBorder(10, 38, 10, 38));
+        scorePanel.add(Score, c);
 
-        //components toevoegen
-        this.add(label);
-        this.add(Back);
-        this.add(Player);
-        this.add(Score);
-        this.add(listPlayer);
-        this.add(listScore);
-        this.add(backgroundpane);
+        c.gridx = 1;
+        c.ipadx = 20;
+        middlePanel.add(scorePanel, c);
+
+        c.gridx = 0;
+        c.ipadx = 0;
+        listPlayer.setBorder(new EmptyBorder(10, 10, 10, 10));
+        playerList.add(listPlayer, c);
+
+        c.gridx = 0;
+        c.gridy = 1;
+        c.anchor = GridBagConstraints.LINE_START;
+        middlePanel.add(playerList, c);
+
+        c.gridy = 1;
+        c.ipady = 0;
+        c.anchor = GridBagConstraints.CENTER;
+        listScore.setBorder(new EmptyBorder(10, 10, 10, 10));
+        scoreList.add(listScore, c);
+
+        c.gridx = 1;
+        c.anchor = GridBagConstraints.LINE_END;
+        middlePanel.add(scoreList, c);
+
+        c.gridx = 1;
+        c.gridy = 1;
+        c.gridwidth = 3;
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        add(middlePanel, c);
+
+        c.gridx = 2;
+        c.gridy = 2;
+        c.weighty = 0.2;
+        c.gridwidth = 2;
+        c.insets = new Insets(0, 0, 20, 20);
+        c.anchor = GridBagConstraints.LAST_LINE_END;
+        add(Exit, c);
+        c.insets = new Insets(0, 0, 20, 130);
+        add(Back, c);
 
         //actionlisteners
 
         Back.addActionListener(evt -> {
             new Sound("click");
-            panel.setVisible(false);
-            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
-            window.getStartGame().setVisible(true);
+            setVisible(false);
+            Window window = (Window) SwingUtilities.getRoot(getParent());
+            window.getCl().show(window.getCards(), "startgamepanel");
+        });
+
+        Exit.addActionListener(evt -> {
+            new Sound("click");
+            System.exit(0);
         });
 
         listPlayer.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 new Sound("click");
-                panel.setVisible(false);
-                Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+                Window window = (Window) SwingUtilities.getRoot(getParent());
                 Speler speler = spelers.get(listPlayer.getSelectedIndex());
                 try {
                     window.getSpel().checkRank(speler);
@@ -148,7 +207,7 @@ class Highscores extends GPanel {
                 } catch (IOException | FontFormatException | SQLException ef) {
                     ef.printStackTrace();
                 }
-                window.getProfile().setVisible(true);
+                window.getCl().show(window.getCards(), "profilepanel");
             }
 
             @Override
@@ -185,14 +244,14 @@ class Highscores extends GPanel {
     }
 
     private List<Speler> processNames(){
-        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(getParent());
 
         return window.getSpel().getSpelers();
     }
 
     private List<String> processScores(){
         List<String> strings = new ArrayList<>();
-        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(getParent());
         List<Speler> spelers;
         spelers = window.getSpel().getSpelers();
 

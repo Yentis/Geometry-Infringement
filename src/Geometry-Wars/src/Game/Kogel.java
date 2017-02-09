@@ -15,8 +15,8 @@ public class Kogel extends Sprite {
 
     //region Constructors
 
-    public Kogel(double x, double y, Point target, String image) {
-        super(x, y, target, image);
+    public Kogel(Spel spel, double x, double y, Point target, String image) {
+        super(spel, x, y, target, image);
         startingPoint = new Point();
         startingPoint.setLocation(x, y);
         isHit = false;

@@ -19,13 +19,7 @@ import javax.swing.*;
  *
  * @author Yentl
  */
-class Register extends GPanel {
-    //region Instance Variables
-
-    private Register panel = this;
-
-    //endregion
-
+class Register extends JPanel {
     //region Constructors
 
     Register() throws IOException, FontFormatException {
@@ -35,42 +29,78 @@ class Register extends GPanel {
     //endregion
 
     //region Behaviour
-
-    @Override
     public void initComponents() throws IOException, FontFormatException {
-        panel.removeAll();
+        removeAll();
+        setLayout(new GridBagLayout());
+        setOpaque(false);
 
-        JLabel label = new GLabel("Geometry Wars", 65f, 25, 25, 650, 100, true, Color.darkGray);
-        JButton register = new GButton("Register", 24f, 220,500,170,50);
-        JButton Back = new GButton("Back", 24f, 635,650, 170, 63);
-        JLabel message = new GLabel("", 24f, 220,125,350,50, false, Color.white);
-        JTextField username = new GInputField(480,190,200,50, register);
-        JLabel lblusername = new GLabel("Username", 24f, 220,190,150,50, false, Color.white);
-        JPasswordField password = new GPasswordField(480, 260, 200, 50, register);
-        JLabel lblpassword = new GLabel("Password", 24f, 220, 260, 150, 50, false, Color.white);
-        JPasswordField passwordconfirm = new GPasswordField(480,330,200,50, register);
-        JLabel lblpasswordconfirm = new GLabel("Repeat Password", 24f, 220, 330, 300, 50, false, Color.white);
-        JTextField email = new GInputField(480,400,200,50, register);
-        JLabel lblemail = new GLabel("E-mail", 24f, 220, 400, 150, 50, false, Color.white);
-        JButton Exit = new GButton("Quit", 24f, 820, 650, 170, 63);
+        GridLayout layout = new GridLayout(0, 2);
+        JPanel registerin = new JPanel(layout);
+        JLabel lblTitle = new GLabel("Geometry Wars", true, Color.black);
+        JButton register = new GButton("Register");
+        JButton Back = new GButton("Back");
+        JLabel message = new GLabel("", false, Color.white);
+        JTextField username = new GInputField(register, 10);
+        JLabel lblusername = new GLabel("Username: ", false, Color.white);
+        JPasswordField password = new GPasswordField(register, 10);
+        JLabel lblpassword = new GLabel("Password: ", false, Color.white);
+        JPasswordField passwordconfirm = new GPasswordField(register, 10);
+        JLabel lblpasswordconfirm = new GLabel("Repeat Password: ", false, Color.white);
+        JTextField email = new GInputField(register, 10);
+        JLabel lblemail = new GLabel("E-mail: ", false, Color.white);
+        JButton Exit = new GButton("Quit");
 
-        this.add(label);
-        this.add(register);
-        this.add(message);
-        this.add(username);
-        this.add(lblusername);
-        this.add(password);
-        this.add(lblpassword);
-        this.add(passwordconfirm);
-        this.add(lblpasswordconfirm);
-        this.add(email);
-        this.add(lblemail);
-        this.add(Exit);
-        this.add(Back);
+        lblTitle.setFont(new GFont(65f));
+        registerin.setOpaque(false);
+        layout.setHgap(10);
+        layout.setVgap(10);
+        GridBagConstraints c = new GridBagConstraints();
+
+        c.gridx = 0;
+        c.gridy = 0;
+        c.ipadx = 40;
+        c.ipady = 20;
+        c.weightx = 1;
+        c.weighty = 0.1;
+        c.gridwidth = 4;
+        c.insets = new Insets(20, 20, 0, 0);
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(lblTitle, c);
+
+        c.gridx = 1;
+        c.gridy = 1;
+        c.ipadx = 0;
+        c.ipady = 0;
+        c.gridwidth = 3;
+        c.insets = new Insets(0, 0, 300, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        add(message, c);
+
+        c.insets = new Insets(0, 0, 0, 0);
+        registerin.add(lblusername);
+        registerin.add(username);
+        registerin.add(lblpassword);
+        registerin.add(password);
+        registerin.add(lblpasswordconfirm);
+        registerin.add(passwordconfirm);
+        registerin.add(lblemail);
+        registerin.add(email);
+        registerin.add(register);
+        add(registerin, c);
+
+        c.gridx = 2;
+        c.gridy = 2;
+        c.weighty = 0.2;
+        c.gridwidth = 1;
+        c.insets = new Insets(0, 0, 20, 140);
+        c.anchor = GridBagConstraints.LAST_LINE_END;
+        add(Back, c);
+        c.insets = new Insets(0, 0, 20, 20);
+        add(Exit, c);
 
         //Action Listeners
         register.addActionListener(e -> {
-            GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+            GUI.Window window = (GUI.Window) SwingUtilities.getRoot(getParent());
 
             new Sound("click");
             if(Objects.equals(username.getText(), "")){
@@ -94,7 +124,7 @@ class Register extends GPanel {
                 if(Objects.equals(result, "")){
                     try {
                         window.getSpel().logIn(username.getText());
-                        panel.setVisible(false);
+                        setVisible(false);
                         window.getMainMenu().setVisible(true);
                     } catch (SQLException e1) {
                         e1.printStackTrace();
@@ -112,9 +142,9 @@ class Register extends GPanel {
 
         Back.addActionListener(evt -> {
             new Sound("click");
-            panel.setVisible(false);
-            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
-            window.getLogin().setVisible(true);
+            setVisible(false);
+            Window window = (Window) SwingUtilities.getRoot(getParent());
+            window.getCl().show(window.getCards(), "loginpanel");
         });
     }
 

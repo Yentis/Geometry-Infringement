@@ -20,8 +20,6 @@ public class Enemy extends Sprite {
     private int experience;
     private int score;
     private double speed;
-    private int SCREEN_WIDTH = 1024;
-    private int SCREEN_HEIGHT = 768;
     private Rectangle2D hpBar;
     private Rectangle2D maxHpBar;
     private int maxHp;
@@ -34,8 +32,8 @@ public class Enemy extends Sprite {
 
     //region Constructors
 
-    public Enemy(int nr, String naam, String beschrijving, int hp, int kracht, String image, int experience, int score, double speed) {
-        super(image);
+    public Enemy(Spel spel, int nr, String naam, String beschrijving, int hp, int kracht, String image, int experience, int score, double speed) {
+        super(spel, image);
         imageString = image;
         this.nr = nr;
         this.naam = naam;
@@ -50,12 +48,12 @@ public class Enemy extends Sprite {
         normal = new double[]{this.hp, this.kracht, this.speed, this.score};
         hard = new double[]{this.hp * 1.5, this.kracht * 1.5, this.speed * 1.25, this.score * 2};
 
-        locationX = randomX();
-        locationY = randomY();
+        locationX = random(getSCREEN_WIDTH());
+        locationY = random(getSCREEN_HEIGHT());
 
-        while ((locationX > 100 && locationY >100) && (locationX < SCREEN_WIDTH -100 && locationY < SCREEN_HEIGHT -100)){
-            locationX = randomX();
-            locationY = randomY();
+        while ((locationX > 100 && locationY >100) && (locationX < getSCREEN_WIDTH() -100 && locationY < getSCREEN_HEIGHT() -100)){
+            locationX = random(getSCREEN_WIDTH());
+            locationY = random(getSCREEN_HEIGHT());
         }
 
         currentLocation = new Point();
@@ -154,18 +152,6 @@ public class Enemy extends Sprite {
 
     public void loseHP(int amount) {
         this.hp -= amount;
-    }
-
-    private double randomX() {
-        Random randomGenerator = new Random();
-
-        return randomGenerator.nextInt(SCREEN_WIDTH);
-    }
-
-    private double randomY() {
-        Random randomGenerator = new Random();
-
-        return randomGenerator.nextInt(SCREEN_HEIGHT);
     }
 
     public void move(double velocityX, double velocityY) {

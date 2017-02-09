@@ -3,8 +3,8 @@ package GUI;
 import GComponents.*;
 import Game.Sound;
 import Game.Speler;
-import java.awt.Color;
-import java.awt.FontFormatException;
+
+import java.awt.*;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
@@ -17,7 +17,6 @@ import javax.swing.border.EmptyBorder;
 class Profile extends GPanel {
     //region Instance Variables
 
-    private Profile panel = this;
     private Speler speler;
     private boolean fromHighscore = false;
 
@@ -39,54 +38,100 @@ class Profile extends GPanel {
 
     @Override
     public void initComponents() throws IOException, FontFormatException {
-        panel.removeAll();
+        removeAll();
+        setLayout(new GridBagLayout());
+        setOpaque(false);
 
         //Make components
         //==================================================
 
-        JLabel Title = new GTitle(25, 25);
-        JLabel Background = new JLabel(new ImageIcon(((new ImageIcon("resources\\Media\\Background.png")).getImage().getScaledInstance(1920, 1080, java.awt.Image.SCALE_SMOOTH))));
-        JLabel Profile = new GPane(220, 160, 234, 300);
-        JButton Back = new GButton("Back", 24f, 320, 655, 140, 45);
-        JLabel ProfileInfo = new GPane(480, 160, 500, 540);
-        JLabel Username = new GLabel("  " + speler.getGebruikersnaam(), 24f, 245, 175, 180, 64, true, Color.BLACK);
-        JLabel ProfilePicture = new GIcon("ProfilePictures\\" + speler.getGebruikersnaam() + ".png", 245, 268, 180, 170, true);
-        JLabel Rank = new GLabel(speler.getRank(), 24f, 660, 210, 280, 62, false, Color.BLACK);
-        JLabel RankPicture = new GIcon("Badges\\" + speler.getRank() + ".png", 520, 175, 130, 130, false);
-        //JButton Achievements = new GButton("Achievements", 24f, 60, 982, 340, 67);
+        JPanel userandpic = new JPanel(new GridBagLayout());
+        JPanel stats = new JPanel(new GridBagLayout());
+        JLabel lblTitle = new GLabel("Geometry Wars", true, Color.black);
+        JButton Back = new GButton("Back");
+        JButton Exit = new GButton("Quit");
+        JLabel Profile = new GPane();
+        JLabel ProfileInfo = new GPane();
+        JLabel Username = new GLabel(speler.getGebruikersnaam(), true, Color.BLACK);
+        JLabel ProfilePicture = new GIcon("ProfilePictures\\" + speler.getGebruikersnaam() + ".png", 180, 170, false);
+        JLabel Rank = new GLabel(speler.getRank(), false, Color.WHITE);
+        JLabel RankPicture = new GIcon("Badges\\" + speler.getRank() + ".png", 130, 130, false);
 
+        lblTitle.setFont(new GFont(65f));
         ProfileInfo.setFont(new GFont(22));
         ProfileInfo.setForeground(Color.BLACK);
-        ProfileInfo.setBorder(new EmptyBorder(0, 10, 0, 0));
         ProfileInfo.setText("<html>Level: " + speler.getLevel() + "<br>Experience: " + speler.getExperience() + "<br>Rank: " + speler.getRank() + "<br>Nuggets: " + speler.getNuggets() + "<br>Golden Nuggets: " + speler.getGnuggets() + "<br>Highscore: " + speler.getHighscore() + "<html>");
+        userandpic.setOpaque(false);
+        stats.setOpaque(false);
+        GridBagConstraints c = new GridBagConstraints();
+
+        c.gridx = 0;
+        c.gridy = 0;
+        c.ipadx = 40;
+        c.ipady = 20;
+        c.weightx = 1;
+        c.weighty = 0.1;
+        c.gridwidth = 4;
+        c.insets = new Insets(20, 20, 0, 0);
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(lblTitle, c);
+
+        c.gridx = 1;
+        c.gridy = 1;
+        c.ipadx = 10;
+        c.ipady = 10;
+        c.gridwidth = 2;
+        c.insets = new Insets(0, 0, 100, 200);
+        c.anchor = GridBagConstraints.CENTER;
+        userandpic.add(Username, c);
+        c.ipadx = 0;
+        c.ipady = 0;
+        c.insets = new Insets(150, 0, 0, 200);
+        userandpic.add(ProfilePicture, c);
+        c.insets = new Insets(100, 0, 0, 200);
+        Profile.setBorder(new EmptyBorder(140, 110, 140, 110));
+        userandpic.add(Profile, c);
+        c.insets = new Insets(0, 0, 0, 0);
+        add(userandpic, c);
+
+        c.gridy = 1;
+        c.insets = new Insets(0, 400, 200, 0);
+        stats.add(RankPicture, c);
+        c.insets = new Insets(0, 650, 200, 0);
+        stats.add(Rank, c);
+        c.insets = new Insets(200, 520, 0, 0);
+        ProfileInfo.setBorder(new EmptyBorder(10, 10, 10, 10));
+        stats.add(ProfileInfo, c);
+        c.insets = new Insets(0, 0, 0, 0);
+        add(stats, c);
+
+        c.gridx = 2;
+        c.gridy = 2;
+        c.weighty = 0.2;
+        c.gridwidth = 2;
+        c.insets = new Insets(0, 0, 20, 140);
+        c.anchor = GridBagConstraints.LAST_LINE_END;
+        add(Back, c);
+        c.insets = new Insets(0, 0, 20, 20);
+        add(Exit, c);
 
         //Add Action Listener
         //==================================================
         Back.addActionListener(evt -> {
             new Sound("click");
-            panel.setVisible(false);
-            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
+            Window window = (Window) SwingUtilities.getRoot(getParent());
 
             if(fromHighscore){
-                window.getHighScores().setVisible(true);
+                window.getCl().show(window.getCards(), "highscorespanel");
             } else {
-                window.getMainMenu().setVisible(true);
+                window.getCl().show(window.getCards(), "mainmenupanel");
             }
         });
-        //==================================================
-        //Add Components
-        //==================================================
-        this.add(Title);
-        this.add(ProfilePicture);
-        this.add(Back);
-        //this.add(Achievements);
-        this.add(Username);
-        this.add(RankPicture);
-        this.add(Rank);
-        this.add(Profile);
-        this.add(ProfileInfo);
-        this.add(Background);
-        //==================================================
+
+        Exit.addActionListener(evt -> {
+            new Sound("click");
+            System.exit(0);
+        });
     }
 
     //endregion

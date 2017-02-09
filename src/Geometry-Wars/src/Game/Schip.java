@@ -3,6 +3,7 @@ package Game;
 import Game.InGameUpgrade.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.ImageObserver;
 import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.List;
@@ -17,7 +18,7 @@ public class Schip extends Sprite {
     private int hp = 100;
     private int maxhp = 100;
     private int kracht = 25;
-    private int score = 0;
+    private long score = 0;
     private int newscore = 0;
     private int combo = 0;
     private int level = 0;
@@ -39,6 +40,7 @@ public class Schip extends Sprite {
     private List<Integer> menuUpgrades = new ArrayList<>();
     private Movement move;
     private Drone drone;
+    private Spel spel;
     private boolean leveled = false;
 
     //IngameUpgrades
@@ -54,15 +56,16 @@ public class Schip extends Sprite {
 
     //region Constructors
 
-    public Schip(int nr, int hp, int kracht, String image, int keyLeft, int keyRight, int keyUp, int keyDown, double speed, List<Integer> upgrades) {
-        super(image);
+    public Schip(Spel spel, int nr, int hp, int kracht, String image, int keyLeft, int keyRight, int keyUp, int keyDown, double speed, List<Integer> upgrades) {
+        super(spel, image);
         imageString = image;
         currentLocation = new Point();
-        currentLocation.setLocation(700, 300);
+        currentLocation.setLocation(getSCREEN_WIDTH() / 2, getSCREEN_HEIGHT() / 2);
         locationX = currentLocation.getX();
         locationY = currentLocation.getY();
         currentAngle = 0;
         menuUpgrades = upgrades;
+        this.spel = spel;
         this.nr = nr;
         this.hp = hp;
         this.kracht = kracht;
@@ -152,7 +155,7 @@ public class Schip extends Sprite {
         return combo;
     }
 
-    public int getScore() {
+    public long getScore() {
         return score;
     }
 
@@ -297,7 +300,7 @@ public class Schip extends Sprite {
         score = adjustScore(score);
     }
 
-    private int adjustScore(int score) {
+    private int adjustScore(long score) {
         newscore += score;
         return newscore;
     }
@@ -315,8 +318,8 @@ public class Schip extends Sprite {
     }
 
     public void beweegSchip() {
-        locationX = limitToBorders(locationX, 75, 875);
-        locationY = limitToBorders(locationY, 125, 525);
+        locationX = limitToBorders(locationX, 50, getSCREEN_WIDTH() - (50 + getImage().getWidth(null)));
+        locationY = limitToBorders(locationY, 100, getSCREEN_HEIGHT() - (100 + getImage().getHeight(null)));
 
         currentLocation.setLocation(locationX += dx, locationY += dy);
     }
@@ -387,39 +390,25 @@ public class Schip extends Sprite {
         double kogelX = locationX + getWidth() / 2;
         double kogelY = locationY + getHeight() / 2;
 
-        addKogels(new Kogel(kogelX, kogelY, point, "resources/Media/kogel1.png"));
+        addKogels(new Kogel(spel, kogelX, kogelY, point, "resources/Media/kogel1.png"));
 
         if (menuUpgrades.contains(1)) {
             Point mousePointer2 = new Point((int)point.getX(), (int)point.getY() + 50);
             Point mousePointer3 = new Point((int)point.getX(), (int)point.getY() - 50);
 
-            addKogels(new Kogel(kogelX, kogelY, mousePointer2, "resources/Media/kogel1.png"));
-            addKogels(new Kogel(kogelX, kogelY, mousePointer3, "resources/Media/kogel1.png"));
+            addKogels(new Kogel(spel, kogelX, kogelY, mousePointer2, "resources/Media/kogel1.png"));
+            addKogels(new Kogel(spel, kogelX, kogelY, mousePointer3, "resources/Media/kogel1.png"));
         }
-    }
-
-    private int randomX() {
-        Random randomGenerator = new Random();
-        int SCREEN_WIDTH = 1024;
-
-        return randomGenerator.nextInt(SCREEN_WIDTH);
-    }
-
-    private int randomY() {
-        Random randomGenerator = new Random();
-        int SCREEN_HEIGHT = 768;
-
-        return randomGenerator.nextInt(SCREEN_HEIGHT);
     }
 
     private void randomFire() {
         double kogelX = locationX + getWidth() / 2;
         double kogelY = locationY + getHeight() / 2;
-        int kogelX2 = randomX();
-        int kogelY2 = randomY();
+        int kogelX2 = random(getSCREEN_WIDTH());
+        int kogelY2 = random(getSCREEN_HEIGHT());
         Point mousePointer2 = new Point(kogelX2, kogelY2);
 
-        addKogels(new Kogel(kogelX, kogelY, mousePointer2, "resources/Media/kogel1.png"));
+        addKogels(new Kogel(spel, kogelX, kogelY, mousePointer2, "resources/Media/kogel1.png"));
     }
 
     // Dit zorgt ervoor dat de angle binnen 360 blijft.

@@ -18,13 +18,7 @@ import javax.swing.*;
  *
  * @author Renzie
  */
-class Login extends GPanel{
-    //region Instance Variables
-    
-    private Login panel = this;
-
-    //endregion
-
+class Login extends JPanel{
     //region Constructors
 
     Login() throws IOException, FontFormatException {
@@ -34,30 +28,64 @@ class Login extends GPanel{
     //endregion
 
     //region Behaviour
-
-    @Override
     public void initComponents() throws IOException, FontFormatException {
-        panel.removeAll();
+        removeAll();
+        setLayout(new GridBagLayout());
+        setOpaque(false);
 
-        JLabel label = new GLabel("Geometry Wars", 65f, 25, 25, 650, 100, true, Color.darkGray);
-        JLabel message = new GLabel("", 24f, 220,120,600,50, false, Color.white);
-        JLabel lblusername = new GLabel("Username: ", 24f, 200,170,150,50, false, Color.white);
-        JLabel lblpassword = new GLabel("Password: ", 24f, 200,240,150,50, false, Color.white);
-        JButton register = new GButton("Register", 24f, 200,300,170,50);
-        JButton loginButton = new GButton("Login", 24f, 390,300,170,50);
-        JTextField username = new GInputField(360,170,200,50, loginButton);
-        JPasswordField password = new GPasswordField(360,240,200,50, loginButton);
-        JButton Exit = new GButton("Quit", 24f, 820, 650, 170, 63);
+        GridLayout layout = new GridLayout(0, 2);
+        JPanel login = new JPanel(layout);
+        JLabel lblTitle = new GLabel("Geometry Wars", true, Color.black);
+        JLabel message = new GLabel(" ", false, Color.white);
+        JLabel lblusername = new GLabel("Username: ", false, Color.white);
+        JLabel lblpassword = new GLabel("Password: ", false, Color.white);
+        JButton register = new GButton("Register");
+        JButton loginButton = new GButton("Login");
+        JTextField username = new GInputField(loginButton, 10);
+        JPasswordField password = new GPasswordField(loginButton, 10);
+        JButton Exit = new GButton("Quit");
+        login.setOpaque(false);
+        lblTitle.setFont(new GFont(65f));
+        layout.setHgap(10);
+        layout.setVgap(10);
+        GridBagConstraints c = new GridBagConstraints();
 
-        this.add(label);
-        this.add(lblusername);
-        this.add(lblpassword);
-        this.add(username);
-        this.add(password);
-        this.add(register);
-        this.add(loginButton);
-        this.add(Exit);
-        this.add(message);
+        c.gridx = 0;
+        c.gridy = 0;
+        c.ipadx = 40;
+        c.ipady = 20;
+        c.weightx = 1;
+        c.weighty = 0.1;
+        c.gridwidth = 4;
+        c.insets = new Insets(20, 20, 0, 0);
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(lblTitle, c);
+
+        c.gridx = 1;
+        c.gridy = 1;
+        c.ipadx = 0;
+        c.ipady = 0;
+        c.gridwidth = 2;
+        c.insets = new Insets(0, 0, 300, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        add(message, c);
+
+        c.insets = new Insets(0, 0, 0, 0);
+        login.add(lblusername);
+        login.add(username);
+        login.add(lblpassword);
+        login.add(password);
+        login.add(register);
+        login.add(loginButton);
+        add(login, c);
+
+        c.gridx = 2;
+        c.gridy = 2;
+        c.weighty = 0.2;
+        c.gridwidth = 1;
+        c.insets = new Insets(0, 0, 20, 20);
+        c.anchor = GridBagConstraints.LAST_LINE_END;
+        add(Exit, c);
 
         //Action Listeners
         Exit.addActionListener(evt -> {
@@ -67,9 +95,8 @@ class Login extends GPanel{
 
         register.addActionListener(evt -> {
             new Sound("click");
-            panel.setVisible(false);
-            Window window = (Window) SwingUtilities.getRoot(panel.getParent());
-            window.getRegister().setVisible(true);
+            Window window = (Window) SwingUtilities.getRoot(getParent());
+            window.getCl().show(window.getCards(), "registerpanel");
         });
 
         loginButton.addActionListener(e -> {
@@ -87,9 +114,9 @@ class Login extends GPanel{
                 }
 
                 if(Objects.equals(result, "")){
-                    panel.setVisible(false);
-                    Window window = (Window) SwingUtilities.getRoot(panel.getParent());
-                    window.getMainMenu().setVisible(true);
+                    message.setText(" ");
+                    Window window = (Window) SwingUtilities.getRoot(getParent());
+                    window.getCl().show(window.getCards(), "mainmenupanel");
                 } else if (result == null){
                     message.setText("Database connection failed.");
                 } else if (Objects.equals(result, "banned")){
@@ -98,12 +125,11 @@ class Login extends GPanel{
                     message.setText(result + " is not correct.");
                 }
             }
-            message.setVisible(true);
         });
     }
 
     private String checkAndCreate(String gebruikersnaam, char[] password) throws NoSuchAlgorithmException, UnsupportedEncodingException, SQLException {
-        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(getParent());
         String result;
 
         //hash

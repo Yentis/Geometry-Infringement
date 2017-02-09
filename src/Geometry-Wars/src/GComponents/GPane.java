@@ -14,4 +14,9 @@ public class GPane extends JLabel{
         this.setOpaque(true);
         this.setBackground(new Color(255,255,255,95));
     }
+
+    public GPane(){
+        this.setOpaque(true);
+        this.setBackground(new Color(255,255,255,95));
+    }
 }

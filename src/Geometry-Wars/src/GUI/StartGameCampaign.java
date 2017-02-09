@@ -15,29 +15,22 @@ import Game.Sound;
 /**
  * Created by Laurens Visser on 9/11/2016.
  */
-class StartGameCampaign extends GPanel {
-    //region Instance Variables
-
-    private StartGameCampaign panel = this;
-
-    //endregion
-
+class StartGameCampaign extends JPanel {
     //region Behaviour
-
-    @Override
     public void initComponents() throws IOException, FontFormatException {
-        panel.removeAll();
+        removeAll();
+        setLayout(new GridBagLayout());
+        setOpaque(false);
 
-        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(getParent());
         List<Integer> upgradeList = new ArrayList<>();
         List<Integer> droneList = new ArrayList<>();
-        JButton Start = new GButton("Start", 24f, 150,230,300,80);
-        //JButton NewCampaign = new GButton("New Campaign", 24f, 200,350,350,80);
-        //JButton ClearCampaign = new GButton("Clear Campaign", 24f, 250,470,350,80);
-        JButton Back = new GButton("Back", 24f, 820, 650, 170, 63);
-
-        JLabel label = new GLabel("Geometry Wars", 65f, 25, 25, 650, 100, true, Color.darkGray);
-        JLabel labelDrone = new GLabel("Choose drone: ", 18, 500,250,200,50,false, Color.white);
+        JPanel middlePanel = new JPanel(new GridBagLayout());
+        JButton Start = new GButton("Start");
+        JButton Back = new GButton("Back");
+        JButton Exit = new GButton("Quit");
+        JLabel lblTitle = new GLabel("Geometry Wars", true, Color.black);
+        JLabel labelDrone = new GLabel("Choose drone: ", false, Color.white);
 
         try {
             upgradeList = window.getSpel().checkUpgrades();
@@ -66,41 +59,75 @@ class StartGameCampaign extends GPanel {
         }
 
         JComboBox<String> chooseDrone = new JComboBox<>(drones);
+        lblTitle.setFont(new GFont(65f));
+        labelDrone.setFont(new GFont(18f));
+        chooseDrone.setFont(new GFont(18f));
         chooseDrone.setSelectedItem(window.getSpel().getSpeler().getActiveDrone());
+        middlePanel.setOpaque(false);
+        GridBagConstraints c = new GridBagConstraints();
 
-        //props
-        Start.setBackground(new Color(255,255,255,200));
-        //NewCampaign.setBackground(new Color(255,255,255,200));
-        //ClearCampaign.setBackground(new Color(255,255,255,200));
+        c.gridx = 0;
+        c.gridy = 0;
+        c.ipadx = 40;
+        c.ipady = 20;
+        c.weightx = 1;
+        c.weighty = 0.1;
+        c.gridwidth = 4;
+        c.insets = new Insets(20, 20, 0, 0);
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(lblTitle, c);
 
-        Back.setBackground(new Color(255,255,255,200));
-        chooseDrone.setFont(new GFont(18));
-        //Bounds
-        chooseDrone.setBounds(650,250,200,50);
+        c.ipadx = 0;
+        c.ipady = 0;
+        c.gridwidth = 1;
+        c.insets = new Insets(0, 0, 0, 80);
+        c.anchor = GridBagConstraints.LINE_START;
+        middlePanel.add(Start, c);
 
-        this.add(labelDrone);
-        this.add(chooseDrone);
-        this.add(Start);
-        //this.add(NewCampaign);
-        //this.add(ClearCampaign);
-        this.add(label);
-        this.add(Back);
+        c.gridx = 1;
+        c.insets = new Insets(0, 0, 0, 20);
+        c.anchor = GridBagConstraints.CENTER;
+        middlePanel.add(labelDrone, c);
+
+        c.gridx = 2;
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.LINE_END;
+        middlePanel.add(chooseDrone, c);
+
+        c.gridx = 1;
+        c.gridy = 1;
+        c.ipadx = 0;
+        c.ipady = 0;
+        c.gridwidth = 3;
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        add(middlePanel, c);
+
+        c.gridx = 2;
+        c.gridy = 2;
+        c.weighty = 0.2;
+        c.gridwidth = 2;
+        c.insets = new Insets(0, 0, 20, 20);
+        c.anchor = GridBagConstraints.LAST_LINE_END;
+        add(Exit, c);
+        c.insets = new Insets(0, 0, 20, 130);
+        add(Back, c);
 
         //Action listeners
         Back.addActionListener(evt -> {
             new Sound("click");
-            panel.setVisible(false);
-            window.getStartGame().setVisible(true);
+            window.getCl().show(window.getCards(), "startgamepanel");
         });
+
         Start.addActionListener(evt -> {
             new Sound("click");
-            panel.setVisible(false);
-            window.getInGame().setVisible(true);
+            window.getCl().show(window.getCards(), "ingamepanel");
             window.getInGame().getStartGame().setVisible(true);
             window.getInGame().getGameEnd().setVisible(false);
             window.getInGame().getPause().setVisible(false);
             window.getInGame().setCoop(false);
         });
+
         chooseDrone.addActionListener(evt -> {
             new Sound("click");
             if(chooseDrone.getSelectedItem() == "No drone"){
@@ -108,6 +135,11 @@ class StartGameCampaign extends GPanel {
             } else {
                 window.getSpel().getSpeler().setActiveDrone(chooseDrone.getSelectedItem().toString());
             }
+        });
+
+        Exit.addActionListener(evt -> {
+            new Sound("click");
+            System.exit(0);
         });
     }
 

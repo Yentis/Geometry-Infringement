@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+import java.util.Random;
 
 /**
  * Created by Yentl-PC on 10/11/2016.
@@ -20,16 +21,19 @@ public class Sprite {
     Point currentLocation;
     private Rectangle2D hitBox;
     boolean isHit;
-    private Schip hitter;
+    private int SCREEN_WIDTH;
+    private int SCREEN_HEIGHT;
 
     //endregion
 
     //region Constructors
 
-    Sprite(double x, double y, Point target, String image) {
+    Sprite(Spel spel, double x, double y, Point target, String image) {
         this.x = x;
         this.y = y;
         this.target = target;
+        SCREEN_WIDTH = spel.getScreenSize().width;
+        SCREEN_HEIGHT = spel.getScreenSize().height;
         ImageIcon ii = new ImageIcon(image);
         width = ii.getIconWidth();
         height = ii.getIconHeight();
@@ -39,7 +43,9 @@ public class Sprite {
         isHit = false;
     }
 
-    Sprite(String image) {
+    Sprite(Spel spel, String image) {
+        SCREEN_WIDTH = spel.getScreenSize().width;
+        SCREEN_HEIGHT = spel.getScreenSize().height;
         ImageIcon ii = new ImageIcon(image);
         width = ii.getIconWidth();
         height = ii.getIconHeight();
@@ -47,7 +53,9 @@ public class Sprite {
         isHit = false;
     }
 
-    Sprite(Point currentLocation){
+    Sprite(Spel spel, Point currentLocation){
+        SCREEN_WIDTH = spel.getScreenSize().width;
+        SCREEN_HEIGHT = spel.getScreenSize().height;
         this.currentLocation = currentLocation;
         //currentLocation.setLocation(currentLocation);
     }
@@ -55,6 +63,14 @@ public class Sprite {
     //endregion
 
     //region Getters & Setters
+
+    public int getSCREEN_WIDTH() {
+        return SCREEN_WIDTH;
+    }
+
+    public int getSCREEN_HEIGHT() {
+        return SCREEN_HEIGHT;
+    }
 
     public Point getCurrentLocation() {
         return currentLocation;
@@ -142,6 +158,12 @@ public class Sprite {
 
         //verplaats met de velocities
         move(velocityX, velocityY);
+    }
+
+    int random(int axis) {
+        Random randomGenerator = new Random();
+
+        return randomGenerator.nextInt(axis);
     }
 
     public boolean collisionDetect(Rectangle2D approachingTarget) {

@@ -3,12 +3,13 @@ package GUI;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import GComponents.*;
 import Game.Sound;
 import Game.Upgrade;
@@ -17,20 +18,15 @@ import Game.Speler;
 /**
  * @author Renzie
  */
-class Upgrades extends GPanel {
-    //region Instance Variables
-
-    private Upgrades panel = this;
-
-    //endregion
-
+class Upgrades extends JPanel {
     //region Behaviour
 
-    @Override
     public void initComponents() throws IOException, FontFormatException {
-        panel.removeAll();
+        removeAll();
+        setLayout(new GridBagLayout());
+        setOpaque(false);
 
-        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(panel.getParent());
+        GUI.Window window = (GUI.Window) SwingUtilities.getRoot(getParent());
         List<Integer> upgradeList = new ArrayList<>();
         Speler speler = window.getSpel().getSpeler();
 
@@ -43,49 +39,76 @@ class Upgrades extends GPanel {
         //Make components
         //==================================================
 
-        //JButton skins = new GButton("Skins", 18f, 205,690,133,35);
-        //JButton techTree = new GButton("Tech Tree", 18f, 365,690,287,35);
-        //JButton goldenNuggets = new GButton("Buy Golden Nuggets", 18f, 681,690,287,35);
-        JButton back = new GButton("Back", 18f, 52,690,133,35);
-        JLabel lblNuggets = new GLabel("Nuggets: ", 18f, 52,60,150,35, false, Color.white);
-        JLabel spaceShipPane = new GPane(52,138,287,535);
-        JLabel dronePane = new GPane(365,138,287,534);
-        JLabel firePane = new GPane(681,138,287,534);
-        JLabel spaceShip = new GLabel("Spaceship", 16f, 151,149,100,28, false, Color.black );
-        JLabel drone = new GLabel("Drone", 16f, 482,149,87,28, false, Color.black );
-        JLabel fire = new GLabel("Bullets", 16f, 807,149,87,28, false, Color.black );
-        JLabel upgradesPane = new GPane(365,10,287,98);
-        JLabel upgrades = new GLabel("Upgrades", 36f, 400,22,218,74, false, Color.black);
-        JLabel nuggets = new GLabel("" + speler.getNuggets(), 18f, 200,60,150,35, false, Color.white);
-        JLabel message = new GLabel("", 24f, 365, 82, 330, 74, false, Color.white);
-        JLabel upgradeShip1Info = new GLabel("?", 16f, 163,193,16,21, false, Color.black);
-        JButton upgradeShip1 = new GButton("", 16f,75,214,104,123);
-        JLabel upgradeShip1Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(1).getKost()), 16f, 75,143,104,123, false, Color.black);
-        JLabel upgradeShip2Info = new GLabel("?", 16f, 299,193,16,21, false, Color.black);
-        JButton upgradeShip2 = new GButton("", 16f,211,214,104,123);
-        JLabel upgradeShip2Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(2).getKost()), 16f, 211,143,104,123, false, Color.black);
-        //JButton upgradeShip3 = new GButton("",16f,75,368,104,123);
-        JLabel upgradeDrone1Info = new GLabel("?", 16f, 480,193,16,21, false, Color.black);
-        JButton upgradeDrone1 = new GButton("", 16f, 392,214,104,123);
-        JLabel upgradeDrone1Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(3).getKost()), 16f, 392,143,104,123, false, Color.black);
-        JLabel upgradeDrone2Info = new GLabel("?", 16f, 616,193,16,21, false, Color.black);
-        JButton upgradeDrone2 = new GButton("",16f, 528,214,104,123);
-        JLabel upgradeDrone2Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(4).getKost()), 16f, 528,143,104,123, false, Color.black);
-        JLabel upgradeDrone3Info = new GLabel("?", 16f, 480,346,16,21, false, Color.black);
-        JButton upgradeDrone3 = new GButton("",16f, 392,368,104,123);
-        JLabel upgradeDrone3Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(5).getKost()), 16f, 392,293,104,123, false, Color.black);
-        JLabel upgradeFire1Info = new GLabel("?", 16f, 792,193,16,21, false, Color.black);
-        JButton upgradeFire1 = new GButton("", 16f, 704,218,104,123);
-        JLabel upgradeFire1Price = new GLabel(String.valueOf(window.getSpel().getUpgrades().get(0).getKost()), 16f, 704,143,104,123, false, Color.black);
-        //JButton upgradeFire2 = new GButton("", 16f, 841,218,104,123);
-        //JButton upgradeFire3 = new GButton("", 16f, 704,368,104,123);
+        List<JButton> upgradeComponents = new ArrayList<>();
+        JButton back = new GButton("Back");
+        JButton Exit = new GButton("Quit");
+        JPanel middlePanel = new JPanel(new GridBagLayout());
+        JPanel shipPanel = new JPanel(new GridBagLayout());
+        JPanel dronePanel = new JPanel(new GridBagLayout());
+        JPanel firePanel = new JPanel(new GridBagLayout());
+        JLabel lblTitle = new GLabel("Upgrades", true, Color.black);
+        JLabel lblNuggets = new GLabel("Nuggets: ", false, Color.white);
+        JLabel spaceShipPane = new GPane();
+        JLabel dronePane = new GPane();
+        JLabel firePane = new GPane();
+        JLabel spaceShip = new GLabel("Spaceship", false, Color.black );
+        JLabel drone = new GLabel("Drone", false, Color.black );
+        JLabel fire = new GLabel("Bullets", false, Color.black );
+        JLabel nuggets = new GLabel("" + speler.getNuggets(), false, Color.white);
+        JLabel message = new GLabel(" ", false, Color.white);
+        JLabel upgradeFire1Info = new GLabel("?", false, Color.black);
+        JButton upgradeFire1 = new GButton("");
+        JLabel upgradeFire1Price = new GLabel("" + window.getSpel().getUpgrades().get(0).getKost(), false, Color.black);
+        JLabel upgradeShip1Info = new GLabel("?", false, Color.black);
+        JButton upgradeShip1 = new GButton("");
+        JLabel upgradeShip1Price = new GLabel("" + window.getSpel().getUpgrades().get(1).getKost(), false, Color.black);
+        JLabel upgradeShip2Info = new GLabel("?", false, Color.black);
+        JButton upgradeShip2 = new GButton("");
+        JLabel upgradeShip2Price = new GLabel("" + window.getSpel().getUpgrades().get(2).getKost(), false, Color.black);
+        JLabel upgradeDrone1Info = new GLabel("?", false, Color.black);
+        JButton upgradeDrone1 = new GButton("");
+        JLabel upgradeDrone1Price = new GLabel("" + window.getSpel().getUpgrades().get(3).getKost(), false, Color.black);
+        JLabel upgradeDrone2Info = new GLabel("?", false, Color.black);
+        JButton upgradeDrone2 = new GButton("");
+        JLabel upgradeDrone2Price = new GLabel("" + window.getSpel().getUpgrades().get(4).getKost(), false, Color.black);
+        JLabel upgradeDrone3Info = new GLabel("?", false, Color.black);
+        JButton upgradeDrone3 = new GButton("");
+        JLabel upgradeDrone3Price = new GLabel("" + window.getSpel().getUpgrades().get(5).getKost(), false, Color.black);
 
-        upgradeFire1.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(0).getFoto()));
-        upgradeShip1.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(1).getFoto()));
-        upgradeShip2.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(2).getFoto()));
-        upgradeDrone1.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(3).getFoto()));
-        upgradeDrone2.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(4).getFoto()));
-        upgradeDrone3.setIcon(new ImageIcon(window.getSpel().getUpgrades().get(5).getFoto()));
+        upgradeDrone3Price.setFont(new GFont(16f));
+        upgradeDrone3Info.setFont(new GFont(16f));
+        upgradeDrone2Price.setFont(new GFont(16f));
+        upgradeDrone2Info.setFont(new GFont(16f));
+        upgradeDrone1Price.setFont(new GFont(16f));
+        upgradeDrone1Info.setFont(new GFont(16f));
+        upgradeShip2Price.setFont(new GFont(16f));
+        upgradeFire1Price.setFont(new GFont(16f));
+        upgradeShip1Info.setFont(new GFont(16f));
+        upgradeShip1Price.setFont(new GFont(16f));
+        upgradeShip2Info.setFont(new GFont(16f));
+        lblTitle.setFont(new GFont(36f));
+        lblNuggets.setFont(new GFont(18f));
+        spaceShip.setFont(new GFont(16f));
+        drone.setFont(new GFont(16f));
+        fire.setFont(new GFont(16f));
+        nuggets.setFont(new GFont(18f));
+        upgradeFire1Info.setFont(new GFont(16f));
+        upgradeComponents.add(upgradeFire1);
+        upgradeComponents.add(upgradeShip1);
+        upgradeComponents.add(upgradeShip2);
+        upgradeComponents.add(upgradeDrone1);
+        upgradeComponents.add(upgradeDrone2);
+        upgradeComponents.add(upgradeDrone3);
+
+        int j = 0;
+        for (JButton b:upgradeComponents) {
+            b.setFont(new GFont(16f));
+            b.setIcon(new ImageIcon(new ImageIcon(window.getSpel().getUpgrades().get(j).getFoto()).getImage()));
+            b.setPreferredSize(new Dimension(104, 123));
+            j++;
+        }
+        shipPanel.setOpaque(false);
+        middlePanel.setOpaque(false);
 
         for (int i:upgradeList) {
             switch (i){
@@ -109,36 +132,170 @@ class Upgrades extends GPanel {
                     break;
             }
         }
+        GridBagConstraints c = new GridBagConstraints();
 
-        //region Matthias
-        /*
-            x for every column of upgrades
-            1: 75x
-            2: 211x
-            3: 392x
-            4: 528x
-            5: 704x
-            6: 841x
+        c.gridx = 0;
+        c.gridy = 0;
+        c.ipadx = 40;
+        c.ipady = 20;
+        c.weightx = 1;
+        c.weighty = 0.1;
+        c.gridwidth = 4;
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.PAGE_START;
+        add(lblTitle, c);
 
-            y for every row of upgrades
-            1: 218
-            2: 358
-            3: 504
+        c.ipadx = 0;
+        c.ipady = 0;
+        c.insets = new Insets(90, 0, 0, 0);
+        add(message, c);
 
-            width and height for buttons of upgrades
-            width: 104
-            height: 123
+        c.insets = new Insets(20, 0, 0, 700);
+        add(lblNuggets, c);
+        c.insets = new Insets(20, 0, 0, 450);
+        add(nuggets, c);
 
-         */
-        //endregion
+        //Ship
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.PAGE_START;
+        shipPanel.add(spaceShip, c);
+
+        //Upgrade1
+        c.insets = new Insets(60, 30, 0, 30);
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
+        shipPanel.add(upgradeShip1, c);
+
+        c.insets = new Insets(40, 30, 0, 0);
+        shipPanel.add(upgradeShip1Price, c);
+
+        c.insets = new Insets(40, 120, 0, 0);
+        shipPanel.add(upgradeShip1Info, c);
+
+        //Upgrade2
+        c.insets = new Insets(60, 30, 0, 30);
+        c.anchor = GridBagConstraints.FIRST_LINE_END;
+        shipPanel.add(upgradeShip2, c);
+
+        c.insets = new Insets(40, 0, 0, 75);
+        shipPanel.add(upgradeShip2Price, c);
+
+        c.insets = new Insets(40, 0, 0, 30);
+        shipPanel.add(upgradeShip2Info, c);
+
+        //Panel
+        c.insets = new Insets(0, 0, 0, 0);
+        spaceShipPane.setBorder(new EmptyBorder(200, 150, 200, 150));
+        shipPanel.add(spaceShipPane, c);
+
+        c.anchor = GridBagConstraints.LINE_START;
+        c.insets = new Insets(0, 700, 0, 0);
+        middlePanel.add(shipPanel, c);
+
+        //Drone
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.PAGE_START;
+        dronePanel.add(drone, c);
+
+        //Upgrade1
+        c.insets = new Insets(60, 30, 0, 30);
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
+        dronePanel.add(upgradeDrone1, c);
+
+        c.insets = new Insets(40, 30, 0, 0);
+        dronePanel.add(upgradeDrone1Price, c);
+
+        c.insets = new Insets(40, 120, 0, 0);
+        dronePanel.add(upgradeDrone1Info, c);
+
+        //Upgrade2
+        c.insets = new Insets(60, 30, 0, 30);
+        c.anchor = GridBagConstraints.FIRST_LINE_END;
+        dronePanel.add(upgradeDrone2, c);
+
+        c.insets = new Insets(40, 0, 0, 90);
+        dronePanel.add(upgradeDrone2Price, c);
+
+        c.insets = new Insets(40, 0, 0, 30);
+        dronePanel.add(upgradeDrone2Info, c);
+
+        //Upgrade3
+        c.insets = new Insets(140, 30, 0, 30);
+        c.anchor = GridBagConstraints.LINE_START;
+        dronePanel.add(upgradeDrone3, c);
+
+        c.insets = new Insets(0, 30, 0, 0);
+        dronePanel.add(upgradeDrone3Price, c);
+
+        c.insets = new Insets(0, 120, 0, 0);
+        dronePanel.add(upgradeDrone3Info, c);
+
+        c.ipady = 0;
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        dronePane.setBorder(new EmptyBorder(200, 150, 200, 150));
+        dronePanel.add(dronePane, c);
+
+        c.gridx = 1;
+        c.anchor = GridBagConstraints.CENTER;
+        c.insets = new Insets(0, 0, 0, 0);
+        middlePanel.add(dronePanel, c);
+
+        //Bullets
+        c.gridx = 0;
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.PAGE_START;
+        firePanel.add(fire, c);
+
+        //Upgrade1
+        c.insets = new Insets(60, 30, 0, 30);
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
+        firePanel.add(upgradeFire1, c);
+
+        c.insets = new Insets(40, 30, 0, 0);
+        firePanel.add(upgradeFire1Price, c);
+
+        c.insets = new Insets(40, 120, 0, 0);
+        firePanel.add(upgradeFire1Info, c);
+
+        c.insets = new Insets(0, 0, 0, 0);
+        c.anchor = GridBagConstraints.CENTER;
+        firePane.setBorder(new EmptyBorder(200, 150, 200, 150));
+        firePanel.add(firePane, c);
+
+        c.gridx = 2;
+        c.anchor = GridBagConstraints.LINE_END;
+        c.insets = new Insets(0, 0, 0, 700);
+        middlePanel.add(firePanel, c);
+
+        c.gridx = 1;
+        c.gridy = 1;
+        c.anchor = GridBagConstraints.CENTER;
+        c.insets = new Insets(0, 0, 0, 0);
+        add(middlePanel, c);
+
+        c.gridx = 2;
+        c.gridy = 2;
+        c.ipadx = 0;
+        c.ipady = 0;
+        c.gridwidth = 2;
+        c.insets = new Insets(0, 0, 20, 140);
+        c.anchor = GridBagConstraints.LAST_LINE_END;
+        add(back, c);
+
+        c.insets = new Insets(0, 0, 20, 20);
+        add(Exit, c);
 
         //Add Action Listener
         //==================================================
 
         back.addActionListener(evt -> {
             new Sound("click");
-            panel.setVisible(false);
-            window.getMainMenu().setVisible(true);
+            window.getCl().show(window.getCards(), "mainmenupanel");
+        });
+
+        Exit.addActionListener(evt -> {
+            new Sound("click");
+            System.exit(0);
         });
 
         upgradeFire1.addActionListener(evt -> {
@@ -172,7 +329,7 @@ class Upgrades extends GPanel {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                message.setText("");
+                message.setText(" ");
             }
         });
 
@@ -207,7 +364,7 @@ class Upgrades extends GPanel {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                message.setText("");
+                message.setText(" ");
             }
         });
 
@@ -242,7 +399,7 @@ class Upgrades extends GPanel {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                message.setText("");
+                message.setText(" ");
             }
         });
 
@@ -277,7 +434,7 @@ class Upgrades extends GPanel {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                message.setText("");
+                message.setText(" ");
             }
         });
 
@@ -312,7 +469,7 @@ class Upgrades extends GPanel {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                message.setText("");
+                message.setText(" ");
             }
         });
 
@@ -347,47 +504,9 @@ class Upgrades extends GPanel {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                message.setText("");
+                message.setText(" ");
             }
         });
-        //Add Components
-        //==================================================
-        panel.add(back);
-        panel.add(nuggets);
-        panel.add(lblNuggets);
-        panel.add(upgrades);
-        panel.add(upgradesPane);
-        //panel.add(skins);
-        //panel.add(techTree);
-        //panel.add(goldenNuggets);
-        panel.add(spaceShip);
-        panel.add(drone);
-        panel.add(fire);
-        panel.add(upgradeDrone1);
-        panel.add(upgradeDrone1Price);
-        panel.add(upgradeDrone1Info);
-        panel.add(upgradeDrone2);
-        panel.add(upgradeDrone2Price);
-        panel.add(upgradeDrone2Info);
-        panel.add(upgradeDrone3);
-        panel.add(upgradeDrone3Price);
-        panel.add(upgradeDrone3Info);
-        panel.add(upgradeShip1);
-        panel.add(upgradeShip1Price);
-        panel.add(upgradeShip1Info);
-        panel.add(upgradeShip2);
-        panel.add(upgradeShip2Price);
-        panel.add(upgradeShip2Info);
-        //panel.add(upgradeShip3);
-        panel.add(upgradeFire1);
-        panel.add(upgradeFire1Price);
-        panel.add(upgradeFire1Info);
-        //panel.add(upgradeFire2);
-        //panel.add(upgradeFire3);
-        panel.add(spaceShipPane);
-        panel.add(dronePane);
-        panel.add(firePane);
-        panel.add(message);
     }
 
     private void buyUpgrade(GUI.Window window, Upgrade upgrade, JLabel message, JButton button, JLabel nuggets){

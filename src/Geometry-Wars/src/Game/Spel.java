@@ -1,9 +1,11 @@
 package Game;
 
+import java.awt.*;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by Yentl-PC on 8/11/2016.
@@ -19,6 +21,7 @@ public class Spel implements Cloneable{
     private List<Enemy> enemies = new ArrayList<>();
     private String currentDifficulty = "Normal";
     private String currentControls = "Keyboard + Mouse";
+    private Dimension screenSize;
     private Connection myConn = null;
 
     //endregion
@@ -26,6 +29,7 @@ public class Spel implements Cloneable{
     //region Constructors
 
     public Spel() throws SQLException {
+        setScreenSize(Toolkit.getDefaultToolkit().getScreenSize());
         readDatabase();
         initDankabank();
         initEnemies();
@@ -34,6 +38,10 @@ public class Spel implements Cloneable{
     //endregion
 
     //region Getters & Setters
+
+    public Dimension getScreenSize() {
+        return screenSize;
+    }
 
     public List<Upgrade> getUpgrades() {
         return upgrades;
@@ -65,6 +73,10 @@ public class Spel implements Cloneable{
 
     public List<Speler> getSpelers() {
         return spelers;
+    }
+
+    public void setScreenSize(Dimension screenSize) {
+        this.screenSize = screenSize;
     }
 
     public void setCurrentControls(String currentControls) {
@@ -151,7 +163,7 @@ public class Spel implements Cloneable{
 
         i = 0;
         while (schip.next()){
-            schepen.add(i, new Schip(schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image"), 81, 68, 90, 83, schip.getInt("speed"), null));
+            schepen.add(i, new Schip(this, schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image"), 81, 68, 90, 83, schip.getInt("speed"), null));
             i++;
         }
         //endregion
@@ -161,7 +173,7 @@ public class Spel implements Cloneable{
 
         i = 0;
         while (drone.next()){
-            drones.add(i, new Drone(drone.getInt("nr") - 1, drone.getString("naam"), drone.getString("beschrijving"), drone.getInt("kracht"), drone.getString("uiterlijk"), drone.getInt("type")));
+            drones.add(i, new Drone(this, drone.getInt("nr") - 1, drone.getString("naam"), drone.getString("beschrijving"), drone.getInt("kracht"), drone.getString("uiterlijk"), drone.getInt("type")));
             i++;
         }
         //endregion
@@ -183,7 +195,7 @@ public class Spel implements Cloneable{
 
         int i = 0;
         while (enemy.next()){
-            enemies.add(i, new Enemy(enemy.getInt("nr") - 1, enemy.getString("naam"), enemy.getString("beschrijving"), enemy.getInt("hp"), enemy.getInt("kracht"), enemy.getString("uiterlijk"), enemy.getInt("experience"), enemy.getInt("score"), enemy.getInt("snelheid")));
+            enemies.add(i, new Enemy(this, enemy.getInt("nr") - 1, enemy.getString("naam"), enemy.getString("beschrijving"), enemy.getInt("hp"), enemy.getInt("kracht"), enemy.getString("uiterlijk"), enemy.getInt("experience"), enemy.getInt("score"), enemy.getInt("snelheid")));
             i++;
         }
     }

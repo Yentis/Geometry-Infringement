@@ -16,130 +16,43 @@ import Game.Sound;
 /**
  * Created by Laurens Visser on 9/11/2016.
  */
-class InGame extends GPanel implements ActionListener {
+class InGame extends JPanel implements ActionListener {
     //region Instance Variables
 
-    private InGame panel = this;
     private Sound backgroundMusic;
     private boolean coop;
 
     //GamePanel
     private GamePanel gamePanel;
 
-    private GButtonPause startGame = new GButtonPause("Click to Start", 35f, 280, 250, 400, 200);
+    private GButtonPause startGame = new GButtonPause("Click to Start");
     private Timer gameTimer;
 
     //PausePanel
-    private GButtonPause Continue = new GButtonPause("Continue", 24f, 185, 250, 275, 120);
-    private GButtonPause menuPauze = new GButtonPause("Main Menu", 24f, 530, 250, 275, 120);
+    private GButtonPause Continue = new GButtonPause("Continue");
+    private GButtonPause menuPauze = new GButtonPause("Main Menu");
 
-    private GButtonPause menuGameEnd = new GButtonPause("Main Menu", 24f, 365, 420, 275, 120);
-    private ImageIcon PauseImage = new ImageIcon("resources\\Media\\pause-128.png");
+    private GButtonPause menuGameEnd = new GButtonPause("Main Menu");
+    private ImageIcon PauseImage = new ImageIcon(((new ImageIcon("resources\\Media\\pause-128.png")).getImage()).getScaledInstance(60, 58, java.awt.Image.SCALE_SMOOTH));
     private JButton pauze = new JButton(PauseImage);
-    private GLabel gameOver = new GLabel("Oopsy daisy! u dead fam", 25f, 325, 260, 375, 120, true, Color.white);
-    private GLabel nuggetAmount = new GLabel("",  24f, 300, 120, 500, 120, false, Color.white);
-    private GPanel pause = new GPanel() {
-        @Override
-        public void initComponents() throws IOException, FontFormatException {
-            pause.removeAll();
-            Continue.setBackground(Color.black);
-            Continue.setForeground(Color.white);
-            Continue.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
-
-            menuPauze.setBackground(Color.black);
-            menuPauze.setForeground(Color.white);
-            menuPauze.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
-
-            pause.add(Continue);
-            pause.add(menuPauze);
-
-            menuPauze.addActionListener(evt -> {
-                new Sound("click");
-                gamePanel.setGameFinished(true);
-                backgroundMusic.stopMusic();
-                gameEnd.setVisible(false);
-                panel.setVisible(false);
-
-                Window window = (Window) SwingUtilities.getRoot(panel.getParent());
-                window.getMainMenu().setVisible(true);
-            });
-        }
-    };
-    private GPanel gameEnd = new GPanel() {
-        @Override
-        public void initComponents() throws IOException, FontFormatException {
-            gameEnd.removeAll();
-            JLabel pane = new JLabel();
-            pane.setOpaque(true);
-            pane.setBackground(new Color(255, 255, 255, 2));
-            pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
-            pane.setBounds(50, 125, 900, 500);
-
-            menuGameEnd.setBackground(Color.black);
-            menuGameEnd.setForeground(Color.white);
-            menuGameEnd.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
-
-            nuggetAmount.setText("You obtained: " + gamePanel.getScore() / 10000 + " nuggets!");
-            gameOver.setHorizontalAlignment(SwingConstants.CENTER);
-            nuggetAmount.setHorizontalAlignment(SwingConstants.CENTER);
-            gameOver.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
-            gameOver.setBackground(Color.black);
-            gameEnd.add(pane);
-            gameEnd.add(gameOver);
-            gameEnd.add(nuggetAmount);
-            gameEnd.add(menuGameEnd);
-
-            menuGameEnd.addActionListener(evt -> {
-                new Sound("click");
-                panel.setVisible(false);
-                Window window = (Window) SwingUtilities.getRoot(panel.getParent());
-                try {
-                    window.getSpel().submitScore(gamePanel.getScore());
-                    window.getSpel().logIn(window.getSpel().getSpeler().getGebruikersnaam());
-                    window.getSpel().checkRank(window.getSpel().getSpeler());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                window.getMainMenu().setVisible(true);
-            });
-        }
-    };
+    private GLabel gameOver = new GLabel("Oopsy daisy! u dead fam", true, Color.white);
+    private GLabel nuggetAmount = new GLabel("", false, Color.white);
+    private JPanel pause = new JPanel(new GridBagLayout());
+    private JPanel gameEnd = new JPanel(new GridBagLayout());
 
     //coop
-    private GLabel healthp2Background;
     private GLabel scorep2Background;
-    private GLabel schipLvlp2Background;
+    private GLabel shipLvlp2Background;
     private GLabel droneLvlp2Background;
-    private GLabel healthbarp2Background;
-    private GLabel dronebarp2Background;
-    private GLabel schipbarp2BackGround;
 
     //endregion
 
     //region Constructors
-
     InGame() throws IOException, FontFormatException {
         gamePanel = new GamePanel();
-        pause.initComponents();
-        //do not init gameEnd
+        initPause();
         initComponents();
-
-        this.add(pause);
-        pause.setVisible(false);
-
-        this.add(gameEnd);
-        gameEnd.setVisible(false);
-
-        this.add(gamePanel);
-        gamePanel.setOpaque(false);
-
-        startGame.setBackground(Color.black);
-        startGame.setForeground(Color.white);
-        startGame.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
-        //this.add(startGame);
-
         addActionListeners();
-        gamePanel.setVisible(false);
     }
 
     //endregion
@@ -154,104 +67,176 @@ class InGame extends GPanel implements ActionListener {
         return startGame;
     }
 
-    GPanel getGameEnd() {
+    JPanel getGameEnd() {
         return gameEnd;
     }
 
-    GPanel getPause() {
+    JPanel getPause() {
         return pause;
     }
 
     //endregion
 
     //region Behaviour
-
-    @Override
     public void initComponents() throws IOException, FontFormatException {
-        panel.removeAll();
+        removeAll();
+        setLayout(new GridBagLayout());
+        setOpaque(false);
+
         JLabel pane = new JLabel();
+        JPanel middlePanel = new JPanel(new GridBagLayout());
+        GLabel scorep1Background = new GLabel("Score:", false, Color.cyan);
+        GLabel shipLvlp1Background = new GLabel("Ship:", false, Color.green);
+        GLabel droneLvlp1Background = new GLabel("Drone:", false, new Color(155, 255, 204));
+        scorep2Background = new GLabel("Score:", false, Color.cyan);
+        shipLvlp2Background = new GLabel("Ship:", false, Color.green);
+        droneLvlp2Background = new GLabel("Drone:", false, new Color(155, 255, 204));
 
-        healthp2Background = new GLabel("Health:", 24, 595, 18, 169, 62, false, Color.black);
-        scorep2Background = new GLabel("Score:", 24, 580, 65, 169, 62, false, Color.cyan);
-        schipLvlp2Background = new GLabel("Ship:", 20, 600, 680, 222, 62, false, Color.green);
-        droneLvlp2Background = new GLabel("Drone:", 20, 800, 680, 222, 62, false, new Color(155, 255, 204));
-        healthbarp2Background = new GLabel("", 24, 570, 23, 410, 47, true, Color.black);
-        dronebarp2Background = new GLabel("", 20, 880, 695, 125, 35, true, Color.black);
-        schipbarp2BackGround = new GLabel("", 20, 660, 695, 125, 35, true, Color.black);
-
-        //region Single player
-
-        GLabel healthp1Background = new GLabel("Health:", 24, 40, 18, 169, 62, false, Color.black);
-        GLabel scorep1Background = new GLabel("Score:", 24, 25, 65, 169, 62, false, Color.cyan);
-        GLabel healthbarp1Background = new GLabel("", 24, 15, 23, 410, 47, true, Color.black);
-        healthbarp1Background.setBackground(new Color(255, 255, 255, 95));
-        this.add(healthbarp1Background);
-        this.add(scorep1Background);
-        this.add(healthp1Background);
-
-        //endregion
-
-        //region Coop
-
-        healthbarp2Background.setBackground(new Color(255, 255, 255, 95));
-        dronebarp2Background.setBackground(new Color(255, 255, 255, 95));
-        schipbarp2BackGround.setBackground(new Color(255, 255, 255, 95));
-
-        this.add(healthbarp2Background);
-        this.add(schipbarp2BackGround);
-        this.add(dronebarp2Background);
-        this.add(scorep2Background);
-        this.add(healthp2Background);
-        this.add(schipLvlp2Background);
-        this.add(droneLvlp2Background);
-
-        //endregion
-
-        pane.setOpaque(true);
+        gameOver.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.white));
+        gameOver.setBackground(Color.black);
         pane.setBackground(new Color(255, 255, 255, 2));
         pane.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
+        startGame.setFont(new GFont(35f));
+        shipLvlp1Background.setFont(new GFont(20f));
+        droneLvlp1Background.setFont(new GFont(20f));
+        shipLvlp2Background.setFont(new GFont(20f));
+        droneLvlp2Background.setFont(new GFont(20f));
+        middlePanel.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
+        middlePanel.setOpaque(false);
+        pause.setOpaque(false);
+        gameEnd.setOpaque(false);
+        pause.setVisible(false);
+        gameEnd.setVisible(false);
+        gamePanel.setOpaque(false);
+        gamePanel.setVisible(false);
+        GridBagConstraints c = new GridBagConstraints();
 
-        pauze.setOpaque(true);
-        pauze.setBackground(new Color(155, 255, 204, 200));
-        pauze.setBorder(null);
+        c.gridx = 1;
+        c.gridy = 0;
+        c.ipadx = 0;
+        c.weightx = 0.1;
+        c.weighty = 0.1;
+        c.gridwidth = 3;
+        c.insets = new Insets(10, 0, 0, 0);
+        c.anchor = GridBagConstraints.PAGE_START;
+        pauze.setBorderPainted(false);
+        pauze.setContentAreaFilled(false);
+        pauze.setFocusPainted(false);
+        pauze.setOpaque(false);
+        add(pauze, c);
 
-        //BOUNDS
-        pauze.setBounds(482, 23, 60, 58);
-        pane.setBounds(50, 125, 900, 500);
+        c.gridx = 0;
+        c.ipadx = 0;
+        c.insets = new Insets(60, 20, 0, 0);
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(scorep1Background, c);
 
-        //==================================================
+        c.gridx = 2;
+        c.insets = new Insets(60, 0, 0, 340);
+        c.anchor = GridBagConstraints.FIRST_LINE_END;
+        add(scorep2Background, c);
 
-        //Add Components
-        //==================================================
+        c.gridx = 0;
+        c.insets = new Insets(0, 20, 20, 0);
+        c.anchor = GridBagConstraints.LAST_LINE_START;
+        add(shipLvlp1Background, c);
 
-        this.add(pane);
-        this.add(pauze);
-        this.add(startGame);
+        c.insets = new Insets(0, 240, 20, 0);
+        add(droneLvlp1Background, c);
+
+        c.gridx = 2;
+        c.insets = new Insets(0, 0, 20, 400);
+        c.anchor = GridBagConstraints.LAST_LINE_END;
+        add(shipLvlp2Background, c);
+
+        c.insets = new Insets(0, 0, 20, 160);
+        add(droneLvlp2Background, c);
+
+        c.gridx = 0;
+        c.gridy = 0;
+        c.ipadx = 10;
+        c.ipady = 10;
+        c.gridwidth = 1;
+        c.insets = new Insets(0, 0, 0, 50);
+        c.anchor = GridBagConstraints.CENTER;
+        pause.add(Continue, c);
+
+        c.insets = new Insets(0, 0, 20, 0);
+        gameEnd.add(nuggetAmount, c);
+
+        c.gridy = 1;
+        gameEnd.add(gameOver, c);
+
+        c.gridy = 2;
+        c.insets = new Insets(0, 0, 0, 0);
+        gameEnd.add(menuGameEnd, c);
+
+        c.gridx = 1;
+        c.gridy = 0;
+        c.insets = new Insets(0, 50, 0, 0);
+        pause.add(menuPauze, c);
+
+        c.gridx = 0;
+        c.ipadx = 0;
+        c.ipady = 0;
+        c.insets = new Insets(0, 0, 0, 0);
+        middlePanel.add(pause, c);
+        middlePanel.add(gameEnd, c);
+        middlePanel.add(startGame, c);
+
+        c.gridx = 1;
+        c.ipadx = 0;
+        c.ipady = 0;
+        c.gridwidth = 3;
+        c.fill = GridBagConstraints.BOTH;
+        c.anchor = GridBagConstraints.CENTER;
+        c.insets = new Insets(100, 50, 100, 50);
+        add(middlePanel, c);
+
+        c.insets = new Insets(0, 0, 0, 0);
+        add(gamePanel, c);
 
         pauze.addActionListener(evt -> {
             new Sound("click");
             pauseGameLoop();
         });
+
+        menuGameEnd.addActionListener(evt -> {
+            new Sound("click");
+            Window window = (Window) SwingUtilities.getRoot(getParent());
+            try {
+                window.getSpel().submitScore(gamePanel.getScore());
+                window.getSpel().logIn(window.getSpel().getSpeler().getGebruikersnaam());
+                window.getSpel().checkRank(window.getSpel().getSpeler());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            window.getCl().show(window.getCards(), "mainmenupanel");
+        });
+    }
+
+    private void initPause(){
+        menuPauze.addActionListener(evt -> {
+            new Sound("click");
+            gamePanel.setGameFinished(true);
+            backgroundMusic.stopMusic();
+            gameEnd.setVisible(false);
+
+            Window window = (Window) SwingUtilities.getRoot(getParent());
+            window.getCl().show(window.getCards(), "mainmenupanel");
+        });
     }
 
     private void showCoopUI(){
-        healthp2Background.setVisible(true);
         scorep2Background.setVisible(true);
-        schipLvlp2Background.setVisible(true);
+        shipLvlp2Background.setVisible(true);
         droneLvlp2Background.setVisible(true);
-        healthbarp2Background.setVisible(true);
-        dronebarp2Background.setVisible(true);
-        schipbarp2BackGround.setVisible(true);
     }
 
     private void hideCoopUI(){
-        healthp2Background.setVisible(false);
         scorep2Background.setVisible(false);
-        schipLvlp2Background.setVisible(false);
+        shipLvlp2Background.setVisible(false);
         droneLvlp2Background.setVisible(false);
-        healthbarp2Background.setVisible(false);
-        dronebarp2Background.setVisible(false);
-        schipbarp2BackGround.setVisible(false);
     }
 
     private void initGamePanel() throws SQLException {
@@ -268,9 +253,9 @@ class InGame extends GPanel implements ActionListener {
     }
 
     private void addActionListeners() {
-        menuPauze.addActionListener(panel);
-        startGame.addActionListener(panel);
-        Continue.addActionListener(panel);
+        menuPauze.addActionListener(this);
+        startGame.addActionListener(this);
+        Continue.addActionListener(this);
     }
 
     private void checkGameFinished() {
@@ -296,11 +281,7 @@ class InGame extends GPanel implements ActionListener {
     }
 
     private void initEndGamePanel() {
-        try {
-            gameEnd.initComponents();
-        } catch (IOException | FontFormatException e) {
-            e.printStackTrace();
-        }
+        nuggetAmount.setText("You obtained: " + gamePanel.getScore() / 10000 + " nuggets!");
         gameEnd.setVisible(true);
         gamePanel.setFocusable(false);
     }
