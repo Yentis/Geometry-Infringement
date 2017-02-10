@@ -205,8 +205,12 @@ class InGame extends JPanel implements ActionListener {
         menuGameEnd.addActionListener(evt -> {
             new Sound("click");
             Window window = (Window) SwingUtilities.getRoot(getParent());
+            int score = gamePanel.getScore();
             try {
-                window.getSpel().submitScore(gamePanel.getScore());
+                if(coop){
+                    score += gamePanel.getScorep2();
+                }
+                window.getSpel().submitScore(score);
                 window.getSpel().logIn(window.getSpel().getSpeler().getGebruikersnaam());
                 window.getSpel().checkRank(window.getSpel().getSpeler());
             } catch (SQLException e) {
@@ -282,7 +286,11 @@ class InGame extends JPanel implements ActionListener {
     }
 
     private void initEndGamePanel() {
-        nuggetAmount.setText("You obtained: " + gamePanel.getScore() / 10000 + " nuggets!");
+        if(coop){
+            nuggetAmount.setText("You obtained: " + (gamePanel.getScore() + gamePanel.getScorep2()) / 10000 + " nuggets!");
+        } else {
+            nuggetAmount.setText("You obtained: " + gamePanel.getScore() / 10000 + " nuggets!");
+        }
         gameEnd.setVisible(true);
         gamePanel.setFocusable(false);
     }

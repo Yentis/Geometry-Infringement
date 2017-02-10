@@ -4,10 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import net.java.games.input.Component;
 import net.java.games.input.Component.Identifier;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
 
+import javax.sound.sampled.Control;
 import javax.swing.*;
 
 /**
@@ -52,6 +54,7 @@ public class Controllers implements Runnable {
                     controller.getType() == Controller.Type.WHEEL ||
                     controller.getType() == Controller.Type.FINGERSTICK
                 ) {
+                System.out.println(controller.getType());
                 // Add new controller to the list of all controllers.
                 foundControllers.add(controller);
             }
@@ -61,11 +64,7 @@ public class Controllers implements Runnable {
     private void startShowingControllerData(int index){
         while(true){
             // Currently selected controller.
-            try {
-                foundControllers.get(index);
-            } catch (IndexOutOfBoundsException e){
-                index = 0;
-            }
+            foundControllers.get(index);
 
             Controller controller = foundControllers.get(index);
 
@@ -73,19 +72,36 @@ public class Controllers implements Runnable {
                 break;
             }
 
-            // X axis and Y axis
+            Controller.Type type = controller.getType();
+
+            // X axis, Y axis
             final int[] rxAxis = {getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData())};
             final int[] ryAxis = {getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData())};
+            int[] zAxis = null;
+            int[] rzAxis = null;
+            if(type == Controller.Type.STICK){
+                zAxis = new int[]{getAxisValueInPercentage(controller.getComponent(Identifier.Axis.Z).getPollData())};
+                rzAxis = new int[]{getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RZ).getPollData())};
+            }
 
             if (mousePressedTimer == null){
+                int[] finalZAxis = zAxis;
+                int[] finalRzAxis = rzAxis;
                 mousePressedTimer = new Timer(150, e -> {
                     if(controller.getComponent(Identifier.Button._5).getPollData() != 0.0f){
 
-                        rxAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData());
-                        ryAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData());
+                        if(type == Controller.Type.STICK){
+                            finalZAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.Z).getPollData());
+                            finalRzAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RZ).getPollData());
 
+                            schip.controllerAim(finalZAxis[0] * (schip.getSCREEN_WIDTH() / 100), finalRzAxis[0] * (schip.getSCREEN_HEIGHT() / 100));
+                        } else {
+                            rxAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData());
+                            ryAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData());
 
-                        schip.controllerAim(rxAxis[0] * (schip.getSCREEN_WIDTH() / 100), ryAxis[0] * (schip.getSCREEN_HEIGHT() / 100));
+                            schip.controllerAim(rxAxis[0] * (schip.getSCREEN_WIDTH() / 100), ryAxis[0] * (schip.getSCREEN_HEIGHT() / 100));
+                        }
+
                     }
                 });
             }else{

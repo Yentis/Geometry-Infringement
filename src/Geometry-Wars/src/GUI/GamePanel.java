@@ -81,6 +81,10 @@ class GamePanel extends JPanel {
 
     //region Getters & Setters
 
+    int getScorep2() {
+        return Integer.parseInt(scorep2.getText());
+    }
+
     int getScore() {
         return Integer.parseInt(score.getText());
     }
@@ -117,6 +121,7 @@ class GamePanel extends JPanel {
         setInvulnerabilityTimer(schip);
         if (coop && schipp2 != null && schipp2.getDrone() != null){
             setUpShootingDroneTimer(schipp2.getDrone());
+        } else if (coop && schipp2 != null){
             setSlowerEnemiesTimer(schipp2);
             setInvulnerabilityTimer(schipp2);
         }
@@ -321,9 +326,6 @@ class GamePanel extends JPanel {
 
         schip = new Schip(window.getSpel(), dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
 
-        setSlowerEnemiesTimer(schip);
-        setInvulnerabilityTimer(schip);
-
         if (Objects.equals(window.getSpel().getCurrentControls(), "Keyboard + Mouse")) {
             addKeyListener(new TAdapter());
             MouseAdapter adapter = new MAdapter();
@@ -350,10 +352,11 @@ class GamePanel extends JPanel {
             showCoopUI();
             schipp2 = new Schip(window.getSpel(), dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
 
-            setSlowerEnemiesTimer(schipp2);
-            setInvulnerabilityTimer(schipp2);
-
-            new Controllers(schipp2, 1);
+            if(Objects.equals(window.getSpel().getCurrentControls(), "Controller")){
+                new Controllers(schipp2, 1);
+            } else {
+                new Controllers(schipp2, 0);
+            }
 
             if (dummydr != null) {
                 dronep2 = new Drone(window.getSpel(), dummydr.getNr(), dummydr.getNaam(), dummydr.getBeschrijving(), dummydr.getKracht(), dummydr.getImageString(), dummydr.getType());
@@ -399,7 +402,7 @@ class GamePanel extends JPanel {
         if (coop && schipp2 != null) {
             drawBullets(g, schipp2.getKogels(), schipp2);
             drawShip(g, schipp2);
-            drawBuffs(g, schipp2, 955);
+            drawBuffs(g, schipp2, schipp2.getSCREEN_WIDTH() - 54);
         }
         if (coop && schipp2 != null && schipp2.getDrone() != null) {
             drawBullets(g, schipp2.getDrone().getKogels(), schipp2);

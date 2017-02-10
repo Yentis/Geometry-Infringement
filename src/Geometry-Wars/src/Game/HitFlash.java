@@ -13,8 +13,9 @@ public class HitFlash implements Runnable {
 
     @Override
     public void run() {
-        InputStream image = getClass().getResourceAsStream("/Media/schip1.png");
-        InputStream imagehit = getClass().getResourceAsStream("/Media/schip1-hit.png");
+        InputStream image = getClass().getResourceAsStream(schip.getImageString());
+        String hit = (schip.getImageString().substring(0, schip.getImageString().length() - 4)) + "-hit.png";
+        InputStream imagehit = getClass().getResourceAsStream(hit);
 
         try {
             ImageIcon ii = new ImageIcon(ImageIO.read(imagehit));

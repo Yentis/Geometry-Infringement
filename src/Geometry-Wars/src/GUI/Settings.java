@@ -71,6 +71,7 @@ class Settings extends JPanel {
         Dimension res = window.getSpel().getScreenSize();
         resolution.setSelectedItem((int)(res.getWidth()) + "x" + (int)(res.getHeight()));
         windowed.setSelected(window.getSpel().isWindowed());
+        input.setSelectedItem(window.getSpel().getCurrentControls());
         input.setFont(new GFont(18));
         middlePanel.setOpaque(false);
         controlPanel.setOpaque(false);
