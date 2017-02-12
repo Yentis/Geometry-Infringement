@@ -54,7 +54,6 @@ public class Controllers implements Runnable {
                     controller.getType() == Controller.Type.WHEEL ||
                     controller.getType() == Controller.Type.FINGERSTICK
                 ) {
-                System.out.println(controller.getType());
                 // Add new controller to the list of all controllers.
                 foundControllers.add(controller);
             }

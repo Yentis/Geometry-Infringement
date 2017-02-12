@@ -350,6 +350,7 @@ class GamePanel extends JPanel {
         if (coop) {
             //set layouts
             showCoopUI();
+            dummy = window.getSpel().getSchepen().get(1);
             schipp2 = new Schip(window.getSpel(), dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
 
             if(Objects.equals(window.getSpel().getCurrentControls(), "Controller")){
@@ -703,10 +704,10 @@ class GamePanel extends JPanel {
     }
 
     private double updateHealthBar(Schip schip) {
-        double healthBarWidth = 0;
+        float healthBarWidth = 0;
 
         if (schip.getHp() >= 0) {
-            double ratioHP = 100 / schip.getMaxhp();
+            float ratioHP = 100 / schip.getMaxhp();
             healthBarWidth = ratioHP * schip.getHp();
         }
         return healthBarWidth;

@@ -15,9 +15,9 @@ public class Schip extends Sprite {
     //region Instance Variables
 
     private int nr;
-    private int hp = 100;
-    private int maxhp = 100;
-    private int kracht = 25;
+    private float hp;
+    private float maxhp;
+    private int kracht;
     private long score = 0;
     private int newscore = 0;
     private int combo = 0;
@@ -56,7 +56,7 @@ public class Schip extends Sprite {
 
     //region Constructors
 
-    public Schip(Spel spel, int nr, int hp, int kracht, String image, int keyLeft, int keyRight, int keyUp, int keyDown, double speed, List<Integer> upgrades) {
+    public Schip(Spel spel, int nr, float hp, int kracht, String image, int keyLeft, int keyRight, int keyUp, int keyDown, double speed, List<Integer> upgrades) {
         super(spel, image);
         imageString = image;
         currentLocation = new Point();
@@ -65,6 +65,7 @@ public class Schip extends Sprite {
         locationY = currentLocation.getY();
         currentAngle = 0;
         menuUpgrades = upgrades;
+        this.maxhp = hp;
         this.spel = spel;
         this.nr = nr;
         this.hp = hp;
@@ -159,7 +160,7 @@ public class Schip extends Sprite {
         return score;
     }
 
-    public int getHp() {
+    public float getHp() {
         return hp;
     }
 
@@ -167,7 +168,7 @@ public class Schip extends Sprite {
         return speed;
     }
 
-    public int getMaxhp() {
+    public float getMaxhp() {
         return maxhp;
     }
 
