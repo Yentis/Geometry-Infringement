@@ -390,8 +390,10 @@ public class Schip extends Sprite {
         addKogels(new Kogel(spel, kogelX, kogelY, point, "/Media/kogel1.png"));
 
         if (menuUpgrades.contains(1)) {
-            Point mousePointer2 = new Point((int)point.getX(), (int)point.getY() + 50);
-            Point mousePointer3 = new Point((int)point.getX(), (int)point.getY() - 50);
+            int deviation = 50;
+
+            Point mousePointer2 = new Point((int)point.getX(), (int)point.getY() + deviation);
+            Point mousePointer3 = new Point((int)point.getX(), (int)point.getY() - deviation);
 
             addKogels(new Kogel(spel, kogelX, kogelY, mousePointer2, "/Media/kogel1.png"));
             addKogels(new Kogel(spel, kogelX, kogelY, mousePointer3, "/Media/kogel1.png"));
@@ -401,9 +403,7 @@ public class Schip extends Sprite {
     private void randomFire() {
         double kogelX = getCurrentLocation().getX() + getWidth() / 2;
         double kogelY = getCurrentLocation().getY() + getHeight() / 2;
-        int kogelX2 = random(getSCREEN_WIDTH());
-        int kogelY2 = random(getSCREEN_HEIGHT());
-        Point mousePointer2 = new Point(kogelX2, kogelY2);
+        Point mousePointer2 = new Point(random(getSCREEN_WIDTH()), random(getSCREEN_HEIGHT()));
 
         addKogels(new Kogel(spel, kogelX, kogelY, mousePointer2, "/Media/kogel1.png"));
     }

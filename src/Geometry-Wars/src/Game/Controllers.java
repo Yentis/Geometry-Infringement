@@ -115,8 +115,8 @@ public class Controllers implements Runnable {
                     rxAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData());
                     ryAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData());
 
-                    double locationX = (schip.getCurrentLocation().getX() + schip.getWidth() / 2) + (rxAxis[0] - 50);
-                    double locationY = (schip.getCurrentLocation().getY() + schip.getHeight() / 2) + (ryAxis[0] - 50);
+                    double locationX = (schip.getCurrentLocation().getX() + schip.getWidth() / 2) + ((rxAxis[0] * 8) - 400);
+                    double locationY = (schip.getCurrentLocation().getY() + schip.getHeight() / 2) + ((ryAxis[0] * 8) - 400);
 
                     schip.controllerAim(locationX, locationY);
                 }
