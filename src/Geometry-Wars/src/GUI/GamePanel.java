@@ -324,7 +324,7 @@ class GamePanel extends JPanel {
         Schip dummy = window.getSpel().getSchepen().get(0);
         Drone dummydr;
 
-        schip = new Schip(window.getSpel(), dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
+        schip = new Schip(window.getSpel(), dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getSpeed(), upgrades);
 
         if (Objects.equals(window.getSpel().getCurrentControls(), "Keyboard + Mouse")) {
             addKeyListener(new TAdapter());
@@ -351,7 +351,7 @@ class GamePanel extends JPanel {
             //set layouts
             showCoopUI();
             dummy = window.getSpel().getSchepen().get(1);
-            schipp2 = new Schip(window.getSpel(), dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getSpeed(), upgrades);
+            schipp2 = new Schip(window.getSpel(), dummy.getNr(), dummy.getHp(), dummy.getKracht(), dummy.getImageString(), dummy.getKeyUp(), dummy.getKeyDown(), dummy.getKeyLeft(), dummy.getKeyRight(), dummy.getSpeed(), upgrades);
 
             if(Objects.equals(window.getSpel().getCurrentControls(), "Controller")){
                 new Controllers(schipp2, 1);

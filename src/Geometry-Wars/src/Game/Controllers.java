@@ -80,13 +80,9 @@ public class Controllers implements Runnable {
     private void movement(Controller controller){
         int xAxis = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.X).getPollData());
         int yAxis = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.Y).getPollData());
-        int moveleft = 81;
-        int moveright = 68;
-        int moveup = 90;
-        int movedown = 83;
 
-        moveDirection(xAxis, moveleft, moveright);
-        moveDirection(yAxis, moveup, movedown);
+        moveDirection(xAxis, schip.getKeyLeft(), schip.getKeyRight());
+        moveDirection(yAxis, schip.getKeyUp(), schip.getKeyDown());
     }
 
     private void moveDirection(int axis, int direction1, int direction2){

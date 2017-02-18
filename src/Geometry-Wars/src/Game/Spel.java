@@ -191,7 +191,6 @@ public class Spel implements Cloneable{
 
         i = 0;
         while (schip.next()){
-            System.out.println(keys.get(0));
             schepen.add(i, new Schip(this, schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image"), parseKey(keys.get(0)), parseKey(keys.get(1)), parseKey(keys.get(2)), parseKey(keys.get(3)), schip.getInt("speed"), null));
             i++;
         }

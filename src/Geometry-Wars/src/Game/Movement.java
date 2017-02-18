@@ -21,7 +21,7 @@ public class Movement implements KeyListener {
 
     //region Constructors
 
-    Movement(Schip schip, int keyLeft, int keyRight, int keyUp, int keyDown) {
+    Movement(Schip schip, int keyUp, int keyDown, int keyLeft, int keyRight) {
         this.schip = schip;
         setTimer();
         this.keyLeft = keyLeft;
