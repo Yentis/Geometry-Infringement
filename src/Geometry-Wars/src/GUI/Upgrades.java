@@ -525,7 +525,7 @@ class Upgrades extends JPanel {
         try {
             window.getSpel().initDankabank();
             window.getSpel().logIn(window.getSpel().getSpeler().getGebruikersnaam());
-        } catch (SQLException e) {
+        } catch (SQLException | IllegalAccessException | NoSuchFieldException e) {
             e.printStackTrace();
         }
         nuggets.setText(String.valueOf(window.getSpel().getSpeler().getNuggets()));

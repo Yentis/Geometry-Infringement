@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-
 /**
  * Created by Renzie on 26/11/2016.
  */
@@ -12,7 +11,6 @@ public class Movement implements KeyListener {
     //region Instance Variables
 
     private Schip schip;
-    private Timer startMoves;
     private double targetAngle;
     private int keyLeft;
     private int keyRight;
@@ -37,7 +35,7 @@ public class Movement implements KeyListener {
     //region Behaviour
 
     private void setTimer() {
-        startMoves = new Timer(20, e -> rotate(10, targetAngle));
+        Timer startMoves = new Timer(20, e -> rotate(10, targetAngle));
         startMoves.start();
     }
 

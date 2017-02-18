@@ -168,7 +168,7 @@ public class Window extends JFrame {
             cards.add(upgrades, "upgradespanel");
             cards.add(settings, "settingspanel");
             cards.add(highscores, "highscorespanel");
-        } catch (SQLException e) {
+        } catch (SQLException | IllegalAccessException | NoSuchFieldException e) {
             e.printStackTrace();
         }
     }

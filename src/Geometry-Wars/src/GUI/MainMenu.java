@@ -107,7 +107,7 @@ class MainMenu extends JPanel {
                 window.getSpel().logIn(window.getSpel().getSpeler().getGebruikersnaam());
                 window.getSpel().initDankabank();
                 window.getUpgrades().initComponents();
-            } catch (IOException | FontFormatException | SQLException e) {
+            } catch (IOException | FontFormatException | SQLException | IllegalAccessException | NoSuchFieldException e) {
                 e.printStackTrace();
             }
             window.getCl().show(window.getCards(), "upgradespanel");

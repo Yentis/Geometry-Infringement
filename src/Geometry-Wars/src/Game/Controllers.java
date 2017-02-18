@@ -1,15 +1,9 @@
 package Game;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
-import net.java.games.input.Component;
 import net.java.games.input.Component.Identifier;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
-
-import javax.sound.sampled.Control;
 import javax.swing.*;
 
 /**
@@ -71,68 +65,8 @@ public class Controllers implements Runnable {
                 break;
             }
 
-            Controller.Type type = controller.getType();
-
-            // X axis, Y axis
-            final int[] rxAxis = {getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData())};
-            final int[] ryAxis = {getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData())};
-            int[] zAxis = null;
-            int[] rzAxis = null;
-            if(type == Controller.Type.STICK){
-                zAxis = new int[]{getAxisValueInPercentage(controller.getComponent(Identifier.Axis.Z).getPollData())};
-                rzAxis = new int[]{getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RZ).getPollData())};
-            }
-
-            if (mousePressedTimer == null){
-                int[] finalZAxis = zAxis;
-                int[] finalRzAxis = rzAxis;
-                mousePressedTimer = new Timer(150, e -> {
-                    if(controller.getComponent(Identifier.Button._5).getPollData() != 0.0f){
-
-                        if(type == Controller.Type.STICK){
-                            finalZAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.Z).getPollData());
-                            finalRzAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RZ).getPollData());
-
-                            schip.controllerAim(finalZAxis[0] * (schip.getSCREEN_WIDTH() / 100), finalRzAxis[0] * (schip.getSCREEN_HEIGHT() / 100));
-                        } else {
-                            rxAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData());
-                            ryAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData());
-
-                            schip.controllerAim(rxAxis[0] * (schip.getSCREEN_WIDTH() / 100), ryAxis[0] * (schip.getSCREEN_HEIGHT() / 100));
-                        }
-
-                    }
-                });
-            }else{
-                mousePressedTimer.start();
-            }
-
-            int xAxis = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.X).getPollData());
-            int yAxis = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.Y).getPollData());
-
-            // X axis
-            if(xAxis <= 35){
-                //Pointing left
-                schip.controllerPressed(81);
-            } else if (xAxis >= 65){
-                //Pointing right
-                schip.controllerPressed(68);
-            } else {
-                schip.controllerReleased(81);
-                schip.controllerReleased(68);
-            }
-
-            // Y axis
-            if(yAxis <= 35){
-                //Pointing up
-                schip.controllerPressed(90);
-            } else if (yAxis >= 65){
-                //Pointing down
-                schip.controllerPressed(83);
-            } else {
-                schip.controllerReleased(90);
-                schip.controllerReleased(83);
-            }
+            aimAndShoot(controller);
+            movement(controller);
 
             // We have to give processor some rest.
             try {
@@ -140,6 +74,59 @@ public class Controllers implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void movement(Controller controller){
+        int xAxis = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.X).getPollData());
+        int yAxis = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.Y).getPollData());
+        int moveleft = 81;
+        int moveright = 68;
+        int moveup = 90;
+        int movedown = 83;
+
+        moveDirection(xAxis, moveleft, moveright);
+        moveDirection(yAxis, moveup, movedown);
+    }
+
+    private void moveDirection(int axis, int direction1, int direction2){
+        if(axis <= 35){
+            schip.controllerPressed(direction1);
+        } else if (axis >= 65){
+            schip.controllerPressed(direction2);
+        } else {
+            schip.controllerReleased(direction1);
+            schip.controllerReleased(direction2);
+        }
+    }
+
+    private void aimAndShoot(Controller controller){
+        int shootDelay = 150;
+        final int[] rxAxis;
+        final int[] ryAxis;
+
+        if(controller.getType() == Controller.Type.STICK){
+            rxAxis = new int[]{getAxisValueInPercentage(controller.getComponent(Identifier.Axis.Z).getPollData())};
+            ryAxis = new int[]{getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RZ).getPollData())};
+        } else {
+            rxAxis = new int[]{getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData())};
+            ryAxis = new int[]{getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData())};
+        }
+
+        if (mousePressedTimer == null){
+            mousePressedTimer = new Timer(shootDelay, e -> {
+                if(controller.getComponent(Identifier.Button._5).getPollData() != 0.0f){
+                    rxAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RX).getPollData());
+                    ryAxis[0] = getAxisValueInPercentage(controller.getComponent(Identifier.Axis.RY).getPollData());
+
+                    double locationX = (schip.getCurrentLocation().getX() + schip.getWidth() / 2) + (rxAxis[0] - 50);
+                    double locationY = (schip.getCurrentLocation().getY() + schip.getHeight() / 2) + (ryAxis[0] - 50);
+
+                    schip.controllerAim(locationX, locationY);
+                }
+            });
+        }else{
+            mousePressedTimer.start();
         }
     }
 

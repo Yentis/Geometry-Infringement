@@ -117,7 +117,7 @@ class Register extends JPanel {
                 String result = null;
                 try {
                     result = checkAndCreate(username.getText(), password.getPassword(), email.getText());
-                } catch (NoSuchAlgorithmException | UnsupportedEncodingException | SQLException e1) {
+                } catch (NoSuchAlgorithmException | UnsupportedEncodingException | SQLException | IllegalAccessException | NoSuchFieldException e1) {
                     e1.printStackTrace();
                 }
 
@@ -148,7 +148,7 @@ class Register extends JPanel {
         });
     }
 
-    private String checkAndCreate(String gebruikersnaam, char[] password, String email) throws NoSuchAlgorithmException, UnsupportedEncodingException, SQLException {
+    private String checkAndCreate(String gebruikersnaam, char[] password, String email) throws NoSuchAlgorithmException, UnsupportedEncodingException, SQLException, NoSuchFieldException, IllegalAccessException {
         Spel spel = new Spel();
         String result;
 

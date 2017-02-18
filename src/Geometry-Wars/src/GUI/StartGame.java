@@ -93,7 +93,7 @@ class StartGame extends JPanel {
             try {
                 window.getSpel().initDankabank();
                 window.getStartGameCampaign().initComponents();
-            } catch (IOException | FontFormatException | SQLException e) {
+            } catch (IOException | FontFormatException | SQLException | IllegalAccessException | NoSuchFieldException e) {
                 e.printStackTrace();
             }
             window.getCl().show(window.getCards(), "startgamecampaignpanel");
@@ -125,6 +125,10 @@ class StartGame extends JPanel {
                 window.getSpel().initDankabank();
                 window.getHighScores().initComponents();
             } catch (IOException | FontFormatException | SQLException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (NoSuchFieldException e) {
                 e.printStackTrace();
             }
             window.getCl().show(window.getCards(), "highscorespanel");

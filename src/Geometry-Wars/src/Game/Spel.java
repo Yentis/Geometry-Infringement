@@ -1,11 +1,13 @@
 package Game;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.*;
 import java.util.List;
+import java.awt.event.KeyEvent.*;
 
 /**
  * Created by Yentl-PC on 8/11/2016.
@@ -21,6 +23,7 @@ public class Spel implements Cloneable{
     private List<Enemy> enemies = new ArrayList<>();
     private String currentDifficulty = "Normal";
     private String currentControls = "Keyboard + Mouse";
+    private ArrayList<String> keys = new ArrayList<>();
     private boolean windowed = false;
     private Dimension screenSize;
     private Connection myConn = null;
@@ -29,8 +32,9 @@ public class Spel implements Cloneable{
 
     //region Constructors
 
-    public Spel() throws SQLException {
+    public Spel() throws NoSuchFieldException, IllegalAccessException, SQLException {
         setScreenSize(Toolkit.getDefaultToolkit().getScreenSize());
+        addKeys();
         readDatabase();
         initDankabank();
         initEnemies();
@@ -42,6 +46,10 @@ public class Spel implements Cloneable{
 
     public boolean isWindowed() {
         return windowed;
+    }
+
+    public ArrayList<String> getKeys() {
+        return keys;
     }
 
     public Dimension getScreenSize() {
@@ -80,6 +88,10 @@ public class Spel implements Cloneable{
         return spelers;
     }
 
+    public void setKeys(ArrayList<String> keys) {
+        this.keys = keys;
+    }
+
     public void setScreenSize(Dimension screenSize) {
         this.screenSize = screenSize;
     }
@@ -103,6 +115,13 @@ public class Spel implements Cloneable{
     //endregion
 
     //region Behaviour
+
+    private void addKeys(){
+        keys.add("Z");
+        keys.add("S");
+        keys.add("Q");
+        keys.add("D");
+    }
 
     private void readDatabase() throws SQLException {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
@@ -147,7 +166,7 @@ public class Spel implements Cloneable{
         return false;
     }
 
-    public void initDankabank() throws SQLException {
+    public void initDankabank() throws SQLException, NoSuchFieldException, IllegalAccessException {
         Statement myStmt = myConn.createStatement();
 
         spelers = new ArrayList<>();
@@ -172,7 +191,8 @@ public class Spel implements Cloneable{
 
         i = 0;
         while (schip.next()){
-            schepen.add(i, new Schip(this, schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image"), 81, 68, 90, 83, schip.getInt("speed"), null));
+            System.out.println(keys.get(0));
+            schepen.add(i, new Schip(this, schip.getInt("nr") - 1, schip.getInt("hp"), schip.getInt("kracht"), schip.getString("image"), parseKey(keys.get(0)), parseKey(keys.get(1)), parseKey(keys.get(2)), parseKey(keys.get(3)), schip.getInt("speed"), null));
             i++;
         }
         //endregion
@@ -196,6 +216,10 @@ public class Spel implements Cloneable{
             i++;
         }
         //endregion
+    }
+
+    private int parseKey(String key) throws NoSuchFieldException, IllegalAccessException {
+        return KeyEvent.class.getField("VK_" + key).getInt(null);
     }
 
     private void initEnemies() throws SQLException {

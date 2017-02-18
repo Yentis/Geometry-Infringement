@@ -23,17 +23,15 @@ public class Schip extends Sprite {
     private int combo = 0;
     private int level = 0;
     private int currentXp = 0;
-    private int keyLeft;
-    private int keyRight;
     private int keyUp;
     private int keyDown;
+    private int keyLeft;
+    private int keyRight;
     private int upgradecombo = 0;
     private double speed;
     private double dx;
     private double dy;
     private double maxXp = 1000;
-    private double locationX;
-    private double locationY;
     private double currentAngle;
     private String imageString;
     private ArrayList<Kogel> kogels = new ArrayList<>();
@@ -56,13 +54,11 @@ public class Schip extends Sprite {
 
     //region Constructors
 
-    public Schip(Spel spel, int nr, float hp, int kracht, String image, int keyLeft, int keyRight, int keyUp, int keyDown, double speed, List<Integer> upgrades) {
+    public Schip(Spel spel, int nr, float hp, int kracht, String image, int keyUp, int keyDown, int keyLeft, int keyRight, double speed, List<Integer> upgrades) {
         super(spel, image);
         imageString = image;
         currentLocation = new Point();
         currentLocation.setLocation(getSCREEN_WIDTH() / 2, getSCREEN_HEIGHT() / 2);
-        locationX = currentLocation.getX();
-        locationY = currentLocation.getY();
         currentAngle = 0;
         menuUpgrades = upgrades;
         this.maxhp = hp;
@@ -70,12 +66,12 @@ public class Schip extends Sprite {
         this.nr = nr;
         this.hp = hp;
         this.kracht = kracht;
-        this.keyLeft = keyLeft;
-        this.keyRight = keyRight;
         this.keyUp = keyUp;
         this.keyDown = keyDown;
+        this.keyLeft = keyLeft;
+        this.keyRight = keyRight;
         this.speed = speed;
-        move = new Movement(this, keyLeft, keyRight, keyUp, keyDown);
+        move = new Movement(this, keyUp, keyDown, keyLeft, keyRight);
         addBuffs();
     }
 
@@ -319,10 +315,10 @@ public class Schip extends Sprite {
     }
 
     public void beweegSchip() {
-        locationX = limitToBorders(locationX, 50, getSCREEN_WIDTH() - (50 + getImage().getWidth(null)));
-        locationY = limitToBorders(locationY, 100, getSCREEN_HEIGHT() - (100 + getImage().getHeight(null)));
+        double locationX = limitToBorders(getCurrentLocation().getX(), 50, getSCREEN_WIDTH() - (50 + getImage().getWidth(null)));
+        double locationY = limitToBorders(getCurrentLocation().getY(), 100, getSCREEN_HEIGHT() - (100 + getImage().getHeight(null)));
 
-        currentLocation.setLocation(locationX += dx, locationY += dy);
+        getCurrentLocation().setLocation(locationX + dx, locationY + dy);
     }
 
     private double limitToBorders(double currLocation, double minBorder, double maxBorder) {
@@ -388,8 +384,8 @@ public class Schip extends Sprite {
     private void fire(Point point) {
         new Sound("shoot");
 
-        double kogelX = locationX + getWidth() / 2;
-        double kogelY = locationY + getHeight() / 2;
+        double kogelX = getCurrentLocation().getX() + getWidth() / 2;
+        double kogelY = getCurrentLocation().getY() + getHeight() / 2;
 
         addKogels(new Kogel(spel, kogelX, kogelY, point, "/Media/kogel1.png"));
 
@@ -403,8 +399,8 @@ public class Schip extends Sprite {
     }
 
     private void randomFire() {
-        double kogelX = locationX + getWidth() / 2;
-        double kogelY = locationY + getHeight() / 2;
+        double kogelX = getCurrentLocation().getX() + getWidth() / 2;
+        double kogelY = getCurrentLocation().getY() + getHeight() / 2;
         int kogelX2 = random(getSCREEN_WIDTH());
         int kogelY2 = random(getSCREEN_HEIGHT());
         Point mousePointer2 = new Point(kogelX2, kogelY2);

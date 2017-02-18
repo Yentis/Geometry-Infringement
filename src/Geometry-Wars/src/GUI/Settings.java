@@ -3,6 +3,7 @@ package GUI;
 import GComponents.*;
 import Game.Enemy;
 import Game.Sound;
+import Game.Spel;
 
 import javax.swing.*;
 import javax.tools.Tool;
@@ -30,6 +31,7 @@ class Settings extends JPanel {
         setOpaque(false);
 
         GUI.Window window = (GUI.Window) SwingUtilities.getRoot(getParent());
+        Spel spel = window.getSpel();
         String[] difficulties = {"Hard", "Normal", "Easy"};
         String[] inputs = {"Keyboard + Mouse", "Controller"};
         String[] resolutions = {"1024x768", "1280x720", "1366x768", "1440x900", "1600x900", "1680x1050", "1920x1080", "1920x1200", "2560x1440", "4096x2160"};
@@ -59,19 +61,27 @@ class Settings extends JPanel {
         GLabel aim2 = new GLabel("Mouse | Right joystick", false, Color.white);
         GLabel shoot2 = new GLabel("Mouse Click | R1", false, Color.white);
         GLabel move2 = new GLabel("Left joystick", false, Color.white);
-        GLabel moveUp2 = new GLabel("Z", false, Color.white);
-        GLabel moveDown2 = new GLabel("S", false, Color.white);
-        GLabel moveLeft2 = new GLabel("Q", false, Color.white);
-        GLabel moveRight2 = new GLabel("D", false, Color.white);
+        GInputField moveUp2 = new GInputField(set, 10);
+        GInputField moveDown2 = new GInputField(set, 10);
+        GInputField moveLeft2 = new GInputField(set, 10);
+        GInputField moveRight2 = new GInputField(set, 10);
 
+        moveUp2.setDocument(new JTextFieldLimit(1));
+        moveUp2.setText(spel.getKeys().get(0));
+        moveDown2.setDocument(new JTextFieldLimit(1));
+        moveDown2.setText(spel.getKeys().get(1));
+        moveLeft2.setDocument(new JTextFieldLimit(1));
+        moveLeft2.setText(spel.getKeys().get(2));
+        moveRight2.setDocument(new JTextFieldLimit(1));
+        moveRight2.setText(spel.getKeys().get(3));
         resolution.setFont(new GFont(18));
         lblTitle.setFont(new GFont(65));
         difficulty.setFont(new GFont(18));
-        difficulty.setSelectedItem(window.getSpel().getCurrentDifficulty());
-        Dimension res = window.getSpel().getScreenSize();
+        difficulty.setSelectedItem(spel.getCurrentDifficulty());
+        Dimension res = spel.getScreenSize();
         resolution.setSelectedItem((int)(res.getWidth()) + "x" + (int)(res.getHeight()));
-        windowed.setSelected(window.getSpel().isWindowed());
-        input.setSelectedItem(window.getSpel().getCurrentControls());
+        windowed.setSelected(spel.isWindowed());
+        input.setSelectedItem(spel.getCurrentControls());
         input.setFont(new GFont(18));
         middlePanel.setOpaque(false);
         controlPanel.setOpaque(false);
@@ -244,38 +254,50 @@ class Settings extends JPanel {
         set.addActionListener(evt -> {
             new Sound("click");
             List<Enemy> enemies = new ArrayList<>();
-            String currentDifficulty = window.getSpel().getCurrentDifficulty();
-            String currentControls = window.getSpel().getCurrentControls();
-            Dimension currentResolution = window.getSpel().getScreenSize();
+            String currentDifficulty = spel.getCurrentDifficulty();
+            String currentControls = spel.getCurrentControls();
+            Dimension currentResolution = spel.getScreenSize();
+            ArrayList<String> currentKeys = spel.getKeys();
             String selectedDifficulty = difficulty.getSelectedItem().toString();
             String selectedControls = input.getSelectedItem().toString();
             String selectedResolution = resolution.getSelectedItem().toString();
+            ArrayList<String> selectedKeys = new ArrayList<>();
             int width = parseInt(selectedResolution.substring(0, selectedResolution.indexOf("x")));
             int height = parseInt(selectedResolution.substring(selectedResolution.indexOf("x") + 1));
             Dimension chosenResolution = new Dimension(width, height);
 
-            if(!Objects.equals(currentDifficulty, selectedDifficulty)){
-                window.getSpel().setCurrentDifficulty(selectedDifficulty);
+            selectedKeys.add(moveUp2.getText());
+            selectedKeys.add(moveDown2.getText());
+            selectedKeys.add(moveLeft2.getText());
+            selectedKeys.add(moveRight2.getText());
 
-                for (Enemy enemy: window.getSpel().getEnemies())
+            if(!Objects.equals(currentDifficulty, selectedDifficulty)){
+                spel.setCurrentDifficulty(selectedDifficulty);
+
+                for (Enemy enemy: spel.getEnemies())
                 {
                     enemy.setDifficulty(selectedDifficulty);
                     enemies.add(enemy);
                 }
-                window.getSpel().setEnemies(enemies);
+                spel.setEnemies(enemies);
                 message.setText("Settings changed.");
             }
 
             if (!Objects.equals(selectedControls, currentControls)){
-                window.getSpel().setCurrentControls(selectedControls);
+                spel.setCurrentControls(selectedControls);
                 message.setText("Settings changed.");
             }
 
             if (currentResolution != chosenResolution){
                 window.setSize(chosenResolution);
                 window.setBackgroundPane(chosenResolution);
-                window.getSpel().setScreenSize(chosenResolution);
+                spel.setScreenSize(chosenResolution);
                 message.setText("Settings changed.");
+            }
+
+            if(currentKeys != selectedKeys){
+                spel.setKeys(selectedKeys);
+                message.setText("Keybinds changed.");
             }
         });
 
@@ -287,15 +309,15 @@ class Settings extends JPanel {
         windowed.addItemListener(evt -> {
             new Sound("click");
             if(evt.getStateChange() == ItemEvent.SELECTED){
-                window.getSpel().setWindowed(true);
+                spel.setWindowed(true);
                 window.setExtendedState(JFrame.NORMAL);
                 window.dispose();
                 window.setUndecorated(false);
                 window.setVisible(true);
             } else {
                 Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-                window.getSpel().setWindowed(false);
-                window.getSpel().setScreenSize(size);
+                spel.setWindowed(false);
+                spel.setScreenSize(size);
                 window.setBackgroundPane(size);
                 resolution.setSelectedItem((int)(size.getWidth()) + "x" + (int)(size.getHeight()));
                 window.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -304,6 +326,8 @@ class Settings extends JPanel {
                 window.setVisible(true);
             }
         });
+
+
     }
 
     //endregion
