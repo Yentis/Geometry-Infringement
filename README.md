@@ -1,2 +1,2 @@
 # Geometry-Infringement
-Programmeerproject geometry wars
+Programming project geometry wars
